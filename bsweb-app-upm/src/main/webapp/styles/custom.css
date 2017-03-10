@@ -1,0 +1,51 @@
+﻿.lr-layout
+{
+	border-top-width: 0;
+}
+.lr-layout .main
+{
+	min-width: 950px;
+	_width: 950px;
+}
+.wraper-custom
+{
+	margin-left: 200px;
+	border-bottom: 1px solid #ccc;
+	margin-right:5px;
+}
+
+.wraper-custom .current-bc
+{
+	background-color: #F0FBEB;
+}
+.buttonGroup
+{
+	padding-left: 10px;
+	margin-top: 5px;
+}
+
+.gridWraper
+{
+	padding: 5px;
+}
+
+.pager
+{
+	padding-left: 5px;
+}
+
+.combinegridWraper
+{
+	padding: 5px;
+}
+
+.combineGrid
+{
+	border-style: solid;
+	border-color: #ACC3DF;
+	border-width: 0 1px 1px;
+	padding-bottom: 5px;
+	background-color: #fff;
+}
+
+.

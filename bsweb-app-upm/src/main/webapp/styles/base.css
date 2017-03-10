@@ -1,0 +1,54 @@
+﻿html, body
+{
+	color: #000;
+	font-family: verdana,arial,sans-serif;
+	font-size: 12px;
+	background-color: #fff;
+	
+}
+
+a
+{
+	color: #00f;
+	text-decoration: none;
+}
+a:active
+{
+	color: #00f;
+}
+
+a:hover
+{
+	color: #00f;
+	text-decoration: underline;
+}
+
+a:visited
+{
+	color: #00f;
+}
+html, body, h1, p, h2, h3, h4, h5, h6, ul, dl, ol, li, dd, dt, fieldset, legend, form
+{
+	margin: 0;
+	padding: 0;
+}
+
+fieldset
+{
+	border: 0;
+}
+
+legend
+{
+	text-indent: -5000px;
+}
+
+img
+{
+	border: none;
+}
+
+.clear
+{
+	clear: both;
+}

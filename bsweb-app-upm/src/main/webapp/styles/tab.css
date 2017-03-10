@@ -1,0 +1,107 @@
+﻿
+/*公共样式  开始*/
+.tab
+{
+	background-repeat: repeat-x;
+	background-color: Transparent;
+	background-position: left bottom;
+}
+
+.tab ul
+{
+	list-style-type: none;
+	padding: 10px 10px 0;
+	margin: 0;
+}
+.tab li, .tab a
+{
+	background-color: Transparent;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+}
+
+.tab li
+{
+	float: left;
+	background-position: left top;
+	margin: 0;
+	padding: 0 0 0 9px;
+}
+
+.tab a
+{
+	display: block;
+	background-position: right top;
+	padding: 5px 15px 4px 6px;
+	text-decoration: none;
+	color: #776655;
+	font-weight: bold;
+}
+/*公共样式  结束*/
+
+
+
+
+/*外部样式 开始*/
+
+.wraper-bg
+{
+	background-image: url(../images/bg.gif);
+}
+
+.tab .current-bg
+{
+	background-image: url(../images/left_on.gif);
+}
+
+.tab .current-bg a
+{
+	background-image: url(../images/right_on.gif);
+	padding-bottom: 5px;
+	color: #000;
+}
+
+
+.tab .tab-bg
+{
+	background-image: url(../images/left.gif);
+}
+
+
+.tab .tab-bg a
+{
+	background-image: url(../images/right.gif);
+}
+
+
+
+
+
+.wraper-bc
+{
+	background-color: #EAF0F6;
+	border-color: #ACC3DF;
+	border-style: solid;
+	border-width: 1px 0 1px 0;
+}
+
+
+
+.tab .current-bc
+{
+	background-color: #FFF;
+	border-color: #ACC3DF;
+	border-style: solid;
+	border-width: 1px 1px 0;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	margin-bottom: -1px;
+}
+
+.tab .current-bc a
+{
+	color: #000;
+	padding-bottom: 5px;
+}
+
+/*外部样式 结束*/

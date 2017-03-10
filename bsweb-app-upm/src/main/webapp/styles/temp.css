@@ -1,0 +1,77 @@
+﻿
+.bg
+{
+	opacity: 0.05;
+	filter: Alpha(Opacity=5);
+	z-index: 2;
+	position: absolute;
+	background-color: #000;
+	width:100%;
+	top: 0;
+	left: 0;
+}
+
+.dialog
+{
+	border: 1px solid #14495f;
+	position: absolute;
+	overflow: auto;
+}
+.dialog .title
+{
+	height: 26px;
+	width: auto;
+	background-image: url('../images/dialog-title.gif');
+}
+.title .titleinfo
+{
+	float: left;
+	height: 20px;
+	margin-top: 2px;
+	margin-left: 10px;
+	line-height: 20px;
+	vertical-align: middle;
+	color: #FFF;
+	font-weight: bold;
+}
+.title .titleico
+{
+	float: right;
+	height: 20px;
+	width: 21px;
+	margin-top: 2px;
+	margin-right: 5px;
+	text-align: center;
+	line-height: 20px;
+	vertical-align: middle;
+	background-image: url('../images/dialog.gif');
+	background-position: -21px 0px;
+}
+.dialog .main
+{
+	padding: 10px;
+	width: auto;
+	background-color: #FFFFFF;
+}
+
+
+.main iframe
+{
+	width: 98%;
+	height: 98%;
+	border: 1px solid #ccc;
+}
+
+
+.dialog .bottom
+{
+	bottom: 1px;
+	right: 1px;
+	cursor: nw-resize;
+	position: absolute;
+	background-image: url('../images/dialog.gif');
+	background-position: -42px -10px;
+	width: 10px;
+	height: 10px;
+	font-size: 0;
+}

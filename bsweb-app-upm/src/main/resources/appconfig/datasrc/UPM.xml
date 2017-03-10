@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<app appcode="UPM">
+	<!--帐号管理类型:A帐号自管理;B帐号由其他系统管理;C=A+B-->
+	<accttype>A</accttype>
+	
+	<!--查询接口实现方式:view(或table)视图方式;Webservices方式;file接口-->
+	<singlequerymode>view</singlequerymode>
+	<batchquerymode>view</batchquerymode>
+	
+	<!-- 开发模式/联调(发布)模式 ，true为开发模式，关闭接口；false打开接口-->
+	<debug>false</debug>
+	
+	<!-- 接口消息体是否加密，为true时WebServices消息体需要按3DES方式加密 -->
+	<encryt>false</encryt>
+	
+	<!--如果查询接口实现方式为view视图方式;需要在spring-base.xml文件配置对方提供的数据源-->
+	<!-- 默认情况对方提供的视图都在一个数据源下，如果某个视图在其他数据源下，需要在datasrc->table元素中配置datasrcname属性 -->
+	<defaultdatasrc>UPM</defaultdatasrc>
+	
+	<!--
+		手动或定期同步：A只比较多和少;B比较多少和差异(差异只比较归属组织和状态两个属性); C比较全量属性，暂不实现
+	-->
+	<syncmode>A</syncmode>
+	
+	<!--
+		acctbean ——	4A针对所有应用定义一个帐号管理抽象bean(com.asiainfo.uap.appcommon.CommonAppAcctBean)类，
+		此类各省不允许修改，该类中只定义帐号主属性，扩展属性需要各应用定义子类，继承父类CommonAppAcctBean。
+	-->
+	<acctbean>com.asiainfo.a4.core.app.base.entity.IapAcctBean</acctbean>
+	
+	<!--
+		callwebservice	—— 调用应用服务的call方法接口类，如果未配置则返回默认实现com.asiainfo.a4.core.app.base.api.impl.AppCallWsApiServiceImpl
+		如果调用应用服务时，需要对call方法进行处理，需要配置此类，并实现该接口中的方法
+	-->
+	<callwebservice>iapCallWebService</callwebservice>
+	
+	<!--
+		acctservice	—— 4A针对所有应用定义一个帐号管理服务(com.asiainfo.uap.appcommon.CommonAppAcctServices)类，
+		该类中实现通用的帐号各管理方法，包含增加帐号、修改帐号等，此类各省不允许修改。如果父类可以满足应用的需要，
+		应用无需扩展子类，这里配置成父类即可。如果应用有特殊需求，此父类不能满足需求，需要各应用定义子类，继承父
+		类CommonAppAcctServices，实现自己个性化的方法覆盖父类方法（只需要覆盖不满足需要的部分方法），此处配置子类即可。
+	-->
+	<acctservice></acctservice>	
+	
+	<!--Webservices发布地址-->
+	<!--authen属性代表是否传送认证信息Y/N，Y代表需要，如果没有配置，默认为N。如果是Y,则会在请求报文中增加OPERATORPWD标签-->
+	<!--clientip属性代表是否传送客户端IP，Y代表需要，如果没有配置，默认为N。如果是Y,则会在请求报文中增加OPERATORIP标签-->		
+	<soapurl>
+		<!--default为默认配置。对于没有配置的服务，采用此默认地址。如果应用发布的所有服务在一个URL上，只需要配置一个默认即可-->
+		<service name="default" authen="Y" clientip="Y" url="http://10.1.21.77:9092/iap/services/UpdateAppAcctSoap"/>
+		<service name="UpdateAppOrgServices" authen="Y" clientip="Y" url="http://10.1.21.77:9092/iap/cxf/services/PermissonServices"/>
+		<service name="UpdateAppAuthorServices" authen="Y" clientip="Y" url="http://10.1.21.77:9092/iap/cxf/services/PermissonServices"/>
+		<service name="UpdateAppAuthorRelServices" authen="Y" clientip="Y" url="http://10.1.21.77:9092/iap/cxf/services/PermissonServices"/>
+		<service name="UpdateAppAcctAuthorServices" authen="Y" clientip="Y" url="http://10.1.21.77:9092/iap/cxf/services/PermissonServices"/>
+	</soapurl>
+	
+	<!--嵌套页面，支持动态扩展-->
+	<pagesrc>
+		<!--角色增删改维护-->
+		<page linktitle="组织机构维护"   linkurl="http://localhost:8080/iap/inline!toAppOrgMgrPage.action"/>
+		<!--角色增删改维护-->
+		<page linktitle="角色维护"   linkurl="http://localhost:8080/iap/inline!toAppRoleMgrPage.action"/>
+		<!--角色权限配置-->
+		<page linktitle="角色权限配置"   linkurl="http://localhost:8080/iap/inline!toAppRolePermissionMgrPage.action"/>
+		<!--为帐号分配角色-->
+		<page linktitle="角色授权" linkurl="http://localhost:8080/iap/inline!toAppUserRoleMgrPage.action" flag="1"/>
+		<!--角色权限配置-->
+		<page linktitle="用户权限配置"   linkurl="http://localhost:8080/iap/inline!toUserMgrPage.action"/>
+		
+		<page linktitle="用户管理"   linkurl="http://localhost:8080/upm/jsp/user/upmUserList.jsp"/>
+		<page linktitle="组织机构管理"   linkurl="http://localhost:8080/upm/jsp/user/upmUserGroupTreeList.jsp"/>
+		<page linktitle="角色管理"   linkurl="http://localhost:8080/jsp/role/upmRoleList.jsp?appId=CRM"/>
+		<page linktitle="权限管理"   linkurl="${ctx}/jsp/permission/permission.jsp?appId=CRM"/>
+		<page linktitle="数据字典管理"   linkurl="http://localhost:8080/upm/jsp/user/upmUserList.jsp"/>
+		<page linktitle="用户管理"   linkurl="http://localhost:8080/upm/jsp/dictionary/upmDictionaryNoteList.jsp"/>
+		<page linktitle="配置管理"   linkurl="http://localhost:8080/upm/jsp/dictionary/upmConfigurationList.jsp"/>
+		
+	</pagesrc>
+	
+	
+	<!--配置应用系统管理员管理帐号时如何控制帐号的管理范围-->
+	<!--目前控制方式分为三种：
+		1.默认规则：无数据范围控制，即只要能进入此功能模块，即可管理全部组织机构下的所有帐号。style=DEFAULT；
+		2.通用规则：管理员只能自身所在组织机构及以下组织机构的帐号。style=COMMON；
+		3.应用规则：数据范围控制规则由被管应用控制，4A调用应用系统提供的服务，由应用返回给4A当前管理员帐号可以管理
+		帐号的组织机构根即以下各级节点。甚至控制某个节点下可以管理的帐号范围(应用暂时不考虑)。style=SERVICES；后续
+		参数代表对方WebServices发布的相关配置信息
+		4.函数规则：有特殊的控制逻辑，需要定义单独的函数来实现逻辑。style=FUNCTION；
+		如果不配置，按默认规则控制
+	-->
+	<!--对于将来接触的应用，可能存在不在上述几种之内而且管理逻辑极为不规则的情形。后续再扩展-->
+	<datacontrol style="COMMON"/>
+	
+	<!-- 如果查询接口是视图方式，需要配置datasrc元素。配置方式同一期，唯一不同的是uapfield需要修改成实际数据库字段名 -->
+	<datasrc>
+		 <!--测试维表-->
+		 <!--这里table里name指对方提供的视图名称，支持带用户名。SQL为直接查询原表的SQL语句。二者只能配置其一-->
+	
+		 <!--组织机构-->
+		 <table name="iap_sub_organization" type="AUTHORENTITY:ORG"><!--替换成实际的BOSS组织机构表名或视图名-->
+			<field name="ORG_ID" type="VARCHAR2" uapfield="ORG_ID" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="ORG_NAME" type="VARCHAR2" uapfield="ORG_NAME" uaptype="VARCHAR2" get="getOrgName" set="setOrgName"/>	
+			<field name="PARENT_ID" type="VARCHAR2" uapfield="PARENT_ID" uaptype="VARCHAR2" get="getParentId" set="setParentId"/>
+			<field name="ORG_CODE" type="VARCHAR2" uapfield="ORG_CODE" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="ORG_DESC" type="VARCHAR2" uapfield="ORG_DESC" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="SORT_NO" type="VARCHAR2" uapfield="SORT_NO" uaptype="NUMBER" get="getOrgId" set="setOrgId"/>
+		 </table>
+		 <!--组织机构增量信息表，所有应用的组织机构增量表放在4A端-->
+		<!--<table name="IAP_SUB_ORGANIZATION" type="ORG_PART_SERVICES">
+			<field name="ORG_ID" type="NUMBER" xmltitle="ORGID" uapfield="ORG_ID" uaptype="VARCHAR2" get="getOrgId" set="setOrgId" />
+			<field name="ORG_NAME" type="VARCHAR2" xmltitle="ORGNAME" uapfield="ORG_NAME" uaptype="VARCHAR2" get="getOrgName" set="setOrgName" />
+			<field name="PARENT_ID" type="NUMBER" xmltitle="PARENTORGID" uapfield="PARENT_ID" uaptype="VARCHAR2" get="getParentId" set="setParentId" />
+		</table>-->
+		<!-- 菜单表 -->
+		<table name="iap_permission" type="AUTHORENTITY:FUNCTION"><!--替换成实际的BOSS组织机构表名或视图名-->
+			<field name="PERMISSION_ID" type="NUMBER" uapfield="PERMISSION_ID" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="PARENT_ID" type="VARCHAR2" uapfield="PARENT_ID" uaptype="VARCHAR2" get="getOrgName" set="setOrgName"/>	
+			<field name="NAME" type="VARCHAR2" uapfield="NAME" uaptype="VARCHAR2" get="getParentId" set="setParentId"/>
+			<field name="TYPE" type="VARCHAR2" uapfield="TYPE" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="URL" type="VARCHAR2" uapfield="URL" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="CODE" type="VARCHAR2" uapfield="CODE" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="STATE" type="VARCHAR2" uapfield="STATE" uaptype="VARCHAR2" get="getOrgName" set="setOrgName"/>	
+			<field name="REMARK" type="VARCHAR2" uapfield="REMARK" uaptype="VARCHAR2" get="getParentId" set="setParentId"/>
+			<field name="SORT_NO" type="VARCHAR2" uapfield="SORT_NO" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+			<field name="CREATE_TIME" type="DATE" uapfield="CREATE_TIME" uaptype="DATE" get="getOrgId" set="setOrgId"/>
+			<field name="LAST_UPDATE_TIME" type="DATE" uapfield="LAST_UPDATE_TIME" uaptype="DATE" get="getOrgId" set="setOrgId"/>
+			<field name="ICON_PATH" type="VARCHAR2" uapfield="ICON_PATH" uaptype="VARCHAR2" get="getOrgId" set="setOrgId"/>
+		 </table>
+		<!-- 帐号信息表 -->
+		<table name="IAP_ACCOUNT" type="USER" delpolicy="Y">
+			<field name="main_acct_id" type="NUMBER" uapfield="USER_ID" uaptype="VARCHAR2" mainfield="Y" get="getUserId" set="setUserId"/>
+			<field name="LOGIN_NAME" type="VARCHAR2" uapfield="LOGIN_ACCT" uaptype="VARCHAR2" mainfield="Y" get="getLoginAcct" set="setLoginAcct"/>
+			<field name="NAME" type="VARCHAR2" uapfield="USER_NAME" uaptype="VARCHAR2" mainfield="Y" get="getUserName" set="setUserName"/>
+			<field name="DEFAULT_ORG" type="NUMBER" uapfield="ORG_ID" uaptype="VARCHAR2" mainfield="Y" get="getOrgId" set="setOrgId"/>
+			<field name="EMAIL" type="VARCHAR2" uapfield="EMAIL" uaptype="VARCHAR2" mainfield="Y" get="getEmail" set="setEmail"/>
+			<field name="LOGIN_PWD" type="VARCHAR2" uapfield="LOGIN_PWD" uaptype="VARCHAR2" mainfield="Y" get="getLoginPwd" set="setLoginPwd" />
+			<field name="MOBILE" type="VARCHAR2" uapfield="MOBILE" uaptype="VARCHAR2" mainfield="Y" get="getMobile" set="setMobile"/>			 
+			<field name="LOCK_STATUS" type="VARCHAR2" uapfield="ACCT_STATUS" uaptype="CHAR" lockvalue="0" unlockvalue="1" mainfield="Y" get="getAcctStatus" set="setAcctStatus"/>			
+			<field name="EFFECT_TIME" type="DATE" uapfield="EFFECT_TIME" uaptype="DATE" mainfield="Y" get="getEffectTime" set="setEffectTime"/>
+			<field name="EXPIRE_TIME" type="DATE" uapfield="EXPIRE_TIME" uaptype="DATE" mainfield="Y" get="getExpireTime" set="setExpireTime"/>
+			<!--USER扩展属性-->
+		</table>
+		<!--角色 表-->
+		<table name="iap_role" type="AUTHORENTITY:ROLE">
+			<field name="ROLE_ID" type="NUMBER" uapfield="ROLE_ID" uaptype="VARCHAR2" get="getRoleId" set="setRoleId" />
+			<field name="ROLE_NAME" type="VARCHAR2" uapfield="ROLE_NAME" uaptype="VARCHAR2" get="getRoleName" set="setRoleName" />
+		    <field name="PROVINCE_FLAG" type="VARCHAR2" uapfield="PROVINCE_FLAG" uaptype="VARCHAR2" get="getRoleId" set="setRoleId" />
+		    <field name="CREATE_MAINACCT" type="VARCHAR2" uapfield="CREATE_MAINACCT" uaptype="VARCHAR2" get="getRoleId" set="setRoleId" />
+		    <field name="CREATE_TIME" type="DATE" uapfield="CREATE_TIME" uaptype="DATE" get="getRoleId" set="setRoleId" />
+		    <field name="LAST_UPDATE_TIME" type="VARCHAR2" uapfield="LAST_UPDATE_TIME" uaptype="VARCHAR2" get="getRoleId" set="setRoleId" />
+		    <field name="ROLE_DESC" type="VARCHAR2" uapfield="ROLE_DESC" uaptype="VARCHAR2" get="getRoleId" set="setRoleId" />
+		</table>
+		<!--帐号角色关系 表-->
+		<table name="IAP_ACCOUNT_ROLE" type="USERGRANT:ROLE">
+			<field name="MAIN_ACCT_ID" type="VARCHAR2" uapfield="USER_ID" uaptype="VARCHAR2" mapkey="Y" get="getUserId" set="setUserId"/>
+			<field name="ROLE_ID" type="NUMBER" uapfield="GRANT_ID" uaptype="VARCHAR2" get="getRoleId" set="setRoleId"/>
+		</table>
+		<!--角色菜单关系 表-->
+		<table name="iap_role_permission" type="AUTHORGRANT:ROLE-FUNCTION">
+			<field name="ROLE_ID" type="NUMBER" uapfield="main_grant_id" uaptype="VARCHAR2" get="getRoleId" set="setRoleId"/>
+			<field name="PERMISSION_ID" type="VARCHAR2" uapfield="be_grant_id" uaptype="VARCHAR2" get="getFunctionId" set="setFunctionId"/>
+		</table>
+	</datasrc>
+	<!-- 
+		type取值:tree,other;roottype取值：single,multi,当type为other时，无需后两个参数。
+		当type为tree时，需要定义根节点类型和根节点的值，当roottype为multi时，多根用逗号隔开
+	  -->
+	<permission type="tree" roottype="single" rootvalue="1"/> 
+</app>
+

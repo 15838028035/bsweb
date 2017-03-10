@@ -1,0 +1,30 @@
+﻿.button
+{
+	border-bottom: 1px solid #E7E7E7;
+	border-right: 1px solid #E7E7E7;
+	display: inline-block;
+	height: 27px;
+	_border-top: 1px solid #E7E7E7;
+}
+
+.button .wraper
+{
+	background: #EEEEEE none repeat scroll 0 0;
+	border-color: #CCCCCC #999999 #999999 #CCCCCC;
+	border-style: solid;
+	border-width: 1px;
+	display: block;
+	height: 25px;
+	_display: inline;
+}
+
+.button input
+{
+	border: none;
+	cursor: pointer;
+	height: 25px;
+	background: transparent url(../images/buttonbg.png) no-repeat scroll left top;
+}
+
+
+
