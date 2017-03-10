@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<apppermission appcode="UPM">
+	<!-- type：button-多按钮点击页面跳转  tab-单按钮进入后tab操作 -->
+	<!-- name 前台名称，is_attr是否属性权限 url授权页面 urltype是否嵌套 code权限编码  optype操作对象 -->
+	<usergrants code="user_grant" type="button" name="员工权限管理" url=""
+		urltype="0">
+		<usergrant name="主岗位授权" is_attr="N" url="" urltype="0" code="user_role" optype="post" isBatch="Y">
+		</usergrant>
+		<usergrant name="辅助岗位授权" is_attr="N" url="/jsp/local/henan/app/haboss/author/rel/habossauthorrelnavilist!input_fzpost.action" urltype="0" code="user_permission" optype="fzpost"></usergrant>
+		<usergrant name="客服岗位授权" is_attr="N" url="" urltype="0" code="user_permission" optype="kfpost" isBatch="Y">
+		</usergrant>
+		<!-- <usergrant name="员工反向权限授权" is_attr="N" url="" is_rev="Y"
+			urltype="0" code="user_reverse_permission" optype="function">
+		</usergrant> 
+		<usergrant name="组织权限" is_attr="Y" optype="org"></usergrant>
+		-->
+		<extbutton name="批量授权和权限复制"
+			url="/jsp/app/appauthor/batch/commonappauthorbatch!tobatchOperate.action"
+			multicount="2" beforeopen="" key="COPY" code="" />
+		<extbutton name="批量解除授权"
+			url="/jsp/app/appauthor/batch/commonappauthorbatch!tobatchOperate.action"
+			multicount="" beforeopen="" key="REVOKE" code="" />
+	</usergrants>
+	
+	<options>
+		<option type="station_func_manager" name="主岗位类型可选功能管理员管理" url="/jsp/local/henan/app/haboss/author/habossacctauthornavi!manager_posttypeselectmenumanger.action" urltype="0" code="menu,27">
+		</option>
+		<!-- 新增编辑删除按钮，在管理页面的code后加_add,_update,_delete -->
+		<option type="org" name="组织管理" url="/jsp/local/henan/app/haboss/author/habossacctauthortreemng!manager_org.action" urltype="0"
+			code="MENU,25">
+			<operates>
+				<operate type="add" name="新增子节点" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="update" name="编辑该节点"
+					url="www.rolemng.com" urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删除该节点"
+					url="www.rolemng.com" urltype="1" code="role_mng">
+				</operate>
+			</operates>
+		</option>
+		<option type="posttype" name="主岗位类型管理" url="/jsp/local/henan/app/haboss/author/habossacctauthortreemng!manager.action" urltype="0"
+			code="menu,4665">
+			<operates>
+				<operate type="add" name="新增" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="update" name="编辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+			<optiongrants code="role_grant" type="button" name="岗位类型权限管理"
+				url="" urltype="0">
+				<optiongrant name="与菜单关系管理" url="/jsp/local/henan/app/haboss/habossauthorrel!input.action"
+					urltype="0" code="role_permission" optype="menu">
+				</optiongrant>
+			</optiongrants>
+		</option>
+		<option type="fzposttype" name="辅岗位类型管理" url="/jsp/local/henan/app/haboss/author/habossacctauthornavilistmng!manager.action" urltype="0"
+			code="menu,3333">
+			<operates>
+				<operate type="add" name="新增" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="update" name="编辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+			<optiongrants code="stationtype_grant" type="button" name="辅岗位类型权限管理" url="" urltype="0">
+				<optiongrant name="辅岗位类型权限管理" url="/jsp/local/henan/app/haboss/habossauthorrel!input.action"
+					urltype="0" code="stationtype_permission" optype="menu">
+				</optiongrant>
+			</optiongrants>
+		</option>
+		<option type="kfposttype" name="客服岗位类型管理" url="" urltype="0"
+			code="menu,2595">
+			<operates>
+				<operate type="add" name="新增" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="update" name="编辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+			<optiongrants code="stationtype_grant" type="button" name="岗位类型权限管理" url="" urltype="0">
+				<optiongrant name="岗位类型权限管理" url="/jsp/local/henan/app/haboss/habossauthorrel!input.action"
+					urltype="0" code="stationtype_permission" optype="menu">
+				</optiongrant>
+			</optiongrants>
+		</option>
+		
+		<option type="posttype_org" name="主岗位类型与组织关系" url="/jsp/local/henan/app/haboss/author/habossacctauthornavilistmng!manager_posttype_org.action" urltype="0"
+			code="menu,4669">
+			<optiongrants code="stationtype_grant" type="button" name="编辑组织与主岗位类型关系" url="" urltype="0">
+				<optiongrant name="编辑组织与主岗位类型关系" url=""
+					urltype="0" code="stationtype_permission" optype="POSTTYPE">
+				</optiongrant>
+			</optiongrants>
+		</option>
+		<option type="kfposttype_org" name="客服岗位类型与组织关系" url="/jsp/local/henan/app/haboss/author/habossacctauthornavilistmng!manager_kfposttype_org.action" urltype="0"
+			code="menu,2597">
+			<optiongrants code="stationtype_grant" type="button" name="编辑组织与客服岗位类型关系" url="" urltype="0">
+				<optiongrant name="编辑组织与客服岗位类型关系" url=""
+					urltype="0" code="stationtype_permission" optype="kfposttype">
+				</optiongrant>
+			</optiongrants>
+		</option>
+		<option type="kfkind" name="客服岗位类型分类管理" url="" urltype="0"
+			code="menu,2595">
+			<operates>
+				<operate type="add" name="新增" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="update" name="编辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+		</option>
+		<option type="kfpost" name="客服岗位管理" url="/jsp/local/henan/app/haboss/author/habossacctauthor!manager_kfpost.action" urltype="0"
+			code="menu,27">
+			<operates>
+				<operate type="update" name="编   辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删   除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+		</option>
+		<option type="post" name="主岗位管理" url="/jsp/local/henan/app/haboss/author/habossacctauthor!manager_post.action" urltype="0"
+			code="stationtype_mng">
+			<operates>
+				<operate type="update" name="编   辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删   除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+		</option>
+		<option type="fzpost" name="辅岗位管理" url="/jsp/local/henan/app/haboss/author/habossacctauthor!manager_fzpost.action" urltype="0"
+			code="menu,3336">
+			<operates>
+				<operate type="update" name="编   辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删   除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+		</option>
+		<option type="menu" name="菜单管理" url="/jsp/local/henan/app/haboss/author/habossacctauthortreemng!manager_menu.action" urltype="0"
+			code="menu,17">
+			<operates>
+				<operate type="add" name="新增" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="update" name="编辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+			<optiongrants code="menu_manager_grant" type="button" name="为管理员赋权" url="" urltype="0">
+				<optiongrant name="为管理员赋权" url=""
+					urltype="0" code="stationtype_permission" optype="MANAGER">
+				</optiongrant>
+			</optiongrants>
+		</option>
+		<option type="kforgtype" name="组织类型管理" url="" urltype="0" code="menu,-100"> </option>
+		<!-- <option type="bosskind" name="boss岗位类型分类管理" url="" urltype="0" code="stationtype_mng"> </option>-->
+		<option type="bossorgtype" name="boss组织管理" url="" urltype="0" code="menu,-100"> </option>
+		<option type="MANAGER" name="管理员管理" url="" urltype="0" code="menu,-100"> </option>
+		<option type="mspagerelat" name="越权访问菜单管理" url="" urltype="0"
+			code="menu,-100">
+			<operates>
+				<operate type="add" name="新增" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="update" name="编辑" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+				<operate type="delete" name="删除" url="www.rolemng.com"
+					urltype="1" code="role_mng">
+				</operate>
+			</operates>
+		</option>
+	</options>
+</apppermission>

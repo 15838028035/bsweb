@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <constant name="struts.multipart.maxSize" value="20000000" />
+	<!-- 用于CRUD Action的parent package -->
+	<package name="crud-default" extends="convention-default" namespace="/">
+		<!-- 基于paramsPrepareParamsStack,
+			增加store interceptor保证actionMessage在redirect后不会丢失 -->
+		<interceptors>
+			<interceptor-stack name="crudStack">
+				<interceptor-ref name="store">
+					<param name="operationMode">AUTOMATIC</param>
+				</interceptor-ref>
+				<interceptor-ref name="exception">
+		            <param name="logEnabled">true</param>
+		            <param name="logLevel">error</param>
+				</interceptor-ref>				
+				<interceptor-ref name="paramsPrepareParamsStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="crudStack" />
+	</package>
+	
+ 	<constant name="struts.i18n.encoding" value="UTF-8"/>
+ 	
+ 	<package name="timeout" extends="crud-default">
+		<interceptors>
+			<interceptor name="timeoutInterceptor"
+				class="com.lj.app.core.common.interceptor.TimeoutInterceptor">
+				<param name="includeMethods">
+					login,passwordCheck
+				</param>
+			</interceptor>
+		</interceptors>
+		<global-results>
+			<result name="timeout">/jsp/common/sessionexpire.jsp</result>
+			<result name="ajaxTimeOut">
+				/commonwebAction!ajaxtimeout.action
+			</result>
+			<result name="loginAjaxTimeOut">
+				/commonwebAction!logintimeout.action
+			</result>
+		</global-results>
+	</package>
+	
+</struts>

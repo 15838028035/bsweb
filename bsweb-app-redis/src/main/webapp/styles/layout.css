@@ -1,0 +1,120 @@
+﻿
+.lr-layout
+{
+	background-color: #F0FBEB;
+	border: 1px solid #999;
+	margin-left: 200px;
+	min-width: 600px;
+	padding-bottom: 5px;
+	margin-right: 5px;
+}
+.lr-layout .main
+{
+	float: left;
+	margin-left: -200px;
+	_margin-left: -100px;
+}
+.lr-layout .sideBar
+{
+	width: 200px;
+	float: left;
+	margin-right: -1px;
+}
+.lr-layout .sideBar .listWraper
+{
+	width: 199px;
+	background-color: #fff;
+}
+.lr-layout .sideBar ul
+{
+	list-style-type: none;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+.lr-layout .sideBar ul li, .lr-layout .sideBar ul dt, .lr-layout .sideBar ul dd
+{
+	padding: 2px 0 2px 5px;
+}
+.lr-layout .sideBar dd
+{
+	margin-left: 20px;
+}
+
+.lr-layout .main .content
+{
+	float: left;
+}
+.lr-layout .line
+{
+	width: 600px;
+}
+.lr-layout .sideBar .current
+{
+	border-style: solid;
+	border-color: #999;
+	border-width: 1px 0 1px 1px;
+	background: #F0FBEB none repeat scroll 0 0;
+	position: relative;
+	right: -1px;
+}
+
+
+
+
+
+.vertical-tab
+{
+	margin-left: 150px;
+	min-width: 20px;
+	padding-bottom: 0;
+
+}
+
+.vertical-tab .main
+{
+	margin-left: -150px;
+	_margin-left: -75px;
+}
+
+.vertical-tab .sideBar
+{
+	width: 150px;
+	margin-top: -1px;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #999;
+	margin-bottom: -1px;
+	margin-left: -1px;
+
+}
+
+.vertical-tab .sideBar .listWraper
+{
+	width: 149px;
+	background-color: #fff;
+}
+.vertical-tab .sideBar .listWraper ul li
+{
+	border-top: 1px solid #999;
+
+}
+.vertical-tab .sideBar .listWraper ul li.current
+{
+	margin-left: -1px;
+	border-bottom-width: 0;
+	border-left-width: 0;
+
+
+
+
+}
+.vertical-tab .sideBar .listWraper ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+
+
+
+
+

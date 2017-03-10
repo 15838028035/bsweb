@@ -1,0 +1,7 @@
+	<!-- datetime picker -->    
+	<link href="${ctx}/scripts/jquery/datetime/datetime.css" type="text/css" rel="stylesheet" />
+   	<script src="${ctx}/scripts/jquery/datetime/jquery-ui-timepicker-addon-0.5.js" type="text/javascript"></script> 
+	
+		//日期控件
+	$("#contractExpireDate,#joinDate,#birthDate,#effectDate,#expireDate").datetimepicker();
+	 

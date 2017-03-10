@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="upmApp">
+
+    <typeAlias alias="upmApp" type="com.lj.app.bsweb.upm.app.entity.UpmApp"/>
+
+    <resultMap id="upmAppResult" class="upmApp">
+   	  	<result property="id" column="id"/>
+   	  	<result property="appId" column="app_id"/>
+   	  	<result property="appCode" column="app_code"/>
+   	  	<result property="appName" column="app_name"/>
+   	  	<result property="appUrl" column="app_url"/>
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="appId">
+	             app_id = #appId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="appCode">
+	             app_code = #appCode#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="appName">
+	             app_name = #appName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="appUrl">
+	             app_url = #appUrl#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+	    	id, 
+        	app_id ,
+        	app_code ,
+        	app_name ,
+        	app_url 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="upmApp">
+         <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        upm_app (
+	        	id,
+	        	app_id ,
+	        	app_code ,
+	        	app_name ,
+	        	app_url
+	        	
+	        ) VALUES (
+	        	#id# ,
+				#appId# ,
+				#appCode# ,
+				#appName# ,
+				#appUrl# 
+	        )
+	    ]]>
+    </insert>
+
+    <update id="update" parameterClass="upmApp">
+    <![CDATA[
+        UPDATE upm_app 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="appId">
+				app_id = #appId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="appCode">
+				app_code = #appCode#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="appName">
+				app_name = #appName#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="appUrl">
+				app_url = #appUrl#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from upm_app where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="getInfoByKey" resultMap="upmAppResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_app 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+    
+    <select id="select" resultMap="upmAppResult">
+    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_app 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+
+ 	<select id="pagenate" resultMap="upmAppResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_app 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from upm_app
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>
