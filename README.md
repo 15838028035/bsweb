@@ -1,8 +1,4 @@
-## bsweb
-
-
-
-##Changes
+﻿##Changes
 
 ### 2016-04-24
  - 核心工程core新增方法
@@ -28,5 +24,6 @@ Contributions are absolutely welcome. Unfortunately, Xamarin is a paid framework
     Commit your changes: git commit -am 'Add some feature'
     Push to the branch: git push origin my-new-feature
     Submit a pull request :D
+
 
 
