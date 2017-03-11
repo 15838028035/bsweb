@@ -15,7 +15,7 @@
 ## Install
 mvn install
 
-Contributing
+##Contributing
 
 Contributions are absolutely welcome. Unfortunately, Xamarin is a paid framework which makes it hard for contributors but if you'd like to create a PR I would be happen to test it.
 
