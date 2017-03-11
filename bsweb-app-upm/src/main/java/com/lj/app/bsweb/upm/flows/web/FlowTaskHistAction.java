@@ -14,6 +14,7 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
+import com.lj.app.core.common.flows.service.FlowTaskHistService;
 import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
@@ -45,13 +46,16 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 
 	 @Autowired
 	private FlowEngineFacetsService flowEngineFacetsService;
+	 
+	@Autowired
+	private FlowTaskHistService flowTaskHistService;
 	
 	private FlowTaskHist flowTaskHist;
 	
 	private java.lang.Integer id;
 	
 	public   BaseService getBaseService(){
-		return flowEngineFacetsService.getEngine().FlowTaskHistService();
+		return flowTaskHistService;
 	}
 	
 	public FlowTaskHist getModel() {
@@ -61,7 +65,7 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 	@Override
 	protected void prepareModel() throws Exception {
 		if (id != null) {
-			flowTaskHist = (FlowTaskHist)flowEngineFacetsService.getEngine().FlowTaskHistService().getInfoByKey(id);
+			flowTaskHist = (FlowTaskHist)flowTaskHistService.getInfoByKey(id);
 		} else {
 			flowTaskHist = new FlowTaskHist();
 		}
@@ -106,5 +110,23 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 	public java.lang.Integer  getId(){
 		return id;
 	}
+
+	public FlowEngineFacetsService getFlowEngineFacetsService() {
+		return flowEngineFacetsService;
+	}
+
+	public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
+		this.flowEngineFacetsService = flowEngineFacetsService;
+	}
+
+	public FlowTaskHistService getFlowTaskHistService() {
+		return flowTaskHistService;
+	}
+
+	public void setFlowTaskHistService(FlowTaskHistService flowTaskHistService) {
+		this.flowTaskHistService = flowTaskHistService;
+	}
+	
+	
 }
 
