@@ -1,5 +1,6 @@
 package com.lj.app.bsweb.upm.flows.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,19 +12,17 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.flows.api.FlowTaskServiceApi;
-import com.lj.app.core.common.flows.entity.FlowOrderHist;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskActor;
+import com.lj.app.core.common.flows.service.FlowCcorderService;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
 import com.lj.app.core.common.flows.service.FlowQueryService;
 import com.lj.app.core.common.flows.service.FlowTaskActorService;
 import com.lj.app.core.common.flows.service.FlowTaskService;
-import com.lj.app.core.common.pagination.Page;
 import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
@@ -72,6 +71,9 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 	
 	@Autowired
 	private FlowQueryService flowQueryService;
+	
+	@Autowired
+	private FlowCcorderService flowCcorderService;
 	
 	private String orderId;
 	private String taskId;
@@ -188,20 +190,34 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 	 * @param model
 	 * @return
 	 */
-	public String activeCCList(Model model, Page<FlowOrderHist> page) {
-	/*	List<String> list = ShiroUtils.getGroups();
-		list.add(ShiroUtils.getUsername());
-		log.info(list.toString());
+	public String activeCCList() throws Exception{
+		List<String> list =new ArrayList<String>();
+		list.add(this.getUserName());
 		String[] assignees = new String[list.size()];
 		list.toArray(assignees);
-		facets.getEngine()
-				.query()
-				.getCCWorks(page, new QueryFilter()
-				.setOperators(assignees)
-				.setState(1));
-		model.addAttribute("page", page);
-		return "snaker/activeCCMore";*/
-		return null;
+		
+		try {
+			Map<String,Object> condition = new HashMap<String,Object>();
+			page.setFilters(getModel());
+			
+			if (StringUtil.isNotBlank(this.getSidx())) {
+				String orderBy = PageTool.convert(this.getSidx()) + " "+ this.getSord();
+				page.setSortColumns(orderBy);
+			}
+			
+			if(assignees != null && assignees.length > 0) {
+				//TODO:修改方法查询条件为用户组
+				condition.put("conditionWhere", " and actor_id in ('" + this.getUserName() + "')");
+			}
+			
+			page = flowCcorderService.findPageList(page, condition,"homePage");
+			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 	
 	/**

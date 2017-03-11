@@ -25,6 +25,7 @@ import com.lj.app.core.common.flows.entity.FlowProcess;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.model.TaskModel;
 import com.lj.app.core.common.flows.service.FlowApproveService;
+import com.lj.app.core.common.flows.service.FlowCcorderService;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
 import com.lj.app.core.common.flows.service.FlowOrderService;
 import com.lj.app.core.common.flows.service.FlowProcessService;
@@ -84,6 +85,9 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	private FlowOrderService  flowOrderService;
 	
 	@Autowired
+	private FlowCcorderService flowCcorderService;
+	
+	@Autowired
 	private FlowQueryService flowQueryService;
 	
 	private String processId;
@@ -102,7 +106,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	
 	
 	public   BaseService getBaseService(){
-		return flowEngineFacetsService.getEngine().flowProcessService();
+		return flowProcessService;
 	}
 	
 	public FlowProcess getModel() {
@@ -222,7 +226,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         }
         String ccOperator = request.getParameter(PARA_CCOPERATOR);
         if(StringUtils.isNotEmpty(ccOperator)) {
-        	//flowEngineFacets.getEngine().order().createCCOrder(orderId, ShiroUtils.getUsername(), ccOperator.split(","));
+        	flowCcorderService.createCCOrder(orderId,this.getUserName(), ccOperator.split(","));
         }
         return "taskList";
     }

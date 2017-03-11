@@ -25,6 +25,7 @@
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowEngineFacetsService" ref="flowEngineFacetsService" />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowOrderHistService" ref="flowOrderHistService" />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowOrderService" ref="flowOrderService"  />
+	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowCcorderService" ref="flowCcorderService"  />
 	 
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowProcessService" ref="flowProcessService"  />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowQueryService" ref="flowQueryService"  />

@@ -182,7 +182,10 @@ function topMenuEff(){
 					<a href="${ctx}/jsp/flows/flowOrderList.jsp" target="LT_main" >流程实例</a>
 				</li>
 				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none"> 
-					<a href="${ctx}/jsp/flows/flowTaskList.jsp" target="LT_main" >流程代办任务</a>
+					<a href="${ctx}/jsp/flows/flowCcorderList.jsp" target="LT_main" >抄送实例</a>
+				</li>
+				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none"> 
+					<a href="${ctx}/jsp/flows/flowTaskList.jsp" target="LT_main" >代办任务</a>
 				</li>
 				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none"> 
 					<a href="${ctx}/jsp/flows/flowTaskHistList.jsp" target="LT_main" >历史任务</a>
