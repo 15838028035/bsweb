@@ -1,0 +1,98 @@
+﻿
+.pagination
+{
+	list-style-type: none;
+	overflow: hidden;
+	width: 100%;
+}
+.pagination li
+{
+	float: left;
+}
+
+.pagination a
+{
+	background-color: #fff;
+}
+.deep a, .shallow a
+{
+	margin-right: 2px;
+}
+
+.deep .previous-off, .deep .next-off, .shallow .previous-off, .shallow .next-off, .deep .total, .shallow .total
+{
+	display: block;
+	font-weight: bold;
+	padding: 3px 4px;
+}
+
+.deep .next a, .deep .previous a, .shallow .next a, .shallow .previous a
+{
+	font-weight: bold;
+}
+.deep a:link, .deep a:visited, .shallow a:link, .shallow a:visited
+{
+	float: left;
+	padding: 3px 6px;
+	text-decoration: none;
+}
+
+
+/*深色背景*/
+.deep a
+{
+	border: solid 1px #9aafe5;
+}
+.deep .previous-off, .deep .next-off
+{
+	border: solid 1px #DEDEDE;
+	color: #888888;
+	margin-right: 2px;
+}
+.deep .active, .shallow .active
+{
+	font-weight: bold;
+	display: block;
+	padding: 4px 6px;
+}
+.deep .active
+{
+	background: #2e6ab1;
+	color: #FFFFFF;
+	margin-right: 2px;
+}
+
+.deep a:link, .deep a:visited
+{
+	color: #0e509e;
+}
+.deep a:hover
+{
+	border: solid 1px #0e509e;
+}
+
+/*浅色背景*/
+.shallow a
+{
+	border: solid 1px #DDDDDD;
+}
+.shallow .previous-off, .shallow .next-off
+{
+	color: #666666;
+}
+.shallow .next a, .shallow .previous a
+{
+	border: solid 1px #FFFFFF;
+}
+.shallow .active
+{
+	color: #ff0084;
+}
+.shallow a:link, .shallow a:visited
+{
+	color: #0063e3;
+}
+.shallow a:hover
+{
+	border: solid 1px #666666;
+}

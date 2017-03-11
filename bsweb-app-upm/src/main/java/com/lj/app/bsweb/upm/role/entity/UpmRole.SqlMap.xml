@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="upmRole">
+
+    <typeAlias alias="upmRole" type="com.lj.app.bsweb.upm.role.entity.UpmRole"/>
+    <typeAlias alias="upmPermission" type="com.lj.app.bsweb.upm.role.entity.UpmPermission" />
+    
+    <resultMap id="upmRoleResult" class="upmRole">
+   	  	<result property="id" column="id"/>
+   	  	<result property="roleCode" column="role_code"/>
+   	  	<result property="appId" column="app_id"/>
+   	  	<result property="roleName" column="role_name"/>
+   	  	<result property="roleDesc" column="role_desc"/>
+   	  	<result property="createBy" column="create_By"/>
+   	  	<result property="createDate" column="create_Date"/>
+   	  	<result property="updateBy" column="update_By"/>
+   	  	<result property="updateDate" column="update_Date"/>
+   	  	<result property="enableFlag" column="enable_Flag"/>
+   	  	<result property="lockStatus" column="lock_Status"/>
+    </resultMap>
+     <resultMap id="upmRoleResult2" class="upmRole" extends="upmRoleResult">
+     	<result property="userGroupRoleRelId" column="userGroupRoleRelId"/>
+     </resultMap>
+     
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleCode">
+	             role_code = #roleCode#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="appId">
+	             app_id = #appId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleName">
+	             role_name = #roleName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleDesc">
+	             role_desc = #roleDesc#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	             update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	             enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             lock_Status = #lockStatus#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	role_code ,
+        	app_id ,
+        	role_name ,
+        	role_desc,
+        	create_By ,
+        	create_Date ,
+        	update_By ,
+        	update_Date ,
+        	enable_Flag ,
+        	lock_Status 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="upmRole">
+        <selectKey resultClass="int" keyProperty="id" type="post" >
+             SELECT LAST_INSERT_ID() 
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        upm_role (
+	        	id ,
+	        	role_code ,
+	        	app_id ,
+	        	role_name ,
+	        	role_desc,
+	        	create_By ,
+	        	create_Date ,
+	        	update_By ,
+	        	update_Date ,
+	        	enable_Flag ,
+	        	lock_Status 
+	        ) VALUES (
+				#id# ,
+				#roleCode# ,
+				#appId# ,
+				#roleName# ,
+				#roleDesc# ,
+				#createBy# ,
+				#createDate# ,
+				#updateBy# ,
+				#updateDate# ,
+				#enableFlag# ,
+				#lockStatus# 
+	        )
+	    ]]>
+    </insert>
+
+    <update id="update" parameterClass="upmRole">
+    <![CDATA[
+        UPDATE upm_role SET
+			id = #id# ,
+			role_code = #roleCode# ,
+			app_id = #appId# ,
+			role_name = #roleName# ,
+			role_desc = #roleDesc# ,
+			create_By = #createBy# ,
+			create_Date = #createDate# ,
+			update_By = #updateBy# ,
+			update_Date = #updateDate# ,
+			enable_Flag = #enableFlag# ,
+			lock_Status = #lockStatus# 
+        WHERE 
+	        id = #id# 
+    ]]>
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from upm_role where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="getInfoByKey" resultMap="upmRoleResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_role 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+    
+    <select id="select" resultMap="upmRoleResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_role 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+
+ 	<select id="pagenate" resultMap="upmRoleResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_role 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from upm_role
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <select id="findAssignedRoleList" resultMap="upmRoleResult2">
+	    <![CDATA[
+	       select
+	        m.id as userGroupRoleRelId,
+        	r.id ,
+        	r.role_code ,
+        	r.app_id ,
+        	r.role_name ,
+        	r.role_desc,
+        	r.create_By ,
+        	r.create_Date ,
+        	r.update_By ,
+        	r.update_Date ,
+        	r.enable_Flag ,
+        	r.lock_Status  FROM   UPM_ROLE R, UPM_USER_GROUP G, upm_user_group_and_role_rel M 
+	WHERE M.user_group_id=g.id and m.role_id=r.id
+	    ]]>
+	    <dynamic prepend="AND">
+	       <isNotEmpty prepend="AND" property="id">
+	             r.id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleCode">
+	             r.role_code = #roleCode#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="appId">
+	             r.app_id = #appId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleName">
+	             r.role_name = #roleName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             r.create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             r.create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	             r.update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             r.update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	            r. enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             r.lock_Status = #lockStatus#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="userGroupId">
+	             M.user_group_id = #userGroupId#
+	       </isNotEmpty>
+	    </dynamic>	
+    </select>
+    
+    <select id="findAssignedRoleList_count" resultClass="long">
+    <![CDATA[
+        select count(*) FROM   UPM_ROLE R, UPM_USER_GROUP G, upm_user_group_and_role_rel M 
+		WHERE M.user_group_id=g.id and m.role_id=r.id
+    ]]>
+		<dynamic prepend="AND">
+	       <isNotEmpty prepend="AND" property="id">
+	             r.id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleCode">
+	             r.role_code = #roleCode#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="appId">
+	             r.app_id = #appId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleName">
+	             r.role_name = #roleName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             r.create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             r.create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	             r.update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             r.update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	            r. enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             r.lock_Status = #lockStatus#
+	       </isNotEmpty>
+	        <isNotEmpty prepend="AND" property="userGroupId">
+	             M.user_group_id = #userGroupId#
+	       </isNotEmpty>
+	    </dynamic>	
+    </select>
+
+	<!-- 判断是否是自己创建的角色 -->
+	<select id="isSelfCreateOfRole" resultClass="int">
+		<![CDATA[
+		select count(*) from upm_role where id=#id# and create_By=#updateBy#
+	    ]]>
+	</select>
+	
+	<insert id="saveRolePermisson">
+		 <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        upm_role_and_permission_rel (
+	        	id ,
+	        	role_id ,
+	        	permission_id 
+	        ) VALUES (
+				#id# ,
+				#roleId# ,
+				#permissionId# 
+	        )
+	    ]]>
+	</insert>
+	
+	<delete id="deleteRolePermissionByRoleId">
+		<![CDATA[
+	        DELETE FROM upm_role_and_permission_rel WHERE role_id = #roleId#
+	    ]]>
+	</delete>
+	
+	<select id="findRolePermissionIds" resultClass="java.lang.Integer">
+		<![CDATA[
+	        SELECT PERMISSION_ID FROM    upm_role_and_permission_rel  WHERE role_id = #roleId#
+	    ]]>
+	</select>
+	
+	<!-- 分页查询权限菜单总数 FIXME  -->
+	<!-- <select id="pageQueryPermissionCount" resultClass="int">
+		select count(*) from ( select distinct d.* from uap_role a,
+		uap_main_acct_role b , uap_role_permission c, uap_permission d
+		where a.role_id = b.role_id and d.domain_id = #domainId# and
+		b.main_acct_id = #mainAcctId# and b.role_id = c.role_id and
+		c.permission_id = d.permission_id order by d.sort_no asc ) e
+		where e.parent_id = #parentId#
+	</select> -->
+	<!-- 分页查询权限菜单集合  FIXME -->
+	<!-- <select id="pageQueryPermission"
+		resultMap="upmPermission.upmPermissionResult">
+		<![CDATA[
+		select e.* from 
+		( 	select distinct d.* from uap_role a, uap_main_acct_role b , uap_role_permission c, uap_permission d
+			where a.role_id = b.role_id
+			and d.domain_id = #domainId#
+			and b.main_acct_id = #mainAcctId# 
+			and b.role_id = c.role_id
+			and c.permission_id = d.permission_id order by d.sort_no asc
+		) e
+		where e.parent_id = #parentId#
+		  ]]>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">
+				$sortColumns$
+			</isNotEmpty>
+		</dynamic>
+	</select> -->
+	
+</sqlMap>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="bsweb-app-upm" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<!-- 注册中心地址 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+	
+	<!-- 用户服务接口 -->
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.ConfigurationService" id="configurationService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowApproveService" id="flowApproveService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowCompletionService" id="flowCompletionService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowEngine" id="flowEngine" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowEngineFacetsService" id="flowEngineFacetsService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowOrderHistService" id="flowOrderHistService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowOrderService" id="flowOrderService" check="false" />
+	 
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowProcessService" id="flowProcessService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowQueryService" id="flowQueryService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskAccessStrategyService" id="flowTaskAccessStrategyService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskActorService" id="flowTaskActorService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskHistService" id="flowTaskHistService" check="false" />
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskService" id="flowTaskService" check="false" />
+	 
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowLeaveTestService" id="flowLeaveTestService" check="false" />
+	
+ 	<dubbo:reference interface="com.lj.app.core.common.flows.api.FlowTaskServiceApi" id="flowTaskServiceApi" check="false" /> 
+ 	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowEngineFacetsService" id="FlowEngineFacetsService" check="false" />
+
+
+
+</beans>  

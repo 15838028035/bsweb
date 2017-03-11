@@ -1,0 +1,83 @@
+
+.bomc
+{
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header
+{
+	padding: 5px;
+	background: transparent url(../images/headerbg.gif) repeat-x scroll 0 -50px;
+	border-bottom: 1px solid #999;
+	margin-bottom: 5px;
+}
+
+
+.header .logo
+{
+	float: left;
+	width: 150px;
+	height: 50px;
+	border-bottom: 1px solid #999;
+	background-image: url("../images/chinamobile.gif");
+}
+
+.header .toolBar
+{
+	float: right;
+}
+
+.header .toolBar ul
+{
+	list-style-type: none;
+}
+
+.header .toolBar ul li
+{
+	float: left;
+	padding-right: 5px;
+}
+
+.footer
+{
+	padding: 10px;
+	text-align: center;
+	border-top: 1px solid #ccc;
+	margin-top: 5px;
+}
+.custom
+{
+	min-height: 300px;
+	_height: 300px;
+}
+
+.custom .navigation
+{
+	padding: 5px;
+	border-bottom: 1px solid #ccc;
+	overflow: hidden;
+	background-color: #fff;
+	margin-bottom: 5px;
+}
+
+.custom .navigation a, .content .navigation span
+{
+	float: left;
+	margin-left: 5px;
+}
+.custom .navigation span
+{
+	font-weight: bold;
+	font-size: 14px;
+}
+.custom .navigation .home
+{
+	background: transparent url(../images/sprite.png) no-repeat scroll left top;
+	width: 12px;
+	height: 12px;
+}
+
+
+

@@ -1,0 +1,41 @@
+﻿.grid
+{
+	border: 1px solid #99BBE8;
+	background-color: #fff;
+	width: 100%;
+}
+
+.fixed
+{
+	table-layout: fixed;
+}
+
+.checkboxCell, .orderCell
+{
+	width: 20px;
+}
+
+
+
+
+
+.sort
+{
+	background: transparent url(../images/sort.gif) no-repeat scroll right 8px;
+}
+
+.grid thead tr,.grid .order
+{
+	background: transparent url(../images/tbg.gif) repeat-x scroll left top;
+}
+
+.grid th, .grid td
+{
+	padding: 4px;
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 0 1px 1px 0;
+}
+
+
+

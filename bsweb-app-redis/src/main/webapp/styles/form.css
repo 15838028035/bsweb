@@ -1,0 +1,74 @@
+﻿
+.form
+{
+	padding: 5px;
+}
+.form label
+{
+	color: #999;
+}
+
+.form div
+{
+	padding: 5px;
+}
+
+
+
+.form .input-text, .form textarea, .form .format-text, .form .format-textend
+{
+	border: 1px solid #999;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+}
+.form .input-text, .form textarea
+{
+	width: 70%;
+}
+
+.form .format-text
+{
+	width: 40%;
+}
+
+.form .format-textend
+{
+	width: 10%;
+}
+
+.form .input-text
+{
+	height: 20px;
+}
+
+.form .buttonGroup
+{
+	text-align: right;
+	padding-right: 50px;
+}
+
+.form .title, .form .field, .form .sfield
+{
+	float: left;
+}
+
+.form .title
+{
+	width: 15%;
+	text-align: right;
+	padding-right: 10px;
+}
+
+.form .field
+{
+	width: 30%;
+}
+
+.form .sfield
+{
+	width: 80%;
+}
+
+

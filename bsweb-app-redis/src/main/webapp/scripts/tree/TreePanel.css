@@ -1,0 +1,40 @@
+.TreePanel {
+	font-size: 12px;
+	color: #666;
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	white-space: nowrap;
+	overflow-x:visible;
+	overflow-y:visible;
+	
+}
+.TreePanel img {
+	border-right: 0px;
+	border-top: 0px;
+	vertical-align: middle;
+	border-left: 0px;
+	border-bottom: 0px;
+	overflow-x:auto;
+	overflow-y:auto;
+}
+.TreeNode {
+	padding-left: 3px;
+	line-height: 25px;
+}
+.TreePanel a {
+	color: #333; text-decoration: none
+}
+.TreePanel a.node {
+	padding-right: 5px; padding-left: 5px; padding-bottom: 5px; padding-top: 5px; white-space: nowrap
+}
+.TreePanel a.nodesel {
+	padding-right: 2px; padding-left: 2px; padding-bottom: 5px; padding-top: 1px; white-space: nowrap
+}
+.TreePanel a.node:hover {
+	font-weight: bold; color: #333; text-decoration: none
+}
+.TreePanel a.nodesel:hover {
+	font-weight: bold; color: #333; text-decoration: none
+}
+.TreePanel a.nodesel {
+	background-color: #c0d2ec
+}

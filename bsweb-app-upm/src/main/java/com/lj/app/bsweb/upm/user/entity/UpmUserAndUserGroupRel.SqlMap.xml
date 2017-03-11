@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="upmUserAndUserGroupRel">
+
+    <typeAlias alias="upmUserAndUserGroupRel" type="com.lj.app.bsweb.upm.user.entity.UpmUserAndUserGroupRel"/>
+
+    <resultMap id="upmUserAndUserGroupRelResult" class="upmUserAndUserGroupRel">
+   	  	<result property="id" column="id"/>
+   	  	<result property="userId" column="userId"/>
+   	  	<result property="groupId" column="groupId"/>
+   	  	<result property="createBy" column="create_By"/>
+   	  	<result property="createDate" column="create_Date"/>
+   	  	<result property="updateBy" column="update_By"/>
+   	  	<result property="updateDate" column="update_Date"/>
+   	  	<result property="enableFlag" column="enable_Flag"/>
+   	  	<result property="lockStatus" column="lock_Status"/>
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="userId">
+	             userId = #userId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="groupId">
+	             groupId = #groupId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	             update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	             enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             lock_Status = #lockStatus#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	userId ,
+        	groupId ,
+        	create_By ,
+        	create_Date ,
+        	update_By ,
+        	update_Date ,
+        	enable_Flag ,
+        	lock_Status 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="upmUserAndUserGroupRel">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        upm_user_and_user_group_rel (
+	        	id ,
+	        	userId ,
+	        	groupId ,
+	        	create_By ,
+	        	create_Date ,
+	        	update_By ,
+	        	update_Date ,
+	        	enable_Flag ,
+	        	lock_Status 
+	        ) VALUES (
+				#id# ,
+				#userId# ,
+				#groupId# ,
+				#createBy# ,
+				#createDate# ,
+				#updateBy# ,
+				#updateDate# ,
+				#enableFlag# ,
+				#lockStatus# 
+	        )
+	    ]]>
+    </insert>
+
+    <update id="update" parameterClass="upmUserAndUserGroupRel">
+    <![CDATA[
+        UPDATE upm_user_and_user_group_rel SET
+			id = #id# ,
+			userId = #userId# ,
+			groupId = #groupId# ,
+			create_By = #createBy# ,
+			create_Date = #createDate# ,
+			update_By = #updateBy# ,
+			update_Date = #updateDate# ,
+			enable_Flag = #enableFlag# ,
+			lock_Status = #lockStatus# 
+        WHERE 
+	        id = #id# 
+    ]]>
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from upm_user_and_user_group_rel where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="upmUserAndUserGroupRelResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user_and_user_group_rel 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="upmUserAndUserGroupRelResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user_and_user_group_rel 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="upmUserAndUserGroupRelResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user_and_user_group_rel 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from upm_user_and_user_group_rel
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>
