@@ -86,8 +86,6 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	@Autowired
 	private FlowQueryService flowQueryService;
 	
-	
-	
 	private String processId;
 	private String orderId;
 	private String taskId;

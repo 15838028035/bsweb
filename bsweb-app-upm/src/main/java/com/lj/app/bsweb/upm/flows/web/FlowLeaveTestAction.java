@@ -99,7 +99,7 @@ public class FlowLeaveTestAction extends AbstractBaseUpmAction<FlowLeaveTest> {
 		//可通过修改申请页面的部门经理、总经理输入框来改变下一步的处理人
 		operator = this.getUserName();
 		//根据taskId是否为空来标识当前请求的页面是否为活动任务的节点页面
-		if(StringUtil.isBlank(orderId) || StringUtil.isBlank(taskId)) {
+		if(StringUtil.isBlank(orderId) || StringUtil.isNotBlank(taskId)) {
 			//如果实例id为空或者驳回情况下，返回apply.jsp
 			return "flowLeaveTestApply";
 		} else {
