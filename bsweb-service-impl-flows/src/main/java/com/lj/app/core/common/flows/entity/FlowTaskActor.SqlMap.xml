@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="flowTaskActor">
+
+    <typeAlias alias="flowTaskActor" type="com.lj.app.core.common.flows.entity.FlowTaskActor"/>
+
+    <resultMap id="flowTaskActorResult" class="flowTaskActor">
+   	  	<result property="id" column="id"   />
+   	  	<result property="taskId" column="TASK_ID"   />
+   	  	<result property="actorId" column="ACTOR_ID"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="taskId">
+	             TASK_ID = #taskId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="actorId">
+	             ACTOR_ID = #actorId#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	TASK_ID ,
+        	ACTOR_ID 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="flowTaskActor">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        flow_task_actor (
+	        	id ,
+	        	TASK_ID ,
+	        	ACTOR_ID 
+	        ) VALUES (
+				#id# ,
+				#taskId# ,
+				#actorId# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" >
+    <![CDATA[
+        UPDATE flow_task_actor 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="taskId">
+				TASK_ID = #taskId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="actorId">
+				ACTOR_ID = #actorId#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from flow_task_actor where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <delete id="deleteFlowTaskActorByTaskIdAndActorId" >
+    <![CDATA[
+        delete from flow_task_actor where TASK_ID = #taskId# and ACTOR_ID = #actorId#
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="flowTaskActorResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_task_actor 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="flowTaskActorResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_task_actor 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="flowTaskActorResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_task_actor 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from flow_task_actor
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>

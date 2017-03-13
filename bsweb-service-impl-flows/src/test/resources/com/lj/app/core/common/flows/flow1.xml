@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process name="floorFlow" displayName="房管局申请审批流程" expireTime="2017-01" instanceUrl="/1" instanceNoClass="com.lj.app.core.common.flows.CustomNoGenerator" >
+<start layout="-25,65,50,50" name="start" preInterceptors="com.lj.app.core.common.flows.task.interceptor.LocalTaskInterceptor" postInterceptors="com.lj.app.core.common.flows.task.interceptor.LocalTaskInterceptor" >
+<transition offset="0,-10" to="task1" name="tran1" displayName="tran1" />
+</start>
+<end layout="946,174,50,50" name="end" preInterceptors="com.lj.app.core.common.flows.task.interceptor.LocalTaskInterceptor" postInterceptors="com.lj.app.core.common.flows.task.interceptor.LocalTaskInterceptor" >
+</end>
+<task layout="79,60,100,50" name="task1" displayName="费用申请" taskType="Major" performType="ANY" preInterceptors="com.lj.app.core.common.flows.task.interceptor.LocalTaskInterceptor" postInterceptors="com.lj.app.core.common.flows.task.interceptor.LocalTaskInterceptor" >
+<transition offset="0,-10" to="rect4" name="tran2" displayName="tran2" />
+</task>
+<decision layout="210,51,100,50" name="rect4" >
+<transition offset="0,-10" to="task2" name="tran3" displayName="tran3" />
+<transition offset="0,-10" to="task3" name="tran4" displayName="tran4" />
+</decision>
+<task layout="380,42,100,50" name="task2" displayName="项目经理审批" taskType="Major" performType="ANY" >
+<transition offset="0,-10" to="task5" name="tran5" displayName="tran5" />
+</task>
+<task layout="382,138,100,50" name="task3" displayName="部门经理审批" taskType="Major" performType="ANY" >
+<transition offset="0,-10" to="task5" name="tran6" displayName="tran6" />
+</task>
+<task layout="739,46,100,50" name="task5" displayName="技术副总审核" taskType="Major" performType="ANY" >
+<transition offset="0,-10" to="task6" name="tran7" displayName="tran7" />
+</task>
+<task layout="131,287,100,50" name="task6" displayName="总经理审核" taskType="Major" performType="ANY" >
+<transition offset="0,-10" to="subprocess" name="tran8" displayName="tran8" />
+</task>
+<subprocess layout="398,444,252,220" name="subprocess" displayName="财务付款子流程" processName="财务付款子流程" >
+<transition offset="0,-10" to="task8" name="tran9" displayName="tran9" />
+<transition offset="0,-10" to="subTask1" name="path26" />
+</subprocess>
+<task layout="930,323,100,50" name="task8" displayName="出纳登记" taskType="Major" performType="ANY" >
+<transition offset="0,-10" to="end" name="tran10" displayName="tran10" />
+</task>
+<task layout="425,461,100,50" name="subTask1" displayName="付款子流程01" >
+<transition offset="0,-10" to="subTask02" name="subTran01" displayName="subTran01" />
+</task>
+<task layout="431,535,100,50" name="subTask02" displayName="付款子流程02" >
+<transition offset="0,-10" to="subTask03" name="subTran02" displayName="subTran02" />
+</task>
+<task layout="437,601,100,50" name="subTask03" displayName="付款子流程03" >
+</task>
+</process>

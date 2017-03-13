@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="upmConfiguration">
+
+    <typeAlias alias="upmConfiguration" type="com.lj.app.core.common.base.entity.UpmConfiguration"/>
+
+    <resultMap id="upmConfigurationResult" class="upmConfiguration">
+   	  	<result property="configId" column="config_id"   />
+   	  	<result property="cfgKey" column="cfg_key"   />
+   	  	<result property="cfgValue" column="cfg_value"   />
+   	  	<result property="cfgDesc" column="cfg_desc"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="configId">
+	             config_id = #configId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="cfgKey">
+	             cfg_key = #cfgKey#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="cfgValue">
+	             cfg_value = #cfgValue#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="cfgDesc">
+	             cfg_desc = #cfgDesc#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	config_id ,
+        	cfg_key ,
+        	cfg_value ,
+        	cfg_desc 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="upmConfiguration">
+        <selectKey resultClass="int" keyProperty="configId"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        upm_configuration (
+	        	config_id ,
+	        	cfg_key ,
+	        	cfg_value ,
+	        	cfg_desc 
+	        ) VALUES (
+				#configId# ,
+				#cfgKey# ,
+				#cfgValue# ,
+				#cfgDesc# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" parameterClass="upmConfiguration">
+    <![CDATA[
+        UPDATE upm_configuration 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="configId">
+				config_id = #configId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="cfgKey">
+				cfg_key = #cfgKey#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="cfgValue">
+				cfg_value = #cfgValue#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="cfgDesc">
+				cfg_desc = #cfgDesc#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        config_id = #configId# 
+    </update>
+
+    <delete id="delete" parameterClass="Integer">
+    <![CDATA[
+        delete from upm_configuration where
+        config_id = #configId# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="upmConfigurationResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_configuration 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="upmConfigurationResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_configuration 
+	        where 
+		        config_id = #configId# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="upmConfigurationResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_configuration 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from upm_configuration
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>
