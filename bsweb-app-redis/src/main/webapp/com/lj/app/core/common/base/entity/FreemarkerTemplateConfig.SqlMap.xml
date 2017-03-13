@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="freemarkerTemplateConfig">
+
+    <typeAlias alias="freemarkerTemplateConfig" type="com.lj.app.core.common.base.entity.FreemarkerTemplateConfig"/>
+
+    <resultMap id="freemarkerTemplateConfigResult" class="freemarkerTemplateConfig">
+   	  	<result property="id" column="id"   />
+   	  	<result property="templateNo" column="TEMPLATE_NO"   />
+   	  	<result property="templateName" column="TEMPLATE_NAME"   />
+   	  	<result property="templatePath" column="TEMPLATE_PATH"   />
+   	  	<result property="templateConent" column="TEMPLATE_CONENT"   />
+   	  	<result property="testData" column="TEST_DATA"   />
+   	  	<result property="testEmail" column="TEST_EMAIL"   />
+   	  	<result property="templateRemark" column="TEMPLATE_REMARK"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="templateNo">
+	             TEMPLATE_NO = #templateNo#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="templateName">
+	             TEMPLATE_NAME = #templateName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="templatePath">
+	             TEMPLATE_PATH = #templatePath#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="templateConent">
+	             TEMPLATE_CONENT = #templateConent#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="testData">
+	             TEST_DATA = #testData#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="testEmail">
+	             TEST_EMAIL = #testEmail#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="templateRemark">
+	             TEMPLATE_REMARK = #templateRemark#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	TEMPLATE_NO ,
+        	TEMPLATE_NAME ,
+        	TEMPLATE_PATH ,
+        	TEMPLATE_CONENT ,
+        	TEST_DATA ,
+        	TEST_EMAIL ,
+        	TEMPLATE_REMARK 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="freemarkerTemplateConfig">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        freemarker_template_config (
+	        	id ,
+	        	TEMPLATE_NO ,
+	        	TEMPLATE_NAME ,
+	        	TEMPLATE_PATH ,
+	        	TEMPLATE_CONENT ,
+	        	TEST_DATA ,
+	        	TEST_EMAIL ,
+	        	TEMPLATE_REMARK 
+	        ) VALUES (
+				#id# ,
+				#templateNo# ,
+				#templateName# ,
+				#templatePath# ,
+				#templateConent# ,
+				#testData# ,
+				#testEmail# ,
+				#templateRemark# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" parameterClass="freemarkerTemplateConfig">
+    <![CDATA[
+        UPDATE freemarker_template_config 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="templateNo">
+				TEMPLATE_NO = #templateNo#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="templateName">
+				TEMPLATE_NAME = #templateName#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="templatePath">
+				TEMPLATE_PATH = #templatePath#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="templateConent">
+				TEMPLATE_CONENT = #templateConent#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="testData">
+				TEST_DATA = #testData#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="testEmail">
+				TEST_EMAIL = #testEmail#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="templateRemark">
+				TEMPLATE_REMARK = #templateRemark#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from freemarker_template_config where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="freemarkerTemplateConfigResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from freemarker_template_config 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="freemarkerTemplateConfigResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from freemarker_template_config 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="freemarkerTemplateConfigResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from freemarker_template_config 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from freemarker_template_config
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>

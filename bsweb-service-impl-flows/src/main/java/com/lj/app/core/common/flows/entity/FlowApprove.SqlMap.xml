@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="flowApprove">
+
+    <typeAlias alias="flowApprove" type="com.lj.app.core.common.flows.entity.FlowApprove"/>
+
+    <resultMap id="flowApproveResult" class="flowApprove">
+   	  	<result property="id" column="id"   />
+   	  	<result property="processId" column="process_id"   />
+   	  	<result property="orderId" column="order_id"   />
+   	  	<result property="taskId" column="task_id"   />
+   	  	<result property="operator" column="operator"   />
+   	  	<result property="operateTime" column="operate_Time"   />
+   	  	<result property="optResult" column="opt_result"   />
+   	  	<result property="optContent" column="opt_content"   />
+   	  	<result property="taskName" column="task_Name"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="processId">
+	             process_id = #processId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderId">
+	             order_id = #orderId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="taskId">
+	             task_id = #taskId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="operator">
+	             operator = #operator#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="operateTime">
+	             operate_Time = #operateTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="operateTimeBegin">
+	             <![CDATA[
+	             operate_Time >= str_to_date('#operateTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="operateTimeEnd">
+	             <![CDATA[
+	             operate_Time <= str_to_date('#operateTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="optResult">
+	             opt_result = #optResult#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="optContent">
+	             opt_content = #optContent#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="taskName">
+	             task_Name = #taskName#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	process_id ,
+        	order_id ,
+        	task_id ,
+        	operator ,
+        	operate_Time ,
+        	opt_result ,
+        	opt_content ,
+        	task_Name 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="flowApprove">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        flow_approve (
+	        	id ,
+	        	process_id ,
+	        	order_id ,
+	        	task_id ,
+	        	operator ,
+	        	operate_Time ,
+	        	opt_result ,
+	        	opt_content ,
+	        	task_Name 
+	        ) VALUES (
+				#id# ,
+				#processId# ,
+				#orderId# ,
+				#taskId# ,
+				#operator# ,
+				#operateTime# ,
+				#optResult# ,
+				#optContent# ,
+				#taskName# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" >
+    <![CDATA[
+        UPDATE flow_approve 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="processId">
+				process_id = #processId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="orderId">
+				order_id = #orderId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="taskId">
+				task_id = #taskId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="operator">
+				operator = #operator#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="operateTime">
+				operate_Time = #operateTime#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="optResult">
+				opt_result = #optResult#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="optContent">
+				opt_content = #optContent#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="taskName">
+				task_Name = #taskName#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from flow_approve where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="flowApproveResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_approve 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="flowApproveResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_approve 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="flowApproveResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_approve 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from flow_approve
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>

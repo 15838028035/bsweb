@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="flowProcess">
+
+    <typeAlias alias="flowProcess" type="com.lj.app.core.common.flows.entity.FlowProcess"/>
+
+    <resultMap id="flowProcessResult" class="flowProcess">
+   	  	<result property="id" column="id"   />
+   	  	<result property="flowNo" column="FLOW_NO"   />
+   	  	<result property="flowVersion" column="FLOW_VERSION"   />
+   	  	<result property="flowName" column="FLOW_NAME"   />
+   	  	<result property="displayName" column="DISPLAY_NAME"   />
+   	  	<result property="flowType" column="FLOW_TYPE"   />
+   	  	<result property="flowContent" column="FLOW_CONTENT"   />
+   	  	<result property="createBy" column="create_By"   />
+   	  	<result property="createDate" column="create_Date"   />
+   	  	<result property="updateBy" column="update_By"   />
+   	  	<result property="updateDate" column="update_Date"   />
+   	  	<result property="enableFlag" column="enable_Flag"   />
+   	  	<result property="lockStatus" column="lock_Status"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="flowNo">
+	             FLOW_NO = #flowNo#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="flowVersion">
+	             FLOW_VERSION = #flowVersion#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="flowName">
+	             FLOW_NAME = #flowName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="displayName">
+	             DISPLAY_NAME = #displayName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="flowType">
+	             FLOW_TYPE = #flowType#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="flowContent">
+	             FLOW_CONTENT = #flowContent#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDateBegin">
+	             <![CDATA[
+	             create_Date >= str_to_date('#createDatebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDateEnd">
+	             <![CDATA[
+	             create_Date <= str_to_date('#createDateEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	             update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDateBegin">
+	             <![CDATA[
+	             update_Date >= str_to_date('#updateDatebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDateEnd">
+	             <![CDATA[
+	             update_Date <= str_to_date('#updateDateEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	             enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             lock_Status = #lockStatus#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	FLOW_NO ,
+        	FLOW_VERSION ,
+        	FLOW_NAME ,
+        	DISPLAY_NAME ,
+        	FLOW_TYPE ,
+        	FLOW_CONTENT ,
+        	create_By ,
+        	create_Date ,
+        	update_By ,
+        	update_Date ,
+        	enable_Flag ,
+        	lock_Status 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="flowProcess">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        flow_process (
+	        	id ,
+	        	FLOW_NO ,
+	        	FLOW_VERSION ,
+	        	FLOW_NAME ,
+	        	DISPLAY_NAME ,
+	        	FLOW_TYPE ,
+	        	FLOW_CONTENT ,
+	        	create_By ,
+	        	create_Date ,
+	        	update_By ,
+	        	update_Date ,
+	        	enable_Flag ,
+	        	lock_Status 
+	        ) VALUES (
+				#id# ,
+				#flowNo# ,
+				#flowVersion# ,
+				#flowName# ,
+				#displayName# ,
+				#flowType# ,
+				#flowContent# ,
+				#createBy# ,
+				#createDate# ,
+				#updateBy# ,
+				#updateDate# ,
+				#enableFlag# ,
+				#lockStatus# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" parameterClass="flowProcess">
+    <![CDATA[
+        UPDATE flow_process 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="flowNo">
+				FLOW_NO = #flowNo#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="flowVersion">
+				FLOW_VERSION = #flowVersion#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="flowName">
+				FLOW_NAME = #flowName#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="displayName">
+				DISPLAY_NAME = #displayName#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="flowType">
+				FLOW_TYPE = #flowType#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="flowContent">
+				FLOW_CONTENT = #flowContent#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createBy">
+				create_By = #createBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createDate">
+				create_Date = #createDate#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateBy">
+				update_By = #updateBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateDate">
+				update_Date = #updateDate#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="enableFlag">
+				enable_Flag = #enableFlag#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="lockStatus">
+				lock_Status = #lockStatus#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from flow_process where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="flowProcessResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_process 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="flowProcessResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_process 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="flowProcessResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_process 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from flow_process
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="upmUser">
+
+    <typeAlias alias="upmUser" type="com.lj.app.core.common.base.entity.UpmUser"/>
+
+    <resultMap id="upmUserResult" class="upmUser">
+   	  	<result property="id" column="id"/>
+   	  	<result property="loginNo" column="login_No"/>
+   	  	<result property="pwd" column="pwd"/>
+   	  	<result property="userName" column="userName"/>
+   	  	<result property="address" column="address"/>
+   	  	<result property="mobile" column="mobile"/>
+   	  	<result property="orgDesc" column="org_Desc"/>
+   	  	<result property="createBy" column="create_By"/>
+   	  	<result property="createDate" column="create_Date"/>
+   	  	<result property="updateBy" column="update_By"/>
+   	  	<result property="updateDate" column="update_Date"/>
+   	  	<result property="enableFlag" column="enable_Flag"/>
+   	  	<result property="lockStatus" column="lock_Status"/>
+    </resultMap>
+    
+     <resultMap id="upmUserResult2" class="upmUser" extends="upmUserResult">
+    	<result property="userGroupAndUserRelId" column="userGroupAndUserRelId"/>
+     </resultMap>
+    
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	        <isGreaterThan  prepend="AND"  property="id"  compareValue="0">
+	        	id = #id#
+	       </isGreaterThan>
+	       <isNotEmpty prepend="AND" property="loginNo">
+	             login_No = #loginNo#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="pwd">
+	             pwd = #pwd#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="userName">
+	             userName = #userName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="address">
+	             address = #address#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="mobile">
+	             mobile = #mobile#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orgDesc">
+	             org_Desc = #orgDesc#
+	       </isNotEmpty>
+	       <isGreaterThan  prepend="AND"  property="createBy"  compareValue="0">
+	        	create_By = #createBy#
+	       </isGreaterThan>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             create_Date = #createDate#
+	       </isNotEmpty>
+	        <isGreaterThan  prepend="AND"  property="updateBy"  compareValue="0">
+	        	  update_By = #updateBy#
+	       </isGreaterThan>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	             enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             lock_Status = #lockStatus#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	login_No ,
+        	pwd ,
+        	userName ,
+        	address ,
+        	mobile ,
+        	org_Desc,
+        	create_By ,
+        	create_Date ,
+        	update_By ,
+        	update_Date ,
+        	enable_Flag ,
+        	lock_Status 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="upmUser">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        upm_user (
+	        	id ,
+	        	login_No ,
+	        	pwd ,
+	        	userName ,
+	        	address ,
+	        	mobile ,
+	        	org_Desc,
+	        	create_By ,
+	        	create_Date ,
+	        	update_By ,
+	        	update_Date ,
+	        	enable_Flag ,
+	        	lock_Status 
+	        ) VALUES (
+				#id# ,
+				#loginNo# ,
+				#pwd# ,
+				#userName# ,
+				#address# ,
+				#mobile# ,
+				#orgDesc# ,
+				#createBy# ,
+				#createDate# ,
+				#updateBy# ,
+				#updateDate# ,
+				#enableFlag# ,
+				#lockStatus# 
+	        )
+	    ]]>
+    </insert>
+
+    <update id="update" parameterClass="upmUser">
+    <![CDATA[
+        UPDATE upm_user SET
+			id = #id# ,
+			login_No = #loginNo# ,
+			pwd = #pwd# ,
+			userName = #userName# ,
+			address = #address# ,
+			mobile = #mobile# ,
+			org_Desc = #orgDesc# ,
+			create_By = #createBy# ,
+			create_Date = #createDate# ,
+			update_By = #updateBy# ,
+			update_Date = #updateDate# ,
+			enable_Flag = #enableFlag# ,
+			lock_Status = #lockStatus# 
+        WHERE 
+	        id = #id# 
+    ]]>
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from upm_user where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="upmUserResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="upmUserResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="upmUserResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from upm_user
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <select id="listUserByCondition" resultMap="upmUserResult2">
+	    <![CDATA[
+	      select
+	        r.id as   userGroupAndUserRelId,
+        	u.id ,
+        	u.login_No ,
+        	u.pwd ,
+        	u.userName ,
+        	u.address ,
+        	u.mobile ,
+        	u.org_Desc,
+        	u.create_By ,
+        	u.create_Date ,
+        	u.update_By ,
+        	u.update_Date ,
+        	u.enable_Flag ,
+        	u.lock_Status FROM UPM_USER U ,UPM_USER_GROUP P, upm_user_and_user_group_rel  r
+
+	where r.userId=u.id and r.groupId=p.id
+	    ]]>
+		 <dynamic prepend="AND">
+	       <isNotEmpty prepend="AND" property="id">
+	             u.id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="loginNo">
+	             u.login_No = #loginNo#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="pwd">
+	             u.pwd = #pwd#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="userName">
+	             u.userName = #userName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="address">
+	             u.address = #address#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="mobile">
+	             u.mobile = #mobile#
+	       </isNotEmpty>
+	        <isNotEmpty prepend="AND" property="orgDesc">
+	             u.org_Desc = #orgDesc#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             u.create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             u.create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	            u.update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             u.update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	             u.enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             u.lock_Status = #lockStatus#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="treeNodeId">
+	             r.groupId = #treeNodeId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="userGroupCode">
+	             p.user_group_code = #userGroupCode#
+	       </isNotEmpty>
+	    </dynamic>	
+    </select>
+    
+    <select id="listUserByCondition_count" resultClass="long">
+    <![CDATA[
+       SELECT count(1) FROM UPM_USER U ,UPM_USER_GROUP P, upm_user_and_user_group_rel  r
+	where r.userId=u.id and r.groupId=p.id
+    ]]>
+		<dynamic prepend="AND">
+	       <isNotEmpty prepend="AND" property="id">
+	             u.id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="loginNo">
+	             u.login_No = #loginNo#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="pwd">
+	             u.pwd = #pwd#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="userName">
+	             u.userName = #userName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="address">
+	             u.address = #address#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="mobile">
+	             u.mobile = #mobile#
+	       </isNotEmpty>
+	        <isNotEmpty prepend="AND" property="orgDesc">
+	             u.org_Desc = #orgDesc#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             u.create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             u.create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	            u.update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             u.update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="enableFlag">
+	             u.enable_Flag = #enableFlag#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="lockStatus">
+	             u.lock_Status = #lockStatus#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="treeNodeId">
+	             r.groupId = #treeNodeId#
+	       </isNotEmpty>
+	        <isNotEmpty prepend="AND" property="userGroupCode">
+	             p.user_group_code = #userGroupCode#
+	       </isNotEmpty>
+	    </dynamic>	
+    </select>
+	
+	<select id="findUserBussinessCode" parameterClass="int"  resultClass="java.lang.String">
+	select  p.bussiness_code  from upm_user_group p ,upm_user_and_user_group_rel r 
+	where r.groupId=p.id
+	and p.bussiness_code  is not null 
+	and r.userId=#id#
+    </select>
+    
+    <select id="findRecUserName" parameterClass="java.lang.String"  resultClass="java.lang.String">
+	select  u.userName   from upm_user_group p ,upm_user_and_user_group_rel r , upm_user u 
+		where r.groupId=p.id
+		and p.bussiness_code  is not null 
+		and r.userId= u.id
+		and p.bussiness_code=#bussinessCode#
+    </select>
+     <select id="internalOfficeUserName"  resultClass="java.lang.String">
+	select  u.userName   from upm_user_group p ,upm_user_and_user_group_rel r , upm_user u 
+		where r.groupId=p.id
+		and p.bussiness_code  is not null 
+		and r.userId= u.id
+		and p.user_group_code='INTERNAL_OFFICE'
+    </select>
+    
+    <select id="saleAssistantUserName"  resultClass="java.lang.String">
+	select  u.userName   from upm_user_group p ,upm_user_and_user_group_rel r , upm_user u 
+		where r.groupId=p.id
+		and p.bussiness_code  is not null 
+		and r.userId= u.id
+		and p.user_group_code='SALE_ASSISTANT'
+    </select>
+     <select id="marketManager"  resultClass="java.lang.String">
+	select  u.userName   from upm_user_group p ,upm_user_and_user_group_rel r , upm_user u 
+		where r.groupId=p.id
+		and p.bussiness_code  is not null 
+		and r.userId= u.id
+		and p.user_group_code='MARKET_MANAGER'
+    </select>
+     <select id="saleManager"  resultClass="java.lang.String">
+	select  u.userName   from upm_user_group p ,upm_user_and_user_group_rel r , upm_user u 
+		where r.groupId=p.id
+		and p.bussiness_code  is not null 
+		and r.userId= u.id
+		and p.user_group_code='SALE_MANAGER'
+    </select>
+    
+     <select id="serviceManager"  resultClass="java.lang.String">
+	select  u.userName   from upm_user_group p ,upm_user_and_user_group_rel r , upm_user u 
+		where r.groupId=p.id
+		and p.bussiness_code  is not null 
+		and r.userId= u.id
+		and p.user_group_code='SERVICE_MANAGER'
+    </select>
+    
+</sqlMap>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="flowOrder">
+
+    <typeAlias alias="flowOrder" type="com.lj.app.core.common.flows.entity.FlowOrder"/>
+
+    <resultMap id="flowOrderResult" class="flowOrder">
+   	  	<result property="id" column="ID"   />
+   	  	<result property="orderNo" column="ORDER_NO"   />
+   	  	<result property="orderVersion" column="ORDER_VERSION"   />
+   	  	<result property="flowProcessId" column="FLOW_PROCESS_ID"   />
+   	  	<result property="parentId" column="PARENT_ID"   />
+   	  	<result property="parentNodeName" column="parent_Node_Name"   />
+   	  	<result property="expireTime" column="expire_time"   />
+   	  	<result property="priority" column="priority"   />
+   	  	<result property="variable" column="variable"   />
+   	  	<result property="createBy" column="create_By"   />
+   	  	<result property="createDate" column="create_Date"   />
+   	  	<result property="updateBy" column="update_By"   />
+   	  	<result property="updateDate" column="update_Date"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             ID = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderNo">
+	             ORDER_NO = #orderNo#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderVersion">
+	             ORDER_VERSION = #orderVersion#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="flowProcessId">
+	             FLOW_PROCESS_ID = #flowProcessId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="parentId">
+	             PARENT_ID = #parentId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="parentNodeName">
+	             parent_Node_Name = #parentNodeName#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="expireTime">
+	             expire_time = #expireTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="expireTimeBegin">
+	             <![CDATA[
+	             expire_time >= str_to_date('#expireTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="expireTimeEnd">
+	             <![CDATA[
+	             expire_time <= str_to_date('#expireTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="priority">
+	             priority = #priority#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="variable">
+	             variable = #variable#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createBy">
+	             create_By = #createBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDate">
+	             create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDateBegin">
+	             <![CDATA[
+	             create_Date >= str_to_date('#createDatebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDateEnd">
+	             <![CDATA[
+	             create_Date <= str_to_date('#createDateEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateBy">
+	             update_By = #updateBy#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDate">
+	             update_Date = #updateDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDateBegin">
+	             <![CDATA[
+	             update_Date >= str_to_date('#updateDatebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDateEnd">
+	             <![CDATA[
+	             update_Date <= str_to_date('#updateDateEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	ID ,
+        	ORDER_NO ,
+        	ORDER_VERSION ,
+        	FLOW_PROCESS_ID ,
+        	PARENT_ID ,
+        	parent_Node_Name ,
+        	expire_time ,
+        	priority ,
+        	variable ,
+        	create_By ,
+        	create_Date ,
+        	update_By ,
+        	update_Date 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="flowOrder">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        flow_order (
+	        	ID ,
+	        	ORDER_NO ,
+	        	ORDER_VERSION ,
+	        	FLOW_PROCESS_ID ,
+	        	PARENT_ID ,
+	        	parent_Node_Name ,
+	        	expire_time ,
+	        	priority ,
+	        	variable ,
+	        	create_By ,
+	        	create_Date ,
+	        	update_By ,
+	        	update_Date 
+	        ) VALUES (
+				#id# ,
+				#orderNo# ,
+				#orderVersion# ,
+				#flowProcessId# ,
+				#parentId# ,
+				#parentNodeName# ,
+				#expireTime# ,
+				#priority# ,
+				#variable# ,
+				#createBy# ,
+				#createDate# ,
+				#updateBy# ,
+				#updateDate# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" parameterClass="flowOrder">
+    <![CDATA[
+        UPDATE flow_order 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				ID = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="orderNo">
+				ORDER_NO = #orderNo#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="orderVersion">
+				ORDER_VERSION = #orderVersion#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="flowProcessId">
+				FLOW_PROCESS_ID = #flowProcessId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="parentId">
+				PARENT_ID = #parentId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="parentNodeName">
+				parent_Node_Name = #parentNodeName#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="expireTime">
+				expire_time = #expireTime#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="priority">
+				priority = #priority#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="variable">
+				variable = #variable#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createBy">
+				create_By = #createBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createDate">
+				create_Date = #createDate#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateBy">
+				update_By = #updateBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateDate">
+				update_Date = #updateDate#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        ID = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from flow_order where
+        ID = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="flowOrderResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_order 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="flowOrderResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_order 
+	        where 
+		        ID = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="flowOrderResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_order 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from flow_order
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>

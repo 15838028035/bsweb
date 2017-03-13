@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="flowCcorder">
+
+    <typeAlias alias="flowCcorder" type="com.lj.app.core.common.flows.entity.FlowCcorder"/>
+
+    <resultMap id="flowCcorderResult" class="flowCcorder">
+   	  	<result property="id" column="id"   />
+   	  	<result property="orderId" column="order_id"   />
+   	  	<result property="actorId" column="actor_id"   />
+   	  	<result property="creator" column="creator"   />
+   	  	<result property="createTime" column="createTime"   />
+   	  	<result property="finishTime" column="finishTime"   />
+   	  	<result property="status" column="status"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderId">
+	             order_id = #orderId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="actorId">
+	             actor_id = #actorId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="creator">
+	             creator = #creator#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTime">
+	             createTime = #createTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeBegin">
+	             <![CDATA[
+	             createTime >= str_to_date('#createTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeEnd">
+	             <![CDATA[
+	             createTime <= str_to_date('#createTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTime">
+	             finishTime = #finishTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeBegin">
+	             <![CDATA[
+	             finishTime >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeEnd">
+	             <![CDATA[
+	             finishTime <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="status">
+	             status = #status#
+	       </isNotEmpty>
+	    </dynamic>	
+	   </sql>
+	    
+	    <sql id="dynamicWhere2">
+	    <dynamic prepend=" ">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderId">
+	             order_id = #orderId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="actorId">
+	             actor_id = #actorId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="creator">
+	             creator = #creator#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTime">
+	             createTime = #createTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeBegin">
+	             <![CDATA[
+	             createTime >= str_to_date('#createTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeEnd">
+	             <![CDATA[
+	             createTime <= str_to_date('#createTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTime">
+	             finishTime = #finishTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeBegin">
+	             <![CDATA[
+	             finishTime >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeEnd">
+	             <![CDATA[
+	             finishTime <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="status">
+	             status = #status#
+	       </isNotEmpty>
+	       
+	       $conditionWhere$
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	order_id ,
+        	actor_id ,
+        	creator ,
+        	createTime ,
+        	finishTime ,
+        	status 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="flowCcorder">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        flow_ccorder (
+	        	id ,
+	        	order_id ,
+	        	actor_id ,
+	        	creator ,
+	        	createTime ,
+	        	finishTime ,
+	        	status 
+	        ) VALUES (
+				#id# ,
+				#orderId# ,
+				#actorId# ,
+				#creator# ,
+				#createTime# ,
+				#finishTime# ,
+				#status# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" parameterClass="flowCcorder">
+    <![CDATA[
+        UPDATE flow_ccorder 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="orderId">
+				order_id = #orderId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="actorId">
+				actor_id = #actorId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="creator">
+				creator = #creator#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createTime">
+				createTime = #createTime#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="finishTime">
+				finishTime = #finishTime#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="status">
+				status = #status#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from flow_ccorder where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="flowCcorderResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_ccorder 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="flowCcorderResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_ccorder 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="flowCcorderResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_ccorder 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from flow_ccorder
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <select id="homePage" resultMap="flowCcorderResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_ccorder  where 1=1 
+	    ]]>
+		<include refid="dynamicWhere2"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="homePage_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from flow_ccorder where 1=1 
+    ]]>
+		<include refid="dynamicWhere2"/>    
+    </select>
+
+</sqlMap>
