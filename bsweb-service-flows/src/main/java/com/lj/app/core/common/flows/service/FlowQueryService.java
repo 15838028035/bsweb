@@ -5,6 +5,7 @@ import java.util.List;
 import com.lj.app.core.common.flows.entity.FlowApprove;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowOrderHist;
+import com.lj.app.core.common.flows.entity.FlowQueryFilter;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
 
@@ -15,10 +16,14 @@ public interface FlowQueryService {
 
 	public List<FlowTask> getActiveTasks(String flowOrderId);
 	public List<FlowTask> getActiveTasks(int flowOrderId);
+	
+	public List<FlowTask> getActiveTasks(FlowQueryFilter filter);
 
 	public FlowTask getFlowTask(String taskId);
 
 	public List<FlowApprove> queryApprove(String orderId, String taskId)throws Exception;
+	
+	public List<FlowOrder> getActiveOrders(FlowQueryFilter filter);
 
 	public FlowOrderHist getHistOrder(String orderId);
 

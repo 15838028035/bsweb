@@ -7,7 +7,7 @@ import com.lj.app.core.common.base.entity.BaseEntity;
 import com.lj.app.core.common.util.JsonUtil;
 
 /**
-*FlowOrder
+*流程实例
 */
 public class FlowOrder extends BaseEntity{
 	

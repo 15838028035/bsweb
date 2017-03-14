@@ -8,7 +8,7 @@ import com.lj.app.core.common.flows.model.NodeModel;
 import com.lj.app.core.common.flows.model.SubProcessModel;
 import com.lj.app.core.common.flows.parser.AbstractNodeParser;
 import com.lj.app.core.common.flows.util.ConfigHelper;
-import com.lj.app.core.common.generator.util.StringHelper;
+import com.lj.app.core.common.util.StringUtil;
 
 public class SubProcessParser extends AbstractNodeParser {
 	/**
@@ -31,7 +31,7 @@ public class SubProcessParser extends AbstractNodeParser {
 		}
 		model.setVersion(ver);
 		String form = element.getAttribute(ATTR_FORM);
-		if (StringHelper.isNotEmpty(form)) {
+		if (StringUtil.isNotBlank(form)) {
 			model.setForm(form);
 		} else {
 			model.setForm(ConfigHelper.getProperty("subprocessurl"));

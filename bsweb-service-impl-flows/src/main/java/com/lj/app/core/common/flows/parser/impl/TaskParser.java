@@ -2,9 +2,11 @@ package com.lj.app.core.common.flows.parser.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import com.lj.app.core.common.flows.model.FieldModel;
 import com.lj.app.core.common.flows.model.NodeModel;
 import com.lj.app.core.common.flows.model.TaskModel;
@@ -24,12 +26,12 @@ public class TaskParser extends AbstractNodeParser {
 		task.setAssignee(element.getAttribute(ATTR_ASSIGNEE));
 		task.setExpireTime(element.getAttribute(ATTR_EXPIRETIME));
 		task.setAutoExecute(element.getAttribute(ATTR_AUTOEXECUTE));
-		// task.setCallback(element.getAttribute(ATTR_CALLBACK));
+		task.setCallback(element.getAttribute(ATTR_CALLBACK));
 		task.setReminderTime(element.getAttribute(ATTR_REMINDERTIME));
 		task.setReminderRepeat(element.getAttribute(ATTR_REMINDERREPEAT));
 		task.setPerformType(element.getAttribute(ATTR_PERFORMTYPE));
 		task.setTaskType(element.getAttribute(ATTR_TASKTYPE));
-		// task.setAssignmentHandler(element.getAttribute(ATTR_ASSIGNEE_HANDLER));
+		task.setAssignmentHandler(element.getAttribute(ATTR_ASSIGNEE_HANDLER));
 		NodeList fieldList = element.getElementsByTagName(ATTR_FIELD);
 		List<FieldModel> fields = new ArrayList<FieldModel>();
 		for (int i = 0; i < fieldList.getLength(); i++) {

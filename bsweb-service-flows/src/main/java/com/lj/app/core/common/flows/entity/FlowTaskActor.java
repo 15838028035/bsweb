@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.lj.app.core.common.base.entity.BaseEntity;
 
 /**
-*FlowTaskActor
+*流程参与者
 */
 public class FlowTaskActor extends BaseEntity{
 	

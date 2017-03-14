@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.lj.app.core.common.flows.entity.FlowApprove;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowOrderHist;
+import com.lj.app.core.common.flows.entity.FlowQueryFilter;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
 
@@ -63,4 +64,15 @@ public class FlowQueryServiceImpl implements FlowQueryService,Serializable {
 		flowTaskHist.setTaskName(taskName);
 		return flowEngineFacets.getEngine().FlowTaskHistService().queryForList(flowTaskHist);
 	}
+
+	@Override
+	public List<FlowTask> getActiveTasks(FlowQueryFilter filter) {
+		return null;//TODO:query me
+	}
+
+	@Override
+	public List<FlowOrder> getActiveOrders(FlowQueryFilter filter) {
+		return null;//TODO:query me
+	}
+	
 }

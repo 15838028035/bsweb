@@ -112,7 +112,7 @@ public class FlowUtil {
 			buffer.append("',to:'");
 			buffer.append(tm.getTarget().getName());
 			buffer.append("', dots:[");
-			if(StringUtils.isNotEmpty(tm.getG())) {
+			if(StringUtils.isNotBlank(tm.getG())) {
 		        String[] bendpoints = tm.getG().split(";");
 		        for (String bendpoint: bendpoints) {
 		        	buffer.append("{");
@@ -126,7 +126,7 @@ public class FlowUtil {
 			buffer.append("],text:{text:'");
 			buffer.append(tm.getDisplayName());
 			buffer.append("'},textPos:{");
-			if(StringUtils.isNotEmpty(tm.getOffset())) {
+			if(StringUtils.isNotBlank(tm.getOffset())) {
 				String[] values = tm.getOffset().split(",");
 				buffer.append("x:").append(values[0]).append(",");
 				buffer.append("y:").append(values[1]).append("");
