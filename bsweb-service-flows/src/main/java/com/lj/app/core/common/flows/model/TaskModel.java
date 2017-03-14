@@ -6,6 +6,7 @@ import java.util.List;
 import com.lj.app.core.common.flows.AssignmentHandler;
 import com.lj.app.core.common.flows.core.Execution;
 import com.lj.app.core.common.flows.handlers.impl.MergeActorHandler;
+import com.lj.app.core.common.flows.scheduling.JobCallback;
 import com.lj.app.core.common.util.Assert;
 import com.lj.app.core.common.util.ClassUtil;
 import com.lj.app.core.common.util.StringUtil;
@@ -89,7 +90,8 @@ public class TaskModel extends WorkModel {
 	/**
 	 * 任务执行后回调对象
 	 */
-	//private JobCallback callbackObject;
+	private JobCallback callbackObject;
+	
 	/**
 	 * 分配参与者处理对象
 	 */
@@ -204,7 +206,7 @@ public class TaskModel extends WorkModel {
 		return callback;
 	}
 	
-/*	public JobCallback getCallbackObject() {
+	public JobCallback getCallbackObject() {
 		return callbackObject;
 	}
 
@@ -212,9 +214,9 @@ public class TaskModel extends WorkModel {
 		if(StringUtil.isNotBlank(callbackStr)) {
 			this.callback = callbackStr;
 			callbackObject = (JobCallback)ClassUtil.newInstance(callbackStr);
-			AssertHelper.notNull(callbackObject, "回调处理类实例化失败");
+			Assert.notNull(callbackObject, "回调处理类实例化失败");
 		}
-	}*/
+	}
 
     public List<FieldModel> getFields() {
         return fields;

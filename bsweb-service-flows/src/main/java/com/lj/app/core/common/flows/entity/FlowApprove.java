@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.lj.app.core.common.base.entity.BaseEntity;
 
 /**
-*FlowApprove
+*流程审批
 */
 public class FlowApprove extends BaseEntity{
 	

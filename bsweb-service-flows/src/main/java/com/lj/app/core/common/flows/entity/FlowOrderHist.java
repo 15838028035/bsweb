@@ -5,7 +5,7 @@ import java.util.Date;
 import com.lj.app.core.common.base.entity.BaseEntity;
 
 /**
-*FlowOrderHist
+*流程实例历史
 */
 public class FlowOrderHist extends BaseEntity{
 	
@@ -159,6 +159,7 @@ public class FlowOrderHist extends BaseEntity{
 	public Date getEndTime() {
 		return endTime;
 	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("HistoryOrder(id=").append(this.id);
@@ -167,6 +168,6 @@ public class FlowOrderHist extends BaseEntity{
 		sb.append(",createTime").append(this.getCreateDate());
 		sb.append(",orderNo=").append(this.orderNo).append(")");
 		return sb.toString();
-}
+	}
 }
 

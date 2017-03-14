@@ -21,7 +21,7 @@ public class MergeActorHandler extends AbstractMergeHandler {
 	/**
 	 * actor all方式，查询参数为：orderId、taskName
 	 * 
-	 * @see org.snaker.engine.handlers.impl.AbstractMergeHandler#findActiveNodes()
+	 * @see com.lj.app.core.common.flows.handlers.impl.AbstractMergeHandler#findActiveNodes()
 	 */
 	protected String[] findActiveNodes() {
 		return new String[] { taskName };

@@ -70,8 +70,6 @@ public class StartSubProcessHandler implements IHandler {
 	/**
 	 * Future模式的任务执行。通过call返回任务结果集
 	 *
-	 * @author yuqs
-	 * @since 1.0
 	 */
 	class ExecuteTask implements Callable<FlowOrder> {
 		private FlowEngine engine;

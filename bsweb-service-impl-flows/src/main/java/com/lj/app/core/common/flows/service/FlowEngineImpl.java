@@ -40,7 +40,7 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
 	private static final Log log = LogFactory.getLog(FlowEngineImpl.class);
 			
 	/**
-	 * Snaker配置对象
+	 * 配置对象
 	 */
 	@Autowired
 	protected ConfigurationService configurationService;

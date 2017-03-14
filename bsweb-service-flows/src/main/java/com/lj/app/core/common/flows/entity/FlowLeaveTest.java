@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.lj.app.core.common.base.entity.BaseEntity;
 
 /**
-*FlowLeaveTest
+*请假申请测试流程
 */
 public class FlowLeaveTest extends BaseEntity{
 	
