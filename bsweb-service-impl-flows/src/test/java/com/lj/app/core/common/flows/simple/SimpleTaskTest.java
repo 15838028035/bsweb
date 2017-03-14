@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.lj.app.core.common.flows.FlowBaseTest;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowTask;
-import com.lj.app.core.common.flows.util.FileUtil;
+import com.lj.app.core.common.util.FileUtil;
 
 public class SimpleTaskTest  extends FlowBaseTest {
 	@Before
