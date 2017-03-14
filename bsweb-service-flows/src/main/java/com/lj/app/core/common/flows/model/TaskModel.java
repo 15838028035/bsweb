@@ -209,7 +209,7 @@ public class TaskModel extends WorkModel {
 	}
 
 	public void setCallback(String callbackStr) {
-		if(StringHelper.isNotEmpty(callbackStr)) {
+		if(StringUtil.isNotBlank(callbackStr)) {
 			this.callback = callbackStr;
 			callbackObject = (JobCallback)ClassUtil.newInstance(callbackStr);
 			AssertHelper.notNull(callbackObject, "回调处理类实例化失败");
