@@ -22,7 +22,7 @@ public class ResumeTaskTest extends FlowBaseTest {
 	public void taskTest()  throws Exception {
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("task1.operator", new String[]{"1"});
-		FlowOrder order = flowEngine.startInstanceByName("simple", 0, "2", args);
+		FlowOrder order = flowEngine.startInstanceByName("simple", null, "2", args);
 		System.out.println("order=" + order);
 		List<FlowTask> tasks =  flowEngine.flowQueryService().getActiveTasks(order.getId());
 		for(FlowTask task : tasks) {

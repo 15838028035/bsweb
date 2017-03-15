@@ -23,7 +23,7 @@ public class GroupTaskTest extends FlowBaseTest {
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("task1.operator", new String[]{"role1"});
 		
-		FlowOrder order = flowEngine.startInstanceByName("group", 0, "2", args);
+		FlowOrder order = flowEngine.startInstanceByName("group", null, "2", args);
 		System.out.println("order=" + order);
 		List<FlowTask> tasks =  flowEngine.flowQueryService().getActiveTasks(order.getId());
 		for(FlowTask task : tasks) {

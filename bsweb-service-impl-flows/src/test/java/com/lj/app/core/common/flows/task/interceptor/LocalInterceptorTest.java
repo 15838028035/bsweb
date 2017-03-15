@@ -26,11 +26,11 @@ public class LocalInterceptorTest extends FlowBaseTest {
 		assertEquals("interceptor",flowProcess.getFlowName());
 		assertEquals("测试局部拦截器",flowProcess.getDisplayName());
 		
-		FlowOrder order = flowEngine.startInstanceByName(processId, 2);
+		FlowOrder order = flowEngine.startInstanceByName(flowProcess.getFlowName());
 		System.out.println("order=" + order);
 		List<FlowTask> tasks =  flowEngine.flowQueryService().getActiveTasks(order.getId());
 		for(FlowTask task : tasks) {
-			flowEngine.executeTask(task.getId().toString(), "1");
+			flowEngine.executeTask(task.getId().toString());
 		}
 	}
 
