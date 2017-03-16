@@ -17,6 +17,7 @@ import com.lj.app.core.common.cache.MemoryCacheManager;
 import com.lj.app.core.common.flows.api.FlowTaskServiceApi;
 import com.lj.app.core.common.flows.core.Execution;
 import com.lj.app.core.common.flows.core.ServiceContext;
+import com.lj.app.core.common.flows.entity.FlowCcorder;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowOrderHist;
 import com.lj.app.core.common.flows.entity.FlowProcess;
@@ -57,6 +58,9 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
 	
 	@Autowired
 	protected FlowOrderHistService<FlowOrderHist> flowOrderHistService;
+	
+	@Autowired
+	protected FlowCcorderService<FlowCcorder> flowCcorderService;
 	
 	/**
 	 * 任务业务类
@@ -347,107 +351,206 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
 	}
 
 
-	
+	public ConfigurationService getConfigurationService() {
+		return configurationService;
+	}
 
-	public FlowProcessService getFlowProcessService() {
+
+	public void setConfigurationService(ConfigurationService configurationService) {
+		this.configurationService = configurationService;
+	}
+
+
+	public FlowProcessService<FlowProcess> getFlowProcessService() {
 		return flowProcessService;
 	}
 
-	public void setFlowProcessService(FlowProcessService flowProcessService) {
+
+	public void setFlowProcessService(FlowProcessService<FlowProcess> flowProcessService) {
 		this.flowProcessService = flowProcessService;
 	}
 
-	public FlowOrderService getFlowOrderService() {
+
+	public FlowOrderService<FlowOrder> getFlowOrderService() {
 		return flowOrderService;
 	}
 
-	public void setFlowOrderService(FlowOrderService flowOrderService) {
+
+	public void setFlowOrderService(FlowOrderService<FlowOrder> flowOrderService) {
 		this.flowOrderService = flowOrderService;
 	}
 
-	public FlowTaskService getFlowTaskService() {
+
+	public FlowOrderHistService<FlowOrderHist> getFlowOrderHistService() {
+		return flowOrderHistService;
+	}
+
+
+	public void setFlowOrderHistService(FlowOrderHistService<FlowOrderHist> flowOrderHistService) {
+		this.flowOrderHistService = flowOrderHistService;
+	}
+
+
+	public FlowCcorderService<FlowCcorder> getFlowCcorderService() {
+		return flowCcorderService;
+	}
+
+
+	public void setFlowCcorderService(FlowCcorderService<FlowCcorder> flowCcorderService) {
+		this.flowCcorderService = flowCcorderService;
+	}
+
+
+	public FlowTaskService<FlowTask> getFlowTaskService() {
 		return flowTaskService;
 	}
 
-	public void setFlowTaskService(FlowTaskService flowTaskService) {
+
+	public void setFlowTaskService(FlowTaskService<FlowTask> flowTaskService) {
 		this.flowTaskService = flowTaskService;
 	}
+
+
+	public FlowTaskServiceApi getFlowTaskServiceApi() {
+		return flowTaskServiceApi;
+	}
+
+
+	public void setFlowTaskServiceApi(FlowTaskServiceApi flowTaskServiceApi) {
+		this.flowTaskServiceApi = flowTaskServiceApi;
+	}
+
+
+	public FlowTaskHistService<FlowTaskHist> getFlowTaskHistService() {
+		return flowTaskHistService;
+	}
+
+
+	public void setFlowTaskHistService(FlowTaskHistService<FlowTaskHist> flowTaskHistService) {
+		this.flowTaskHistService = flowTaskHistService;
+	}
+
 
 	public FlowQueryService getFlowQueryService() {
 		return flowQueryService;
 	}
 
+
 	public void setFlowQueryService(FlowQueryService flowQueryService) {
 		this.flowQueryService = flowQueryService;
 	}
+
+
+	public FlowTaskActorService getFlowTaskActorService() {
+		return flowTaskActorService;
+	}
+
+
+	public void setFlowTaskActorService(FlowTaskActorService flowTaskActorService) {
+		this.flowTaskActorService = flowTaskActorService;
+	}
+
+
+	public FlowCompletionService getFlowCompletionService() {
+		return flowCompletionService;
+	}
+
+
+	public void setFlowCompletionService(FlowCompletionService flowCompletionService) {
+		this.flowCompletionService = flowCompletionService;
+	}
+
+
+	public FlowTaskAccessStrategyService getFlowTaskAccessStrategyService() {
+		return flowTaskAccessStrategyService;
+	}
+
+
+	public void setFlowTaskAccessStrategyService(FlowTaskAccessStrategyService flowTaskAccessStrategyService) {
+		this.flowTaskAccessStrategyService = flowTaskAccessStrategyService;
+	}
+
+
+	public FlowApproveService getFlowApproveService() {
+		return flowApproveService;
+	}
+
+
+	public void setFlowApproveService(FlowApproveService flowApproveService) {
+		this.flowApproveService = flowApproveService;
+	}
+
 
 	@Override
 	public FlowProcessService flowProcessService() {
 		return flowProcessService;
 	}
 
+
 	@Override
 	public FlowQueryService flowQueryService() {
 		return flowQueryService;
 	}
+
 
 	@Override
 	public FlowOrderService flowOrderService() {
 		return flowOrderService;
 	}
 
-	@Override
-	public FlowTaskService flowTaskService() {
-		return flowTaskService;
-	}
-	
-	/**
-	 * 获取任务服务
-	 * @return
-	 */
-	public FlowTaskServiceApi FlowTaskServiceApi(){
-		return flowTaskServiceApi;
-	}
-	
-	/**
-	 * 任务参与
-	 * @return
-	 */
-	@Override
-	public FlowTaskActorService flowTaskActorService(){
-		return  flowTaskActorService;
-	}
-
-	@Override
-	public FlowTaskHistService FlowTaskHistService() {
-		return this.flowTaskHistService;
-	}
-
-	public FlowTaskServiceApi getFlowTaskServiceApi() {
-		return flowTaskServiceApi;
-	}
-
-	public void setFlowTaskServiceApi(FlowTaskServiceApi flowTaskServiceApi) {
-		this.flowTaskServiceApi = flowTaskServiceApi;
-	}
-
-	@Override
-	public FlowCompletionService flowCompletionService() {
-		return flowCompletionService;
-	}
-
-	@Override
-	public FlowTaskAccessStrategyService flowTaskAccessStrategyService() {
-		return flowTaskAccessStrategyService;
-	}
 
 	@Override
 	public FlowOrderHistService flowOrderHistService() {
 		return flowOrderHistService;
 	}
 
+
+	@Override
+	public FlowCcorderService flowCcorderService() {
+		return flowCcorderService;
+	}
+
+
+	@Override
+	public FlowTaskService flowTaskService() {
+		return flowTaskService;
+	}
+
+
+	@Override
+	public com.lj.app.core.common.flows.api.FlowTaskServiceApi FlowTaskServiceApi() {
+		return flowTaskServiceApi;
+	}
+
+
+	@Override
+	public com.lj.app.core.common.flows.service.FlowTaskHistService FlowTaskHistService() {
+		return flowTaskHistService;
+	}
+
+
+	@Override
+	public FlowTaskActorService flowTaskActorService() {
+		return flowTaskActorService;
+	}
+
+
+	@Override
+	public FlowCompletionService flowCompletionService() {
+		return flowCompletionService;
+	}
+
+
+	@Override
+	public FlowTaskAccessStrategyService flowTaskAccessStrategyService() {
+		return flowTaskAccessStrategyService;
+	}
+
+
 	@Override
 	public FlowApproveService flowApproveService() {
 		return flowApproveService;
 	}
+
+
 }

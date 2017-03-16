@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.lj.app.core.common.flows.FlowBaseTest;
@@ -23,11 +22,6 @@ import com.lj.app.core.common.util.JsonUtil;
 import com.lj.app.core.common.util.StringUtil;
 
 public class SimpleTaskTest2 extends FlowBaseTest {
-
-	@Before
-	public void before() throws Exception {
-		processId = "96";
-	}
 
 	@Test
 	public void taskTest() throws Exception {

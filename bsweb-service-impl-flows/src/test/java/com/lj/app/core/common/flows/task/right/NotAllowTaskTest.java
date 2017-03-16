@@ -15,7 +15,6 @@ import com.lj.app.core.common.util.FileUtil;
 
 public class NotAllowTaskTest extends FlowBaseTest {
 
-
 	@Before
 	public void before() {
 		processId = flowEngine.flowProcessService().deploy(FileUtil.getStreamFromClasspath("com/lj/app/core/common/flows/task/right/flow1.xml"));

@@ -27,7 +27,7 @@ public class CustomHandlerTest extends FlowBaseTest {
 		FlowProcess flowProcess  = (FlowProcess) flowEngine.flowProcessService().getProcessById(processId);
 		
 		assertEquals("custom1",flowProcess.getFlowName());
-		assertEquals("custom1",flowProcess.getDisplayName());
+		assertEquals("测试自定义节点1",flowProcess.getDisplayName());
 		assertNotNull(flowProcess.getFlowNo());
 		
 		Map<String, Object> args = new HashMap<String, Object>();

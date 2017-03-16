@@ -2,8 +2,6 @@ package com.lj.app.core.common.flows.model;
 
 import com.lj.app.core.common.flows.core.Execution;
 
-
-
 /**
  * 分支定义fork元素
  */

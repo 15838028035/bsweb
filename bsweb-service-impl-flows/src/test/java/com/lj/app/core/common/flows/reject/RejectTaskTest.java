@@ -22,7 +22,7 @@ public class RejectTaskTest extends FlowBaseTest{
 		
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("number", 2);
-		flowEngine.executeTask("10", null, args);
-		flowEngine.executeAndJumpTask("11", null, args, "task1");
+		flowEngine.executeTask(processId, null, args);
+		flowEngine.executeAndJumpTask(processId, null, args, "task1");
 	}
 }

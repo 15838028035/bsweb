@@ -47,6 +47,11 @@ public interface FlowEngine {
 	public FlowOrderHistService flowOrderHistService();
 	
 	/**
+	 * 流程抄送
+	 */
+	public FlowCcorderService flowCcorderService();
+	
+	/**
 	 * 获取任务服务
 	 * @return ITaskService 任务服务
 	 */

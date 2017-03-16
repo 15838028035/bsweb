@@ -1,6 +1,6 @@
 package com.lj.app.core.common.flows;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,9 +21,9 @@ public class FlowBaseTest   {
 	@Autowired
 	protected  FlowEngine flowEngine;
 	
-	@Before
-	public   void setUpRunEnvNew() {
-		//flowEngine = flowEngineFacets.getEngine();
+	@BeforeClass
+	public  static  void setUpRunEnvNew() {
+		 
 	}
 	
 }

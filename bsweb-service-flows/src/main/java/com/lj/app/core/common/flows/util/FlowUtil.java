@@ -87,6 +87,7 @@ public class FlowUtil {
 		buffer.append("'}}}}");
 		return buffer.toString();
 	}
+	
 	public static String getNodeJson(List<NodeModel> nodes) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("states: {");

@@ -25,8 +25,6 @@ public class FlowTaskActor extends BaseEntity{
 	 * 关联的参与者ID（参与者可以为用户、部门、角色)  ACTOR_ID
 	 */
 	private String actorId;
-	
-
 
 	public void setId(java.lang.Integer value) {
 		this.id = value;

@@ -18,7 +18,7 @@ public class AidantTest extends FlowBaseTest {
 	
 	@Test
 	public void taskTest()  throws Exception {
-		FlowOrder order = flowEngine.startInstanceByName("aidant", 0);
+		FlowOrder order = flowEngine.startInstanceByName("aidant");
 		System.out.println("order=" + order);
 		List<FlowTask> tasks =  flowEngine.flowQueryService().getActiveTasks(order.getId());
 		for(FlowTask task : tasks) {
