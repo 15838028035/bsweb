@@ -24,6 +24,8 @@ Contributions are absolutely welcome. Unfortunately, Xamarin is a paid framework
     Commit your changes: git commit -am 'Add some feature'
     Push to the branch: git push origin my-new-feature
     Submit a pull request :D
+    
+![Alt text](https://github.com/975545486/bsweb/raw/master/bsweb-app-upm/src/main/webapp/images/flow.png)
 
 
 

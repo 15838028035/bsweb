@@ -13,6 +13,7 @@ import com.lj.app.core.common.flows.FlowBaseTest;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowProcess;
 import com.lj.app.core.common.flows.entity.FlowTask;
+import com.lj.app.core.common.flows.service.FlowEngine;
 import com.lj.app.core.common.util.FileUtil;
 
 public class LeaveTaskTest extends FlowBaseTest {
@@ -29,11 +30,11 @@ public class LeaveTaskTest extends FlowBaseTest {
 		
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("task1.operator", new String[]{"1"});
-		FlowOrder order = flowEngine.startInstanceByName("simple", null, "2", args);
+		FlowOrder order = flowEngine.startInstanceByName(flowProcess.getFlowName());
 		System.out.println("order=" + order);
 		List<FlowTask> tasks =  flowEngine.flowQueryService().getActiveTasks(order.getId());
 		for(FlowTask task : tasks) {
-			flowEngine.executeTask(task.getId().toString(), "1");
+			flowEngine.executeTask(task.getId().toString(), FlowEngine.ADMIN);
 		}
 	}
 
