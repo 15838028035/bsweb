@@ -28,10 +28,15 @@
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 	  
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
 		<list>
-			<value>classpath:env-common.properties</value>
 			<value>classpath:env.properties</value>
+			<value>classpath:env-common.properties</value>
+			<!-- 本地开发环境配置 -->
+			<value>classpath*:env-local.properties</value>
+				<!-- 服务器生产环境配置 -->
+			<value>file:${user.home}/env.properties</value>
 		</list>
 		</property>
 	</bean>
