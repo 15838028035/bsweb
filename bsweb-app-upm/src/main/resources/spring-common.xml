@@ -5,17 +5,17 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 						http://www.springframework.org/schema/tx 
-						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+						http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
 						http://www.springframework.org/schema/jee 
-						http://www.springframework.org/schema/jee/spring-jee-3.0.xsd 
+						http://www.springframework.org/schema/jee/spring-jee-3.1.xsd 
 						http://www.springframework.org/schema/context 
-						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/context/spring-context-3.1.xsd
 					  	http://www.springframework.org/schema/aop
 					    http://www.springframework.org/schema/aop/spring-aop.xsd
 					    http://www.springframework.org/schema/task
-					    http://www.springframework.org/schema/task/spring-task-3.0.xsd
+					    http://www.springframework.org/schema/task/spring-task-3.1.xsd
 					    "
 	default-lazy-init="false">
 	
@@ -26,21 +26,6 @@
 	<aop:aspectj-autoproxy proxy-target-class="true" />  
 	
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-	  
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations">
-		<list>
-			<value>classpath:env.properties</value>
-			<value>classpath:env-common.properties</value>
-			<!-- 本地开发环境配置 -->
-			<value>classpath*:env-local.properties</value>
-				<!-- 服务器生产环境配置 -->
-			<value>file:${user.home}/env.properties</value>
-		</list>
-		</property>
-	</bean>
-	
 	
 	 <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">

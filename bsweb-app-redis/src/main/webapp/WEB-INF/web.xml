@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          id="WebApp_ID" version="3.0">
-         
+      
          	
  <!-- 检查用户是否登录，并检查权限-->
 	<filter>
@@ -88,6 +88,12 @@
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	
+
+	<context-param>
+	<param-name>spring.profiles.default</param-name>
+	<param-value>dev</param-value>
+	</context-param>
+
  <context-param>
   <param-name>contextConfigLocation</param-name>
   <param-value>classpath:spring-base.xml</param-value>
