@@ -8,9 +8,9 @@
        lazyLoadingEnabled="true" maxRequests="256" maxSessions="64"
        maxTransactions="32" useStatementNamespaces="true"/>
        <typeHandler jdbcType="BLOB" javaType="[B" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler"/>
-	 <typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler"/>
- 
-      <sqlMap resource="com/lj/app/core/common/base/entity/UpmToken.SqlMap.xml"/>
+ 	   <typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler"/>
+      
+     <sqlMap resource="com/lj/app/core/common/base/entity/UpmToken.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/core/common/notify/entity/UpmNotice.SqlMap.xml"/>
       
       <sqlMap resource="com/lj/app/core/common/base/entity/UpmDictionary.SqlMap.xml"/>
@@ -18,6 +18,15 @@
        <sqlMap resource="com/lj/app/core/common/base/entity/UpmConfiguration.SqlMap.xml"/>
        <sqlMap resource="com/lj/app/core/common/base/entity/FreemarkerTemplateConfig.SqlMap.xml"/>
       
+	   <sqlMap resource="com/lj/app/core/common/base/entity/UpmUser.SqlMap.xml"/> 
+      <sqlMap resource="com/lj/app/bsweb/upm/user/entity/UpmUserGroup.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/upm/user/entity/UpmUserAndUserGroupRel.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/upm/user/entity/UpmUserGroupAndRoleRel.SqlMap.xml"/>
+      
+      <sqlMap resource="com/lj/app/bsweb/upm/app/entity/UpmApp.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/upm/role/entity/UpmRole.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/upm/role/entity/UpmRoleGroup.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/upm/role/entity/UpmPermission.SqlMap.xml"/>
       
 </sqlMapConfig>
     

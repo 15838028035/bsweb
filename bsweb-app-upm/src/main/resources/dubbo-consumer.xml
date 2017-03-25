@@ -33,7 +33,13 @@
 	
  	<dubbo:reference interface="com.lj.app.core.common.flows.api.FlowTaskServiceApi" id="flowTaskServiceApi" check="false" /> 
  	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowEngineFacetsService" id="FlowEngineFacetsService" check="false" />
-
-
+ 	
+ 	<dubbo:reference interface="com.lj.app.bsweb.upm.app.servic.UpmAppService" id="upmAppService" check="false" />
+ 	<dubbo:reference interface="com.lj.app.bsweb.upm.role.service.UpmPermissionService" id="upmPermissionService" check="false" />
+ 	<dubbo:reference interface="com.lj.app.bsweb.upm.role.service.UpmRoleGroupService" id="upmRoleGroupService" check="false" />
+ 	<dubbo:reference interface="com.lj.app.bsweb.upm.role.service.UpmRoleService" id="UpmRoleService" check="false" />
+ 	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserAndUserGroupRelService" id="upmUserAndUserGroupRelService" check="false" />
+ 	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupAndRoleRelService" id="upmUserGroupAndRoleRelService" check="false" />
+ 	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupService" id="upmUserGroupService" check="false" />
 
 </beans>  

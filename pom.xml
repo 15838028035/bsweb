@@ -812,6 +812,8 @@
 		<module>bsweb-common-config</module>
 		<module>bsweb-service-flows</module>
 		<module>bsweb-service-impl-flows</module>
+		<module>bsweb-service-upm</module>
+		<module>bsweb-service-impl-upm</module>
 		<module>bsweb-app-upm</module>
 		<module>bsweb-service-redis</module>
 		<module>bsweb-service-impl-redis</module>
