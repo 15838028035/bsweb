@@ -2,64 +2,80 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<title>应用管理</title>
+	<title>应用管理</title>
+    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 <%@ include file="/jsp/common/resource/styles_all.jsp" %>
+
+<!--css样式-->
+<link href="${ctx}/styles/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/styles/bootstrap/bootstrap-table.css" rel="stylesheet">
+<!--js-->
+<script src="${ctx}/scripts/bootstrap/jquery-1.12.0.min.js" type="text/javascript"></script>
+<script src="${ctx}/scripts/bootstrap/bootstrap.min.js"></script>
+<script src="${ctx}/scripts/bootstrap/bootstrap-table.js"></script>
+<script src="${ctx}/scripts/bootstrap/bootstrap-table-zh-CN.js"></script>
+
 <style>
 .altclass{background: #E5EFFD ;}
 </style>
 
 <script language="javascript">
 	$(document).ready(function(){
-		contralEffect.contain();
-		contralEffect.tablelist();
-		contralEffect.blueButton();
+		 var oTable = new TableInit();
+	     oTable.Init();
 	});
 	
-	jQuery(document).ready(function(){ 
-		var lastsel;
-		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/upmApp/upmAppAction!jqGridList.action',
-			datatype: 'json',
-			mtype: 'POST',
-			colNames:['ID','应用ID','应用编号','应用名称','应用url'],
-			colModel:[
-			 	 {name:'id',index:'id'},
-				 {name:'appId',index:'appId'},
-				 {name:'appCode',index:'appCode',width:100},
-				 {name:'appName',index:'appName',width:100},
-				 {name:'appUrl',index:'appUrl',width:240}
-				 ],
-	
-			pager: '#pager',
-			sortable: true,
-			rowNum: 10,
-			rowList:[10,15,20,50],
-			multiboxonly:true,
-			multiselect: true,
-			prmNames:{rows:"page.pageSize",page:"page.pageNumber",total:"page.totalPages"},     
-			jsonReader: {     
-				root: "rows",   
-				repeatitems : false,
-				id:"0"        		    
-				},
-			viewrecords: true,
-			autowidth:true,
-			height: '100%',
-			sortname:'id',
-			sortorder:'asc',
-			hidegrid: false,
-			loadtext: '正在加载,请稍等..',
-			scrollrows: true,
-			altRows:true,
-			altclass:'altclass'
-		}); 
-		
-		});
+	var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tableList').bootstrapTable({
+                url: '${ctx}/jsp/upmApp/upmAppAction!jqGridList.action',         //请求后台的URL（*）
+                method: 'post',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 50,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                strictSearch: true,
+                clickToSelect: true,                //是否启用点击选中行
+                height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns: [
+                          { field: 'id', title: '序号' }, 
+                          { field: 'appCode', title: 'appCode' }, 
+                          { field: 'appName', title: 'appName' }, 
+                          { field: 'appUrl', title: 'appUrl' }
+               		 ]
+            });
+        };
+ 
+        //得到查询的参数
+      oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                "upmApp.appId":$("#appId").val(),
+ 			 	"upmApp.appCode":$("#appCode").val(),
+ 			 	"upmApp.appName": $("#appName").val()
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
 		
 </script>
 </head>
@@ -110,6 +126,43 @@
 
             </div>
         </div>
+    </div>
+    
+    <div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">查询条件</div>
+            <div class="panel-body">
+                <form id="formSearch" class="form-horizontal">
+                    <div class="form-group" style="margin-top:15px">
+                        <label class="control-label col-sm-1" for="txt_search_departmentname">部门名称</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="txt_search_departmentname">
+                        </div>
+                        <label class="control-label col-sm-1" for="txt_search_statu">状态</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="txt_search_statu">
+                        </div>
+                        <div class="col-sm-4" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>       
+
+        <div id="toolbar" class="btn-group">
+            <button id="btn_add" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            <button id="btn_edit" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+            </button>
+            <button id="btn_delete" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+        </div>
+        
+        <table id="tableList"></table>
     </div>
 
     <script type="text/javascript">
