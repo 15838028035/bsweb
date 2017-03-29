@@ -37,5 +37,4 @@
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowLeaveTestService" ref="flowLeaveTestService"  />
 	
  	<dubbo:service interface="com.lj.app.core.common.flows.api.FlowTaskServiceApi" ref="flowTaskServiceApi"  /> 
-
 </beans>  

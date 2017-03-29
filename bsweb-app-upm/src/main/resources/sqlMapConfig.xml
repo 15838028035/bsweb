@@ -17,7 +17,8 @@
       <sqlMap resource="com/lj/app/core/common/base/entity/UpmDictionaryNote.SqlMap.xml"/>
        <sqlMap resource="com/lj/app/core/common/base/entity/UpmConfiguration.SqlMap.xml"/>
        <sqlMap resource="com/lj/app/core/common/base/entity/FreemarkerTemplateConfig.SqlMap.xml"/>
-      
+       
+       <sqlMap resource="com/lj/app/core/common/base/entity/UpmUser.SqlMap.xml"/>
       
 </sqlMapConfig>
     

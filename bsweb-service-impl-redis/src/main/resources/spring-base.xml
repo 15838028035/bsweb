@@ -26,7 +26,7 @@
 			<list>
 				<value>classpath:env.properties</value>
 				<value>classpath:env-common.properties</value>
-				<value>classpath*:env-local.properties</value>
+				<value>classpath*:env-dev.properties</value>
 			</list>
 			</property>
 		</bean>

@@ -9,7 +9,7 @@
 		ex = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
 	//记录日志
-	Logger logger = LoggerFactory.getLogger("500.jsp");
+	Log logger = LogFactory.getLog("500.jsp");
 	logger.error("500---------------------------"+ex.getMessage()+"-------------------------", ex);
 %>
 

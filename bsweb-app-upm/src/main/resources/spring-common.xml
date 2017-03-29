@@ -95,7 +95,7 @@
 	
 	<aop:config>
 		<aop:pointcut id="baseServiceMethods"
-			expression="execution(* com.lj.app.bsweb.*.service.*service(..))" />
+			expression="(execution(* com.lj.app.bsweb.*.service.*service(..))) or (execution(* com.lj.app.core.common.*.service.*service(..)))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="baseServiceMethods" />
 	</aop:config>
 	<aop:aspectj-autoproxy />
