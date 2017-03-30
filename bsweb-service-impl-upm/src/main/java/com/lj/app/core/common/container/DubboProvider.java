@@ -13,6 +13,7 @@ public class DubboProvider {
 		ClassPathXmlApplicationContext context;
 		
 		try {
+			
 			 context = new ClassPathXmlApplicationContext("classpath:spring-base.xml");
 			context.start();
 		} catch (Exception e) {

@@ -110,7 +110,6 @@
 	</tx:advice>
 	
 	 <bean id="springContextHolder" class="com.lj.app.core.common.util.SpringContextHolder" lazy-init="false"/>
-	 <bean id="SpringContextHolderExt" class="com.lj.app.core.common.flows.SpringContextHolderExt" lazy-init="false"/>
 
 	<!-- 邮件接口 -->
 	<bean id="javaMailSender"

@@ -31,7 +31,7 @@
 			</property>
 		</bean>
 		 <import resource="classpath:spring-common.xml" />
-	 	<import resource="classpath:dubbo-consumer.xml" />
+	 	<import resource="classpath:dubbo-provider.xml" />
 	</beans>
 	
 	<beans profile="test">  
@@ -46,7 +46,7 @@
 			</property>
 		</bean>
 		 <import resource="classpath:spring-common.xml" />
-	 	<import resource="classpath:dubbo-consumer.xml" />
+	 	<import resource="classpath:dubbo-provider.xml" />
 	</beans>
 	
 	<beans profile="pro">  
@@ -61,7 +61,7 @@
 			</property>
 		</bean>
 		 <import resource="classpath:spring-common.xml" />
-	 	<import resource="classpath:dubbo-consumer.xml" />
+	 	<import resource="classpath:dubbo-provider.xml" />
 	</beans>
 	
 </beans>

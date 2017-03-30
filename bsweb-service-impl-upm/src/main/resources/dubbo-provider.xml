@@ -8,7 +8,7 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<!-- 提供方应用信息，用于计算依赖关系 --> 
-	<dubbo:application name="bsweb-service-impl-flows" />
+	<dubbo:application name="bsweb-service-impl-upm" />
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
@@ -18,10 +18,10 @@
 		
 	<!-- 用户服务接口 -->
 	
-	<dubbo:service interface="com.lj.app.bsweb.upm.app.servic.UpmAppService" ref="upmAppService" />
+	<dubbo:service interface="com.lj.app.bsweb.upm.app.service.UpmAppService" ref="upmAppService" />
 	 <dubbo:service interface="com.lj.app.bsweb.upm.role.service.UpmPermissionService" ref="upmPermissionService"  />
 	 <dubbo:service interface="com.lj.app.bsweb.upm.role.service.UpmRoleGroupService" ref="upmRoleGroupService"  />
-	 <dubbo:service interface="com.lj.app.bsweb.upm.role.service.UpmRoleService" ref="UpmRoleService"/>
+	 <dubbo:service interface="com.lj.app.bsweb.upm.role.service.UpmRoleService" ref="upmRoleService"/>
 	 <dubbo:service interface="com.lj.app.bsweb.upm.user.service.UpmUserAndUserGroupRelService" ref="upmUserAndUserGroupRelService" />
 	 <dubbo:service interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupAndRoleRelService" ref="upmUserGroupAndRoleRelService" />
 	 <dubbo:service interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupService" ref="upmUserGroupService"  />
