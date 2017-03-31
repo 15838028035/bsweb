@@ -26,16 +26,6 @@
 	<aop:aspectj-autoproxy proxy-target-class="true" />  
 	
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-	  
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-		<list>
-			<value>classpath:env-common.properties</value>
-			<value>classpath:env.properties</value>
-		</list>
-		</property>
-	</bean>
-	
 	
 	 <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
