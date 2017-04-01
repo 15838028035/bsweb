@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>bsweb</artifactId>
+    <groupId>com.lj.app.bsweb</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>bsweb-service-deploy</artifactId>
+  <packaging>jar</packaging>
+  <name>flows</name>
+  <url>http://maven.apache.org</url>
+  
+  <dependencies>
+
+	<dependency>  
+        <groupId>com.lj.app.bsweb</groupId>  
+        <artifactId>bsweb-service-impl-upm</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    
+    <dependency>  
+        <groupId>com.lj.app.bsweb</groupId>  
+        <artifactId>bsweb-service-impl-flows</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+  	
+	</dependencies>
+	
+  <build>
+    <finalName>bsweb-service-deploy</finalName>
+    
+   
+    <plugins>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.lj.app.bsweb</groupId>
+									<artifactId>bsweb-common-config</artifactId>
+									<version>${project.parent.version}</version>
+									<outputDirectory>${project.build.directory}/bsweb-service-impl-build</outputDirectory>
+									<includes>META-INF/assembly/**</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptor>src/main/assembly/assembly.xml</descriptor>
+                </configuration>
+                <executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+            </plugin>
+		</plugins>
+  </build>
+  	
+</project>
