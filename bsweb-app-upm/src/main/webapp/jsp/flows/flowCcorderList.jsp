@@ -67,14 +67,14 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [
-			 {field:'id',title:'', sortable:true},
-			 {field:'orderId',title:'流程实例编号', sortable:true},
-			 {field:'actorId',title:'执行人', sortable:true},
-			 {field:'creator',title:'建创人', sortable:true},
-			 {field:'createTime',title:'创建时间', sortable:true},
-			 {field:'finishTime',title:'完成时间', sortable:true},
-			 {field:'status',title:'', sortable:true}
+                columns: [{field : 'Number', title : '行号',    formatter : function(value, row, index) {return index+1;}  },
+						 {field:'id',title:'', sortable:true},
+						 {field:'orderId',title:'流程实例编号', sortable:true},
+						 {field:'actorId',title:'执行人', sortable:true},
+						 {field:'creator',title:'建创人', sortable:true},
+						 {field:'createTime',title:'创建时间', sortable:true},
+						 {field:'finishTime',title:'完成时间', sortable:true},
+						 {field:'status',title:'', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";

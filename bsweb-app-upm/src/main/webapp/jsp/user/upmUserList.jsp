@@ -65,7 +65,11 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [
+                columns: [ 
+                           {field : 'Number', title : '行号',    formatter : function(value, row, index) {  
+                        	   			return index+1;
+                           			}  
+                           },
                           { field: 'id', title: '序号',sortable:true }, 
                           { field: 'loginNo', title: '登陆账号',sortable:true }, 
                           { field: 'userName', title: '用户名',sortable:true }, 
