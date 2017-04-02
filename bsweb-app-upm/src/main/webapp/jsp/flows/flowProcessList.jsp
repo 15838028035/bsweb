@@ -47,7 +47,7 @@
                showColumns:true,
                searchOnEnterKey:true,
                showFooter:true,
-               search:true,
+               search:false,
                sortable: true,                     //是否启用排序
                sortOrder: "asc",                   //排序方式
                singleSelect:false,
@@ -175,20 +175,11 @@
     </div>
 
     <script type="text/javascript">
-    
-	  //查询
-	    $("#select").click(function() {
-			 	var flowNo=$("#flowNo").val();
-			 	var flowName=$("#flowName").val();
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowProcessAction!jqGridList.action',
-				postData : {
-			 			 	"flowProcess.flowNo":flowNo,
-			 			 	"flowProcess.flowName":flowName
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
+	    var $tableList = $('#tableList');
+	    var $btn_add = $('#btn_add');
+	    var $btn_edit = $('#btn_edit');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
 	    
 		//新增
         $("#add").click(function() {
@@ -315,12 +306,13 @@
 			refreshGrid();
         }
         
-      	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowProcessAction!jqGridList.action',
-			 	page:1
-			 }).trigger("reloadGrid");
-      	}
+        $btn_query.click(function () {
+       	 refreshGrid();
+       });
+       
+     	function refreshGrid(){
+     		$tableList.bootstrapTable('refresh');
+     	}
       	
     </script>
 

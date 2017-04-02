@@ -134,25 +134,21 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="configId">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="configId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="cfgKey">置配项KEY</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="cfgKey"></div>
-                        
-			 	<label class="control-label col-sm-1" for="cfgValue">置配项值</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="cfgValue"></div>
-                        
-			 	<label class="control-label col-sm-1" for="cfgDesc">置配项描述</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="cfgDesc"></div>
-                        
-
-                        <div class="col-sm-6" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
-                    </div>
+						 	<label class="control-label col-sm-1" for="configId">ID</label>
+							<div class="col-sm-1"> <input type="text" class="form-control" id="configId"></div>
+			                        
+						 	<label class="control-label col-sm-1" for="cfgKey">置配项KEY</label>
+							<div class="col-sm-1"> <input type="text" class="form-control" id="cfgKey"></div>
+			                        
+						 	<label class="control-label col-sm-1" for="cfgValue">置配项值</label>
+							<div class="col-sm-1"> <input type="text" class="form-control" id="cfgValue"></div>
+			                        
+						 	<label class="control-label col-sm-1" for="cfgDesc">置配项描述</label>
+							<div class="col-sm-1"> <input type="text" class="form-control" id="cfgDesc"></div>
+			                   <div class="col-sm-1" style="text-align:left;">
+			                       <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+			                   </div>
+                  </div>
                 </form>
             </div>
         </div>       
@@ -174,28 +170,13 @@
 
 
     <script type="text/javascript">
-    
-	  //查询
-	    $("#select").click(function() {
-			 	var configId=$("#configId").val();
-			 	var cfgKey=$("#cfgKey").val();
-			 	var cfgValue=$("#cfgValue").val();
-			 	var cfgDesc=$("#cfgDesc").val();
-	    	
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/dictionary/upmConfigurationAction!list.action',
-				postData : {
-			 			 	"configId":configId,
-			 			 	"cfgKey":cfgKey,
-			 			 	"cfgValue":cfgValue,
-			 			 	"cfgDesc":cfgDesc
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
-	    
+	    var $tableList = $('#tableList');
+	    var $btn_add = $('#btn_add');
+	    var $btn_edit = $('#btn_edit');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
 		//新增
-        $("#add").click(function() {
+        $("#btn_add").click(function() {
         	window.location.href = '${ctx}/jsp/dictionary/upmConfigurationAction!input.action'
         })
 		//编辑
@@ -234,12 +215,13 @@
 			refreshGrid();
         }
         
-      	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/dictionary/upmConfigurationAction!list.action',
-			 	page:1
-			 }).trigger("reloadGrid");
-      	}
+        $btn_query.click(function () {
+       	 refreshGrid();
+       });
+       
+     	function refreshGrid(){
+     		$tableList.bootstrapTable('refresh');
+     	}
       	
     </script>
 
