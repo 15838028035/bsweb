@@ -818,7 +818,7 @@
 		<module>bsweb-service-redis</module>
 		<module>bsweb-service-impl-redis</module>
 		<module>bsweb-app-redis</module>
-		<module>bsweb-service-deploy</module>
+<!-- 		<module>bsweb-service-deploy</module> -->
  	</modules>
 	
 </project>

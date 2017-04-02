@@ -163,12 +163,19 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
             
-            <div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDelete();"/></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="processDesigner"  class="window_button_centerInput" value="设计" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="processDeploy"  class="window_button_centerInput" value="部署" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="processDeploy2"  class="window_button_centerInput" value="重新部署" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="startFlow"  class="window_button_centerInput" value="启动流程" /></div>
-        	</div>
+             <button id="btn_add" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设计
+            </button>
+             <button id="btn_add" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>部署
+            </button>
+             <button id="btn_add" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>重新部署
+            </button>
+              <button id="btn_add" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>启动流程
+            </button>
+        </div>
         
         <table id="tableList"></table>
     </div>
