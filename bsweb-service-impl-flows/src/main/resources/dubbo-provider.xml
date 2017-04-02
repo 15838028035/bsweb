@@ -14,7 +14,7 @@
 	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
 
 	<!-- 用dubbo协议在20880端口暴露服务 -->
-	<dubbo:protocol name="dubbo" port="20880"   />
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}"   />
 		
 	<!-- 用户服务接口 -->
 	
