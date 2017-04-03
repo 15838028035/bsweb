@@ -1,3 +1,4 @@
+
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
@@ -5,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>流程实例</title>
+<title>flowFormTable管理</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 <%@ include file="/jsp/common/resource/styles_all.jsp" %>
@@ -23,35 +24,25 @@
 	jQuery(document).ready(function(){ 
 		var lastsel;
 		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/flows/flowOrderAction!jqGridList.action',
+			url:'${ctx}/jsp/flows/flowFormTableAction!jqGridList.action',
 			datatype: 'json',
 			mtype: 'POST',
 			colNames:[
 			 		'ID',
-			 		'流程编号',
-			 		'流程版本',
-			 		'流程定义ID',
-			 		'父流程实例ID',
-			 		'父流程名称',
-			 		'流程实例期望完成时间',
-			 		'流程实例优先级',
-			 		'流程实例附属变量',
+			 		'名称',
+			 		'显示名称',
+			 		'类型',
 			 		'创建人',
-			 		'创建日期',
+			 		'创建时间',
 			 		'更新人',
-			 		'更新日期'
+			 		'更新时间'
 			],
 			colModel:[
 			 		{name:'id',index:'id'},
-			 		{name:'orderNo',index:'orderNo'},
-			 		{name:'orderVersion',index:'orderVersion'},
-			 		{name:'flowProcessId',index:'flowProcessId'},
-			 		{name:'parentId',index:'parentId'},
-			 		{name:'parentNodeName',index:'parentNodeName'},
-			 		{name:'expireTime',index:'expireTime'},
-			 		{name:'priority',index:'priority'},
-			 		{name:'variable',index:'variable'},
-			 		{name:'createByUName',index:'createByUName'},
+			 		{name:'name',index:'name'},
+			 		{name:'displayName',index:'displayName'},
+			 		{name:'type',index:'type'},
+			 		{name:'createByUname',index:'createByUname'},
 			 		{name:'createDate',index:'createDate'},
 			 		{name:'updateByUname',index:'updateByUname'},
 			 		{name:'updateDate',index:'updateDate'}
@@ -98,7 +89,7 @@
                 <div class="contain_title">
 			    	<div class="contain_t_wrap">
 			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">流程实例</span>
+			            	<span class="marg_lef5">flowFormTable管理</span>
 			            </div><!--end contain_t_text-->
 			            <div class="float_rig contain_t_check">
 			            </div><!--end contain_t_check-->
@@ -115,14 +106,14 @@
 						<div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDelete();"/></div>
 					<table>
 						<tr>
-			 			<td>流程编号</td>
-						<td><input name="flowOrder.orderNo" id = "orderNo" type="text"/></td>
-			 			<td>流程定义ID</td>
-						<td><input name="flowOrder.flowProcessId" id = "flowProcessId" type="text"/></td>
+			 			<td>名称</td>
+						<td><input name="flowFormTable.name" id = "name" type="text"/></td>
+			 			<td>显示名称</td>
+						<td><input name="flowFormTable.displayName" id = "displayName" type="text"/></td>
+			 			<td>类型</td>
 						<td>		
 							<div class="window_button marg_lef10 float_lef">
 								<input class="window_button_centerInput" name="select" id = "select" type="button" value="查询" /></div>
-								<div class="window_button marg_lef10 float_lef"><input type="button" id="flowDiagram"  class="window_button_centerInput" value="流程图" /></div>
 							</div>
 						</td>
 						</tr>
@@ -141,13 +132,16 @@
     
 	  //查询
 	    $("#select").click(function() {
-			 	var orderNo=$("#orderNo").val();
-			 	var flowProcessId=$("#flowProcessId").val();
+			 	var name=$("#name").val();
+			 	var displayName=$("#displayName").val();
+			 	var type=$("#type").val();
+	    	
 			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowOrderAction!jqGridList.action',
+			    url:'${ctx}/jsp/flows/flowFormTableAction!jqGridList.action',
 				postData : {
-			 			 	"flowOrder.orderNo":orderNo,
-			 			 	"flowOrder.flowProcessId":flowProcessId
+			 			 	"flowFormTable.name":name,
+			 			 	"flowFormTable.displayName":displayName,
+			 			 	"flowFormTable.type":type
 				}, 
 			 	page:1
 			}).trigger("reloadGrid");
@@ -155,7 +149,7 @@
 	    
 		//新增
         $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/flows/flowOrderAction!input.action'
+        	window.location.href = '${ctx}/jsp/flows/flowFormTableAction!input.action'
         })
 		//编辑
         $("#edit").click(function() {
@@ -168,28 +162,8 @@
         		showModalMessage('请选择一条记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/flows/flowOrderAction!input.action?operate=edit&id=" + ids;
+        	window.location.href = "${ctx}/jsp/flows/flowFormTableAction!input.action?operate=edit&id=" + ids;
         })
-          $("#flowDiagram").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要操作的记录');
-        		return;
-        	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
-        		return;
-        	}
-        	var row=jQuery("#list").jqGrid('getRowData',ids); 
-        	var instanceUrl = row.instanceUrl;
-        	var flowProcessId = row.flowProcessId;
-        	var orderId = row.id;
-        	
-        	var url ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + flowProcessId+"&orderId="+orderId;
-        	window.location.href = url;
-        })
-        
-        
 		//删除
         function mulDelete(){
         	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
@@ -203,7 +177,7 @@
         function doDelete(){
         	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/flows/flowOrderAction!multidelete.action?multidelete=" + ids,
+		      	  url:"${ctx}/jsp/flows/flowFormTableAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
@@ -215,7 +189,7 @@
         
       	function refreshGrid(){
 			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowOrderAction!jqGridList.action',
+			    url:'${ctx}/jsp/flows/flowFormTableAction!jqGridList.action',
 			 	page:1
 			 }).trigger("reloadGrid");
       	}

@@ -48,7 +48,7 @@
                 showColumns:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                search:true,
+                search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -67,34 +67,39 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [
-			 {field:'id',title:'', sortable:true},
-			 {field:'taskVefrsion',title:'', sortable:true},
-			 {field:'flowOrderId',title:'', sortable:true},
-			 {field:'taskName',title:'', sortable:true},
-			 {field:'displayName',title:'', sortable:true},
-			 {field:'performType',title:'', sortable:true},
-			 {field:'taskType',title:'', sortable:true},
-			 {field:'operator',title:'', sortable:true},
-			 {field:'createTime',title:'', sortable:true},
-			 {field:'finishTime',title:'', sortable:true},
-			 {field:'expireTime',title:'', sortable:true},
-			 {field:'expireDate',title:'', sortable:true},
-			 {field:'remindDate',title:'', sortable:true},
-			 {field:'actionUrl',title:'', sortable:true},
-			 {field:'parentTaskId',title:'', sortable:true},
-			 {field:'variable',title:'', sortable:true},
-			 {field:'createBy',title:'', sortable:true},
-			 {field:'createByUname',title:'', sortable:true},
-			 {field:'createDate',title:'', sortable:true},
-			 {field:'updateBy',title:'', sortable:true},
-			 {field:'updateByUname',title:'', sortable:true},
-			 {field:'updateDate',title:'', sortable:true},
-			 {field:'flowVersion',title:'', sortable:true},
-			 {field:'flowName',title:'', sortable:true},
-			 {field:'instanceUrl',title:'', sortable:true},
-			 {field:'flowProcessId',title:'', sortable:true},
-			 {field:'actorIds',title:'', sortable:true}
+                columns: [  
+			{ field: 'checkStatus', title: '',checkbox:true }, 
+                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                        	   			return index+1;
+                           			}  
+                           },
+			 	{field:'id',title:'ID', sortable:true},
+			 	{field:'taskVefrsion',title:'任务版本', sortable:true},
+			 	{field:'flowOrderId',title:'程流实例ID', sortable:true},
+			 	{field:'taskName',title:'务任名称', sortable:true},
+			 	{field:'displayName',title:'显示名称', sortable:true},
+			 	{field:'performType',title:'务任参与类型', sortable:true},
+			 	{field:'taskType',title:'任务类型', sortable:true},
+			 	{field:'operator',title:'作操者', sortable:true},
+			 	{field:'createTime',title:'建创时间', sortable:true},
+			 	{field:'finishTime',title:'完成时间', sortable:true},
+			 	{field:'expireTime',title:'过期时间', sortable:true},
+			 	{field:'expireDate',title:'过期日期', sortable:true},
+			 	{field:'remindDate',title:'提醒日期', sortable:true},
+			 	{field:'actionUrl',title:'实例化URL', sortable:true},
+			 	{field:'parentTaskId',title:'父ID', sortable:true},
+			 	{field:'variable',title:'程流变量', sortable:true},
+			 	{field:'createBy',title:'建创人', sortable:true},
+			 	{field:'createByUname',title:'建创人姓名', sortable:true},
+			 	{field:'createDate',title:'建创日期', sortable:true},
+			 	{field:'updateBy',title:'更新人', sortable:true},
+			 	{field:'updateByUname',title:'新更人姓名', sortable:true},
+			 	{field:'updateDate',title:'新更日期', sortable:true},
+			 	{field:'flowVersion',title:'流程版本', sortable:true},
+			 	{field:'flowName',title:'程流名称', sortable:true},
+			 	{field:'instanceUrl',title:'例化实URL', sortable:true},
+			 	{field:'flowProcessId',title:'流程定义ID', sortable:true},
+			 	{field:'actorIds',title:'程流参与者', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -186,11 +191,11 @@
 		"flowTask.actionUrl":actionUrl,
 		"flowTask.parentTaskId":parentTaskId,
 		"flowTask.variable":variable,
-		"flowTask.createBy":createBy,
+		//"flowTask.createBy":createBy,
 		"flowTask.createByUname":createByUname,
 		"flowTask.createDateBegin":createDateBegin,
 		"flowTask.createDateEnd":createDateEnd,
-		"flowTask.updateBy":updateBy,
+		//"flowTask.updateBy":updateBy,
 		"flowTask.updateByUname":updateByUname,
 		"flowTask.updateDateBegin":updateDateBegin,
 		"flowTask.updateDateEnd":updateDateEnd,
@@ -198,7 +203,7 @@
 		"flowTask.flowName":flowName,
 		"flowTask.instanceUrl":instanceUrl,
 		"flowTask.flowProcessId":flowProcessId,
-		"flowTask.actorIds":actorIds
+		//"flowTask.actorIds":actorIds
             };
             return temp;
         };
@@ -219,99 +224,99 @@
                     <div class="form-group" style="margin-top:15px">
                       
 
-			 	<label class="control-label col-sm-1" for="id"></label>
+			 	<label class="control-label col-sm-1" for="id">ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
-			 	<label class="control-label col-sm-1" for="taskVefrsion"></label>
+			 	<label class="control-label col-sm-1" for="taskVefrsion">任务版本</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="taskVefrsion"></div>
                         
-			 	<label class="control-label col-sm-1" for="flowOrderId"></label>
+			 	<label class="control-label col-sm-1" for="flowOrderId">程流实例ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowOrderId"></div>
                         
-			 	<label class="control-label col-sm-1" for="taskName"></label>
+			 	<label class="control-label col-sm-1" for="taskName">务任名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="taskName"></div>
                         
-			 	<label class="control-label col-sm-1" for="displayName"></label>
+			 	<label class="control-label col-sm-1" for="displayName">显示名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="displayName"></div>
                         
-			 	<label class="control-label col-sm-1" for="performType"></label>
+			 	<label class="control-label col-sm-1" for="performType">务任参与类型</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="performType"></div>
                         
-			 	<label class="control-label col-sm-1" for="taskType"></label>
+			 	<label class="control-label col-sm-1" for="taskType">任务类型</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="taskType"></div>
                         
-			 	<label class="control-label col-sm-1" for="operator"></label>
+			 	<label class="control-label col-sm-1" for="operator">作操者</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
                         
-			 	<label class="control-label col-sm-1" for="createTime"></label>
+			 	<label class="control-label col-sm-1" for="createTime">建创时间</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="finishTime"></label>
+			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="finishTimeBegin" id = "finishTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="finishTimeEnd" id = "finishTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="expireTime"></label>
+			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="expireDate"></label>
+			 	<label class="control-label col-sm-1" for="expireDate">过期日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="expireDateBegin" id = "expireDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="expireDateEnd" id = "expireDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="remindDate"></label>
+			 	<label class="control-label col-sm-1" for="remindDate">提醒日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="remindDateBegin" id = "remindDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="remindDateEnd" id = "remindDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="actionUrl"></label>
+			 	<label class="control-label col-sm-1" for="actionUrl">实例化URL</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actionUrl"></div>
                         
-			 	<label class="control-label col-sm-1" for="parentTaskId"></label>
+			 	<label class="control-label col-sm-1" for="parentTaskId">父ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="parentTaskId"></div>
                         
-			 	<label class="control-label col-sm-1" for="variable"></label>
+			 	<label class="control-label col-sm-1" for="variable">程流变量</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="variable"></div>
                         
-			 	<label class="control-label col-sm-1" for="createBy"></label>
+			 	<label class="control-label col-sm-1" for="createBy">建创人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="createByUname"></label>
+			 	<label class="control-label col-sm-1" for="createByUname">建创人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="createDate"></label>
+			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="createDateBegin" id = "createDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="createDateEnd" id = "createDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="updateBy"></label>
+			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateByUname"></label>
+			 	<label class="control-label col-sm-1" for="updateByUname">新更人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateDate"></label>
+			 	<label class="control-label col-sm-1" for="updateDate">新更日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="flowVersion"></label>
+			 	<label class="control-label col-sm-1" for="flowVersion">流程版本</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowVersion"></div>
                         
-			 	<label class="control-label col-sm-1" for="flowName"></label>
+			 	<label class="control-label col-sm-1" for="flowName">程流名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowName"></div>
                         
-			 	<label class="control-label col-sm-1" for="instanceUrl"></label>
+			 	<label class="control-label col-sm-1" for="instanceUrl">例化实URL</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="instanceUrl"></div>
                         
-			 	<label class="control-label col-sm-1" for="flowProcessId"></label>
+			 	<label class="control-label col-sm-1" for="flowProcessId">流程定义ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowProcessId"></div>
                         
-			 	<label class="control-label col-sm-1" for="actorIds"></label>
+			 	<label class="control-label col-sm-1" for="actorIds">程流参与者</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actorIds"></div>
                         
 
@@ -333,6 +338,10 @@
             <button id="btn_delete" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
+            <button id="btn_startHandleFlow" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>代办审批
+            </button>
+            
         </div>
         
         <table id="tableList"></table>
@@ -340,117 +349,54 @@
 
 
     <script type="text/javascript">
-    
-	  //查询
-	    $("#select").click(function() {
-			 	var id=$("#id").val();
-			 	var taskVefrsion=$("#taskVefrsion").val();
-			 	var flowOrderId=$("#flowOrderId").val();
-			 	var taskName=$("#taskName").val();
-			 	var displayName=$("#displayName").val();
-			 	var performType=$("#performType").val();
-			 	var taskType=$("#taskType").val();
-			 	var operator=$("#operator").val();
-	    		var createTimeBegin=$("#createTimeBegin").val();
-	    		var createTimeEnd=$("#createTimeEnd").val();
-	    		var finishTimeBegin=$("#finishTimeBegin").val();
-	    		var finishTimeEnd=$("#finishTimeEnd").val();
-	    		var expireTimeBegin=$("#expireTimeBegin").val();
-	    		var expireTimeEnd=$("#expireTimeEnd").val();
-	    		var expireDateBegin=$("#expireDateBegin").val();
-	    		var expireDateEnd=$("#expireDateEnd").val();
-	    		var remindDateBegin=$("#remindDateBegin").val();
-	    		var remindDateEnd=$("#remindDateEnd").val();
-			 	var actionUrl=$("#actionUrl").val();
-			 	var parentTaskId=$("#parentTaskId").val();
-			 	var variable=$("#variable").val();
-			 	var createBy=$("#createBy").val();
-			 	var createByUname=$("#createByUname").val();
-	    		var createDateBegin=$("#createDateBegin").val();
-	    		var createDateEnd=$("#createDateEnd").val();
-			 	var updateBy=$("#updateBy").val();
-			 	var updateByUname=$("#updateByUname").val();
-	    		var updateDateBegin=$("#updateDateBegin").val();
-	    		var updateDateEnd=$("#updateDateEnd").val();
-			 	var flowVersion=$("#flowVersion").val();
-			 	var flowName=$("#flowName").val();
-			 	var instanceUrl=$("#instanceUrl").val();
-			 	var flowProcessId=$("#flowProcessId").val();
-			 	var actorIds=$("#actorIds").val();
-	    	
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flowTask/flowTaskAction!list.action',
-				postData : {
-			 			 	"id":id,
-			 			 	"taskVefrsion":taskVefrsion,
-			 			 	"flowOrderId":flowOrderId,
-			 			 	"taskName":taskName,
-			 			 	"displayName":displayName,
-			 			 	"performType":performType,
-			 			 	"taskType":taskType,
-			 			 	"operator":operator,
-							"createTimeBegin":createTimeBegin,
-							"createTimeEnd":createTimeEnd,
-							"finishTimeBegin":finishTimeBegin,
-							"finishTimeEnd":finishTimeEnd,
-							"expireTimeBegin":expireTimeBegin,
-							"expireTimeEnd":expireTimeEnd,
-							"expireDateBegin":expireDateBegin,
-							"expireDateEnd":expireDateEnd,
-							"remindDateBegin":remindDateBegin,
-							"remindDateEnd":remindDateEnd,
-			 			 	"actionUrl":actionUrl,
-			 			 	"parentTaskId":parentTaskId,
-			 			 	"variable":variable,
-			 			 	"createBy":createBy,
-			 			 	"createByUname":createByUname,
-							"createDateBegin":createDateBegin,
-							"createDateEnd":createDateEnd,
-			 			 	"updateBy":updateBy,
-			 			 	"updateByUname":updateByUname,
-							"updateDateBegin":updateDateBegin,
-							"updateDateEnd":updateDateEnd,
-			 			 	"flowVersion":flowVersion,
-			 			 	"flowName":flowName,
-			 			 	"instanceUrl":instanceUrl,
-			 			 	"flowProcessId":flowProcessId,
-			 			 	"actorIds":actorIds
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
-	    
+    	    var $tableList = $('#tableList');
+	    var $btn_add = $('#btn_add');
+	    var $btn_edit = $('#btn_edit');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
+
+	
 		//新增
-        $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/flowTask/flowTaskAction!input.action'
+        $("#btn_add").click(function() {
+        	window.location.href = '${ctx}/jsp/flows/flowTaskAction!input.action'
         })
 		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
+        $("#btn_edit").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             	});
+        	if(ids == ''|| ids==null){
+        		alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        	
+        	if(ids.length>1){
+        		alert('请选择一条编辑的记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/flowTask/flowTaskAction!input.action?operate=edit&id=" + ids;
+        	window.location.href = "${ctx}/jsp/flows/flowTaskAction!input.action?operate=edit&id=" + ids;
         })
 		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+      $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		alert('请选择要删除的记录');
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        	//showModalConfirmation('确认要删除么',"doDelete()");
+        	doDelete();
+        })
+
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/flowTask/flowTaskAction!multidelete.action?multidelete=" + ids,
+		      	  url:"${ctx}/jsp/flows/flowTaskAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
@@ -461,11 +407,38 @@
         }
         
       	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flowTask/flowTaskAction!list.action',
-			 	page:1
-			 }).trigger("reloadGrid");
+		$tableList.bootstrapTable('refresh');
       	}
+      	
+      	 //处理
+        $("#startHandleFlow").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+       	if(ids == ''){
+       		showModalMessage('请选择要操作的记录');
+       		return;
+       	}
+       	if(ids.length > 1){
+       		showModalMessage('请选择一条记录');
+       		return;
+       	}
+       	var instanceUrl = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.instanceUrl;
+        });
+       	var flowProcessId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.flowProcessId;
+        });
+       	var taskId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+       	var orderId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.flowOrderId;
+        });
+       	
+       	var url ="${ctx}" + instanceUrl +"?processId="+flowProcessId +"&orderId="+orderId+"&taskId="+taskId;
+       	window.location.href = url;
+       })
       	
     </script>
 

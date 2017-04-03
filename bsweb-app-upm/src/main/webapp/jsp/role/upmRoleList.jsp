@@ -67,8 +67,13 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [
-						 {field:'id',title:'编号', sortable:true},
+                columns: [ 
+                           { field: 'checkStatus', title: '',checkbox:true }, 
+                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+               	   			return index+1;
+                  			}  
+                  			},
+						 {field:'id',title:'ID', sortable:true},
 						 {field:'roleCode',title:'色角编码', sortable:true},
 						 {field:'appId',title:'用应编码', sortable:true},
 						 {field:'roleName',title:'色角名称', sortable:true},
@@ -76,8 +81,15 @@
 						 {field:'createDate',title:'建创日期', sortable:true},
 						 {field:'updateBy',title:'更新人', sortable:true},
 						 {field:'updateDate',title:'更新日期', sortable:true},
-						 {field:'enableFlag',title:'否是有效', sortable:true},
-						 {field:'lockStatus',title:'定锁状态', sortable:true},
+						 {field:'enableFlag',title:'否是有效', sortable:true,formatter : function(value, row, index) {  
+	               	   			if(value=='F') return '否';
+	               	   			return '是';
+               				}  
+						 },
+						 {field:'lockStatus',title:'定锁状态', sortable:true,sortable:true,formatter : function(value, row, index) {  
+	               	   			if(value=='1') return '是';
+	               	   			return '否';
+               				}  },
 						 {field:'roleDesc',title:'色角描述', sortable:true}
                         ],              		
              	formatLoadingMessage: function () {
@@ -161,7 +173,7 @@
                     <div class="form-group" style="margin-top:15px">
                       
 
-			 	<label class="control-label col-sm-1" for="id">编号</label>
+			 	<label class="control-label col-sm-1" for="id">ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
 			 	<label class="control-label col-sm-1" for="roleCode">色角编码</label>
@@ -232,36 +244,47 @@
     var $btn_query = $('#btn_query');
 	 
 		//新增
-        $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/upmRole/upmRoleAction!input.action'
-        })
+        $("#btn_add").click(function() {
+        	window.location.href = '${ctx}/jsp/role/upmRoleAction!input.action'
+        });
+		
 		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
+        $("#btn_edit").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        	
+        	if(ids.length>1){
+        		alert('请选择一条编辑的记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/upmRole/upmRoleAction!input.action?operate=edit&id=" + ids;
-        })
-		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	window.location.href = "${ctx}/jsp/role/upmRoleAction!input.action?operate=edit&id=" + ids;
+        });
+		
+		 $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		alert('请选择要删除的记录');
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        	//showModalConfirmation('确认要删除么',"doDelete()");
+        	doDelete();
+        });
+        
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/upmRole/upmRoleAction!multidelete.action?multidelete=" + ids,
+		      	  url:"${ctx}/jsp/role/upmRoleAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
@@ -277,7 +300,7 @@
         
       	function refreshGrid(){
       		$tableList.bootstrapTable('refresh');
-      	}
+      	};
       	
     </script>
 

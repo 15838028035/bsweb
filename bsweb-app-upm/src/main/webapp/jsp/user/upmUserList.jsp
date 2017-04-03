@@ -20,6 +20,9 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
 <script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();

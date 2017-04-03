@@ -96,18 +96,18 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 	}
 	
 	/**
-	 * 公共jgGrid查询方法
+	 * 公共bootStrapList查询方法
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public String jqGridList() throws Exception {
+	public String bootStrapList() throws Exception {
 		try {
 			Map<String,Object> condition = new HashMap<String,Object>();
 			page.setFilters(getModel());
 			
-			if (StringUtil.isNotBlank(this.getSidx())) {
-				String orderBy = PageTool.convert(this.getSidx()) + " "+ this.getSord();
+			if (StringUtil.isNotBlank(this.getSortName())) {
+				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
 				page.setSortColumns(orderBy);
 			}
 			

@@ -1,4 +1,3 @@
-
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
@@ -6,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>抄送实例管理</title>
+<title>历史任务</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 <%@ include file="/jsp/common/resource/styles_all.jsp" %>
@@ -24,26 +23,58 @@
 	jQuery(document).ready(function(){ 
 		var lastsel;
 		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/flows/flowTaskAction!activeCCList.action',
+			url:'${ctx}/jsp/flows/flowTaskHistAction!jqGridList2.action?flowTaskHist.flowOrderId=${param.flowOrderId}',
 			datatype: 'json',
 			mtype: 'POST',
 			colNames:[
 			 		'ID',
-			 		'流程实例编号',
-			 		'执行人',
-			 		'建创人',
+			 		'版本',
+			 		'流程实例ID',
+			 		'任务名称',
+			 		'显示名称',
+			 		'参与方式（0：普通任务；1：参与者会签任务）',
+			 		'任务类型（0：主办任务；1：协办任务）',
+			 		'任务处理者ID',
+			 		'任务创建时间',
+			 		'任务完成时间',
+			 		'期望任务完成时间',
+			 		'期望的完成时间date类型',
+			 		'提醒时间date类型',
+			 		'任务关联的表单url',
+			 		'任务参与者列表',
+			 		'父任务Id',
+			 		'任务附属变量',
+			 		'创建人',
 			 		'创建时间',
-			 		'完成时间',
-			 		'状态'
+			 		'更新人',
+			 		'更新时间',
+			 		'创建人',
+			 		'更新人'
 			],
 			colModel:[
 			 		{name:'id',index:'id'},
-			 		{name:'orderId',index:'orderId'},
-			 		{name:'actorId',index:'actorId'},
-			 		{name:'creator',index:'creator'},
+			 		{name:'taskVefrsion',index:'taskVefrsion'},
+			 		{name:'flowOrderId',index:'flowOrderId'},
+			 		{name:'taskName',index:'taskName'},
+			 		{name:'displayName',index:'displayName'},
+			 		{name:'performType',index:'performType'},
+			 		{name:'taskType',index:'taskType'},
+			 		{name:'operator',index:'operator'},
 			 		{name:'createTime',index:'createTime'},
 			 		{name:'finishTime',index:'finishTime'},
-			 		{name:'status',index:'status'}
+			 		{name:'expireTime',index:'expireTime'},
+			 		{name:'expireDate',index:'expireDate'},
+			 		{name:'remindDate',index:'remindDate'},
+			 		{name:'actionUrl',index:'actionUrl'},
+			 		{name:'actorIds',index:'actorIds'},
+			 		{name:'parentTaskId',index:'parentTaskId'},
+			 		{name:'variable',index:'variable'},
+			 		{name:'createBy',index:'createBy'},
+			 		{name:'createDate',index:'createDate'},
+			 		{name:'updateBy',index:'updateBy'},
+			 		{name:'updateDate',index:'updateDate'},
+			 		{name:'createByUname',index:'createByUname'},
+			 		{name:'updateByUname',index:'updateByUname'}
 				 ],
 			pager: '#pager',
 			sortable: true,
@@ -87,7 +118,7 @@
                 <div class="contain_title">
 			    	<div class="contain_t_wrap">
 			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">抄送管理</span>
+			            	<span class="marg_lef5">历史任务</span>
 			            </div><!--end contain_t_text-->
 			            <div class="float_rig contain_t_check">
 			            </div><!--end contain_t_check-->
@@ -96,21 +127,6 @@
 			    
 				<div class="toolbar">
 					<div class="toolbar_wrap">
-						</div>
-					<table>
-						<tr>
-			 			<td>流程实例编号</td>
-						<td><input name="flowCcorder.orderId" id = "orderId" type="text"/></td>
-			 			<td>执行人</td>
-						<td><input name="flowCcorder.actorId" id = "actorId" type="text"/></td>
-						<td>		
-							<div class="window_button marg_lef10 float_lef">
-								<input class="window_button_centerInput" name="select" id = "select" type="button" value="查询" /></div>
-								<div class="window_button marg_lef10 float_lef"><input type="button" id="ccRead"  class="window_button_centerInput" value="阅读" /></div>
-							</div>
-						</td>
-						</tr>
-					</table>
 					</div>
 				</div>
 				
@@ -120,45 +136,6 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-    
-	  //查询
-	    $("#select").click(function() {
-			 	var orderId=$("#orderId").val();
-			 	var actorId=$("#actorId").val();
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowTaskAction!activeCCList.action',
-				postData : {
-			 			 	"flowCcorder.orderId":orderId,
-			 			 	"flowCcorder.actorId":actorId
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    });
-	    
-	    $("#ccRead").click(function() {
-		 	var id=$("#id").val();
-		jQuery("#list").jqGrid('setGridParam',{
-		    url:'${ctx}/jsp/flows/flowCcorderAction!ccread.action',
-			postData : {
-		 			 	"flowCcorder.id":id,
-		 			 	"flowCcorder.status":"0"
-			}, 
-		 	page:1
-		}).trigger("reloadGrid");
-    });
-        
-         	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowTaskAction!activeCCList.action',
-			 	page:1
-			 }).trigger("reloadGrid");
-      	}
-	  
-        
-    </script>
-
 
 </body>
 </html>

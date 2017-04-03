@@ -48,7 +48,7 @@
                 showColumns:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                search:true,
+                search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -67,7 +67,12 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [{field : 'Number', title : '行号',    formatter : function(value, row, index) {return index+1;}  },
+                columns: [
+                          { field: 'checkStatus', title: '',checkbox:true }, 
+                          {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                       	   			return index+1;
+                          			}  
+                          },
 						 {field:'id',title:'', sortable:true},
 						 {field:'orderId',title:'流程实例编号', sortable:true},
 						 {field:'actorId',title:'执行人', sortable:true},
@@ -102,10 +107,11 @@
 			var orderId=$("#orderId").val();
 			var actorId=$("#actorId").val();
 			var creator=$("#creator").val();
-    		var createTimeBegin=$("#createTimeBegin").val();
-    		var createTimeEnd=$("#createTimeEnd").val();
-    		var finishTimeBegin=$("#finishTimeBegin").val();
-    		var finishTimeEnd=$("#finishTimeEnd").val();
+	    		var createTimeBegin=$("#createTimeBegin").val();
+	    		var createTimeEnd=$("#createTimeEnd").val();
+	    		var finishTimeBegin=$("#finishTimeBegin").val();
+	    		var finishTimeEnd=$("#finishTimeEnd").val();
+			var status=$("#status").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 //limit: params.limit, //第几条记录
@@ -126,7 +132,8 @@
 		"flowCcorder.createTimeBegin":createTimeBegin,
 		"flowCcorder.createTimeEnd":createTimeEnd,
 		"flowCcorder.finishTimeBegin":finishTimeBegin,
-		"flowCcorder.finishTimeEnd":finishTimeEnd
+		"flowCcorder.finishTimeEnd":finishTimeEnd,
+		"flowCcorder.status":status
             };
             return temp;
         };
@@ -147,7 +154,7 @@
                     <div class="form-group" style="margin-top:15px">
                       
 
-			 	<label class="control-label col-sm-1" for="id">ID</label>
+			 	<label class="control-label col-sm-1" for="id"></label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
 			 	<label class="control-label col-sm-1" for="orderId">流程实例编号</label>
@@ -162,31 +169,28 @@
 			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-								<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-                  </div>
+				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
 			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="finishTimeBegin" id = "finishTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
 				<input type="text" name="finishTimeEnd" id = "finishTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
                          </div>
+			 	<label class="control-label col-sm-1" for="status"></label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="status"></div>
+                        
 
-                      <div class="col-sm-6" style="text-align:left;">
-                          <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                      </div>
+                        <div class="col-sm-6" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>       
 
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default">
+            <button id="btn_ccRead" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
         
@@ -195,81 +199,37 @@
 
 
     <script type="text/javascript">
+    var $tableList = $('#tableList');
+    var $btn_query = $('#btn_query');
+    var $btn_ccRead = $('#btn_ccRead');
     
-	  //查询
-	    $("#select").click(function() {
-			 	var id=$("#id").val();
-			 	var orderId=$("#orderId").val();
-			 	var actorId=$("#actorId").val();
-			 	var creator=$("#creator").val();
-	    		var createTimeBegin=$("#createTimeBegin").val();
-	    		var createTimeEnd=$("#createTimeEnd").val();
-	    		var finishTimeBegin=$("#finishTimeBegin").val();
-	    		var finishTimeEnd=$("#finishTimeEnd").val();
-			 	var status=$("#status").val();
-	    	
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flowCcorder/flowCcorderAction!list.action',
-				postData : {
-			 			 	"id":id,
-			 			 	"orderId":orderId,
-			 			 	"actorId":actorId,
-			 			 	"creator":creator,
-							"createTimeBegin":createTimeBegin,
-							"createTimeEnd":createTimeEnd,
-							"finishTimeBegin":finishTimeBegin,
-							"finishTimeEnd":finishTimeEnd,
-			 			 	"status":status
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
-	    
-		//新增
-        $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/flowCcorder/flowCcorderAction!input.action'
-        })
-		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
-        		return;
-        	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
-        		return;
-        	}
-        	window.location.href = "${ctx}/jsp/flowCcorder/flowCcorderAction!input.action?operate=edit&id=" + ids;
-        })
-		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ""){
-        		showModalMessage('请选择一条记录');
-        		return;
-        	}
-
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
-        function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-            var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/flowCcorder/flowCcorderAction!multidelete.action?multidelete=" + ids,
-		          async:false,
-		          cache:false,
-		          dataType:"json"
-		      }).responseText;
-			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
-			refreshGrid();
-        }
-        
+    $btn_query.click(function () {
+   	 refreshGrid();
+   });
+    
+    $("#btn_ccRead").click(function() {
+    	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+             return row.id;
+         });
+    	 
+    	if(ids == ""){
+    		alert('请选择记录');
+    		return;
+    	}
+    	
+	jQuery("#list").jqGrid('setGridParam',{
+	    url:'${ctx}/jsp/flows/flowCcorderAction!ccread.action',
+		postData : {
+	 			 	"flowCcorder.id":id,
+	 			 	"flowCcorder.status":"0"
+		}, 
+	 	page:1
+	}).trigger("reloadGrid");
+	});
+    
+    
       	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flowCcorder/flowCcorderAction!list.action',
-			 	page:1
-			 }).trigger("reloadGrid");
+      		$tableList.bootstrapTable('refresh');
       	}
       	
     </script>
