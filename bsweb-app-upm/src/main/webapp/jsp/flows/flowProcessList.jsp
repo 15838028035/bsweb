@@ -76,7 +76,7 @@
                          { field: 'flowVersion', title: '流程版本' ,sortable:true},
                          { field: 'flowType', title: '流程类型',sortable:true },
                          { field: 'instanceUrl', title: '流程URL',sortable:true },
-                         { field: 'createByUName', title: '创建人',sortable:true },
+                         { field: 'createByUname', title: '创建人姓名',sortable:true },
                          
                          { field: 'createDate', title: '创建时间',sortable:true },
                          { field: 'updateByUname', title: '更新人',sortable:true },

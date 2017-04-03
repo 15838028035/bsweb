@@ -87,7 +87,7 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 			}
 			
 			page = getBaseService().findPageList(page, condition);
-			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
+			Struts2Utils.renderText(PageTool.mapPageToJsonBootStrap(this.page),new String[0]);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
