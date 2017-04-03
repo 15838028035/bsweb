@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>配置管理</title>
+<title>upmFile管理</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 <%@ include file="/jsp/common/resource/styles_all.jsp" %>
@@ -18,25 +18,35 @@
 		contralEffect.contain();
 		contralEffect.tablelist();
 		contralEffect.blueButton();
+		var isAlert = '${saveSuc}';
+		if(isAlert == "1"){
+			showModalMessage("编辑");
+		}
 	});
 	
 	jQuery(document).ready(function(){ 
 		var lastsel;
 		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/dictionary/upmConfigurationAction!jqGridList.action',
+			url:'${ctx}/jsp/upmFile/upmFileAction!list.action',
 			datatype: 'json',
 			mtype: 'POST',
 			colNames:[
 			 		'ID',
-			 		'置配项KEY',
-			 		'置配项值',
-			 		'置配项描述'
+			 		'relateId1',
+			 		'',
+			 		'',
+			 		'optdate',
+			 		'operator',
+			 		'content'
 			],
 			colModel:[
-			 		{name:'configId',index:'configId',width:10,hidden:true},
-			 		{name:'cfgKey',index:'cfgKey',width:200},
-			 		{name:'cfgValue',index:'cfgValue',width:500},
-			 		{name:'cfgDesc',index:'cfgDesc',width:200}
+			 		{name:'id',index:'id'},
+			 		{name:'relateId1',index:'relateId1'},
+			 		{name:'relateId2',index:'relateId2'},
+			 		{name:'name',index:'name'},
+			 		{name:'optdate',index:'optdate'},
+			 		{name:'operator',index:'operator'},
+			 		{name:'content',index:'content'}
 				 ],
 			pager: '#pager',
 			sortable: true,
@@ -55,7 +65,7 @@
 			autowidth:true,
 			shrinkToFit:true,
 			height: '100%',
-			sortname:'configId',
+			sortname:'loginNo',
 			sortorder:'asc',
 			hidegrid: false,
 			gridComplete:function(){},
@@ -80,7 +90,7 @@
                 <div class="contain_title">
 			    	<div class="contain_t_wrap">
 			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">配置管理</span>
+			            	<span class="marg_lef5">upmFile管理</span>
 			            </div><!--end contain_t_text-->
 			            <div class="float_rig contain_t_check">
 			            </div><!--end contain_t_check-->
@@ -89,18 +99,30 @@
 			    
 				<div class="toolbar">
 					<div class="toolbar_wrap">
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="add" class="window_button_centerInput" value="新增" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="edit" class="window_button_centerInput" value="编辑" /></div>
+						<div class="window_button marg_lef10 float_lef">
+						<input type="button" id="add" class="window_button_centerInput"
+						 value="新增" /></div>
+						<div class="window_button marg_lef10 float_lef">
+						<input type="button" id="edit" class="window_button_centerInput" value="编辑" /></div>
 						<div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDelete();"/></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="加载配置" onclick="reloadConfigPro();"/></div>
 					<table>
 						<tr>
-			 			<td>置配项KEY</td>
-						<td><input name="upmConfiguration.cfgKey" id = "cfgKey" type="text"/></td>
-			 			<td>置配项值</td>
-						<td><input name="upmConfiguration.cfgValue" id = "cfgValue" type="text"/></td>
-			 			<td>置配项描述</td>
-						<td><input name="upmConfiguration.cfgDesc" id = "cfgDesc" type="text"/></td>
+			 			<td>ID</td>
+						<td><input name="id" id = "id" type="text"/></td>
+			 			<td>relateId1</td>
+						<td><input name="relateId1" id = "relateId1" type="text"/></td>
+			 			<td></td>
+						<td><input name="relateId2" id = "relateId2" type="text"/></td>
+			 			<td></td>
+						<td><input name="name" id = "name" type="text"/></td>
+			 			<td>optdate</td>
+						<td><input type="text" name="optdateBegin" id = "optdateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+							<input type="text" name="optdateEnd" id = "optdateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+						</td>
+			 			<td>operator</td>
+						<td><input name="operator" id = "operator" type="text"/></td>
+			 			<td>content</td>
+						<td><input name="content" id = "content" type="text"/></td>
 						<td>		
 							<div class="window_button marg_lef10 float_lef">
 								<input class="window_button_centerInput" name="select" id = "select" type="button" value="查询" /></div>
@@ -122,16 +144,26 @@
     
 	  //查询
 	    $("#select").click(function() {
-			 	var cfgKey=$("#cfgKey").val();
-			 	var cfgValue=$("#cfgValue").val();
-			 	var cfgDesc=$("#cfgDesc").val();
+			 	var id=$("#id").val();
+			 	var relateId1=$("#relateId1").val();
+			 	var relateId2=$("#relateId2").val();
+			 	var name=$("#name").val();
+	    		var optdateBegin=$("#optdateBegin").val();
+	    		var optdateEnd=$("#optdateEnd").val();
+			 	var operator=$("#operator").val();
+			 	var content=$("#content").val();
 	    	
 			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/dictionary/upmConfigurationAction!jqGridList.action',
+			    url:'${ctx}/jsp/upmFile/upmFileAction!list.action',
 				postData : {
-			 			 	"upmConfiguration.cfgKey":cfgKey,
-			 			 	"upmConfiguration.cfgValue":cfgValue,
-			 			 	"upmConfiguration.cfgDesc":cfgDesc
+			 			 	"id":id,
+			 			 	"relateId1":relateId1,
+			 			 	"relateId2":relateId2,
+			 			 	"name":name,
+							"optdateBegin":optdateBegin,
+							"optdateEnd":optdateEnd,
+			 			 	"operator":operator,
+			 			 	"content":content
 				}, 
 			 	page:1
 			}).trigger("reloadGrid");
@@ -139,7 +171,7 @@
 	    
 		//新增
         $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/dictionary/upmConfigurationAction!input.action'
+        	window.location.href = '${ctx}/jsp/upmFile/upmFileAction!input.action'
         })
 		//编辑
         $("#edit").click(function() {
@@ -152,7 +184,7 @@
         		showModalMessage('请选择一条记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/dictionary/upmConfigurationAction!input.action?operate=edit&configId=" + ids;
+        	window.location.href = "${ctx}/jsp/upmFile/upmFileAction!input.action?operate=edit&id=" + ids;
         })
 		//删除
         function mulDelete(){
@@ -167,19 +199,7 @@
         function doDelete(){
         	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!multidelete.action?multidelete=" + ids,
-		          async:false,
-		          cache:false,
-		          dataType:"json"
-		      }).responseText;
-			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
-			refreshGrid();
-        }
-        
-        function reloadConfigPro(){
-            var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!reloadConfigPro.action",
+		      	  url:"${ctx}/jsp/upmFile/upmFileAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
@@ -191,7 +211,7 @@
         
       	function refreshGrid(){
 			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/dictionary/upmConfigurationAction!jqGridList.action',
+			    url:'${ctx}/jsp/upmFile/upmFileAction!list.action',
 			 	page:1
 			 }).trigger("reloadGrid");
       	}
