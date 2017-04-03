@@ -46,7 +46,7 @@
                 showColumns:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                search:true,
+                search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -169,21 +169,21 @@
     </div>
 
     <script type="text/javascript">
-		    
+	    var $tableList = $('#tableList');
+	    var $btn_add = $('#btn_add');
+	    var $btn_edit = $('#btn_edit');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
     
 		//新增
-        $("#add").click(function() {
+        $("#btn_add").click(function() {
         	window.location.href = '${ctx}/jsp/user/upmUserAction!input.action';
         })
 		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
-        		return;
-        	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        $("#btn_edit").click(function() {
+        	var ids = $tableList.bootstrapTable('getData').id;
+        	if(ids == ''|| ids==null){
+        		alert('请选择要编辑的记录');
         		return;
         	}
         	window.location.href = "${ctx}/jsp/user/upmUserAction!input.action?operate=edit&id=" + ids;
@@ -199,7 +199,7 @@
         	showModalConfirmation('确认要删除么',"doDelete()");
         }	
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	var ids = $table.bootstrapTable('getData'); 
             var result = jQuery.ajax({
 		      	  url:"${ctx}/jsp/user/upmUserAction!multidelete.action?multidelete=" + ids,
 		          async:false,
@@ -210,12 +210,18 @@
 			showModalMessage(obj.opResult);
 			refreshGrid();
         }
-			
+		
+        //($table.bootstrapTable('getAllSelections')
+        //$table.bootstrapTable('getOptions')
+        //($table.bootstrapTable('getSelections')
+        // $table.bootstrapTable('resetSearch');
+        		
+        $btn_query.click(function () {
+        	 refreshGrid();
+        });
+        
       	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/user/upmUserAction!bootStrapList.action',
-			 	page:1
-			 }).trigger("reloadGrid");
+      		$tableList.bootstrapTable('refresh');
       	}
       	
     </script>

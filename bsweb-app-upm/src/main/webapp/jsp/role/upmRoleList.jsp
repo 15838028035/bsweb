@@ -1,4 +1,4 @@
-
+﻿
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>upmConfiguration管理</title>
+<title>upmRole管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 
@@ -33,7 +33,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/dictionary/upmConfigurationAction!bootStrapList.action',         //请求后台的URL（*）
+                url: '${ctx}/jsp/role/upmRoleAction!bootStrapList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",
@@ -48,7 +48,7 @@
                 showColumns:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                search:true,
+                search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -67,15 +67,19 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [{field : 'Number', title : '行号',    formatter : function(value, row, index) {  
-    	   				return index+1;
-       					}  
-       				},
-					 {field:'configId',title:'ID', sortable:true},
-					 {field:'cfgKey',title:'置配项KEY', sortable:true},
-					 {field:'cfgValue',title:'置配项值', sortable:true},
-					 {field:'cfgDesc',title:'置配项描述', sortable:true}
-                        ],               		
+                columns: [
+						 {field:'id',title:'编号', sortable:true},
+						 {field:'roleCode',title:'色角编码', sortable:true},
+						 {field:'appId',title:'用应编码', sortable:true},
+						 {field:'roleName',title:'色角名称', sortable:true},
+						 {field:'createBy',title:'建创人', sortable:true},
+						 {field:'createDate',title:'建创日期', sortable:true},
+						 {field:'updateBy',title:'更新人', sortable:true},
+						 {field:'updateDate',title:'更新日期', sortable:true},
+						 {field:'enableFlag',title:'否是有效', sortable:true},
+						 {field:'lockStatus',title:'定锁状态', sortable:true},
+						 {field:'roleDesc',title:'色角描述', sortable:true}
+                        ],              		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
              	},
@@ -98,10 +102,19 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var configId=$("#configId").val();
-			var cfgKey=$("#cfgKey").val();
-			var cfgValue=$("#cfgValue").val();
-			var cfgDesc=$("#cfgDesc").val();
+			var id=$("#id").val();
+			var roleCode=$("#roleCode").val();
+			var appId=$("#appId").val();
+			var roleName=$("#roleName").val();
+			var createBy=$("#createBy").val();
+	    		var createDateBegin=$("#createDateBegin").val();
+	    		var createDateEnd=$("#createDateEnd").val();
+			var updateBy=$("#updateBy").val();
+	    		var updateDateBegin=$("#updateDateBegin").val();
+	    		var updateDateEnd=$("#updateDateEnd").val();
+			var enableFlag=$("#enableFlag").val();
+			var lockStatus=$("#lockStatus").val();
+			var roleDesc=$("#roleDesc").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 //limit: params.limit, //第几条记录
@@ -115,10 +128,19 @@
                 offset:params.offset,
                 "sortName":this.sortName,
                 "sortOrder":this.sortOrder,
-		"upmConfiguration.configId":configId,
-		"upmConfiguration.cfgKey":cfgKey,
-		"upmConfiguration.cfgValue":cfgValue,
-		"upmConfiguration.cfgDesc":cfgDesc
+		"upmRole.id":id,
+		"upmRole.roleCode":roleCode,
+		"upmRole.appId":appId,
+		"upmRole.roleName":roleName,
+		"upmRole.createBy":createBy,
+		"upmRole.createDateBegin":createDateBegin,
+		"upmRole.createDateEnd":createDateEnd,
+		"upmRole.updateBy":updateBy,
+		"upmRole.updateDateBegin":updateDateBegin,
+		"upmRole.updateDateEnd":updateDateEnd,
+		"upmRole.enableFlag":enableFlag,
+		"upmRole.lockStatus":lockStatus,
+		"upmRole.roleDesc":roleDesc
             };
             return temp;
         };
@@ -137,21 +159,50 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-						 	<label class="control-label col-sm-1" for="configId">ID</label>
-							<div class="col-sm-1"> <input type="text" class="form-control" id="configId"></div>
-			                        
-						 	<label class="control-label col-sm-1" for="cfgKey">置配项KEY</label>
-							<div class="col-sm-1"> <input type="text" class="form-control" id="cfgKey"></div>
-			                        
-						 	<label class="control-label col-sm-1" for="cfgValue">置配项值</label>
-							<div class="col-sm-1"> <input type="text" class="form-control" id="cfgValue"></div>
-			                        
-						 	<label class="control-label col-sm-1" for="cfgDesc">置配项描述</label>
-							<div class="col-sm-1"> <input type="text" class="form-control" id="cfgDesc"></div>
-			                   <div class="col-sm-1" style="text-align:left;">
-			                       <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-			                   </div>
-                  </div>
+                      
+
+			 	<label class="control-label col-sm-1" for="id">编号</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
+                        
+			 	<label class="control-label col-sm-1" for="roleCode">色角编码</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="roleCode"></div>
+                        
+			 	<label class="control-label col-sm-1" for="appId">用应编码</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
+                        
+			 	<label class="control-label col-sm-1" for="roleName">色角名称</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="roleName"></div>
+                        
+			 	<label class="control-label col-sm-1" for="createBy">建创人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
+                        
+			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="createDateEnd" id = "createDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
+                        
+			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="enableFlag">否是有效</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="enableFlag"></div>
+                        
+			 	<label class="control-label col-sm-1" for="lockStatus">定锁状态</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="lockStatus"></div>
+                        
+			 	<label class="control-label col-sm-1" for="roleDesc">色角描述</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="roleDesc"></div>
+                        
+
+                        <div class="col-sm-6" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>       
@@ -173,14 +224,16 @@
 
 
     <script type="text/javascript">
-	    var $tableList = $('#tableList');
-	    var $btn_add = $('#btn_add');
-	    var $btn_edit = $('#btn_edit');
-	    var $btn_delete = $('#btn_delete');
-	    var $btn_query = $('#btn_query');
+    
+    var $tableList = $('#tableList');
+    var $btn_add = $('#btn_add');
+    var $btn_edit = $('#btn_edit');
+    var $btn_delete = $('#btn_delete');
+    var $btn_query = $('#btn_query');
+	 
 		//新增
-        $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/dictionary/upmConfigurationAction!input.action'
+        $("#add").click(function() {
+        	window.location.href = '${ctx}/jsp/upmRole/upmRoleAction!input.action'
         })
 		//编辑
         $("#edit").click(function() {
@@ -193,7 +246,7 @@
         		showModalMessage('请选择一条记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/dictionary/upmConfigurationAction!input.action?operate=edit&id=" + ids;
+        	window.location.href = "${ctx}/jsp/upmRole/upmRoleAction!input.action?operate=edit&id=" + ids;
         })
 		//删除
         function mulDelete(){
@@ -208,7 +261,7 @@
         function doDelete(){
         	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!multidelete.action?multidelete=" + ids,
+		      	  url:"${ctx}/jsp/upmRole/upmRoleAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
@@ -221,10 +274,10 @@
         $btn_query.click(function () {
        	 refreshGrid();
        });
-       
-     	function refreshGrid(){
-     		$tableList.bootstrapTable('refresh');
-     	}
+        
+      	function refreshGrid(){
+      		$tableList.bootstrapTable('refresh');
+      	}
       	
     </script>
 
