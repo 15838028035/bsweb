@@ -66,11 +66,12 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [ 
-                           {field : 'Number', title : '行号',    formatter : function(value, row, index) {  
+                          { field: 'checkStatus', title: '',checkbox:true }, 
+                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
                         	   			return index+1;
                            			}  
                            },
-                          { field: 'id', title: '序号',sortable:true }, 
+                          { field: 'id', title: 'ID' }, 
                           { field: 'loginNo', title: '登陆账号',sortable:true }, 
                           { field: 'userName', title: '用户名',sortable:true }, 
                           { field: 'mobile', title: '手机号码',sortable:true },
@@ -181,25 +182,40 @@
         })
 		//编辑
         $("#btn_edit").click(function() {
-        	var ids = $tableList.bootstrapTable('getData').id;
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
         	if(ids == ''|| ids==null){
         		alert('请选择要编辑的记录');
         		return;
         	}
+        	
+        	if(ids.length>1){
+        		alert('请选择一条编辑的记录');
+        		return;
+        	}
+        	
         	window.location.href = "${ctx}/jsp/user/upmUserAction!input.action?operate=edit&id=" + ids;
         })
-		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        
+        $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		alert('请选择要删除的记录');
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        	//showModalConfirmation('确认要删除么',"doDelete()");
+        	doDelete();
+        })
+		
         function doDelete(){
-        	var ids = $table.bootstrapTable('getData'); 
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
             var result = jQuery.ajax({
 		      	  url:"${ctx}/jsp/user/upmUserAction!multidelete.action?multidelete=" + ids,
 		          async:false,
@@ -207,7 +223,9 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			//showModalMessage(obj.opResult);
+			
+			alert(obj.opResult);
 			refreshGrid();
         }
 		

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
@@ -18,8 +18,8 @@
 					    http://www.springframework.org/schema/task/spring-task-3.0.xsd
 					    "
 	default-lazy-init="false">
-	
-	
+
+	<!-- 自动扫描Bean -->
 	<context:component-scan base-package="com.lj" />
 	<task:annotation-driven/>
 	      
@@ -30,14 +30,16 @@
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 		<list>
-			<value>classpath:env-common.properties</value>
 			<value>classpath:env.properties</value>
+			<value>classpath:env-common.properties</value>
 		</list>
 		</property>
 	</bean>
+	  
+	<import resource="classpath:spring-common.xml" />
+	<import resource="classpath:dubbo-provider.xml" />
 	
-	
-	 <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
 		<property name="url" value="${jdbc.url.server}" />
@@ -77,7 +79,6 @@
 		<property name="defaultAutoCommit" value="${mysql.jdbc.defaultAutoCommit}" />
 	</bean>
 	 
-
 	
 	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
 	
@@ -119,45 +120,49 @@
 		</tx:attributes>
 	</tx:advice>
 	
-	 <bean id="springContextHolder" class="com.lj.app.core.common.util.SpringContextHolder" lazy-init="false"/>
-	 
-	<bean id="currentDb"
-		class="com.lj.app.core.common.util.CurrentDb">
-		<property name="driverClass">
-			<bean class="com.lj.app.core.common.util.DataSourceConfigLoader"
-				factory-method="getPropertiesConfig">
-				<constructor-arg type="java.lang.Boolean">
-					<value>false</value>
-				</constructor-arg>
-				<constructor-arg type="java.lang.String">
-					<value>jdbc.driverClassName</value>
-				</constructor-arg>
+	
+	<bean id="redisSentinelConfiguration"
+		class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+		<property name="master">
+			<bean class="org.springframework.data.redis.connection.RedisNode">
+				<property name="name" value="${redis.masterName}"></property>
 			</bean>
 		</property>
-	</bean>
+		<property name="sentinels">
+			<set>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="${redis.RedisNode1}" />
+					<constructor-arg index="1" value="${redis.RedisNode1.port}" />
+				</bean>
+				<!-- <bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="${redis.RedisNode2}" />
+					<constructor-arg index="1" value="${redis.RedisNode2.port}" />
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="${redis.RedisNode3}" />
+					<constructor-arg index="1" value="${redis.RedisNode3.port}" />
+				</bean> -->
+			</set>
+		</property>
+	</bean> 
+	
 
-	<!-- 邮件接口 -->
-	<bean id="javaMailSender"
-		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-			<property name="host" value="${mail-server-host}" />
-			<property name="username" value="${mail-server-username}" />
-			<property name="password" value="${mail-server-password}" />
-			<property name="port" value="${mail-server-port}" />
-			
-			<property name="javaMailProperties">
-				<props>
-					<prop key="mail.smtp.auth">true</prop>
-					<prop key="mail.debug">true</prop>
-					<prop key="mail.smtp.timeout">25000</prop>
-				</props>
-			</property>
+	<bean id="jedisConnectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="password" value="${redis.password}"></property>
+        <property name="usePool" value="${redis.usePool}"/>
+        <constructor-arg ref="redisSentinelConfiguration"/>
+    </bean>
+
+
+	<!-- redis template definition -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnectionFactory"></property>
+		<property name="keySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
 	</bean>
 	
-	<!--异步线程执行器-->
-	<bean id="taskExecutor"
-		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<property name="corePoolSize" value="10" />
-		<property name="maxPoolSize" value="30" />
-	</bean>
-
+	 <bean id="springContextHolder" class="com.lj.app.core.common.util.SpringContextHolder" lazy-init="false"/>
 </beans>

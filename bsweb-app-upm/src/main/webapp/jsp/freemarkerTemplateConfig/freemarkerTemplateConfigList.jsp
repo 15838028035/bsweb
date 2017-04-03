@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>配置管理</title>
+<title>freemarkerTemplateConfig管理</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 <%@ include file="/jsp/common/resource/styles_all.jsp" %>
@@ -23,20 +23,28 @@
 	jQuery(document).ready(function(){ 
 		var lastsel;
 		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/dictionary/upmConfigurationAction!jqGridList.action',
+			url:'${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigAction!jqGridList.action',
 			datatype: 'json',
 			mtype: 'POST',
 			colNames:[
 			 		'ID',
-			 		'置配项KEY',
-			 		'置配项值',
-			 		'置配项描述'
+			 		'模版编号',
+			 		'模版名称',
+			 		'模版路径',
+			 		'模版内容',
+			 		'测试数据',
+			 		'测试邮箱',
+			 		'备注'
 			],
 			colModel:[
-			 		{name:'configId',index:'configId',width:10,hidden:true},
-			 		{name:'cfgKey',index:'cfgKey',width:200},
-			 		{name:'cfgValue',index:'cfgValue',width:500},
-			 		{name:'cfgDesc',index:'cfgDesc',width:200}
+			 		{name:'id',index:'id'},
+			 		{name:'templateNo',index:'templateNo'},
+			 		{name:'templateName',index:'templateName'},
+			 		{name:'templatePath',index:'templatePath'},
+			 		{name:'templateConent',index:'templateConent'},
+			 		{name:'testData',index:'testData'},
+			 		{name:'testEmail',index:'testEmail'},
+			 		{name:'templateRemark',index:'templateRemark'}
 				 ],
 			pager: '#pager',
 			sortable: true,
@@ -55,7 +63,7 @@
 			autowidth:true,
 			shrinkToFit:true,
 			height: '100%',
-			sortname:'configId',
+			sortname:'id',
 			sortorder:'asc',
 			hidegrid: false,
 			gridComplete:function(){},
@@ -80,7 +88,7 @@
                 <div class="contain_title">
 			    	<div class="contain_t_wrap">
 			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">配置管理</span>
+			            	<span class="marg_lef5">freemarkerTemplateConfig管理</span>
 			            </div><!--end contain_t_text-->
 			            <div class="float_rig contain_t_check">
 			            </div><!--end contain_t_check-->
@@ -89,18 +97,22 @@
 			    
 				<div class="toolbar">
 					<div class="toolbar_wrap">
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="add" class="window_button_centerInput" value="新增" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="edit" class="window_button_centerInput" value="编辑" /></div>
+						<div class="window_button marg_lef10 float_lef">
+						<input type="button" id="add" class="window_button_centerInput"
+						 value="新增" /></div>
+						<div class="window_button marg_lef10 float_lef">
+						<input type="button" id="edit" class="window_button_centerInput" value="编辑" /></div>
 						<div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDelete();"/></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="加载配置" onclick="reloadConfigPro();"/></div>
 					<table>
 						<tr>
-			 			<td>置配项KEY</td>
-						<td><input name="upmConfiguration.cfgKey" id = "cfgKey" type="text"/></td>
-			 			<td>置配项值</td>
-						<td><input name="upmConfiguration.cfgValue" id = "cfgValue" type="text"/></td>
-			 			<td>置配项描述</td>
-						<td><input name="upmConfiguration.cfgDesc" id = "cfgDesc" type="text"/></td>
+			 			<td>模版编号</td>
+						<td><input name="freemarkerTemplateConfig.templateNo" id = "templateNo" type="text"/></td>
+			 			<td>模版名称</td>
+						<td><input name="freemarkerTemplateConfig.templateName" id = "templateName" type="text"/></td>
+			 			<td>模版路径</td>
+						<td><input name="freemarkerTemplateConfig.templatePath" id = "templatePath" type="text"/></td>
+			 			<td>测试邮箱</td>
+						<td><input name="freemarkerTemplateConfig.testEmail" id = "testEmail" type="text"/></td>
 						<td>		
 							<div class="window_button marg_lef10 float_lef">
 								<input class="window_button_centerInput" name="select" id = "select" type="button" value="查询" /></div>
@@ -122,16 +134,18 @@
     
 	  //查询
 	    $("#select").click(function() {
-			 	var cfgKey=$("#cfgKey").val();
-			 	var cfgValue=$("#cfgValue").val();
-			 	var cfgDesc=$("#cfgDesc").val();
+			 	var templateNo=$("#templateNo").val();
+			 	var templateName=$("#templateName").val();
+			 	var templatePath=$("#templatePath").val();
+			 	var testEmail=$("#testEmail").val();
 	    	
 			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/dictionary/upmConfigurationAction!jqGridList.action',
+			    url:'${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigAction!jqGridList.action',
 				postData : {
-			 			 	"upmConfiguration.cfgKey":cfgKey,
-			 			 	"upmConfiguration.cfgValue":cfgValue,
-			 			 	"upmConfiguration.cfgDesc":cfgDesc
+			 			 	"freemarkerTemplateConfig.templateNo":templateNo,
+			 			 	"freemarkerTemplateConfig.templateName":templateName,
+			 			 	"freemarkerTemplateConfig.templatePath":templatePath,
+			 			 	"freemarkerTemplateConfig.testEmail":testEmail
 				}, 
 			 	page:1
 			}).trigger("reloadGrid");
@@ -139,7 +153,7 @@
 	    
 		//新增
         $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/dictionary/upmConfigurationAction!input.action'
+        	window.location.href = '${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigAction!input.action'
         })
 		//编辑
         $("#edit").click(function() {
@@ -152,7 +166,7 @@
         		showModalMessage('请选择一条记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/dictionary/upmConfigurationAction!input.action?operate=edit&configId=" + ids;
+        	window.location.href = "${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigAction!input.action?operate=edit&id=" + ids;
         })
 		//删除
         function mulDelete(){
@@ -167,19 +181,7 @@
         function doDelete(){
         	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!multidelete.action?multidelete=" + ids,
-		          async:false,
-		          cache:false,
-		          dataType:"json"
-		      }).responseText;
-			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
-			refreshGrid();
-        }
-        
-        function reloadConfigPro(){
-            var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!reloadConfigPro.action",
+		      	  url:"${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
@@ -191,7 +193,7 @@
         
       	function refreshGrid(){
 			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/dictionary/upmConfigurationAction!jqGridList.action',
+			    url:'${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigAction!jqGridList.action',
 			 	page:1
 			 }).trigger("reloadGrid");
       	}
