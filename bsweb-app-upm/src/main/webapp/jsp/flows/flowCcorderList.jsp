@@ -21,6 +21,12 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
+
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
 <script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();
@@ -190,7 +196,7 @@
 
         <div id="toolbar" class="btn-group">
             <button id="btn_ccRead" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>阅读
             </button>
         </div>
         
@@ -213,18 +219,16 @@
          });
     	 
     	if(ids == ""){
-    		alert('请选择记录');
+    		bootbox.alert('请选择记录');
     		return;
     	}
     	
-	jQuery("#list").jqGrid('setGridParam',{
-	    url:'${ctx}/jsp/flows/flowCcorderAction!ccread.action',
-		postData : {
-	 			 	"flowCcorder.id":id,
-	 			 	"flowCcorder.status":"0"
-		}, 
-	 	page:1
-	}).trigger("reloadGrid");
+		jquery.ajax({
+		    url:'${ctx}/jsp/flows/flowCcorderAction!ccread.action?flowCcorder.id' + id + "&flowCcorder.status=0"	
+		});
+	
+	refreshGrid();
+	
 	});
     
     

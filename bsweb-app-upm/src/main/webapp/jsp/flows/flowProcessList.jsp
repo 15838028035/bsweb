@@ -20,6 +20,12 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
+
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
 <script language="javascript">
 
 	$(document).ready(function(){
@@ -196,7 +202,7 @@
         		return;
         	}
         	if(ids.length > 1){
-        		alert('请选择要编辑的记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	window.location.href = "${ctx}/jsp/flows/flowProcessAction!processDesigner.action?id=" + ids;
@@ -208,12 +214,12 @@
                  return row.id;
              });
         	if(ids == ''|| ids==null){
-        		alert('请选择要编辑的记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	
         	if(ids.length>1){
-        		alert('请选择一条编辑的记录');
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
         	
@@ -225,7 +231,7 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			alert(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         })
         
@@ -235,12 +241,12 @@
                  return row.id;
              });
         	if(ids == ''|| ids==null){
-        		alert('请选择要编辑的记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	
         	if(ids.length>1){
-        		alert('请选择一条编辑的记录');
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
         		var url ="${ctx}/jsp/flows/flowProcessAction!processReDeploy.action?id=" + ids;
@@ -251,7 +257,7 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			alert(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         })
         
@@ -261,12 +267,12 @@
                  return row.id;
              });
         	if(ids == ''|| ids==null){
-        		alert('请选择要编辑的记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	
         	if(ids.length>1){
-        		alert('请选择一条编辑的记录');
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
         	
@@ -292,9 +298,13 @@
         		alert('请选择要删除的记录');
         		return;
         	}
+        	
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	doDelete();
+                }
+        	});
 
-        	//showModalConfirmation('确认要删除么',"doDelete()");
-        	doDelete();
         })
         
         function doDelete(){
@@ -308,7 +318,7 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			alert(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         

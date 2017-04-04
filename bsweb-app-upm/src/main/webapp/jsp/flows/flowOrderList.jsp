@@ -21,6 +21,12 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
+
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
 <script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();
@@ -279,28 +285,32 @@
                  return row.id;
              });
         	if(ids == ''|| ids==null){
-        		alert('请选择要编辑的记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	
         	if(ids.length>1){
-        		alert('请选择一条编辑的记录');
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
         	window.location.href = "${ctx}/jsp/flows/flowOrderAction!input.action?operate=edit&id=" + ids;
         })
+        
 		 $("#btn_delete").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
              });
         	 
         	if(ids == ""){
-        		alert('请选择要删除的记录');
+        		bootbox.alert('请选择要删除的记录');
         		return;
         	}
 
-        	//showModalConfirmation('确认要删除么',"doDelete()");
-        	doDelete();
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	doDelete();
+                }
+        	});
         })
         
         function doDelete(){
@@ -314,7 +324,7 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			alert(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         
@@ -328,12 +338,12 @@
                  return row.id;
              });
         	if(ids == ''|| ids==null){
-        		alert('请选择要编辑的记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	
         	if(ids.length>1){
-        		alert('请选择一条编辑的记录');
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
         	
