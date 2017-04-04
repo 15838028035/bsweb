@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 import com.lj.app.bsweb.upm.role.entity.UpmPermission;
 import com.lj.app.core.common.base.service.BaseServiceImpl;
 import com.lj.app.core.common.pagination.Page;
+import com.lj.app.core.common.tree.BootStrapTreeView;
+import com.lj.app.core.common.tree.BootStrapTreeViewCheck;
 import com.lj.app.core.common.tree.DefaultTreeNode;
-import com.lj.app.core.common.tree.DefaultTreeNodeNoCheck;
 import com.lj.app.core.common.tree.SimpleTree;
-import com.lj.app.core.common.tree.SimpleTreeNoCheck;
 
 @Service("upmRoleService")
 public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implements UpmRoleService<UpmRole>{
@@ -169,7 +169,7 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 				
 		if (null != list && !list.isEmpty()) {
 			List<Integer> permissionIds = getRolePermissionIds(roleId);
-			List<DefaultTreeNodeNoCheck> treeNodeList = new ArrayList<DefaultTreeNodeNoCheck>();
+			List<BootStrapTreeView> treeNodeList = new ArrayList<BootStrapTreeView>();
 			for (int i = 0; i < list.size(); i++) {
 				UpmPermission up = list.get(i);
 				String id = up.getId() + "";
@@ -183,13 +183,12 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 					}
 				}
 				String parentId = up.getParentId().intValue() + "";
-				treeNodeList.add(SimpleTreeNoCheck
-						.createNew(id, text, parentId));
+				treeNodeList.add(BootStrapTreeViewCheck.createNew(id, text, parentId));
 			}
 			
 			Integer rootId = upmPermissionService.findRootPermissionIdByAppId(appId);
 					
-			SimpleTreeNoCheck simpleTree = SimpleTreeNoCheck.valueOf(treeNodeList, rootId.toString());
+			BootStrapTreeViewCheck simpleTree = BootStrapTreeViewCheck.valueOf(treeNodeList, rootId.toString());
 					
 			if (null != simpleTree) {
 				return simpleTree.toJsonString();
