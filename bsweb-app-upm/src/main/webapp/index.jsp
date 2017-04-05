@@ -169,12 +169,9 @@ function topMenuEff(){
 				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none"> 
 					<a href="${ctx}/jsp/dictionary/upmConfigurationList.jsp" target="LT_main" >配置管理</a>
 				</li>
-				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none"> 
-					<a href="${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigList.jsp" target="LT_main" >freemarker模板管理</a>
-				</li>
-				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none">
-				<a href="${ctx}/jsp/flows/flowFormTableList.jsp" target="LT_main" >表单管理</a>
-				</li>
+<!-- 				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none">  -->
+<%-- 					<a href="${ctx}/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigList.jsp" target="LT_main" >freemarker模板管理</a> --%>
+<!-- 				</li> -->
 				<li class="float_lef LT_hd_li_TM LocalManagment" style="font-size:16px;float:none"> 
 					<a href="${ctx}/jsp/flows/flowProcessList.jsp" target="LT_main" >流程定义</a>
 				</li>

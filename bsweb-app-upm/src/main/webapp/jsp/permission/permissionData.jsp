@@ -1,305 +1,343 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/jsp/common/taglibs.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>权限管理</title>
-		<%@ include file="/jsp/common/meta.jsp"%>
-		<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
-		<%@ include file="/jsp/common/resource/styles_all.jsp"%>
-		<style>
-.altclass {
-	background: #E5EFFD;
-}
 
-#list tr td {
-	width: 200px;
-	white-space: nowrap;
-	word-break: keep-all;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-</style>
+<%@page language="java" isELIgnored="false"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/jsp/common/taglibs.jsp" %>
 
-		<script language="javascript">
+<!DOCTYPE html>
+<html>
+<head>
+<title>upmPermission管理</title>
+    <meta name="viewport" content="width=device-width" />
+<%@ include file="/jsp/common/meta.jsp" %>
+
+<!--css样式-->
+<link href="${ctx}/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+<!--js-->
+
+<script src="${ctx}/scripts/jquery/jquery-3.2.0.min.js"></script>
+<script src="${ctx}/scripts/bootstrap/js/bootstrap.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/bootstrap-table.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+
+<script   type="text/javascript">
 	$(document).ready(function(){
-		contralEffect.contain();
-		contralEffect.tablelist();
-		contralEffect.blueButton();
-		var appId=parent.document.getElementById("appId").value;
-		var perssionParentId = $("#perssionParentId").val();
-		if(perssionParentId==''){
-		if(appId=='UPM'){
-		perssionParentId=1000000
-		}else if(appId=='CRM'){
-		perssionParentId=2000000
-		}else if(appId==3){
-		perssionParentId=3000000
-		}else if(appId==4){
-		 perssionParentId=4000000
-		}else if(appId==5){
-		 perssionParentId=5000000
-		}else if(appId==6){
-		 perssionParentId=6000000
-		}
-		}
-		$("#perssionParentId").val(perssionParentId);
-		//设置隐藏域的值
-		$("#appId").val(appId)
-			//初始化JQGrid列表页面
-			jQuery("#list").jqGrid({
-				url:'${ctx}/jsp/permission/upmPermissionAction!list.action?appId='+appId+'&parentId='+perssionParentId,
-				datatype: 'json',
-				mtype: 'POST',
-				colNames:['id', 
-				'名称',
-				'类型',
-				'状态',
-				'权限编码',
-				'url'
-				],
-				colModel:[
-				     {name:'id',index:'id',hidden:true},		
-					 {name:'name',index:'name'},
-					 {name:'type',index:'type',formatter:formatDesc},
-					 {name:'state',index:'state',formatter:stateDesc},
-					 {name:'code',index:'code'},
-					 {name:'url',index:'url'}
-					 ],
-				pager: '#pager',
-				sortable: true,
-				multiboxonly:true,
-				rowNum:10,
-				multiselect: true, 
-				prmNames:{rows:"page.pageSize",page:"page.pageNumber",total:"page.totalPages"},     
-				jsonReader: {     
-					root: "rows",   
-					repeatitems : false,
-					id:"0"        		    
-					},
-				gridComplete:function(){
-				},	
-				rowList:[10,15],
-				sortname: 'name',
-				sortorder: 'asc',
-				viewrecords: true,
-				caption: '权限管理',
-				height: '100%',
-				width:'100%',
-				hidegrid: false,
-				loadtext: '正在加载.....',
-				scrollrows: true,
-				altRows:true,
-				onSelectRow: onSelectRowaction
-			}); 
-		//执行添加操作
-		$("#addButton").click(function(){
-			//获取权限菜单树
-			var jsonData = $.ajax({
-				          url:"${ctx}/jsp/permission/upmPermissionAction!getPermissionTree.action?appId="+appId,
-				          async:false,
-				          cache:false,
-				          dataType:"text"
-			}).responseText;
-			if(jsonData == ""){
-			 showModalMessage('对不起，你没有权限');
-			 return;
-			}
-			window.location = "${ctx}/jsp/permission/upmPermissionAction!input.action?appId="+appId+"&parentId="+perssionParentId;
-		});
-		//执行修改操作
-		$("#editButton").click(function(){
-			var ids = $("#list").getGridParam("selarrrow");
-				 if(ids == ""){
-				 	showModalMessage('请选择一条记录');
-				 	return false;
-				 };
-			//验证只能选择一条数据进行操作
-			ids += "";
-			var splitId = ids.split(","); 
-				if(splitId.length > 1) {
-				showModalMessage('请选择一条记录')	
-				return false;
-				};
-			var perssionParentId = $("#perssionParentId").val();
-			location.href="${ctx}/jsp/permission/upmPermissionAction!input.action?appId="+appId+"&parentId="+perssionParentId+"&permissionId="+ids;
-			
-		});
-		//停用操作
-		$("#cancelButton").click(function(){
-		var ids = $("#list").getGridParam("selarrrow");
-				 if(ids == ""){
-				 	showModalMessage('请选择一条记录');
-				 	return false;
-				 };
-			//验证只能选择一条数据进行操作
-			ids += "";
-			var splitId = ids.split(","); 
-				if(splitId.length > 1) {
-				showModalMessage('请选择一条记录')	
-				return false;
-				};
-		var msg  = '停用';
-		showModalConfirmation(msg,"checkPwd('cancalPeimission();');");
-		});
-		//起用操作
-		$("#startButton").click(function(){
-		var ids = $("#list").getGridParam("selarrrow");
-				 if(ids == ""){
-				 	showModalMessage('请选择一条记录');
-				 	return false;
-				 };
-			//验证只能选择一条数据进行操作
-			ids += "";
-			var splitId = ids.split(","); 
-				if(splitId.length > 1) {
-				showModalMessage('请选择一条记录')	
-				return false;
-				};
-		var msg  = '启用';
-		showModalConfirmation(msg,"checkPwd('startPermission();');");
-		});
-
+		 var oTable = new TableInit();
+	     oTable.Init();
 	});
-	//点击左侧权限菜单，重新加载菜单列表页面
-	function queryByPermission(){
-		var perssionParentId = $("#perssionParentId").val();
-		$("#list").jqGrid('setGridParam',{
-			     url:"${ctx}/jsp/permission/upmPermissionAction!listByJQGrid.action",
-			     postData:{
-			     	"appId":$("#appId").val(),
-			     	"parentId":perssionParentId
-			     },
-			 	 page:1
-			 }).trigger("reloadGrid"); 				
-		  	return false;
-	}
-	    //格式化显示描述
-	formatDesc = function(el, cellval, opts) {
-				var type = opts.type;
-				if(type==1){
-				type='菜单'; 
-				}else if(type==2){
-				type='按钮'; 
-				}else if(type==null){
-				type='菜单'; 
-				}
-				return type;
-			};
-			    //格式化显示描述
-	stateDesc = function(el, cellval, opts) {
-				var state = opts.state;
-				if(state==0 || state==2){
-				state='有效';
-				}else {
-				state='无效';
-				}
-				return state;
-			};
-	onSelectRowaction = function(id){
-		 var s = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-		 var ret = jQuery("#list").jqGrid('getRowData',s);
-		 var state =ret.state;
-		 //停用状态屏蔽停用按钮
-		 if(state=='停用'){
-		 document.getElementById("cancelButton").disabled = true;
-		 document.getElementById("startButton").disabled = false;
-		 }else {
-		 document.getElementById("cancelButton").disabled = false;
-		 document.getElementById("startButton").disabled = true;
-		 }
-	};
-	//停用菜单
-	function cancalPeimission(){
-		if($("#pwdPass").val()=="pass"){
-		var ids = $("#list").getGridParam("selarrrow");
-				$.ajax({
-			 	type: "GET",
-			 	url: "${ctx}/jsp/permission/upmPermissionAction!updataStat.action?permissionId="+ids+"&state=1",
-			  	dataType: "text",
-			  	success: function(msg){
-			    	showModalMessage(msg);
-			var perssionParentId = $("#perssionParentId").val();
-			$("#list").jqGrid('setGridParam',{
-			     url:"${ctx}/jsp/permission/upmPermissionAction!listByJQGrid.action",
-			     postData:{
-			     	"appId":$("#appId").val(),
-			     	"parentId":perssionParentId
-			     },
-			 	 page:1
-			 }).trigger("reloadGrid"); 				
-		  	return false;
-			    }
-			 });
-			 }
-			 $("#pwdPass").val("");
-	};
-		//启用菜单
-		function startPermission(){
-		if($("#pwdPass").val()=="pass"){
-				var ids = $("#list").getGridParam("selarrrow");
-				$.ajax({
-			 	type: "GET",
-			 	url: "${ctx}/jsp/permission/upmPermissionAction!updataStat.action?permissionId="+ids+"&state=0",
-			  	dataType: "text",
-			  	success: function(msg){
-			   showModalMessage(msg);
-		var perssionParentId = $("#perssionParentId").val();
-		$("#list").jqGrid('setGridParam',{
-			     url:"${ctx}/jsp/permission/upmPermissionAction!listByJQGrid.action",
-			     postData:{
-			     	"appId":$("#appId").val(),
-			     	"parentId":perssionParentId
-			     },
-			 	 page:1
-			 }).trigger("reloadGrid"); 				
-		  	return false;
-			    }
-			 });
-		}
-		 $("#pwdPass").val("");
-		};
+
 	
-			//验证主帐号密码
-		function checkPwd(fname){
+	var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tableList').bootstrapTable({
+                url: '${ctx}/jsp/permission/upmPermissionAction!bootStrapList.action',         //请求后台的URL（*）
+                method: 'post',                     //请求方式（*）
+                dataType: "json",
+                contentType : "application/x-www-form-urlencoded",
+                dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+                totalField: 'total',
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                smartDisplay:false,
+                showRefresh:true,
+                showColumns:true,
+                searchOnEnterKey:true,
+                showFooter:true,
+                search:false,
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                singleSelect:false,
+                clickToSelect: true,
+                smartDisplay:true,
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                queryParamsType:'',					//  queryParamsType = 'limit' 参数: limit, offset, search, sort, order;
+                									//  queryParamsType = '' 参数: pageSize, pageNumber, searchText, sortName, sortOrder.
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 25,                       //每页的记录行数（*）
+                pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
+                strictSearch: true,
+                clickToSelect: true,                //是否启用点击选中行
+                height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns: [  
+			{ field: 'checkStatus', title: '',checkbox:true }, 
+                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                        	   			return index+1;
+                           			}  
+                           },
+			 	{field:'id',title:'ID', sortable:true},
+			 	{field:'appId',title:'应用ID', sortable:true},
+			 	{field:'parentId',title:'父ID', sortable:true},
+			 	{field:'name',title:'名称', sortable:true},
+			 	{field:'type',title:'类型', sortable:true},
+			 	{field:'url',title:'URL', sortable:true},
+			 	{field:'code',title:'code', sortable:true},
+			 	{field:'keyCode',title:'key_code', sortable:true},
+			 	{field:'state',title:'态状', sortable:true},
+			 	{field:'remark',title:'注备', sortable:true},
+			 	{field:'sortNo',title:'排序', sortable:true},
+			 	{field:'iconPath',title:'图片路径', sortable:true},
+			 	{field:'createBy',title:'创建人', sortable:true},
+			 	{field:'createDate',title:'创建日期', sortable:true},
+			 	{field:'updateBy',title:'新更人', sortable:true},
+			 	{field:'updateDate',title:'更新日期', sortable:true},
+			 	{field:'enableFlag',title:'是否有效', sortable:true},
+			 	{field:'lockStatus',title:'锁定状态', sortable:true}
+                        ],               		
+             	formatLoadingMessage: function () {
+             		return "请稍等，正在加载中...";
+             	},
+             	formatNoMatches: function () { //没有匹配的结果
+             		return '无符合条件的记录';
+             	},
+             	onLoadError: function (data) {
+             		$('#tableList').bootstrapTable('removeAll');
+             	},
+             	responseHandler: function (res) {
+             	    return {
+             	        total: res.total,
+             	        rows: res.rows
+             	    };
+             	}
+              
+            });
+            
+        };
+ 
+        //得到查询的参数
+      oTableInit.queryParams = function (params) {
+			var id=$("#id").val();
+			var appId=$("#appId").val();
+			var parentId=$("#parentId").val();
+			var name=$("#name").val();
+			var type=$("#type").val();
+			var url=$("#url").val();
+			var code=$("#code").val();
+			var keyCode=$("#keyCode").val();
+			var state=$("#state").val();
+			var remark=$("#remark").val();
+			var sortNo=$("#sortNo").val();
+			var iconPath=$("#iconPath").val();
+			var createBy=$("#createBy").val();
+	    		var createDateBegin=$("#createDateBegin").val();
+	    		var createDateEnd=$("#createDateEnd").val();
+			var updateBy=$("#updateBy").val();
+	    		var updateDateBegin=$("#updateDateBegin").val();
+	    		var updateDateEnd=$("#updateDateEnd").val();
+			var enableFlag=$("#enableFlag").val();
+			var lockStatus=$("#lockStatus").val();
+
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                //limit: params.limit, //第几条记录
+                //offset: params.offset, //显示一页多少记录
+                //maxrows: params.limit,
+                //pageindex:params.pageNumber,
+                rows:params.rows,
+                page:params.page,
+                total:params.total,
+                pageSize:params.limit,
+                offset:params.offset,
+                "sortName":this.sortName,
+                "sortOrder":this.sortOrder,
+		"upmPermission.id":id,
+		"upmPermission.appId":appId,
+		"upmPermission.parentId":parentId,
+		"upmPermission.name":name,
+		"upmPermission.type":type,
+		"upmPermission.url":url,
+		"upmPermission.code":code,
+		"upmPermission.keyCode":keyCode,
+		"upmPermission.state":state,
+		"upmPermission.remark":remark,
+		"upmPermission.sortNo":sortNo,
+		"upmPermission.iconPath":iconPath,
+		"upmPermission.createBy":createBy,
+		"upmPermission.createDateBegin":createDateBegin,
+		"upmPermission.createDateEnd":createDateEnd,
+		"upmPermission.updateBy":updateBy,
+		"upmPermission.updateDateBegin":updateDateBegin,
+		"upmPermission.updateDateEnd":updateDateEnd,
+		"upmPermission.enableFlag":enableFlag,
+		"upmPermission.lockStatus":lockStatus
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
 		
-	};
 </script>
-	</head>
+</head>
 
-	<body>
-		<input type="hidden" name="perssionParentId" id="perssionParentId"
-			value="${parentId }" />
-		<input type="hidden" name="appId" id="appId"
-			value="${appId }" />
-		<input id="pwdPass" name="pwdPass" type="hidden" value="" />
-		<div class="toolbar">
-						<div class="toolbar_wrap">
-								<div class="marg_lef10 float_lef">
-									<input id="addButton" type="button"
-										class="window_button_centerInput window_button_centerInput1"
-										value="新增" />
-								</div>
-								<div class="marg_lef10 float_lef">
-									<input id="editButton" type="button"
-										class="window_button_centerInput window_button_centerInput1"
-										value="编辑" />
-								</div>
-								<div class="marg_lef10 float_lef">
-									<input id="cancelButton" type="button"
-										class="window_button_centerInput window_button_centerInput1"
-										value='停用' />
-								</div>
-								<div class="marg_lef10 float_lef">
-									<input id="startButton" type="button"
-										class="window_button_centerInput window_button_centerInput1"
-										value='启用' />
-								</div>
-						</div>
-						<!--end toolbar_wrap-->
-					</div>
-		<table id="list"></table>
-		<div id="pager"></div>
+<body>
 
-	</body>
+
+<div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">查询条件</div>
+            <div class="panel-body">
+                <form id="formSearch" class="form-horizontal">
+                    <div class="form-group" style="margin-top:15px">
+                      
+
+			 	<label class="control-label col-sm-1" for="id">ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
+                        
+			 	<label class="control-label col-sm-1" for="appId">应用ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
+                        
+			 	<label class="control-label col-sm-1" for="parentId">父ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="parentId"></div>
+                        
+			 	<label class="control-label col-sm-1" for="name">名称</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="name"></div>
+                        
+			 	<label class="control-label col-sm-1" for="type">类型</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="type"></div>
+                        
+			 	<label class="control-label col-sm-1" for="url">URL</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="url"></div>
+                        
+			 	<label class="control-label col-sm-1" for="code">code</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="code"></div>
+                        
+			 	<label class="control-label col-sm-1" for="keyCode">key_code</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="keyCode"></div>
+                        
+			 	<label class="control-label col-sm-1" for="state">态状</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="state"></div>
+                        
+			 	<label class="control-label col-sm-1" for="remark">注备</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="remark"></div>
+                        
+			 	<label class="control-label col-sm-1" for="sortNo">排序</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="sortNo"></div>
+                        
+			 	<label class="control-label col-sm-1" for="iconPath">图片路径</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="iconPath"></div>
+                        
+			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
+                        
+			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="createDateEnd" id = "createDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="updateBy">新更人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
+                        
+			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="enableFlag">是否有效</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="enableFlag"></div>
+                        
+			 	<label class="control-label col-sm-1" for="lockStatus">锁定状态</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="lockStatus"></div>
+                        
+
+                        <div class="col-sm-6" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>       
+
+        <div id="toolbar" class="btn-group">
+            <button id="btn_add" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            <button id="btn_edit" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+            </button>
+            <button id="btn_delete" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+        </div>
+        
+        <table id="tableList"></table>
+    </div>
+
+
+    <script type="text/javascript">
+    	    var $tableList = $('#tableList');
+	    var $btn_add = $('#btn_add');
+	    var $btn_edit = $('#btn_edit');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
+
+	
+		//新增
+        $("#btn_add").click(function() {
+        	window.location.href = '${ctx}/jsp/permission/upmPermissionAction!input.action'
+        })
+		//编辑
+        $("#btn_edit").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             	});
+        	if(ids == ''|| ids==null){
+        		alert('请选择要编辑的记录');
+        		return;
+        	}
+        	
+        	if(ids.length>1){
+        		alert('请选择一条编辑的记录');
+        		return;
+        	}
+        	window.location.href = "${ctx}/jsp/permission/upmPermissionAction!input.action?operate=edit&id=" + ids;
+        })
+		//删除
+      $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
+        	if(ids == ""){
+        		alert('请选择要删除的记录');
+        		return;
+        	}
+
+        	//showModalConfirmation('确认要删除么',"doDelete()");
+        	doDelete();
+        })
+
+        function doDelete(){
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+            var result = jQuery.ajax({
+		      	  url:"${ctx}/jsp/permission/upmPermissionAction!multidelete.action?multidelete=" + ids,
+		          async:false,
+		          cache:false,
+		          dataType:"json"
+		      }).responseText;
+			var obj = eval("("+result+")");
+			showModalMessage(obj.opResult);
+			refreshGrid();
+        }
+        
+  	$btn_query.click(function () {
+        	 refreshGrid();
+        });
+
+      	function refreshGrid(){
+		$tableList.bootstrapTable('refresh');
+      	}
+      	
+    </script>
+
+
+</body>
 </html>

@@ -41,4 +41,4 @@
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserAndUserGroupRelService" id="upmUserAndUserGroupRelService" check="false" />
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupAndRoleRelService" id="upmUserGroupAndRoleRelService" check="false" />
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupService" id="upmUserGroupService" check="false" />
-</beans>  
+</beans> 

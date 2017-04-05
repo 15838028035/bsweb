@@ -81,13 +81,13 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		if (StringUtil.isBlank(loginNo)) {
 			logger.debug("no user loginNo:" + userList + " found.");
 			return SecurityConstants.LOGIN;
-		}
-		if(userList==null || userList.size()==0){
-			logger.debug("no user loginNo:" + userList + " found.");
-			return SecurityConstants.LOGIN;
-		}
-		
-		   loginUser = userList.get(0);
+		} else {
+			if (userList!=null && userList.size()>0) {
+				loginUser = userList.get(0);
+			}else {
+				logger.debug("no user loginNo:" + userList + " found.");
+				return SecurityConstants.LOGIN;
+			}
 			
 			String encryptPwd = pwd;
 			//FIXME: DesUtil.encrypt(pwd); 
@@ -100,6 +100,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 						.info("lockstatus is not 0(common status),so login denied!");
 				return SecurityConstants.LOGIN;
 			}
+		}
 		
 		// FIXME loginUser.setLastLoginTime(new Date());
 		

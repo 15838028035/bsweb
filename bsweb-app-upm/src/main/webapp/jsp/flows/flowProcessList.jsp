@@ -20,6 +20,12 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
+
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
 <script language="javascript">
 
 	$(document).ready(function(){
@@ -47,7 +53,7 @@
                showColumns:true,
                searchOnEnterKey:true,
                showFooter:true,
-               search:true,
+               search:false,
                sortable: true,                     //是否启用排序
                sortOrder: "asc",                   //排序方式
                singleSelect:false,
@@ -67,6 +73,8 @@
                cardView: false,                    //是否显示详细视图
                detailView: false,                   //是否显示父子表
                columns: [
+                         { field: 'checkStatus', title: '',checkbox:true }, 
+                         {field : 'Number', title : '行号',    formatter : function(value, row, index) {return index+1;}  },
                          { field: 'id', title: '序号',sortable:true }, 
                          { field: 'flowNo', title: '流程编号',sortable:true}, 
                          { field: 'flowName', title: '流程名称',sortable:true }, 
@@ -74,7 +82,7 @@
                          { field: 'flowVersion', title: '流程版本' ,sortable:true},
                          { field: 'flowType', title: '流程类型',sortable:true },
                          { field: 'instanceUrl', title: '流程URL',sortable:true },
-                         { field: 'createByUName', title: '创建人',sortable:true },
+                         { field: 'createByUname', title: '创建人姓名',sortable:true },
                          
                          { field: 'createDate', title: '创建时间',sortable:true },
                          { field: 'updateByUname', title: '更新人',sortable:true },
@@ -153,174 +161,174 @@
         </div>       
 
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+             <button id="btn_design" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设计
             </button>
-            <button id="btn_edit" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+             <button id="btn_deploy" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>部署
+            </button>
+             <button id="btn_redeploy" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>重新部署
+            </button>
+              <button id="btn_startflow" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>启动流程
             </button>
             <button id="btn_delete" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
-            
-            <div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDelete();"/></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="processDesigner"  class="window_button_centerInput" value="设计" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="processDeploy"  class="window_button_centerInput" value="部署" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="processDeploy2"  class="window_button_centerInput" value="重新部署" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" id="startFlow"  class="window_button_centerInput" value="启动流程" /></div>
-        	</div>
+        </div>
         
         <table id="tableList"></table>
     </div>
     </div>
 
     <script type="text/javascript">
-    
-	  //查询
-	    $("#select").click(function() {
-			 	var flowNo=$("#flowNo").val();
-			 	var flowName=$("#flowName").val();
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowProcessAction!jqGridList.action',
-				postData : {
-			 			 	"flowProcess.flowNo":flowNo,
-			 			 	"flowProcess.flowName":flowName
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
+	    var $tableList = $('#tableList');
+	    var $btn_design = $('#btn_design');
+	    var $btn_deploy = $('#btn_deploy');
+	    var $btn_redeploy = $('#btn_redeploy');
+	    var $btn_startflow = $('#btn_startflow');
+	    var $btn_delete = $('#btn_delete');
 	    
-		//新增
-        $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/flows/flowProcessAction!input.action'
-        })
-		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
-        		return;
-        	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
-        		return;
-        	}
-        	window.location.href = "${ctx}/jsp/flows/flowProcessAction!input.action?operate=edit&id=" + ids;
-        })
+	    var $btn_query = $('#btn_query');
+	    
         
-        $("#processDesigner").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
+        $("#btn_design").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
         		window.location.href = "${ctx}/jsp/flows/flowProcessAction!processDesigner.action";
         		return;
         	}
         	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	window.location.href = "${ctx}/jsp/flows/flowProcessAction!processDesigner.action?id=" + ids;
         })
         
          //部署
-        $("#processDeploy").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要操作的记录');
+        $("#btn_deploy").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	var row=jQuery("#list").jqGrid('getRowData',ids); 
-        	var rowId = row.id;
-        	var url ="${ctx}/jsp/flows/flowProcessAction!processDeploy.action?id=" + rowId;
-        	  var result = jQuery.ajax({
+        	
+        	var url ="${ctx}/jsp/flows/flowProcessAction!processDeploy.action?id=" + ids;
+        	  var result =$.ajax({
 		      	  url:url,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         })
         
           //部署
-        $("#processDeploy2").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要操作的记录');
+        $("#btn_redeploy").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	var row=jQuery("#list").jqGrid('getRowData',ids); 
-        	var rowId = row.id;
-        		var url ="${ctx}/jsp/flows/flowProcessAction!processReDeploy.action?id=" + rowId;
-        	  var result = jQuery.ajax({
+        		var url ="${ctx}/jsp/flows/flowProcessAction!processReDeploy.action?id=" + ids;
+        	  var result = $.ajax({
 		      	  url:url,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         })
         
         //启动流程
-        $("#startFlow").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要操作的记录');
+        $("#btn_startflow").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
-        		return;
-        	}
-        	var row=jQuery("#list").jqGrid('getRowData',ids); 
-        	var instanceUrl = row.instanceUrl;
-        	var rowId = row.id;
-        	var flowName = row.flowName;
         	
-        	var url ="${ctx}" + instanceUrl +"?processId="+rowId +"&flowProcess.processName="+flowName;
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
+        		return;
+        	}
+        	
+        	var instanceUrl =  $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.instanceUrl;
+            });
+        	var flowName = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.flowName;
+            });
+        	
+        	var url ="${ctx}" + instanceUrl +"?processId="+ids +"&flowProcess.processName="+flowName;
         	window.location.href = url;
         })
         
         
-		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+          
+        $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		alert('请选择要删除的记录');
         		return;
         	}
+        	
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	doDelete();
+                }
+        	});
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        })
+        
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-            var result = jQuery.ajax({
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+            var result = $.ajax({
 		      	  url:"${ctx}/jsp/flows/flowProcessAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         
-      	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowProcessAction!jqGridList.action',
-			 	page:1
-			 }).trigger("reloadGrid");
-      	}
+        $btn_query.click(function () {
+       	 refreshGrid();
+       });
+       
+     	function refreshGrid(){
+     		$tableList.bootstrapTable('refresh');
+     	}
       	
     </script>
 

@@ -46,10 +46,10 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 
 	 @Autowired
 	private FlowEngineFacetsService flowEngineFacetsService;
-	 
-	@Autowired
-	private FlowTaskHistService flowTaskHistService;
 	
+	 @Autowired
+	 private FlowTaskHistService flowTaskHistService;
+	 
 	private FlowTaskHist flowTaskHist;
 	
 	private java.lang.Integer id;
@@ -72,22 +72,22 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 	}
 	
 	/**
-	 * 公共jgGrid查询方法
+	 * 公共bootStrapList查询方法
 	 * @return
 	 * @throws Exception
 	 */
-	public String jqGridList2() throws Exception {
+	public String bootStrapList() throws Exception {
 		try {
 			Map<String,Object> condition = new HashMap<String,Object>();
 			page.setFilters(getModel());
 			
-			if (StringUtil.isNotBlank(this.getSidx())) {
-				String orderBy = PageTool.convert(this.getSidx()) + " "+ this.getSord();
+			if (StringUtil.isNotBlank(this.getSortName())) {
+				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
 				page.setSortColumns(orderBy);
 			}
 			
 			page = getBaseService().findPageList(page, condition);
-			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
+			Struts2Utils.renderText(PageTool.mapPageToJsonBootStrap(this.page),new String[0]);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,6 +111,14 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 		return id;
 	}
 
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
+
 	public FlowEngineFacetsService getFlowEngineFacetsService() {
 		return flowEngineFacetsService;
 	}
@@ -126,7 +134,6 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 	public void setFlowTaskHistService(FlowTaskHistService flowTaskHistService) {
 		this.flowTaskHistService = flowTaskHistService;
 	}
-	
 	
 }
 

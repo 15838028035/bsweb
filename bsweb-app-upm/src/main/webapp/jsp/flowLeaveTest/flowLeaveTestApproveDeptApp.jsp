@@ -50,8 +50,8 @@
 				<tr>
 					<td class="td_table_1"><span>抄送给：</span></td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" id="ccOperator" name="ccOperator" value="">
-						<input type="text" id="ccOperatorName"  name="ccOperatorName" class="input_520" value="">
+						<input type="hidden" id="ccOperator" name="ccOperator" value="">
+						<input type="text" id="ccOperatorName" readonly="readonly" name="ccOperatorName" class="input_520" value="">
 						<input type='button' class='button_70px' value='选择部门' onclick="selectOrg('${ctx}', 'ccOperator', 'ccOperatorName')"/>
 					</td>
 				</tr>

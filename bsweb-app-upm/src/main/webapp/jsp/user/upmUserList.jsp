@@ -20,7 +20,12 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
-<script language="javascript"  type="text/javascript">
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
+<script   type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
@@ -46,7 +51,7 @@
                 showColumns:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                search:true,
+                search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -65,8 +70,13 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [
-                          { field: 'id', title: '序号',sortable:true }, 
+                columns: [ 
+                          { field: 'checkStatus', title: '',checkbox:true }, 
+                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                        	   			return index+1;
+                           			}  
+                           },
+                          { field: 'id', title: 'ID' }, 
                           { field: 'loginNo', title: '登陆账号',sortable:true }, 
                           { field: 'userName', title: '用户名',sortable:true }, 
                           { field: 'mobile', title: '手机号码',sortable:true },
@@ -165,37 +175,56 @@
     </div>
 
     <script type="text/javascript">
-		    
+	    var $tableList = $('#tableList');
+	    var $btn_add = $('#btn_add');
+	    var $btn_edit = $('#btn_edit');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
     
 		//新增
-        $("#add").click(function() {
+        $("#btn_add").click(function() {
         	window.location.href = '${ctx}/jsp/user/upmUserAction!input.action';
         })
 		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
+        $("#btn_edit").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
+        	
         	window.location.href = "${ctx}/jsp/user/upmUserAction!input.action?operate=edit&id=" + ids;
         })
-		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        
+        $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		bootbox.alert('请选择要删除的记录');
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	doDelete();
+                }
+        	});
+        	
+        });
+		
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
             var result = jQuery.ajax({
 		      	  url:"${ctx}/jsp/user/upmUserAction!multidelete.action?multidelete=" + ids,
 		          async:false,
@@ -203,15 +232,22 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
+			
 			refreshGrid();
         }
-			
+		
+        //($table.bootstrapTable('getAllSelections')
+        //$table.bootstrapTable('getOptions')
+        //($table.bootstrapTable('getSelections')
+        // $table.bootstrapTable('resetSearch');
+        		
+        $btn_query.click(function () {
+        	 refreshGrid();
+        });
+        
       	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/user/upmUserAction!bootStrapList.action',
-			 	page:1
-			 }).trigger("reloadGrid");
+      		$tableList.bootstrapTable('refresh');
       	}
       	
     </script>

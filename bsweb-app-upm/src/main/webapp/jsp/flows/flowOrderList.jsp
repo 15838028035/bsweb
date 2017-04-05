@@ -1,207 +1,322 @@
+
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<title>流程实例</title>
+<title>flowOrder管理</title>
+    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
-<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-<style>
-.altclass{background: #E5EFFD ;}
-</style>
 
-<script language="javascript">
+<!--css样式-->
+<link href="${ctx}/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+<!--js-->
+
+<script src="${ctx}/scripts/jquery/jquery-3.2.0.min.js"></script>
+<script src="${ctx}/scripts/bootstrap/js/bootstrap.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/bootstrap-table.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+
+
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
+<script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
-		contralEffect.contain();
-		contralEffect.tablelist();
-		contralEffect.blueButton();
+		 var oTable = new TableInit();
+	     oTable.Init();
 	});
+
 	
-	jQuery(document).ready(function(){ 
-		var lastsel;
-		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/flows/flowOrderAction!jqGridList.action',
-			datatype: 'json',
-			mtype: 'POST',
-			colNames:[
-			 		'ID',
-			 		'流程编号',
-			 		'流程版本',
-			 		'流程定义ID',
-			 		'父流程实例ID',
-			 		'父流程名称',
-			 		'流程实例期望完成时间',
-			 		'流程实例优先级',
-			 		'流程实例附属变量',
-			 		'创建人',
-			 		'创建日期',
-			 		'更新人',
-			 		'更新日期'
-			],
-			colModel:[
-			 		{name:'id',index:'id'},
-			 		{name:'orderNo',index:'orderNo'},
-			 		{name:'orderVersion',index:'orderVersion'},
-			 		{name:'flowProcessId',index:'flowProcessId'},
-			 		{name:'parentId',index:'parentId'},
-			 		{name:'parentNodeName',index:'parentNodeName'},
-			 		{name:'expireTime',index:'expireTime'},
-			 		{name:'priority',index:'priority'},
-			 		{name:'variable',index:'variable'},
-			 		{name:'createByUName',index:'createByUName'},
-			 		{name:'createDate',index:'createDate'},
-			 		{name:'updateByUname',index:'updateByUname'},
-			 		{name:'updateDate',index:'updateDate'}
-				 ],
-			pager: '#pager',
-			sortable: true,
-			rowNum: 20,
-			rownumbers:true,
-			rowList:[10,20,30,50,100],
-			multiboxonly:true,
-			multiselect: true,
-			prmNames:{rows:"page.pageSize",page:"page.pageNumber",total:"page.totalPages"},     
-			jsonReader: {     
-				root: "rows",   
-				repeatitems : false,
-				id:"0"        		    
-				},
-			viewrecords: true,
-			autowidth:true,
-			shrinkToFit:true,
-			height: '100%',
-			sortname:'id',
-			sortorder:'asc',
-			hidegrid: false,
-			gridComplete:function(){},
-			loadtext: '正在加载,请稍等..',
-			scrollrows: true,
-			altRows:true,
-			altclass:'altclass'
-			
-		}); 
-		
-		});
+	var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tableList').bootstrapTable({
+                url: '${ctx}/jsp/flows/flowOrderAction!bootStrapList.action',         //请求后台的URL（*）
+                method: 'post',                     //请求方式（*）
+                dataType: "json",
+                contentType : "application/x-www-form-urlencoded",
+                dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+                totalField: 'total',
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                smartDisplay:false,
+                showRefresh:true,
+                showColumns:true,
+                searchOnEnterKey:true,
+                showFooter:true,
+                search:false,
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                singleSelect:false,
+                clickToSelect: true,
+                smartDisplay:true,
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                queryParamsType:'',					//  queryParamsType = 'limit' 参数: limit, offset, search, sort, order;
+                									//  queryParamsType = '' 参数: pageSize, pageNumber, searchText, sortName, sortOrder.
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 25,                       //每页的记录行数（*）
+                pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
+                strictSearch: true,
+                clickToSelect: true,                //是否启用点击选中行
+                height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns: [
+                          { field: 'checkStatus', title: '',checkbox:true }, 
+                          {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                       	   			return index+1;
+                          			}  
+                          },
+					 {field:'id',title:'编号', sortable:true},
+					 {field:'orderNo',title:'流程编号', sortable:true},
+					 {field:'orderVersion',title:'本版号', sortable:true},
+					 {field:'flowProcessId',title:'流程定义ID', sortable:true},
+					 {field:'parentId',title:'亲ID', sortable:true},
+					 {field:'parentNodeName',title:'亲节点名称', sortable:true},
+					 {field:'expireTime',title:'过期时间', sortable:true},
+					 {field:'priority',title:'先级优', sortable:true},
+					 {field:'variable',title:'程流变量', sortable:true},
+					 {field:'createBy',title:'建创人', sortable:true},
+					 {field:'createByUname',title:'建创人姓名', sortable:true},
+					 {field:'createDate',title:'建创日期', sortable:true},
+					 {field:'updateBy',title:'新更人', sortable:true},
+					 {field:'updateByUname',title:'新更人', sortable:true},
+					 {field:'updateDate',title:'新更日期', sortable:true}
+                        ],               		
+             	formatLoadingMessage: function () {
+             		return "请稍等，正在加载中...";
+             	},
+             	formatNoMatches: function () { //没有匹配的结果
+             		return '无符合条件的记录';
+             	},
+             	onLoadError: function (data) {
+             		$('#tableList').bootstrapTable('removeAll');
+             	},
+             	responseHandler: function (res) {
+             	    return {
+             	        total: res.total,
+             	        rows: res.rows
+             	    };
+             	}
+              
+            });
+            
+        };
+ 
+        //得到查询的参数
+      oTableInit.queryParams = function (params) {
+			var id=$("#id").val();
+			var orderNo=$("#orderNo").val();
+			var orderVersion=$("#orderVersion").val();
+			var flowProcessId=$("#flowProcessId").val();
+			var parentId=$("#parentId").val();
+			var parentNodeName=$("#parentNodeName").val();
+	    		var expireTimeBegin=$("#expireTimeBegin").val();
+	    		var expireTimeEnd=$("#expireTimeEnd").val();
+			var priority=$("#priority").val();
+			var variable=$("#variable").val();
+			var createBy=$("#createBy").val();
+			var createByUname=$("#createByUname").val();
+	    		var createDateBegin=$("#createDateBegin").val();
+	    		var createDateEnd=$("#createDateEnd").val();
+			var updateBy=$("#updateBy").val();
+			var updateByUname=$("#updateByUname").val();
+	    		var updateDateBegin=$("#updateDateBegin").val();
+	    		var updateDateEnd=$("#updateDateEnd").val();
+
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                //limit: params.limit, //第几条记录
+                //offset: params.offset, //显示一页多少记录
+                //maxrows: params.limit,
+                //pageindex:params.pageNumber,
+                rows:params.rows,
+                page:params.page,
+                total:params.total,
+                pageSize:params.limit,
+                offset:params.offset,
+                "sortName":this.sortName,
+                "sortOrder":this.sortOrder,
+		"flowOrder.id":id,
+		"flowOrder.orderNo":orderNo,
+		"flowOrder.orderVersion":orderVersion,
+		"flowOrder.flowProcessId":flowProcessId,
+		"flowOrder.parentId":parentId,
+		"flowOrder.parentNodeName":parentNodeName,
+		"flowOrder.expireTimeBegin":expireTimeBegin,
+		"flowOrder.expireTimeEnd":expireTimeEnd,
+		"flowOrder.priority":priority,
+		"flowOrder.variable":variable,
+		"flowOrder.createBy":createBy,
+		"flowOrder.createByUname":createByUname,
+		"flowOrder.createDateBegin":createDateBegin,
+		"flowOrder.createDateEnd":createDateEnd,
+		"flowOrder.updateBy":updateBy,
+		"flowOrder.updateByUname":updateByUname,
+		"flowOrder.updateDateBegin":updateDateBegin,
+		"flowOrder.updateDateEnd":updateDateEnd
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
 		
 </script>
 </head>
 
 <body>
 
- <div class="padd10">
-        <div class="contain">
-            <div class="contain_wrap">
-            
-                <div class="contain_title">
-			    	<div class="contain_t_wrap">
-			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">流程实例</span>
-			            </div><!--end contain_t_text-->
-			            <div class="float_rig contain_t_check">
-			            </div><!--end contain_t_check-->
-			       </div><!--end contain_t_wrap-->
-			    </div><!--end contain_title-->
-			    
-				<div class="toolbar">
-					<div class="toolbar_wrap">
-						<div class="window_button marg_lef10 float_lef">
-						<input type="button" id="add" class="window_button_centerInput"
-						 value="新增" /></div>
-						<div class="window_button marg_lef10 float_lef">
-						<input type="button" id="edit" class="window_button_centerInput" value="编辑" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDelete();"/></div>
-					<table>
-						<tr>
-			 			<td>流程编号</td>
-						<td><input name="flowOrder.orderNo" id = "orderNo" type="text"/></td>
-			 			<td>流程定义ID</td>
-						<td><input name="flowOrder.flowProcessId" id = "flowProcessId" type="text"/></td>
-						<td>		
-							<div class="window_button marg_lef10 float_lef">
-								<input class="window_button_centerInput" name="select" id = "select" type="button" value="查询" /></div>
-								<div class="window_button marg_lef10 float_lef"><input type="button" id="flowDiagram"  class="window_button_centerInput" value="流程图" /></div>
-							</div>
-						</td>
-						</tr>
-					</table>
-					</div>
-				</div>
-				
-				<table id="list"></table>
-				<div id="pager"></div>
 
+<div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">查询条件</div>
+            <div class="panel-body">
+                <form id="formSearch" class="form-horizontal">
+                    <div class="form-group" style="margin-top:15px">
+                      
+
+			 	<label class="control-label col-sm-1" for="id">编号</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
+                        
+			 	<label class="control-label col-sm-1" for="orderNo">流程编号</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="orderNo"></div>
+                        
+			 	<label class="control-label col-sm-1" for="orderVersion">本版号</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="orderVersion"></div>
+                        
+			 	<label class="control-label col-sm-1" for="flowProcessId">流程定义ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="flowProcessId"></div>
+                        
+			 	<label class="control-label col-sm-1" for="parentId">亲ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="parentId"></div>
+                        
+			 	<label class="control-label col-sm-1" for="parentNodeName">亲节点名称</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="parentNodeName"></div>
+                        
+			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="priority">先级优</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="priority"></div>
+                        
+			 	<label class="control-label col-sm-1" for="variable">程流变量</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="variable"></div>
+                        
+			 	<label class="control-label col-sm-1" for="createBy">建创人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
+                        
+			 	<label class="control-label col-sm-1" for="createByUname">建创人姓名</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="createByUname"></div>
+                        
+			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="createDateEnd" id = "createDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="updateBy">新更人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
+                        
+			 	<label class="control-label col-sm-1" for="updateByUname">新更人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
+                        
+			 	<label class="control-label col-sm-1" for="updateDate">新更日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+
+                        <div class="col-sm-6" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>       
+
+        <div id="toolbar" class="btn-group">
+            <button id="btn_add" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            <button id="btn_edit" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+            </button>
+            <button id="btn_delete" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+            
+             <button id="btn_flowDiagram" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看流程图
+            </button>
+            
         </div>
+        
+        <table id="tableList"></table>
     </div>
+
 
     <script type="text/javascript">
     
-	  //查询
-	    $("#select").click(function() {
-			 	var orderNo=$("#orderNo").val();
-			 	var flowProcessId=$("#flowProcessId").val();
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowOrderAction!jqGridList.action',
-				postData : {
-			 			 	"flowOrder.orderNo":orderNo,
-			 			 	"flowOrder.flowProcessId":flowProcessId
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
-	    
+	    var $tableList = $('#tableList');
+	    var $btn_add = $('#btn_add');
+	    var $btn_edit = $('#btn_edit');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
+	  
 		//新增
-        $("#add").click(function() {
+        $("#btn_add").click(function() {
         	window.location.href = '${ctx}/jsp/flows/flowOrderAction!input.action'
         })
 		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
+        $("#btn_edit").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
         	window.location.href = "${ctx}/jsp/flows/flowOrderAction!input.action?operate=edit&id=" + ids;
         })
-          $("#flowDiagram").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要操作的记录');
-        		return;
-        	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
-        		return;
-        	}
-        	var row=jQuery("#list").jqGrid('getRowData',ids); 
-        	var instanceUrl = row.instanceUrl;
-        	var flowProcessId = row.flowProcessId;
-        	var orderId = row.id;
-        	
-        	var url ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + flowProcessId+"&orderId="+orderId;
-        	window.location.href = url;
-        })
         
-        
-		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+		 $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		bootbox.alert('请选择要删除的记录');
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	doDelete();
+                }
+        	});
+        })
+        
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             }); 
             var result = jQuery.ajax({
 		      	  url:"${ctx}/jsp/flows/flowOrderAction!multidelete.action?multidelete=" + ids,
 		          async:false,
@@ -209,16 +324,42 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         
       	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/flows/flowOrderAction!jqGridList.action',
-			 	page:1
-			 }).trigger("reloadGrid");
+      		$tableList.bootstrapTable('refresh');
       	}
+      	
+      	
+      	 $("#btn_flowDiagram").click(function() {
+      		 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
+        		return;
+        	}
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
+        		return;
+        	}
+        	
+         	var instanceUrl = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.instanceUrl;
+            });
+         	var flowProcessId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.flowProcessId;
+            });
+         	var orderId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.id;
+            });
+         	
+         	var url ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + flowProcessId+"&orderId="+orderId;
+         	window.location.href = url;
+         })
       	
     </script>
 

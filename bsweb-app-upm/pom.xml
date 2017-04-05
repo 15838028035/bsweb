@@ -24,11 +24,12 @@
        <artifactId>bsweb-common-web</artifactId>
 		</dependency>
 		
-		<dependency>
+		 <dependency>
 			<groupId>com.lj.app.bsweb</groupId>
 			<artifactId>bsweb-service-upm</artifactId>
 			 <version>${project.version}</version>
 		</dependency>
+		
 	    <dependency>
 			<groupId>com.lj.app.bsweb</groupId>
 			<artifactId>bsweb-service-flows</artifactId>

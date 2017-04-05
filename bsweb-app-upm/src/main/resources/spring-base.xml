@@ -18,8 +18,8 @@
 					    http://www.springframework.org/schema/task/spring-task-3.1.xsd
 					    "
 	default-lazy-init="false">
-	
-	 	<beans profile="dev">  
+
+<beans profile="dev">  
 		<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 			<property name="ignoreResourceNotFound" value="true" />
 			<property name="locations">
@@ -60,6 +60,6 @@
 		 <import resource="classpath:spring-common.xml" />
 	 	<import resource="classpath:dubbo-consumer.xml" />
 	</beans>
-	
-</beans>
 
+	 
+</beans>

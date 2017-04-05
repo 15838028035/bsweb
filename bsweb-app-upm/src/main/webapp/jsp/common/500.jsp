@@ -9,8 +9,8 @@
 		ex = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
 	//记录日志
-	Log logger = LogFactory.getLog("500.jsp");
-	logger.error("500---------------------------"+ex.getMessage()+"-------------------------", ex);
+	//Log logger = LogFactory.getLog("500.jsp");
+	//logger.error("500---------------------------"+ex.getMessage()+"-------------------------", ex);
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

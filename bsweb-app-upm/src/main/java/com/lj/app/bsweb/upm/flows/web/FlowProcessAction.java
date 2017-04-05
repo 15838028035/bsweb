@@ -23,7 +23,6 @@ import com.lj.app.core.common.flows.model.ProcessModel;
 import com.lj.app.core.common.flows.service.FlowEngine;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
 import com.lj.app.core.common.flows.service.FlowProcessService;
-import com.lj.app.core.common.flows.service.FlowQueryService;
 import com.lj.app.core.common.flows.util.FlowUtil;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.Assert;
@@ -71,9 +70,6 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 	
 	@Autowired
 	private FlowProcessService<FlowProcess> flowProcessService;
-	
-	@Autowired
-	private FlowQueryService flowQueryService;
 
 	private String orderId;
 
@@ -257,7 +253,8 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 	}
 
 	public String flowProcessView() {
-		FlowOrderHist order = flowQueryService.getHistOrder(orderId);
+		FlowOrderHist order = flowEngine.flowQueryService()
+				.getHistOrder(orderId);
 		List<FlowTaskHist> tasks = flowEngine.flowQueryService().getHistoryTasks(orderId);
 				
 		return "flowProcessView";
@@ -281,11 +278,12 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 		}
 
 		if (StringUtil.isNotBlank(orderId)) {
-			List<FlowTask> tasks = flowQueryService.getActiveTasks(orderId);
-			List<FlowTaskHist> historyTasks = flowQueryService.getHistoryTasks(orderId);
-					
-			jsonMap.put("state",FlowUtil.getStateJson(model, tasks, historyTasks));
-					
+			List<FlowTask> tasks = flowEngine
+					.flowQueryService().getActiveTasks(orderId);
+			List<FlowTaskHist> historyTasks = flowEngine
+					.flowQueryService().getHistoryTasks(orderId);
+			jsonMap.put("state",
+					FlowUtil.getStateJson(model, tasks, historyTasks));
 		}
 		logger.debug(jsonMap.get("state"));
 		// {"historyRects":{"rects":[{"paths":["TO 任务1"],"name":"开始"},{"paths":["TO 分支"],"name":"任务1"},{"paths":["TO 任务3","TO 任务4","TO 任务2"],"name":"分支"}]}}

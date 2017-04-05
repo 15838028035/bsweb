@@ -21,6 +21,13 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
+
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
+
 <script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();
@@ -48,7 +55,7 @@
                 showColumns:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                search:true,
+                search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -67,8 +74,13 @@
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [
-						 {field:'id',title:'编号', sortable:true},
+                columns: [ 
+                           { field: 'checkStatus', title: '',checkbox:true }, 
+                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+               	   			return index+1;
+                  			}  
+                  			},
+						 {field:'id',title:'ID', sortable:true},
 						 {field:'roleCode',title:'色角编码', sortable:true},
 						 {field:'appId',title:'用应编码', sortable:true},
 						 {field:'roleName',title:'色角名称', sortable:true},
@@ -76,8 +88,15 @@
 						 {field:'createDate',title:'建创日期', sortable:true},
 						 {field:'updateBy',title:'更新人', sortable:true},
 						 {field:'updateDate',title:'更新日期', sortable:true},
-						 {field:'enableFlag',title:'否是有效', sortable:true},
-						 {field:'lockStatus',title:'定锁状态', sortable:true},
+						 {field:'enableFlag',title:'否是有效', sortable:true,formatter : function(value, row, index) {  
+	               	   			if(value=='F') return '否';
+	               	   			return '是';
+               				}  
+						 },
+						 {field:'lockStatus',title:'定锁状态', sortable:true,sortable:true,formatter : function(value, row, index) {  
+	               	   			if(value=='1') return '是';
+	               	   			return '否';
+               				}  },
 						 {field:'roleDesc',title:'色角描述', sortable:true}
                         ],              		
              	formatLoadingMessage: function () {
@@ -161,7 +180,7 @@
                     <div class="form-group" style="margin-top:15px">
                       
 
-			 	<label class="control-label col-sm-1" for="id">编号</label>
+			 	<label class="control-label col-sm-1" for="id">ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
 			 	<label class="control-label col-sm-1" for="roleCode">色角编码</label>
@@ -225,89 +244,73 @@
 
     <script type="text/javascript">
     
-	  //查询
-	    $("#select").click(function() {
-			 	var id=$("#id").val();
-			 	var roleCode=$("#roleCode").val();
-			 	var appId=$("#appId").val();
-			 	var roleName=$("#roleName").val();
-			 	var createBy=$("#createBy").val();
-	    		var createDateBegin=$("#createDateBegin").val();
-	    		var createDateEnd=$("#createDateEnd").val();
-			 	var updateBy=$("#updateBy").val();
-	    		var updateDateBegin=$("#updateDateBegin").val();
-	    		var updateDateEnd=$("#updateDateEnd").val();
-			 	var enableFlag=$("#enableFlag").val();
-			 	var lockStatus=$("#lockStatus").val();
-			 	var roleDesc=$("#roleDesc").val();
-	    	
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/upmRole/upmRoleAction!list.action',
-				postData : {
-			 			 	"id":id,
-			 			 	"roleCode":roleCode,
-			 			 	"appId":appId,
-			 			 	"roleName":roleName,
-			 			 	"createBy":createBy,
-							"createDateBegin":createDateBegin,
-							"createDateEnd":createDateEnd,
-			 			 	"updateBy":updateBy,
-							"updateDateBegin":updateDateBegin,
-							"updateDateEnd":updateDateEnd,
-			 			 	"enableFlag":enableFlag,
-			 			 	"lockStatus":lockStatus,
-			 			 	"roleDesc":roleDesc
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
-	    
+    var $tableList = $('#tableList');
+    var $btn_add = $('#btn_add');
+    var $btn_edit = $('#btn_edit');
+    var $btn_delete = $('#btn_delete');
+    var $btn_query = $('#btn_query');
+	 
 		//新增
-        $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/upmRole/upmRoleAction!input.action'
-        })
+        $("#btn_add").click(function() {
+        	window.location.href = '${ctx}/jsp/role/upmRoleAction!input.action'
+        });
+		
 		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
+        $("#btn_edit").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/upmRole/upmRoleAction!input.action?operate=edit&id=" + ids;
-        })
-		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	window.location.href = "${ctx}/jsp/role/upmRoleAction!input.action?operate=edit&id=" + ids;
+        });
+		
+		 $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		bootbox.alert('请选择要删除的记录');
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	doDelete();
+                }
+        	});
+        });
+        
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/upmRole/upmRoleAction!multidelete.action?multidelete=" + ids,
+		      	  url:"${ctx}/jsp/role/upmRoleAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         
+        $btn_query.click(function () {
+       	 refreshGrid();
+       });
+        
       	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/upmRole/upmRoleAction!list.action',
-			 	page:1
-			 }).trigger("reloadGrid");
-      	}
+      		$tableList.bootstrapTable('refresh');
+      	};
       	
     </script>
 
