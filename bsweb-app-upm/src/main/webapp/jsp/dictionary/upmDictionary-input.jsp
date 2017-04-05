@@ -8,8 +8,8 @@
 <head>
     <title>应用管理</title>
     <%@ include file="/jsp/common/meta.jsp" %>
-	<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-	<%@ include file="/jsp/common/resource/styles_all.jsp" %>
+	<%@ include file="/jsp/common/meta.jsp" %>
+<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 	<script>
 		$(document).ready(function(){
 			if('${returnMessage}' != ""){

@@ -7,9 +7,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>配置管理</title>
-    <%@ include file="/jsp/common/meta.jsp" %>
-	<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-	<%@ include file="/jsp/common/resource/styles_all.jsp" %>
+<%@ include file="/jsp/common/meta.jsp" %>
+<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 	<script>
 		$(document).ready(function(){
 			if('${returnMessage}' != ""){
