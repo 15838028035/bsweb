@@ -116,8 +116,8 @@
 			 			<td></td>
 						<td><input name="name" id = "name" type="text"/></td>
 			 			<td>optdate</td>
-						<td><input type="text" name="optdateBegin" id = "optdateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-							<input type="text" name="optdateEnd" id = "optdateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+						<td><input type="text" name="optdateBegin" id = "optdateBegin"  class="datetimepicker" readonly="readonly"/>
+							<input type="text" name="optdateEnd" id = "optdateEnd"  class="datetimepicker" readonly="readonly"/>
 						</td>
 			 			<td>operator</td>
 						<td><input name="operator" id = "operator" type="text"/></td>

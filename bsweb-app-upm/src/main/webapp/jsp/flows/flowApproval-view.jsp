@@ -42,7 +42,7 @@
 		  <tr>
 			 <td align="right">操作时间<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowApprove.operateTime" id = "operateTime" value="<s:date name='operateTime' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowApprove.operateTime" id = "operateTime" value="<s:date name='operateTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
 		 

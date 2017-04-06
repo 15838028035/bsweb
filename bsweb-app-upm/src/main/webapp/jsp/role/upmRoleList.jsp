@@ -186,16 +186,16 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
 			   <div class="col-sm-2">
-                 <input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii"  readonly="readonly" placeholder="请选择日期"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii"  readonly="readonly" placeholder="请选择日期"/>
+                 <input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker"   readonly="readonly" placeholder="请选择日期"/>
+				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker"   readonly="readonly" placeholder="请选择日期"/>
                  </div>
 			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
                         
 			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"   readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd"   readonly="readonly"/>
+                            	<input type="text" name="updateDateBegin" id = "updateDateBegin" class="datetimepicker"  readonly="readonly"/>
+				<input type="text" name="updateDateEnd" id = "updateDateEnd" class="datetimepicker"   readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="enableFlag">否是有效</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="enableFlag"></div>

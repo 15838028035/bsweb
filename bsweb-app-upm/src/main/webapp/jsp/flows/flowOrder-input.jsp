@@ -65,7 +65,7 @@
         <tr>
 			 <td align="right">流程实例期望完成时间<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowOrder.expireTime" id = "expireTime" value="<s:date name='expireTime' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowOrder.expireTime" id = "expireTime" value="<s:date name='expireTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>

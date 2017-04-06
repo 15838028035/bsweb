@@ -79,31 +79,31 @@
         <tr>
 			 <td align="right">任务创建时间<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowTask.createTime" id = "createTime" value="<s:date name='createTime' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowTask.createTime" id = "createTime" value="<s:date name='createTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>
 			 <td align="right">任务完成时间<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowTask.finishTime" id = "finishTime" value="<s:date name='finishTime' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowTask.finishTime" id = "finishTime" value="<s:date name='finishTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>
 			 <td align="right">期望任务完成时间<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowTask.expireTime" id = "expireTime" value="<s:date name='expireTime' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowTask.expireTime" id = "expireTime" value="<s:date name='expireTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>
 			 <td align="right">期望的完成时间date类型<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowTask.expireDate" id = "expireDate" value="<s:date name='expireDate' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowTask.expireDate" id = "expireDate" value="<s:date name='expireDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>
 			 <td align="right">提醒时间date类型<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowTask.remindDate" id = "remindDate" value="<s:date name='remindDate' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowTask.remindDate" id = "remindDate" value="<s:date name='remindDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>
@@ -144,7 +144,7 @@
         <tr>
 			 <td align="right">创建时间<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowTask.createDate" id = "createDate" value="<s:date name='createDate' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowTask.createDate" id = "createDate" value="<s:date name='createDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>
@@ -157,7 +157,7 @@
         <tr>
 			 <td align="right">更新时间<font color="red">*</font></td>
 			 <td>
-				<input type="text" name="flowTask.updateDate" id = "updateDate" value="<s:date name='updateDate' format='yyyy-MM-dd' />" class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="flowTask.updateDate" id = "updateDate" value="<s:date name='updateDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
 		 	 </td>
 		 </tr>
         <tr>

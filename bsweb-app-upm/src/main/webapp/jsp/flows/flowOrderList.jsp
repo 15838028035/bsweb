@@ -190,8 +190,8 @@
                         
 			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="priority">先级优</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="priority"></div>
@@ -207,8 +207,8 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="updateBy">新更人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
@@ -218,8 +218,8 @@
                         
 			 	<label class="control-label col-sm-1" for="updateDate">新更日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="updateDateBegin" id = "updateDateBegin" class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
 
                         <div class="col-sm-6" style="text-align:left;">

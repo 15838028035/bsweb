@@ -242,28 +242,28 @@
                         
 			 	<label class="control-label col-sm-1" for="createTime">建创时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="finishTimeEnd" id = "finishTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="finishTimeEnd" id = "finishTimeEnd" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="expireTimeEnd" id = "expireTimeEnd" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="expireDate">过期日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="expireDateBegin" id = "expireDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="expireDateEnd" id = "expireDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="expireDateBegin" id = "expireDateBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="expireDateEnd" id = "expireDateEnd" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="remindDate">提醒日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="remindDateBegin" id = "remindDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="remindDateEnd" id = "remindDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="remindDateBegin" id = "remindDateBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="remindDateEnd" id = "remindDateEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="actionUrl">实例化URL</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actionUrl"></div>
@@ -282,8 +282,8 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
@@ -293,8 +293,8 @@
                         
 			 	<label class="control-label col-sm-1" for="updateDate">新更日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="datetimepicker" readonly="readonly"/>
+				<input type="text" name="updateDateEnd" id = "updateDateEnd" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="flowVersion">流程版本</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowVersion"></div>
