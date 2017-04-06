@@ -242,7 +242,6 @@
       	}
       	
         $("#btn_addDictionaryItemBtn").click(function() {
-  	      var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
   	    var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
             return row.id;
         	});
@@ -256,16 +255,12 @@
 		   		return;
 		   	}
   				
-          	 jQuery.FrameDialog.create({
-  						url: "${ctx}/jsp/dictionary/upmDictionaryList.jsp?nodeId="+ids,
-  						title: "数据字典项管理",
-  						width: 800,
-  						height: 600,
-  						hide: 'slide',
-  						buttons:{}							
-  					}).bind('dialogclose', function(event, ui) {
-  							//refreshGrid();
-  			    	}); 
+          	 bootbox.dialog({
+          		title: "编辑数据字典值",
+          		message: '',
+          		//url:"${ctx}/jsp/dictionary/upmDictionaryList.jsp?nodeId="+ids,
+          		min: false
+          		});
   			    	
           })
       	

@@ -9,11 +9,12 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
-<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<link href="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 
 <script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
 
-<script src="${ctx}/scripts/bootstrap-datepicker/css/bootstrap-datepicker.css"></script>
-<script src="${ctx}/scripts/scripts/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script src="${ctx}/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<link href="${ctx}/scripts/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+<script src="${ctx}/scripts/bootstrap-datetimepicker/js/moment.js"></script>
+<script src="${ctx}/scripts/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
