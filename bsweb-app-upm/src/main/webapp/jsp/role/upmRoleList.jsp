@@ -15,6 +15,12 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
 	});
 
 	
@@ -180,8 +186,8 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
 			   <div class="col-sm-2">
-                 <input type="text" name="createDateBegin" id = "createDateBegin"  class="date-widget" data-date-format="yyyy-mm-dd hh:ii"  readonly="readonly" placeholder="请选择日期"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="date-widget" data-date-format="yyyy-mm-dd hh:ii"  readonly="readonly" placeholder="请选择日期"/>
+                 <input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii"  readonly="readonly" placeholder="请选择日期"/>
+				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii"  readonly="readonly" placeholder="请选择日期"/>
                  </div>
 			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
@@ -294,10 +300,6 @@
       	function refreshGrid(){
       		$tableList.bootstrapTable('refresh');
       	};
-      	
-      	 $(".date-widget").datetimepicker({
-             format: 'yyyy-mm-dd',//格式化时间
-         });
       	
     </script>
 

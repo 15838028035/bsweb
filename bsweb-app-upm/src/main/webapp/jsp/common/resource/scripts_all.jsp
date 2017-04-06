@@ -14,7 +14,8 @@
 
 <script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
 
-<link href="${ctx}/scripts/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
-
 <script src="${ctx}/scripts/bootstrap-datetimepicker/js/moment.js"></script>
+<script src="${ctx}/scripts/bootstrap-datetimepicker/js/moment_zh-CN.js"></script>
+<link href="${ctx}/scripts/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="${ctx}/scripts/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
