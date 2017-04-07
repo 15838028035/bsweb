@@ -93,20 +93,13 @@
         //得到查询的参数
       oTableInit.queryParams = function (params) {
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                //limit: params.limit, //第几条记录
-                //offset: params.offset, //显示一页多少记录
-                //maxrows: params.limit,
-                //pageindex:params.pageNumber,
-                rows:params.rows,
-                page:params.page,
-                total:params.total,
-                pageSize:params.limit,
-                offset:params.offset,
-                "sortName":this.sortName,
-                "sortOrder":this.sortOrder,
-                "upmUser.userName":$("#userName").val(),
- 			 	"upmUser.orgDesc":$("#orgDesc").val(),
- 			 	"upmUser.mobile": $("#mobile").val()
+            		 "page.pageSize":params.pageSize,
+                     "page.pageNumber":params.pageNumber,
+	                "sortName":this.sortName,
+	                "sortOrder":this.sortOrder,
+	                "upmUser.userName":$("#userName").val(),
+	 			 	"upmUser.orgDesc":$("#orgDesc").val(),
+	 			 	"upmUser.mobile": $("#mobile").val()
             };
             return temp;
         };
