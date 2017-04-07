@@ -14,6 +14,12 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
 	});
 
 	var TableInit = function () {
@@ -61,7 +67,7 @@
                         	   			return index+1;
                            			}  
                            },
-                          { field: 'id', title: 'ID' }, 
+                          { field: 'id', title: 'ID',sortable:true }, 
                           { field: 'loginNo', title: '登陆账号',sortable:true }, 
                           { field: 'userName', title: '用户名',sortable:true }, 
                           { field: 'mobile', title: '手机号码',sortable:true },

@@ -17,6 +17,12 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
 	});
 
 	
@@ -67,10 +73,10 @@
                            },
 			 	{field:'id',title:'ID', sortable:true},
 			 	{field:'taskVefrsion',title:'任务版本', sortable:true},
-			 	{field:'flowOrderId',title:'程流实例ID', sortable:true},
-			 	{field:'taskName',title:'务任名称', sortable:true},
+			 	{field:'flowOrderId',title:'流程实例ID', sortable:true},
+			 	{field:'taskName',title:'任务名称', sortable:true},
 			 	{field:'displayName',title:'显示名称', sortable:true},
-			 	{field:'performType',title:'务任参与类型', sortable:true},
+			 	{field:'performType',title:'任务参与类型', sortable:true},
 			 	{field:'taskType',title:'任务类型', sortable:true},
 			 	{field:'operator',title:'作操者', sortable:true},
 			 	{field:'createTime',title:'建创时间', sortable:true},
@@ -80,16 +86,16 @@
 			 	{field:'remindDate',title:'提醒日期', sortable:true},
 			 	{field:'actionUrl',title:'实例化URL', sortable:true},
 			 	{field:'parentTaskId',title:'父ID', sortable:true},
-			 	{field:'variable',title:'程流变量', sortable:true},
-			 	{field:'createBy',title:'建创人', sortable:true},
-			 	{field:'createByUname',title:'建创人姓名', sortable:true},
-			 	{field:'createDate',title:'建创日期', sortable:true},
+			 	{field:'variable',title:'流程变量', sortable:true},
+			 	{field:'createBy',title:'创建人', sortable:true},
+			 	{field:'createByUname',title:'创建人姓名', sortable:true},
+			 	{field:'createDate',title:'创建日期', sortable:true},
 			 	{field:'updateBy',title:'更新人', sortable:true},
-			 	{field:'updateByUname',title:'新更人姓名', sortable:true},
-			 	{field:'updateDate',title:'新更日期', sortable:true},
+			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
+			 	{field:'updateDate',title:'更新日期', sortable:true},
 			 	{field:'flowVersion',title:'流程版本', sortable:true},
-			 	{field:'flowName',title:'程流名称', sortable:true},
-			 	{field:'instanceUrl',title:'例化实URL', sortable:true},
+			 	{field:'flowName',title:'流程名称', sortable:true},
+			 	{field:'instanceUrl',title:'实例化URL', sortable:true},
 			 	{field:'flowProcessId',title:'流程定义ID', sortable:true},
 			 	{field:'actorIds',title:'程流参与者', sortable:true}
                         ],               		
@@ -225,13 +231,13 @@
 			 	<label class="control-label col-sm-1" for="flowOrderId">程流实例ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowOrderId"></div>
                         
-			 	<label class="control-label col-sm-1" for="taskName">务任名称</label>
+			 	<label class="control-label col-sm-1" for="taskName">任务名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="taskName"></div>
                         
 			 	<label class="control-label col-sm-1" for="displayName">显示名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="displayName"></div>
                         
-			 	<label class="control-label col-sm-1" for="performType">务任参与类型</label>
+			 	<label class="control-label col-sm-1" for="performType">任务参与类型</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="performType"></div>
                         
 			 	<label class="control-label col-sm-1" for="taskType">任务类型</label>
@@ -240,7 +246,7 @@
 			 	<label class="control-label col-sm-1" for="operator">作操者</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
                         
-			 	<label class="control-label col-sm-1" for="createTime">建创时间</label>
+			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="datetimepicker" readonly="readonly"/>
@@ -271,16 +277,16 @@
 			 	<label class="control-label col-sm-1" for="parentTaskId">父ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="parentTaskId"></div>
                         
-			 	<label class="control-label col-sm-1" for="variable">程流变量</label>
+			 	<label class="control-label col-sm-1" for="variable">流程变量</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="variable"></div>
                         
-			 	<label class="control-label col-sm-1" for="createBy">建创人</label>
+			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="createByUname">建创人姓名</label>
+			 	<label class="control-label col-sm-1" for="createByUname">创建人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
+			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" readonly="readonly"/>
@@ -288,10 +294,10 @@
 			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateByUname">新更人姓名</label>
+			 	<label class="control-label col-sm-1" for="updateByUname">更新人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateDate">新更日期</label>
+			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="updateDateEnd" id = "updateDateEnd" class="datetimepicker" readonly="readonly"/>
@@ -302,7 +308,7 @@
 			 	<label class="control-label col-sm-1" for="flowName">程流名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowName"></div>
                         
-			 	<label class="control-label col-sm-1" for="instanceUrl">例化实URL</label>
+			 	<label class="control-label col-sm-1" for="instanceUrl">实例化URL</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="instanceUrl"></div>
                         
 			 	<label class="control-label col-sm-1" for="flowProcessId">流程定义ID</label>

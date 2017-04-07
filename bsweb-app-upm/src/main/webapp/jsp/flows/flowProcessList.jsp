@@ -16,6 +16,12 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
 	});
 
 	var TableInit = function () {

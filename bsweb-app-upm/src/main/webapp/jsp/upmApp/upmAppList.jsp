@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>upmApp管理</title>
+<title>应用管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -57,15 +57,15 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [  
-			{ field: 'checkStatus', title: '',checkbox:true }, 
+						{ field: 'checkStatus', title: '',checkbox:true }, 
                            {field : 'Number', title : '行号', formatter : function(value, row, index) {  
                         	   			return index+1;
                            			}  
                            },
 			 	{field:'id',title:'ID', sortable:true},
 			 	{field:'appId',title:'应用ID', sortable:true},
-			 	{field:'appCode',title:'用应编码', sortable:true},
-			 	{field:'appName',title:'用应名称', sortable:true},
+			 	{field:'appCode',title:'应用编码', sortable:true},
+			 	{field:'appName',title:'应用名称', sortable:true},
 			 	{field:'appUrl',title:'URL', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
@@ -135,10 +135,10 @@
 			 	<label class="control-label col-sm-1" for="appId">应用ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
                         
-			 	<label class="control-label col-sm-1" for="appCode">用应编码</label>
+			 	<label class="control-label col-sm-1" for="appCode">应用编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appCode"></div>
                         
-			 	<label class="control-label col-sm-1" for="appName">用应名称</label>
+			 	<label class="control-label col-sm-1" for="appName">应用名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appName"></div>
                         
                         <div class="col-sm-6" style="text-align:left;">

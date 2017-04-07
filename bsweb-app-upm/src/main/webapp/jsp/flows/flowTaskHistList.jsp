@@ -15,6 +15,12 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
 	});
 
 	
@@ -64,7 +70,7 @@
                            			}  
                            },
 			 	{field:'id',title:'ID', sortable:true},
-			 	{field:'taskVefrsion',title:'务任版本', sortable:true},
+			 	{field:'taskVefrsion',title:'任务版本', sortable:true},
 			 	{field:'flowOrderId',title:'流程实例ID', sortable:true},
 			 	{field:'taskName',title:'任务名称', sortable:true},
 			 	{field:'displayName',title:'显示名称', sortable:true},
@@ -80,11 +86,11 @@
 			 	{field:'parentTaskId',title:'父ID', sortable:true},
 			 	{field:'variable',title:'流程变量', sortable:true},
 			 	{field:'createBy',title:'创建人', sortable:true},
-			 	{field:'createByUname',title:'建创人姓名', sortable:true},
+			 	{field:'createByUname',title:'创建人姓名', sortable:true},
 			 	{field:'createDate',title:'创建日期', sortable:true},
-			 	{field:'updateBy',title:'新更人', sortable:true},
-			 	{field:'updateByUname',title:'新更人姓名', sortable:true},
-			 	{field:'updateDate',title:'新更日期', sortable:true}
+			 	{field:'updateBy',title:'更新人', sortable:true},
+			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
+			 	{field:'updateDate',title:'更新日期', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -203,7 +209,7 @@
 			 	<label class="control-label col-sm-1" for="id">ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
-			 	<label class="control-label col-sm-1" for="taskVefrsion">务任版本</label>
+			 	<label class="control-label col-sm-1" for="taskVefrsion">任务版本</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="taskVefrsion"></div>
                         
 			 	<label class="control-label col-sm-1" for="flowOrderId">流程实例ID</label>
@@ -269,13 +275,13 @@
                             	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="createDateEnd" id = "createDateEnd" class="datetimepicker" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="updateBy">新更人</label>
+			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateByUname">新更人姓名</label>
+			 	<label class="control-label col-sm-1" for="updateByUname">更新人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateDate">新更日期</label>
+			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="datetimepicker" readonly="readonly"/>

@@ -15,6 +15,12 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
 	});
 
 	
@@ -66,7 +72,7 @@
 						 {field:'id',title:'', sortable:true},
 						 {field:'orderId',title:'流程实例编号', sortable:true},
 						 {field:'actorId',title:'执行人', sortable:true},
-						 {field:'creator',title:'建创人', sortable:true},
+						 {field:'creator',title:'创建人', sortable:true},
 						 {field:'createTime',title:'创建时间', sortable:true},
 						 {field:'finishTime',title:'完成时间', sortable:true},
 						 {field:'status',title:'', sortable:true}
@@ -153,7 +159,7 @@
 			 	<label class="control-label col-sm-1" for="actorId">执行人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actorId"></div>
                         
-			 	<label class="control-label col-sm-1" for="creator">建创人</label>
+			 	<label class="control-label col-sm-1" for="creator">创建人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="creator"></div>
                         
 			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>

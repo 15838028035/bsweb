@@ -15,6 +15,12 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
 	});
 
 	
@@ -65,19 +71,19 @@
                           },
 					 {field:'id',title:'编号', sortable:true},
 					 {field:'orderNo',title:'流程编号', sortable:true},
-					 {field:'orderVersion',title:'本版号', sortable:true},
+					 {field:'orderVersion',title:'版本号', sortable:true},
 					 {field:'flowProcessId',title:'流程定义ID', sortable:true},
-					 {field:'parentId',title:'亲ID', sortable:true},
-					 {field:'parentNodeName',title:'亲节点名称', sortable:true},
+					 {field:'parentId',title:'父ID', sortable:true},
+					 {field:'parentNodeName',title:'父节点名称', sortable:true},
 					 {field:'expireTime',title:'过期时间', sortable:true},
-					 {field:'priority',title:'先级优', sortable:true},
-					 {field:'variable',title:'程流变量', sortable:true},
-					 {field:'createBy',title:'建创人', sortable:true},
-					 {field:'createByUname',title:'建创人姓名', sortable:true},
-					 {field:'createDate',title:'建创日期', sortable:true},
-					 {field:'updateBy',title:'新更人', sortable:true},
-					 {field:'updateByUname',title:'新更人', sortable:true},
-					 {field:'updateDate',title:'新更日期', sortable:true}
+					 {field:'priority',title:'优先级', sortable:true},
+					 {field:'variable',title:'流程变量', sortable:true},
+					 {field:'createBy',title:'创建人', sortable:true},
+					 {field:'createByUname',title:'创建人姓名', sortable:true},
+					 {field:'createDate',title:'创建日期', sortable:true},
+					 {field:'updateBy',title:'更新人', sortable:true},
+					 {field:'updateByUname',title:'更新人', sortable:true},
+					 {field:'updateDate',title:'更新日期', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -176,16 +182,16 @@
 			 	<label class="control-label col-sm-1" for="orderNo">流程编号</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="orderNo"></div>
                         
-			 	<label class="control-label col-sm-1" for="orderVersion">本版号</label>
+			 	<label class="control-label col-sm-1" for="orderVersion">版本号</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="orderVersion"></div>
                         
 			 	<label class="control-label col-sm-1" for="flowProcessId">流程定义ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowProcessId"></div>
                         
-			 	<label class="control-label col-sm-1" for="parentId">亲ID</label>
+			 	<label class="control-label col-sm-1" for="parentId">父ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="parentId"></div>
                         
-			 	<label class="control-label col-sm-1" for="parentNodeName">亲节点名称</label>
+			 	<label class="control-label col-sm-1" for="parentNodeName">父节点名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="parentNodeName"></div>
                         
 			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
@@ -193,16 +199,16 @@
                             	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="priority">先级优</label>
+			 	<label class="control-label col-sm-1" for="priority">优先级</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="priority"></div>
                         
-			 	<label class="control-label col-sm-1" for="variable">程流变量</label>
+			 	<label class="control-label col-sm-1" for="variable">流程变量</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="variable"></div>
                         
-			 	<label class="control-label col-sm-1" for="createBy">建创人</label>
+			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="createByUname">建创人姓名</label>
+			 	<label class="control-label col-sm-1" for="createByUname">创建人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createByUname"></div>
                         
 			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
@@ -210,13 +216,13 @@
                             	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="updateBy">新更人</label>
+			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateByUname">新更人</label>
+			 	<label class="control-label col-sm-1" for="updateByUname">更新人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateDate">新更日期</label>
+			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
 			   <div class="col-sm-2">
                             	<input type="text" name="updateDateBegin" id = "updateDateBegin" class="datetimepicker" readonly="readonly"/>
 				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="datetimepicker" readonly="readonly"/>

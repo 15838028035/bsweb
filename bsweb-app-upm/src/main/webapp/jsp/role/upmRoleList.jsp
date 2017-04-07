@@ -70,11 +70,11 @@
                   			}  
                   			},
 						 {field:'id',title:'ID', sortable:true},
-						 {field:'roleCode',title:'色角编码', sortable:true},
-						 {field:'appId',title:'用应编码', sortable:true},
-						 {field:'roleName',title:'色角名称', sortable:true},
-						 {field:'createBy',title:'建创人', sortable:true},
-						 {field:'createDate',title:'建创日期', sortable:true},
+						 {field:'roleCode',title:'角色编码', sortable:true},
+						 {field:'appId',title:'应用编码', sortable:true},
+						 {field:'roleName',title:'角色名称', sortable:true},
+						 {field:'createBy',title:'创建人', sortable:true},
+						 {field:'createDate',title:'创建日期', sortable:true},
 						 {field:'updateBy',title:'更新人', sortable:true},
 						 {field:'updateDate',title:'更新日期', sortable:true},
 						 {field:'enableFlag',title:'否是有效', sortable:true,formatter : function(value, row, index) {  
@@ -82,11 +82,11 @@
 	               	   			return '是';
                				}  
 						 },
-						 {field:'lockStatus',title:'定锁状态', sortable:true,sortable:true,formatter : function(value, row, index) {  
+						 {field:'lockStatus',title:'锁定状态', sortable:true,sortable:true,formatter : function(value, row, index) {  
 	               	   			if(value=='1') return '是';
 	               	   			return '否';
                				}  },
-						 {field:'roleDesc',title:'色角描述', sortable:true}
+						 {field:'roleDesc',title:'角色描述', sortable:true}
                         ],              		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -172,19 +172,19 @@
 			 	<label class="control-label col-sm-1" for="id">ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
-			 	<label class="control-label col-sm-1" for="roleCode">色角编码</label>
+			 	<label class="control-label col-sm-1" for="roleCode">角色编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="roleCode"></div>
                         
-			 	<label class="control-label col-sm-1" for="appId">用应编码</label>
+			 	<label class="control-label col-sm-1" for="appId">应用编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
                         
-			 	<label class="control-label col-sm-1" for="roleName">色角名称</label>
+			 	<label class="control-label col-sm-1" for="roleName">角色名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="roleName"></div>
                         
-			 	<label class="control-label col-sm-1" for="createBy">建创人</label>
+			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
+			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
 			   <div class="col-sm-2">
                  <input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker"   readonly="readonly" placeholder="请选择日期"/>
 				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker"   readonly="readonly" placeholder="请选择日期"/>
