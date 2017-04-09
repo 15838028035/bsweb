@@ -23,52 +23,41 @@
 	</script>
 </head>
 <body>
-<form action="upmUserAction!commonSaveOrUpdate.action" method="post" name="userForm" id="userForm">
+<form action="upmUserAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="userForm" id="userForm">
 <input type="hidden" name="id" value="${id}"/>
 <input type="hidden" name="upmUser.id" value="${id}"/>
 <input type="hidden" name="operate" value="${operate}" />
-    <table>
-        <tr>
-            <td align="right">登录名<font color="red">*</font> </td>
-            <td><input type="text" id="loginNo" name="upmUser.loginNo" value="${loginNo}" maxLength="50" /></td>
-        </tr>
-        <tr>
-            <td align="right">密码<font color="red">*</font></td>
-            <td><input type="text" id="pwd" name="upmUser.pwd" value="${pwd}" maxlength="200"/> </td>
-        </tr>
-          <tr>
-            <td align="right">用户名<font color="red">*</font></td>
-             <td><input type="text" id="userName" name="upmUser.userName" value="${userName}" maxlength="50"/> </td>
-        </tr>
-         <tr>
-            <td align="right">组织机构描述<font color="red">*</font></td>
-             <td><input type="text" id="orgDesc" name="upmUser.orgDesc" value="${orgDesc}" maxlength="50"/> </td>
-        </tr>
-         <tr>
-            <td align="right">手机号码 <font color="red">*</font></td>
-             <td><input type="text" id="mobile" name="upmUser.mobile" value="${mobile}" maxlength="15"/> </td>
-        </tr>
-         <tr>
-            <td align="right">email<font color="red">*</font></td>
-             <td><input type="text" id="mobile" name="upmUser.email" value="${email}" maxlength="15"/> </td>
-        </tr>
+        <div class="form-group">  
+             <label class="col-xs-3 control-label">登录名</label>  
+            <div class="col-xs-8"><input type="text" id="loginNo" name="upmUser.loginNo" value="${loginNo}"  /></div>
+       	</div>
+       <div class="form-group">  
+             <label class="col-xs-3 control-label">密码</label>  
+            <div class="col-xs-8"><input type="text" id="pwd" name="upmUser.pwd" value="${pwd}" maxlength="200"/> </div>
+        </div>
+         <div class="form-group">  
+             <label class="col-xs-3 control-label">用户名</label>  
+             <div class="col-xs-8"><input type="text" id="userName" name="upmUser.userName" value="${userName}" maxlength="50"/></div>
+         </div>
+         <div class="form-group">  
+             <label class="col-xs-3 control-label">组织机构描述</label>  
+            <div class="col-xs-8"><input type="text" id="orgDesc" name="upmUser.orgDesc" value="${orgDesc}" maxlength="50"/></div>
+      	</div>
+         <div class="form-group">  
+             <label class="col-xs-3 control-label">手机号码 </label>  
+             <div class="col-xs-8"><input type="text" id="mobile" name="upmUser.mobile" value="${mobile}" maxlength="15"/> </div>
+        </div>
+         <div class="form-group">  
+             <label class="col-xs-3 control-label">email</label>  
+             <div class="col-xs-8"><input type="text" id="mobile" name="upmUser.email" value="${email}" maxlength="15"/> </div>
+        </div>
         
-        <tr>
-            <td>
-            </td>
-            <td>
- 				<div class=" marg_lef10 float_lef"><input type="button" id="submitButton" class="window_button_centerInput window_button_centerInput1" value="保存"/></div>
-		       	<div class=" marg_lef10 float_lef"><input type="button" id="backToHomeButton" class="window_button_centerInput window_button_centerInput1 CA_4A_select04" value="返回主页" /></div>
-            </td>
-        </tr>
-    </table>
+        <div  class="modal-footer">  
+        		  <button type="submit" class="btn btn-success btn-shadow btn-shadow-success ">保存</button>      
+                <button type="button" class="btn btn-default btn-shadow btn-shadow-default ">返回主页</button>  
+        </div>
 </form>
 <script>
-        $("#submitButton").click(function() {
-        	$("#userForm").submit();
-        	return false;
-        })
-
 		$("#userForm").validate({
 			submitHandler: function(form){
 				form.submit();
@@ -102,6 +91,39 @@
 		    }
 			
 		});
+        
+        $('#userForm').bootstrapValidator({  
+            fields: {  
+            	"upmUser.loginNo": {  
+                message: 'The username is not valid',  
+                validators: {  
+                    notEmpty: {  
+                    message: 'The username is required and can\'t be empty'  
+                    }  
+                	}
+        		},
+                "upmUser.pwd": {  
+                    message: 'The username is not valid',  
+                    validators: {  
+                        notEmpty: {  
+                        message: 'The username is required and can\'t be empty'  
+                        }  
+                    }  
+                },
+                "upmUser.userName": {  
+                    message: 'The username is not valid',  
+                    validators: {  
+                        notEmpty: {  
+                        message: 'The username is required and can\'t be empty'  
+                        }  
+                    }  
+                }
+            },
+            
+            submitHandler: function(validator, form, submitButton) {  
+                validator.defaultSubmit();  
+            }  
+        });  
 
         $("#backToHomeButton").click(function() {
 			window.parent.location.href="${ctx}/index.jsp";
