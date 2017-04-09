@@ -1,123 +1,165 @@
 ﻿<%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-	<%@ include file="/jsp/common/meta.jsp" %>
+<meta name="viewport" content="width=device-width" />
+<%@ include file="/jsp/common/meta.jsp" %>
+<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 	<title>UPM用户权限管理系统--用户登录</title>
-	<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-	<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
-	<%@ include file="/jsp/common/resource/scripts_base.jsp" %>
-	<script type="text/javascript" src="${ctx}/scripts/common.js"></script>
-	<script type="text/javascript" src="${ctx}/scripts/jquery/cookie/jquery.cookie.js"></script>
-	<script type="text/javascript" src="${ctx}/scripts/common/securityencode.js"></script>
+
+<style type="text/css">
+.form-bg{
+    background: #00b4ef;
+}
+.form-horizontal{
+    background: #fff;
+    padding-bottom: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+.form-horizontal .heading{
+    display: block;
+    font-size: 35px;
+    font-weight: 700;
+    padding: 35px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 30px;
+}
+.form-horizontal .form-group{
+    padding: 0 40px;
+    margin: 0 0 25px 0;
+    position: relative;
+}
+.form-horizontal .form-control{
+    background: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    box-shadow: none;
+    padding: 0 20px 0 45px;
+    height: 40px;
+    transition: all 0.3s ease 0s;
+}
+.form-horizontal .form-control:focus{
+    background: #e0e0e0;
+    box-shadow: none;
+    outline: 0 none;
+}
+.form-horizontal .form-group i{
+    position: absolute;
+    top: 12px;
+    left: 60px;
+    font-size: 17px;
+    color: #c8c8c8;
+    transition : all 0.5s ease 0s;
+}
+.form-horizontal .form-control:focus + i{
+    color: #00b4ef;
+}
+.form-horizontal .fa-question-circle{
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    font-size: 20px;
+    color: #808080;
+    transition: all 0.5s ease 0s;
+}
+.form-horizontal .fa-question-circle:hover{
+    color: #000;
+}
+.form-horizontal .main-checkbox{
+    float: left;
+    width: 20px;
+    height: 20px;
+    background: #11a3fc;
+    border-radius: 50%;
+    position: relative;
+    margin: 5px 0 0 5px;
+    border: 1px solid #11a3fc;
+}
+.form-horizontal .main-checkbox label{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+.form-horizontal .main-checkbox label:after{
+    content: "";
+    width: 10px;
+    height: 5px;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    border: 3px solid #fff;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.form-horizontal .main-checkbox input[type=checkbox]{
+    visibility: hidden;
+}
+.form-horizontal .main-checkbox input[type=checkbox]:checked + label:after{
+    opacity: 1;
+}
+.form-horizontal .text{
+    float: left;
+    margin-left: 7px;
+    line-height: 20px;
+    padding-top: 5px;
+    text-transform: capitalize;
+}
+.form-horizontal .btn{
+    float: right;
+    font-size: 14px;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    text-transform: capitalize;
+    transition: all 0.5s ease 0s;
+}
+	</style>
 	
-	<!--[if IE 6]>
-	<script src="js/DD_belatedPNG.js"></script>	
-	<![endif]-->
 	
 	<script type="text/javascript">
-		//得到文档宽高值并赋给con这个元素
-		var conWidHeig = function(){
-			var domWidth = document.documentElement.clientWidth;
-			var domheight = document.documentElement.clientHeight;
-			$(".login_content").css({"width":domWidth,"height":domheight});
-		}
-		//通过计算得到box垂直水平居中
-		var conBoxLeftTop = function(){
-			var domBoxLeft = (document.documentElement.clientWidth -531)/2;
-			var domBoxTop = (document.documentElement.clientHeight -349)/2;
-			$(".login_box").css({"left":domBoxLeft,"top":domBoxTop});
-		}
-		//按钮鼠标滑过效果
-		var mouseOver = function(){
-			$(".but01_hover,.but02_hover").css('opacity',0).hover(function (){
-				$(this).stop().fadeTo(650, 1);
-			}, function () {
-				$(this).stop().fadeTo(650, 0);
-			});
-			
-		}	
-		
 		 function login() {
-			$("#loginForm").submit();
+			var loginNo = $("#loginNo").val();
+			var pwd = $("#pwd").val();
+			window.location.href="${ctx}/loginAction!login.action?loginNo="+loginNo + "&pwd=" +pwd;
 		} 
-		
-		$(document).ready(function() {
-			conWidHeig();
-			conBoxLeftTop();
-			$(window).resize(function(){
-				conWidHeig();
-				conBoxLeftTop();
-			}); 
-			mouseOver();
-		}); 
-		//获得焦点后输入框改变样式 加粗边框
-		function changeCssOnfocus(obj){
-		 // obj.style.background = "${ctx}/images/login_inputextbg-hover.jpg";
-		 $(obj).css({"background-image":"url(./images/login_inputextbg-hover.jpg)"});
-		}
-		//失去焦点后输入框改变样式 加粗边框
-		function changeCssOnBlur(obj){
-		 $(obj).css({"background-image":"url(./images/login_inputextbg.jpg)"});
-		}
-	
 	</script>
-	
 </head>
 <body>
 
-
-<div class="login_content">
-<div class="login_box">
-<div class="lb_wrap">
-	<div class="login_logo"></div>
-    <div class="login_form">
-    <div class="login_form_wrap">
-		<form id="loginForm" action="${ctx}/loginAction!login.action" method="post">
-        	<table cellpadding="0" cellspacing="0" border="0" width="364">
-            	<tr id="login_name">
-	            	<td align="right"><label for="user">用户ID：</label></td>
-	            	<td align="left"><input id='loginNo' name='loginNo' type="text" class="login_inputext" value="" onfocus="changeCssOnfocus(this)" onblur="changeCssOnBlur(this)"/></td>
-            	</tr>
-            	<tr id="login_pwd">
-	            	<td align="right"><label for="pwd">密&nbsp;&nbsp;&nbsp;码：</label></td>
-	            	<td align="left"><input id='pwd' name='pwd' type="password" value="" class="login_inputext" onfocus="changeCssOnfocus(this)" onblur="changeCssOnBlur(this)"/></td>
-            	</tr>
-            	<div class="main_tab" id="identifyingCode" style="display: none">验证码图片</div>
-            	
-            </table>
-            <table cellpadding="0" cellspacing="0" border="0" width="364" style="margin-top:33px;">
-            	<tr><td align="center">
-	                <div id="loginHintInto" style="font-size:25px;color:red;align:center;display:none">
-					</div>
-                </td></tr>
-            </table>
-            <table id="btnSubmit" cellpadding="0" cellspacing="0" border="0" width="364">
-            	<tr><td align="center">
-                <div class="but but01" style="margin-left:70px">
-               	<a href="#" onClick="login();">
-                		<div class="but01_hover" >
-                			</div>
-                    </a>
-<!--                      <input type="button" id="login_btn" class="but but01" onclick="login();" value="" /> -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <form class="form-horizontal" action="${ctx}/loginAction!login.action" method="post">
+                <span class="heading">用户登录</span>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="loginNo" placeholder="用户名">
+                    <i class="fa fa-user"></i>
                 </div>
-                </td></tr>
-            </table>
-        
-        </form>
+                <div class="form-group help">
+                    <input type="password" class="form-control" id="pwd" placeholder="密　码">
+                    <i class="fa fa-lock"></i>
+                    <a href="#" class="fa fa-question-circle"></a>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="login();">登录</button>
+                </div>
+            </form>
+        </div>
     </div>
-    </div><!--end login_form-->
-</div><!--end lb_wrap-->
-</div><!--end login_box-->
 </div>
-
-<div id="cacheDiv" style="display: none">
 
 </body>
 </html>
