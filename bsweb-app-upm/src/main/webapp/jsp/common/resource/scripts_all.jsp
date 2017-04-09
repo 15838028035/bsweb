@@ -19,3 +19,7 @@
 <link href="${ctx}/scripts/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script src="${ctx}/scripts/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<link href="${ctx}/scripts/bootstrapvalidator/css/bootstrapValidator.css" rel="stylesheet">
+<script src="${ctx}/scripts/bootstrapvalidator/js/bootstrapValidator.js"></script>
+<script src="${ctx}/scripts/bootstrapvalidator/js/language/zh_CN.js"></script>
