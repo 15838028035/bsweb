@@ -2,88 +2,103 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>配置管理</title>
-<%@ include file="/jsp/common/meta.jsp" %>
-<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-	<script>
-		$(document).ready(function(){
-			if('${returnMessage}' != ""){
-				showModalMessage("${returnMessage}","doUpdateSuccess()");
-			}
-		});
-		function doUpdateSuccess(){
-			jQuery.FrameDialog.closeDialog();
-		   	parent.location.reload();
-		}
-	</script>
+    <title>upmConfiguration管理</title>
+    <%@ include file="/jsp/common/meta.jsp" %>
+    <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
+    <%@ include file="/jsp/common/resource/styles_all.jsp" %>
+	
+<script  type="text/javascript">
+	$(document).ready(function(){
+			     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
+	});
+
+</script>
+
 </head>
 <body>
-<form action="upmConfigurationAction!commonSaveOrUpdate.action" method="post" name="upmConfigurationForm" id="upmConfigurationForm">
-<input type="hidden"  name="configId" id="configId"  value="${configId}" />
-<input type="hidden"  name="upmConfiguration.configId" id="configId"  value="${configId}" />
+
+<form action="upmConfigurationAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmConfigurationForm" id="upmConfigurationForm">
+<input type="hidden" name="id" id="id" value="${id}"/>
+<input type="hidden" name="upmConfiguration.configId" id="configId" value="${id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
-    <table>
-        <tr>
-			 <td align="right">置配项KEY<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="upmConfiguration.cfgKey" id="cfgKey" value="${upmConfiguration.cfgKey}"  />
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">置配项值<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="upmConfiguration.cfgValue" id="cfgValue"  value="${upmConfiguration.cfgValue}" />
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">置配项描述<font color="red">*</font></td>
-			 <td>
-		 	  <textarea rows="3" cols="50" name="upmConfiguration.cfgDesc"  id="cfgDesc">${upmConfiguration.cfgDesc}</textarea>
-										
-		 	 </td>
-		 </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
- 				<div class="window_button marg_lef10 float_lef"><input type="button" id="submitButton" class="window_button_centerInput window_button_centerInput1" value="保存"/></div>
-		       	<div class="window_button marg_lef10 float_lef"><input type="button" id="backToHomeButton" class="window_button_centerInput window_button_centerInput1 CA_4A_select04" value="返回主页" /></div>
-            </td>
-        </tr>
-    </table>
+   
+      		<div class="form-group">
+			 <label for="cfgKey">置配项KEY</label>
+		 	  <input class="form-control" type="text"  name="upmConfiguration.cfgKey" id="cfgKey"  value="${upmConfiguration.cfgKey}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="cfgValue">置配项值</label>
+		 	  <input class="form-control" type="text"  name="upmConfiguration.cfgValue" id="cfgValue"  value="${upmConfiguration.cfgValue}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="cfgDesc">置配项描述</label>
+		 	  <input class="form-control" type="text"  name="upmConfiguration.cfgDesc" id="cfgDesc"  value="${upmConfiguration.cfgDesc}" />
+		 </div>
+		 
+       
+ 	  <div class="form-group"> 
+        		 <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
+        		<button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
+        </div>	
+       
+    
 </form>
 <script>
- $("#submitButton").click(function() {
-        	$("#upmConfigurationForm").submit();
-        	return false;
-        })
 
-		$("#upmConfigurationForm").validate({
-			submitHandler: function(form){
-				form.submit();
-				$('#submitButton').prop('disabled',true);
-			},
-			rules: {
+		$("#upmConfigurationForm").bootstrapValidator({
+			
+			fields: {
 		 		 "upmConfiguration.cfgKey": {
-					required: true,
-					minlength:1,
-					maxlength:200
+					message: '置配项KEY不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '置配项KEY不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 1,
+                           		 max: 50,
+                           			 message: '置配项KEY必须在1到50之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "upmConfiguration.cfgValue": {
-					required: true,
-					minlength:1,
-					maxlength:400
+					message: '置配项值不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '置配项KEY不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 1,
+                           		 max: 30,
+                           			 message: '置配项值必须在1到30之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "upmConfiguration.cfgDesc": {
-					required: false,
-					minlength:1,
-					maxlength:1024
+					message: '置配项描述不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '置配项KEY不能为空'  
+                        				} 
+                    			}  
+				
 		       }
-		    }
+		    },
+ 		submitHandler: function(validator, form, submitButton) {  
+               		 validator.defaultSubmit();  
+            	}  
 			
 		});
 		
