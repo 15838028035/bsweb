@@ -170,36 +170,6 @@
 <script>
 
 		$("#flowTaskForm").bootstrapValidator({
-			
-			fields: {
-		 		 "flowTask.taskVefrsion": {
-					message: '任务版本不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '任务版本不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '任务版本必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       },
-		 		 "flowTask.flowOrderId": {
-					message: '流程实例ID不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '流程实例ID不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '流程实例ID必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       },
 		 		 "flowTask.taskName": {
 					message: '任务名称不能为空',
 					validators: {  
@@ -207,97 +177,12 @@
                         				message: '任务名称不能为空'  
                         				} ,
                         			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '任务名称必须在6到30之间'
+                          			  min: 1,
+                           		 max: 300,
+                           			 message: '任务名称必须在1到300之间'
                         		} 
                     			}  
-				
-		       },
-		 		 "flowTask.displayName": {
-					message: '显示名称不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '显示名称不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '显示名称必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       },
-		 		 "flowTask.performType": {
-					message: '任务参与类型不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '任务参与类型不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '任务参与类型必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       },
-		 		 "flowTask.taskType": {
-					message: '任务类型不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '任务类型不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '任务类型必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       },
-		 		 "flowTask.operator": {
-					message: '操作者不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '操作者不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '操作者必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       },
-		 		 "flowTask.flowName": {
-					message: '流程名称不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '流程名称不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '流程名称必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       },
-		 		 "flowTask.flowProcessId": {
-					message: '流程定义ID不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '流程定义ID不能为空'  
-                        				} ,
-                        			stringLength: {
-                          			  min: 6,
-                           		 max: 30,
-                           			 message: '流程定义ID必须在6到30之间'
-                        		} 
-                    			}  
-				
-		       }
+		 		
 		    },
  		submitHandler: function(validator, form, submitButton) {  
                		 validator.defaultSubmit();  
