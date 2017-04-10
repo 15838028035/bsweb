@@ -1,93 +1,106 @@
-﻿<%@page language="java" isELIgnored="false"%>
+﻿
+<%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
     <title>应用管理</title>
     <%@ include file="/jsp/common/meta.jsp" %>
 	<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 	<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-	<script>
-		$(document).ready(function(){
-			if('${returnMessage}' != ""){
-				showModalMessage("${returnMessage}","doUpdateSuccess()");
-			}
-		});
-		function doUpdateSuccess(){
-			jQuery.FrameDialog.closeDialog();
-		   	parent.location.reload();
-		}
-	</script>
+	
 </head>
 <body>
-<form action="upmAppAction!commonSaveOrUpdate.action" method="post" name="upmAppForm" id="upmAppForm">
-<input type="hidden" name="id" value="${id}"/>
-<input type="hidden" name="upmApp.id" id="id" value="${id}"/>
-<input type="hidden" name="operate" value="${operate}" />
-    <table>
-        <tr>
-            <td align="right">应用ID<font color="red">*</font> </td>
-            <td><input type="text" id="appId" name="upmApp.appId" value="${upmApp.appId}" maxLength="10" /></td>
-        </tr>
-        <tr>
-            <td align="right">应用编号<font color="red">*</font></td>
-            <td><input type="text" id="appCode" name="upmApp.appCode" value="${upmApp.appCode}" maxlength="20"/> </td>
-        </tr>
-          <tr>
-            <td align="right">应用名称<font color="red">*</font></td>
-             <td><input type="text" id="appName" name="upmApp.appName" value="${upmApp.appName}" maxlength="200"/> </td>
-        </tr>
-         <tr>
-            <td align="right">应用url<font color="red">*</font></td>
-             <td><input type="text" id="appUrl" name="upmApp.appUrl" value="${upmApp.appUrl}" style="width:600px;" maxlength="2000"/> </td>
-        </tr>
-        <tr>
-            <td>
- 				<div class=" marg_lef10 float_lef"><input type="button" id="submitButton" class="window_button_centerInput window_button_centerInput1" value="保存"/></div>
-		       	<div class=" marg_lef10 float_lef"><input type="button" id="backToHomeButton" class="window_button_centerInput window_button_centerInput1 CA_4A_select04" value="返回主页" /></div>
-            </td>
-        </tr>
-    </table>
+
+<form action="upmAppAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmAppForm" id="upmAppForm">
+<input type="hidden" name="id" id="id" value="${id}"/>
+<input type="hidden" name="upmApp.id" id="appId" value="${upmApp.id}"/>
+<input type="hidden" name="upmApp.appId" id="appId" value="${upmApp.appId}"/>
+<input type="hidden" name="operate" id="operate" value="${operate}" />
+
+			<div class="form-group">
+			<label for="appCode">应用ID</label>
+		 	  <input class="form-control" type="text"  name="upmApp.appId" id="appId"  value="${upmApp.appId}" />
+			</div>
+      		<div class="form-group">
+			<label for="appCode">应用编码</label>
+		 	  <input class="form-control" type="text"  name="upmApp.appCode" id="appCode"  value="${upmApp.appCode}" />
+			</div>
+		 
+      		<div class="form-group">
+			<label for="appName">应用名称</label>
+		 	  <input class="form-control" type="text"  name="upmApp.appName" id="appName"  value="${upmApp.appName}" />
+			</div>
+		 
+      		<div class="form-group">
+			<label for="appUrl">URL</label>
+		 	  <input class="form-control" type="text"  name="upmApp.appUrl" id="appUrl"  value="${upmApp.appUrl}" />
+		</div>
+       
+ 	  <div class="form-group"> 
+        		  <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
+        		   <button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
+        </div>	
+       
+    
 </form>
 <script>
-        $("#submitButton").click(function() {
-        	$("#upmAppForm").submit();
-        	return false;
-        })
 
-		$("#upmAppForm").validate({
-			submitHandler: function(form){
-				form.submit();
-				$('#submitButton').prop('disabled',true);
-			},
-			rules: {
-		       "appId": {
-					required: true,
-					minlength:2,
-					maxlength:10
+		$("#upmAppForm").bootstrapValidator({
+			
+			fields: {
+		 		 "upmApp.appCode": {
+					message: '应用编码不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '应用编码不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 2,
+                           		 max: 30,
+                           			 message: '应用编码必须在2到30之间'
+                        		} 
+                    			}  
+				
 		       },
-		       "appCode": {
-					required: true,
-					minlength:6,
-					maxlength:50
+		 		 "upmApp.appName": {
+					message: '应用名称不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '应用名称不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 2,
+                           		 max: 50,
+                           			 message: '应用名称必须在2到50之间'
+                        		} 
+                    			}  
+				
 		       },
-		        "appName": {
-					required: true,
-					minlength:2,
-					maxlength:200
-		       },
-		        "appUrl": {
-					required: true,
-					minlength:16,
-					maxlength:2000
+		 		 "upmApp.appUrl": {
+					message: 'URL不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: 'URL不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 10,
+                           		 max: 1000,
+                           			 message: 'URL必须在10到1000之间'
+                        		} 
+                    			}  
+				
 		       }
-		    }
+		 		
+		    },
+ 		submitHandler: function(validator, form, submitButton) {  
+               		 validator.defaultSubmit();  
+            	}  
 			
 		});
-
+		
         $("#backToHomeButton").click(function() {
 			window.parent.location.href="${ctx}/index.jsp";
         });
