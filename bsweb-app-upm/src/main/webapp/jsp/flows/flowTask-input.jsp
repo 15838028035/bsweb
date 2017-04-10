@@ -2,292 +2,306 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>flowTask管理</title>
+    <title>流程任务管理</title>
     <%@ include file="/jsp/common/meta.jsp" %>
-	<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-	<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-	<script>
-		$(document).ready(function(){
-			if('${returnMessage}' != ""){
-				showModalMessage("${returnMessage}","doUpdateSuccess()");
-			}
-		});
-		function doUpdateSuccess(){
-			jQuery.FrameDialog.closeDialog();
-		   	parent.location.reload();
-		}
-	</script>
+    <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
+    <%@ include file="/jsp/common/resource/styles_all.jsp" %>
+	
+<script  type="text/javascript">
+	$(document).ready(function(){
+			     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	         });
+	});
+
+</script>
+
 </head>
 <body>
-<form action="flowTaskAction!commonSaveOrUpdate.action" method="post" name="flowTaskForm" id="flowTaskForm">
-<input type="hidden" name="id" id="id" value="${id}"/>
+
+<form action="flowTaskAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="flowTaskForm" id="flowTaskForm">
+<input type="hidden" name="flowTask.id" id="id" value="${id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
-    <table>
-        <tr>
-			 <td align="right">版本<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.taskVefrsion" id="taskVefrsion" value="${flowTask.taskVefrsion}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">流程实例ID<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.flowOrderId" id="flowOrderId" value="${flowTask.flowOrderId}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务名称<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.taskName" id="taskName" value="${flowTask.taskName}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">显示名称<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.displayName" id="displayName" value="${flowTask.displayName}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">参与方式（0：普通任务；1：参与者会签任务）<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.performType" id="performType" value="${flowTask.performType}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务类型（0：主办任务；1：协办任务）<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.taskType" id="taskType" value="${flowTask.taskType}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务处理者ID<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.operator" id="operator" value="${flowTask.operator}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务创建时间<font color="red">*</font></td>
-			 <td>
-				<input type="text" name="flowTask.createTime" id = "createTime" value="<s:date name='createTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务完成时间<font color="red">*</font></td>
-			 <td>
-				<input type="text" name="flowTask.finishTime" id = "finishTime" value="<s:date name='finishTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">期望任务完成时间<font color="red">*</font></td>
-			 <td>
-				<input type="text" name="flowTask.expireTime" id = "expireTime" value="<s:date name='expireTime' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">期望的完成时间date类型<font color="red">*</font></td>
-			 <td>
-				<input type="text" name="flowTask.expireDate" id = "expireDate" value="<s:date name='expireDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">提醒时间date类型<font color="red">*</font></td>
-			 <td>
-				<input type="text" name="flowTask.remindDate" id = "remindDate" value="<s:date name='remindDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务关联的表单url<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.actionUrl" id="actionUrl" value="${flowTask.actionUrl}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务参与者列表<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.actorIds" id="actorIds" value="${flowTask.actorIds}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">父任务Id<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.parentTaskId" id="parentTaskId" value="${flowTask.parentTaskId}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">任务附属变量<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.variable" id="variable" value="${flowTask.variable}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">创建人<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.createBy" id="createBy" value="${flowTask.createBy}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">创建时间<font color="red">*</font></td>
-			 <td>
-				<input type="text" name="flowTask.createDate" id = "createDate" value="<s:date name='createDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">更新人<font color="red">*</font></td>
-			 <td>
-		 	  <input type="text"  name="flowTask.updateBy" id="updateBy" value="${flowTask.updateBy}" />
-		 	  
-		 	 </td>
-		 </tr>
-        <tr>
-			 <td align="right">更新时间<font color="red">*</font></td>
-			 <td>
-				<input type="text" name="flowTask.updateDate" id = "updateDate" value="<s:date name='updateDate' format='yyyy-MM-dd' />" class="datetimepicker" readonly="readonly"/>
-		 	 </td>
-		 </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
- 				<div class="window_button marg_lef10 float_lef"><input type="button" id="submitButton" class="window_button_centerInput window_button_centerInput1" value="保存"/></div>
-		       	<div class="window_button marg_lef10 float_lef"><input type="button" id="backToHomeButton" class="window_button_centerInput window_button_centerInput1 CA_4A_select04" value="返回主页" /></div>
-            </td>
-        </tr>
-    </table>
+		 
+      		<div class="form-group">
+			 <label for="taskVefrsion">任务版本</label>
+		 	  <input class="form-control" type="text"  name="flowTask.taskVefrsion" id="taskVefrsion"  value="${flowTask.taskVefrsion}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="flowOrderId">流程实例ID</label>
+		 	  <input class="form-control" type="text"  name="flowTask.flowOrderId" id="flowOrderId"  value="${flowTask.flowOrderId}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="taskName">任务名称</label>
+		 	  <input class="form-control" type="text"  name="flowTask.taskName" id="taskName"  value="${flowTask.taskName}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="displayName">显示名称</label>
+		 	  <input class="form-control" type="text"  name="flowTask.displayName" id="displayName"  value="${flowTask.displayName}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="performType">任务参与类型</label>
+		 	  <input class="form-control" type="text"  name="flowTask.performType" id="performType"  value="${flowTask.performType}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="taskType">任务类型</label>
+		 	  <input class="form-control" type="text"  name="flowTask.taskType" id="taskType"  value="${flowTask.taskType}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="operator">操作者</label>
+		 	  <input class="form-control" type="text"  name="flowTask.operator" id="operator"  value="${flowTask.operator}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="createTime">创建时间</label>
+				<input class="form-control" type="text" name="flowTask.createTime" id = "createTime" value="${flowTask.createTime}" class="datetimepicker"  readonly="readonly"/>
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="finishTime">完成时间</label>
+				<input class="form-control" type="text" name="flowTask.finishTime" id = "finishTime" value="${flowTask.finishTime}" class="datetimepicker"  readonly="readonly"/>
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="expireTime">过期时间</label>
+				<input class="form-control" type="text" name="flowTask.expireTime" id = "expireTime" value="${flowTask.expireTime}" class="datetimepicker"  readonly="readonly"/>
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="expireDate">过期日期</label>
+				<input class="form-control" type="text" name="flowTask.expireDate" id = "expireDate" value="${flowTask.expireDate}" class="datetimepicker"  readonly="readonly"/>
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="remindDate">提醒日期</label>
+				<input class="form-control" type="text" name="flowTask.remindDate" id = "remindDate" value="${flowTask.remindDate}" class="datetimepicker"  readonly="readonly"/>
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="actionUrl">实例化URL</label>
+		 	  <input class="form-control" type="text"  name="flowTask.actionUrl" id="actionUrl"  value="${flowTask.actionUrl}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="parentTaskId">父ID</label>
+		 	  <input class="form-control" type="text"  name="flowTask.parentTaskId" id="parentTaskId"  value="${flowTask.parentTaskId}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="variable">流程变量</label>
+		 	  <input class="form-control" type="text"  name="flowTask.variable" id="variable"  value="${flowTask.variable}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="createBy">创建人</label>
+		 	  <input class="form-control" type="text"  name="flowTask.createBy" id="createBy"  value="${flowTask.createBy}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="createByUname">创建人姓名</label>
+		 	  <input class="form-control" type="text"  name="flowTask.createByUname" id="createByUname"  value="${flowTask.createByUname}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="createDate">创建日期</label>
+				<input class="form-control" type="text" name="flowTask.createDate" id = "createDate" value="${flowTask.createDate}" class="datetimepicker"  readonly="readonly"/>
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="updateBy">更新人</label>
+		 	  <input class="form-control" type="text"  name="flowTask.updateBy" id="updateBy"  value="${flowTask.updateBy}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="updateByUname">更新人姓名</label>
+		 	  <input class="form-control" type="text"  name="flowTask.updateByUname" id="updateByUname"  value="${flowTask.updateByUname}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="updateDate">更新日期</label>
+				<input class="form-control" type="text" name="flowTask.updateDate" id = "updateDate" value="${flowTask.updateDate}" class="datetimepicker"  readonly="readonly"/>
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="flowVersion">流程版本</label>
+		 	  <input class="form-control" type="text"  name="flowTask.flowVersion" id="flowVersion"  value="${flowTask.flowVersion}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="flowName">流程名称</label>
+		 	  <input class="form-control" type="text"  name="flowTask.flowName" id="flowName"  value="${flowTask.flowName}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="instanceUrl">实例化URL</label>
+		 	  <input class="form-control" type="text"  name="flowTask.instanceUrl" id="instanceUrl"  value="${flowTask.instanceUrl}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="flowProcessId">流程定义ID</label>
+		 	  <input class="form-control" type="text"  name="flowTask.flowProcessId" id="flowProcessId"  value="${flowTask.flowProcessId}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="actorIds">流程参与者</label>
+		 	  <input class="form-control" type="text"  name="flowTask.actorIds" id="actorIds"  value="${flowTask.actorIds}" />
+		 </div>
+		 
+       
+ 	  <div class="form-group"> 
+        		 <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
+        		<button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
+        </div>	
+       
+    
 </form>
 <script>
- $("#submitButton").click(function() {
-        	$("#flowTaskForm").submit();
-        	return false;
-        })
 
-		$("#flowTaskForm").validate({
-			submitHandler: function(form){
-				form.submit();
-				$('#submitButton').prop('disabled',true);
-			},
-			rules: {
-		 		 "flowTask.id": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
+		$("#flowTaskForm").bootstrapValidator({
+			
+			fields: {
 		 		 "flowTask.taskVefrsion": {
-					required: true,
-					minlength:1,
-					maxlength:50
+					message: '任务版本不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '任务版本不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '任务版本必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "flowTask.flowOrderId": {
-					required: true,
-					minlength:1,
-					maxlength:50
+					message: '流程实例ID不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '流程实例ID不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '流程实例ID必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "flowTask.taskName": {
-					required: true,
-					minlength:1,
-					maxlength:50
+					message: '任务名称不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '任务名称不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '任务名称必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "flowTask.displayName": {
-					required: true,
-					minlength:1,
-					maxlength:50
+					message: '显示名称不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '显示名称不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '显示名称必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "flowTask.performType": {
-					required: true,
-					minlength:1,
-					maxlength:50
+					message: '任务参与类型不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '任务参与类型不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '任务参与类型必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "flowTask.taskType": {
-					required: true,
-					minlength:1,
-					maxlength:50
+					message: '任务类型不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '任务类型不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '任务类型必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
 		 		 "flowTask.operator": {
-					required: true,
-					minlength:1,
-					maxlength:50
+					message: '操作者不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '操作者不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '操作者必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
-		 		 "flowTask.createTime": {
-					required: true,
-					minlength:1,
-					maxlength:50
+		 		 "flowTask.flowName": {
+					message: '流程名称不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '流程名称不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '流程名称必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       },
-		 		 "flowTask.finishTime": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.expireTime": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.expireDate": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.remindDate": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.actionUrl": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.actorIds": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.parentTaskId": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.variable": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.createBy": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.createDate": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.updateBy": {
-					required: true,
-					minlength:1,
-					maxlength:50
-		       },
-		 		 "flowTask.updateDate": {
-					required: true,
-					minlength:1,
-					maxlength:50
+		 		 "flowTask.flowProcessId": {
+					message: '流程定义ID不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '流程定义ID不能为空'  
+                        				} ,
+                        			stringLength: {
+                          			  min: 6,
+                           		 max: 30,
+                           			 message: '流程定义ID必须在6到30之间'
+                        		} 
+                    			}  
+				
 		       }
-		    }
+		    },
+ 		submitHandler: function(validator, form, submitButton) {  
+               		 validator.defaultSubmit();  
+            	}  
 			
 		});
 		
