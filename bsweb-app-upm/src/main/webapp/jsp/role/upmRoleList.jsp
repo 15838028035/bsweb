@@ -20,6 +20,8 @@
 	      		language: 'zh-CN',
 	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
 	             autoclose:true,//日期选择完成后是否关闭选择框
+	             //minView: "month",//设置只显示到月份
+	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
 	         });
 	});
 
@@ -58,6 +60,7 @@
                 pageSize: 25,                       //每页的记录行数（*）
                 pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
                 strictSearch: true,
+                searchOnEnterKey:true,
                 clickToSelect: true,                //是否启用点击选中行
                 //height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列

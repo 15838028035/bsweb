@@ -19,6 +19,8 @@
 	      		language: 'zh-CN',
 	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
 	             autoclose:true,//日期选择完成后是否关闭选择框
+	             //minView: "month",//设置只显示到月份
+	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
 	         });
 	});
 
