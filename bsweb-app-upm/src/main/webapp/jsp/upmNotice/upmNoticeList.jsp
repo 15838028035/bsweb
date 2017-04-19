@@ -1,21 +1,23 @@
-﻿<%@page language="java" isELIgnored="false"%>
+﻿
+<%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>应用管理</title>
+<title>upmNotice管理</title>
     <meta name="viewport" content="width=device-width" />
-<%@ include file="/jsp/common/meta.jsp" %>
-<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
+   <%@ include file="/jsp/common/meta.jsp" %>
+   <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 
-<script   type="text/javascript">
+
+<script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
-	     
-	     $(".datetimepicker").datetimepicker({
+	
+  		$(".datetimepicker").datetimepicker({
 	      		language: 'zh-CN',
 	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
 	             autoclose:true,//日期选择完成后是否关闭选择框
@@ -24,12 +26,13 @@
 	         });
 	});
 
+	
 	var TableInit = function () {
         var oTableInit = new Object();
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/user/upmUserAction!bootStrapList.action',         //请求后台的URL（*）
+                url: '${ctx}/jsp/upmNotice/upmNoticeAction!bootStrapList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",
@@ -42,7 +45,7 @@
                 smartDisplay:false,
                 showRefresh:true,
                 showColumns:true,
-                showToggle:true,
+		        showToggle:true,
                 searchOnEnterKey:true,
                 showFooter:true,
                 search:false,
@@ -61,26 +64,27 @@
                 showPaginationSwitch:true,
                 strictSearch: true,
                 clickToSelect: true,                //是否启用点击选中行
-                //height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-                idField:"id",
+                // height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+				idField:"id",
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [ 
-                          { field: 'checkStatus', title: '',checkbox:true }, 
-                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
-                        	   			return index+1;
-                           			}  
-                           },
-                          { field: 'id', title: 'ID',sortable:true }, 
-                          { field: 'loginNo', title: '登陆账号',sortable:true }, 
-                          { field: 'userName', title: '用户名',sortable:true }, 
-                          { field: 'mobile', title: '手机号码',sortable:true },
-                          { field: 'email', title: '邮箱' ,sortable:true},
-                          { field: 'orgDesc', title: '组织机构描述',sortable:true },
-                          { field: 'createDate', title: '创建时间',sortable:true },
-                          { field: 'updateDate', title: '修改时间',sortable:true }
-               		 ],
+                columns: [  
+				{ field: 'checkStatus', title: '',checkbox:true }, 
+                {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+              	   			return index+1;
+                 			}  
+                 },
+			 	{field:'id',title:'ID', sortable:true},
+			 	{field:'typeId',title:'类别ID', sortable:true},
+			 	{field:'content',title:'内容', sortable:true},
+			 	{field:'paramA',title:'paramA', sortable:true},
+			 	{field:'paramB',title:'', sortable:true},
+			 	{field:'sendBeginDate',title:'发送开始时间', sortable:true},
+			 	{field:'sendEndDate',title:'发送结束日期', sortable:true},
+			 	{field:'createDateTime',title:'创建日期', sortable:true},
+			 	{field:'extCode',title:'扩展code', sortable:true}
+                        ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
              	},
@@ -103,14 +107,37 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
+			var id=$("#id").val();
+			var typeId=$("#typeId").val();
+			var content=$("#content").val();
+			var paramA=$("#paramA").val();
+			var paramB=$("#paramB").val();
+	    		var sendBeginDateBegin=$("#sendBeginDateBegin").val();
+	    		var sendBeginDateEnd=$("#sendBeginDateEnd").val();
+	    		var sendEndDateBegin=$("#sendEndDateBegin").val();
+	    		var sendEndDateEnd=$("#sendEndDateEnd").val();
+	    		var createDateTimeBegin=$("#createDateTimeBegin").val();
+	    		var createDateTimeEnd=$("#createDateTimeEnd").val();
+			var extCode=$("#extCode").val();
+
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-            		 "page.pageSize":params.pageSize,
-                     "page.pageNumber":params.pageNumber,
-	                "sortName":this.sortName,
-	                "sortOrder":this.sortOrder,
-	                "upmUser.userName":$("#userName").val(),
-	 			 	"upmUser.orgDesc":$("#orgDesc").val(),
-	 			 	"upmUser.mobile": $("#mobile").val()
+               
+                "page.pageSize":params.pageSize,
+                "page.pageNumber":params.pageNumber,
+                "sortName":this.sortName,
+                "sortOrder":this.sortOrder,
+				"upmNotice.id":id,
+				"upmNotice.typeId":typeId,
+				"upmNotice.content":content,
+				"upmNotice.paramA":paramA,
+				"upmNotice.paramB":paramB,
+				"upmNotice.sendBeginDateBegin":sendBeginDateBegin,
+				"upmNotice.sendBeginDateEnd":sendBeginDateEnd,
+				"upmNotice.sendEndDateBegin":sendEndDateBegin,
+				"upmNotice.sendEndDateEnd":sendEndDateEnd,
+				"upmNotice.createDateTimeBegin":createDateTimeBegin,
+				"upmNotice.createDateTimeEnd":createDateTimeEnd,
+				"upmNotice.extCode":extCode
             };
             return temp;
         };
@@ -121,25 +148,50 @@
 </head>
 
 <body>
-    
-    <div class="panel-body" style="padding-bottom:0px;">
+
+
+<div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
             <div class="panel-heading">查询条件</div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="userName">用户名</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="userName">
-                        </div>
-                        <label class="control-label col-sm-1" for="mobile">手机号码</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="mobile">
-                        </div>
-                         <label class="control-label col-sm-1" for="orgDesc">组织机构</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="orgDesc">
-                        </div>
+                      
+
+			 	<label class="control-label col-sm-1" for="id">ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
+                        
+			 	<label class="control-label col-sm-1" for="typeId">类别ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="typeId"></div>
+                        
+			 	<label class="control-label col-sm-1" for="content">内容</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="content"></div>
+                        
+			 	<label class="control-label col-sm-1" for="paramA">paramA</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="paramA"></div>
+                        
+			 	<label class="control-label col-sm-1" for="paramB"></label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="paramB"></div>
+                        
+			 	<label class="control-label col-sm-1" for="sendBeginDate">发送开始时间</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="sendBeginDateBegin" id = "sendBeginDateBegin"  class="datetimepicker"  readonly="readonly"/>
+				<input type="text" name="sendBeginDateEnd" id = "sendBeginDateEnd"  class="datetimepicker"  readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="sendEndDate">发送结束日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="sendEndDateBegin" id = "sendEndDateBegin"  class="datetimepicker"  readonly="readonly"/>
+				<input type="text" name="sendEndDateEnd" id = "sendEndDateEnd"  class="datetimepicker"  readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="createDateTime">创建日期</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="createDateTimeBegin" id = "createDateTimeBegin"  class="datetimepicker"  readonly="readonly"/>
+				<input type="text" name="createDateTimeEnd" id = "createDateTimeEnd"  class="datetimepicker"  readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="extCode">扩展code</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="extCode"></div>
+                        
+
                         <div class="col-sm-6" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
@@ -163,22 +215,24 @@
         <table id="tableList"></table>
     </div>
 
+
     <script type="text/javascript">
-	    var $tableList = $('#tableList');
+    	    var $tableList = $('#tableList');
 	    var $btn_add = $('#btn_add');
 	    var $btn_edit = $('#btn_edit');
 	    var $btn_delete = $('#btn_delete');
 	    var $btn_query = $('#btn_query');
-    
+
+	
 		//新增
         $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/user/upmUserAction!input.action';
+        	window.location.href = '${ctx}/jsp/upmNotice/upmNoticeAction!input.action'
         })
 		//编辑
         $("#btn_edit").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
-             });
+             	});
         	if(ids == ''|| ids==null){
         		bootbox.alert('请选择要编辑的记录');
         		return;
@@ -188,11 +242,10 @@
         		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	
-        	window.location.href = "${ctx}/jsp/user/upmUserAction!input.action?operate=edit&id=" + ids;
+        	window.location.href = "${ctx}/jsp/upmNotice/upmNoticeAction!input.action?operate=edit&id=" + ids;
         })
-        
-        $("#btn_delete").click(function() {
+		//删除
+      $("#btn_delete").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
              });
@@ -207,36 +260,29 @@
                 	doDelete();
                 }
         	});
-        	
-        });
-		
+        })
+
         function doDelete(){
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
              });
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/user/upmUserAction!multidelete.action?multidelete=" + ids,
+		      	  url:"${ctx}/jsp/upmNotice/upmNoticeAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
 			bootbox.alert(obj.opResult);
-			
 			refreshGrid();
         }
-		
-        //($table.bootstrapTable('getAllSelections')
-        //$table.bootstrapTable('getOptions')
-        //($table.bootstrapTable('getSelections')
-        // $table.bootstrapTable('resetSearch');
-        		
-        $btn_query.click(function () {
+        
+  	$btn_query.click(function () {
         	 refreshGrid();
         });
-        
+
       	function refreshGrid(){
-      		$tableList.bootstrapTable('refresh');
+		$tableList.bootstrapTable('refresh');
       	}
       	
     </script>

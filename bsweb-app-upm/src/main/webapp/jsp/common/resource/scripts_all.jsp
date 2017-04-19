@@ -1,5 +1,5 @@
 ﻿<!--css样式-->
-<link href="${ctx}/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/scripts/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
 <!--js-->
 
@@ -23,3 +23,6 @@
 <link href="${ctx}/scripts/bootstrapvalidator/css/bootstrapValidator.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrapvalidator/js/bootstrapValidator.js"></script>
 <script src="${ctx}/scripts/bootstrapvalidator/js/language/zh_CN.js"></script>
+
+<link href="${ctx}/scripts/BootSideMenu/css/BootSideMenu.css" rel="stylesheet">
+<script src="${ctx}/scripts/BootSideMenu/js/BootSideMenu.js"></script>
