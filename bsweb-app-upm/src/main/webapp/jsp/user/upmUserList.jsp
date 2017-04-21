@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>应用管理</title>
+	<title>用户管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -32,7 +32,7 @@
                 url: '${ctx}/jsp/user/upmUserAction!bootStrapList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
-                contentType : "application/x-www-form-urlencoded",
+                contentType : "application/x-www-form-urlencoded;charset=UTF-8",
                 dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
                 totalField: 'total',
                 toolbar: '#toolbar',                //工具按钮用哪个容器
