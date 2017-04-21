@@ -78,8 +78,8 @@
 			 	{field:'id',title:'ID', sortable:true},
 			 	{field:'typeId',title:'类别ID', sortable:true},
 			 	{field:'content',title:'内容', sortable:true},
-			 	{field:'paramA',title:'paramA', sortable:true},
-			 	{field:'paramB',title:'', sortable:true},
+			 	{field:'paramA',title:'参数A', sortable:true},
+			 	{field:'paramB',title:'参数B', sortable:true},
 			 	{field:'sendBeginDate',title:'发送开始时间', sortable:true},
 			 	{field:'sendEndDate',title:'发送结束日期', sortable:true},
 			 	{field:'createDateTime',title:'创建日期', sortable:true},
@@ -112,13 +112,12 @@
 			var content=$("#content").val();
 			var paramA=$("#paramA").val();
 			var paramB=$("#paramB").val();
-	    		var sendBeginDateBegin=$("#sendBeginDateBegin").val();
-	    		var sendBeginDateEnd=$("#sendBeginDateEnd").val();
-	    		var sendEndDateBegin=$("#sendEndDateBegin").val();
-	    		var sendEndDateEnd=$("#sendEndDateEnd").val();
-	    		var createDateTimeBegin=$("#createDateTimeBegin").val();
-	    		var createDateTimeEnd=$("#createDateTimeEnd").val();
-			var extCode=$("#extCode").val();
+    		var sendBeginDateBegin=$("#sendBeginDateBegin").val();
+    		var sendBeginDateEnd=$("#sendBeginDateEnd").val();
+    		var sendEndDateBegin=$("#sendEndDateBegin").val();
+    		var sendEndDateEnd=$("#sendEndDateEnd").val();
+    		var createDateTimeBegin=$("#createDateTimeBegin").val();
+    		var createDateTimeEnd=$("#createDateTimeEnd").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                
@@ -136,8 +135,7 @@
 				"upmNotice.sendEndDateBegin":sendEndDateBegin,
 				"upmNotice.sendEndDateEnd":sendEndDateEnd,
 				"upmNotice.createDateTimeBegin":createDateTimeBegin,
-				"upmNotice.createDateTimeEnd":createDateTimeEnd,
-				"upmNotice.extCode":extCode
+				"upmNotice.createDateTimeEnd":createDateTimeEnd
             };
             return temp;
         };
@@ -167,34 +165,31 @@
 			 	<label class="control-label col-sm-1" for="content">内容</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="content"></div>
                         
-			 	<label class="control-label col-sm-1" for="paramA">paramA</label>
+			 	<label class="control-label col-sm-1" for="paramA">参数A</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="paramA"></div>
                         
-			 	<label class="control-label col-sm-1" for="paramB"></label>
+			 	<label class="control-label col-sm-1" for="paramB">参数B</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="paramB"></div>
                         
 			 	<label class="control-label col-sm-1" for="sendBeginDate">发送开始时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="sendBeginDateBegin" id = "sendBeginDateBegin"  class="datetimepicker"  readonly="readonly"/>
-				<input type="text" name="sendBeginDateEnd" id = "sendBeginDateEnd"  class="datetimepicker"  readonly="readonly"/>
+                            	<input type="text" name="sendBeginDateBegin" id = "sendBeginDateBegin" size="16"  class="datetimepicker"  readonly="readonly"/> --
+				<input type="text" name="sendBeginDateEnd" id = "sendBeginDateEnd"  size="16" class="datetimepicker"  readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="sendEndDate">发送结束日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="sendEndDateBegin" id = "sendEndDateBegin"  class="datetimepicker"  readonly="readonly"/>
-				<input type="text" name="sendEndDateEnd" id = "sendEndDateEnd"  class="datetimepicker"  readonly="readonly"/>
+                            	<input type="text" name="sendEndDateBegin" id = "sendEndDateBegin"  size="16" class="datetimepicker"  readonly="readonly"/> --
+				<input type="text" name="sendEndDateEnd" id = "sendEndDateEnd" size="16"   class="datetimepicker"  readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="createDateTime">创建日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createDateTimeBegin" id = "createDateTimeBegin"  class="datetimepicker"  readonly="readonly"/>
-				<input type="text" name="createDateTimeEnd" id = "createDateTimeEnd"  class="datetimepicker"  readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="extCode">扩展code</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="extCode"></div>
-                        
+                      <input type="text" name="createDateTimeBegin" id = "createDateTimeBegin" size="16"  class="datetimepicker"  readonly="readonly"/> --
+					<input type="text" name="createDateTimeEnd" id = "createDateTimeEnd"  class="datetimepicker" size="16"  readonly="readonly"/>
+                 </div>
 
-                        <div class="col-sm-6" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+                      <div class="col-sm-12" style="text-align:left;">
+                          <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                      </div>
                     </div>
                 </form>
             </div>

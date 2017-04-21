@@ -140,7 +140,7 @@
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="orgDesc">
                         </div>
-                        <div class="col-sm-6" style="text-align:left;">
+                        <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
                     </div>

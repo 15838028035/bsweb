@@ -79,8 +79,8 @@
                          { field: 'createByUname', title: '创建人姓名',sortable:true },
                          
                          { field: 'createDate', title: '创建时间',sortable:true },
-                         { field: 'updateByUname', title: '更新人',sortable:true },
-                         { field: 'updateDate', title: '更新时间',sortable:true },
+                         { field: 'updateByUname', title: '修改人',sortable:true },
+                         { field: 'updateDate', title: '修改时间',sortable:true },
                          { field: 'enableFlag', title: '是否有效',sortable:true },
                          { field: 'lockStatus', title: '是否加锁',sortable:true }
               		 ],
@@ -139,7 +139,7 @@
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="flowName">
                         </div>
-                        <div class="col-sm-6" style="text-align:left;">
+                        <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
                     </div>

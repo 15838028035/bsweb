@@ -80,7 +80,7 @@
 						 {field:'creator',title:'创建人', sortable:true},
 						 {field:'createTime',title:'创建时间', sortable:true},
 						 {field:'finishTime',title:'完成时间', sortable:true},
-						 {field:'status',title:'', sortable:true}
+						 {field:'status',title:'状态', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -148,7 +148,7 @@
                     <div class="form-group" style="margin-top:15px">
                       
 
-			 	<label class="control-label col-sm-1" for="id"></label>
+			 	<label class="control-label col-sm-1" for="id">ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
 			 	<label class="control-label col-sm-1" for="orderId">流程实例编号</label>
@@ -162,19 +162,19 @@
                         
 			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="datetimepicker" readonly="readonly"/>
+                     <input type="text" name="createTimeBegin" id = "createTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="createTimeEnd" id = "createTimeEnd" size="16"  class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="finishTimeEnd" id = "finishTimeEnd"  class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="finishTimeEnd" id = "finishTimeEnd" size="16"  class="datetimepicker" readonly="readonly"/>
                          </div>
-			 	<label class="control-label col-sm-1" for="status"></label>
+			 	<label class="control-label col-sm-1" for="status">状态</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="status"></div>
                         
 
-                        <div class="col-sm-6" style="text-align:left;">
+                        <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
                     </div>

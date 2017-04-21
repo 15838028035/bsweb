@@ -83,12 +83,12 @@
 					 {field:'expireTime',title:'过期时间', sortable:true},
 					 {field:'priority',title:'优先级', sortable:true},
 					 {field:'variable',title:'流程变量', sortable:true},
-					 {field:'createBy',title:'创建人', sortable:true},
+					 {field:'createBy',title:'创建人ID', sortable:true, visible:false},
 					 {field:'createByUname',title:'创建人姓名', sortable:true},
 					 {field:'createDate',title:'创建日期', sortable:true},
-					 {field:'updateBy',title:'更新人', sortable:true},
-					 {field:'updateByUname',title:'更新人', sortable:true},
-					 {field:'updateDate',title:'更新日期', sortable:true}
+					 {field:'updateBy',title:'修改人ID', sortable:true, visible:false},
+					 {field:'updateByUname',title:'修改人', sortable:true},
+					 {field:'updateDate',title:'修改日期', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -175,60 +175,60 @@
                       
 
 			 	<label class="control-label col-sm-1" for="id">编号</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="id"></div>
                         
 			 	<label class="control-label col-sm-1" for="orderNo">流程编号</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="orderNo"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="orderNo"></div>
                         
 			 	<label class="control-label col-sm-1" for="orderVersion">版本号</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="orderVersion"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="orderVersion"></div>
                         
 			 	<label class="control-label col-sm-1" for="flowProcessId">流程定义ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="flowProcessId"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="flowProcessId"></div>
                         
 			 	<label class="control-label col-sm-1" for="parentId">父ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="parentId"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="parentId"></div>
                         
 			 	<label class="control-label col-sm-1" for="parentNodeName">父节点名称</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="parentNodeName"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="parentNodeName"></div>
                         
 			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="datetimepicker" readonly="readonly"/>
+			   <div class="col-sm-3">
+                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"   size="16"  class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="priority">优先级</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="priority"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="priority"></div>
                         
 			 	<label class="control-label col-sm-1" for="variable">流程变量</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="variable"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="variable"></div>
                         
 			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="createBy"></div>
                         
 			 	<label class="control-label col-sm-1" for="createByUname">创建人姓名</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="createByUname"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="createByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="createDate">建创日期</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" readonly="readonly"/>
+			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
+			   <div class="col-sm-3">
+                            	<input type="text" name="createDateBegin" id = "createDateBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="createDateEnd" id = "createDateEnd"  size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="updateBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateByUname">更新人姓名</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
+			 	<label class="control-label col-sm-1" for="updateByUname">修改人姓名</label>
+				<div class="col-sm-3"> <input type="text" class="form-control" id="updateByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin" class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
+			 	<label class="control-label col-sm-1" for="updateDate">修改日期</label>
+			   <div class="col-sm-3">
+                           	<input type="text" name="updateDateBegin" id = "updateDateBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+							<input type="text" name="updateDateEnd" id = "updateDateEnd" size="16"  class="datetimepicker" readonly="readonly"/>
+                  </div>
 
-                        <div class="col-sm-6" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+                       <div class="col-sm-12" style="text-align:left;">
+                           <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                       </div>
                     </div>
                 </form>
             </div>
