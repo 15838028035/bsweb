@@ -15,11 +15,6 @@ public class UpmRole extends BaseEntity{
 	private String roleCode;
 	
 	/**
-	 * 应用ID  app_id
-	 */
-	private String appId;
-	
-	/**
 	 * 角色名称  role_name
 	 */
 	private String roleName;
@@ -75,12 +70,5 @@ public class UpmRole extends BaseEntity{
 	public void setRoleDesc(String roleDesc) {
 		this.roleDesc = roleDesc;
 	}
-	public String getAppId() {
-		return appId;
-	}
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
-	
 	
 }

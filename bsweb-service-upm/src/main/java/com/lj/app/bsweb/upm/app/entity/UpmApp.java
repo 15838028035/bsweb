@@ -10,10 +10,6 @@ public class UpmApp extends BaseEntity{
 	private java.lang.Integer id;
 	
 	/**
-	 * 应用ID
-	 */
-	private String appId;
-	/**
 	 * 应用编码
 	 */
 	private String appCode;
@@ -29,13 +25,6 @@ public class UpmApp extends BaseEntity{
 	public UpmApp(){
 	}
 
-	public void setAppId(String value) {
-		this.appId = value;
-	}
-	
-	public String getAppId() {
-		return this.appId;
-	}
 	public void setAppCode(String value) {
 		this.appCode = value;
 	}
