@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>flowTaskHist管理</title>
+<title>历史任务管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -105,6 +105,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
@@ -229,29 +230,29 @@
                         
 			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
+                    <input type="text" name="createTimeBegin" id = "createTimeBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+					<input type="text" name="createTimeEnd" id = "createTimeEnd" size="16" class="datetimepicker" readonly="readonly"/>
+                </div>
 			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="finishTimeEnd" id = "finishTimeEnd"  cclass="datetimepicker" readonly="readonly"/>
-                         </div>
+                     <input type="text" name="finishTimeBegin" id = "finishTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+					<input type="text" name="finishTimeEnd" id = "finishTimeEnd" size="16" cclass="datetimepicker" readonly="readonly"/>
+                </div>
 			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
+                     <input type="text" name="expireTimeBegin" id = "expireTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+					<input type="text" name="expireTimeEnd" id = "expireTimeEnd" size="16" class="datetimepicker" readonly="readonly"/>
+                 </div>
 			 	<label class="control-label col-sm-1" for="expireDate">过期日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="expireDateBegin" id = "expireDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="expireDateEnd" id = "expireDateEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
+                     <input type="text" name="expireDateBegin" id = "expireDateBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+					<input type="text" name="expireDateEnd" id = "expireDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
+                </div>
 			 	<label class="control-label col-sm-1" for="remindDate">提醒日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="remindDateBegin" id = "remindDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="remindDateEnd" id = "remindDateEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
+                     <input type="text" name="remindDateBegin" id = "remindDateBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+					<input type="text" name="remindDateEnd" id = "remindDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
+                 </div>
 			 	<label class="control-label col-sm-1" for="actionUrl">action_URL</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actionUrl"></div>
                         
@@ -269,9 +270,9 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd" class="datetimepicker" readonly="readonly"/>
-                         </div>
+                     <input type="text" name="createDateBegin" id = "createDateBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+					<input type="text" name="createDateEnd" id = "createDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
+                 </div>
 			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
                         
@@ -280,11 +281,11 @@
                         
 			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
+                      <input type="text" name="updateDateBegin" id = "updateDateBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+					<input type="text" name="updateDateEnd" id = "updateDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
+                 </div>
 
-                        <div class="col-sm-6" style="text-align:left;">
+                        <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
                     </div>

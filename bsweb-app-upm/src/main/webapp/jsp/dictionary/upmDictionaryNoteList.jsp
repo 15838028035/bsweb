@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>upmDictionaryNote管理</title>
+<title>数据字典项管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -87,6 +87,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {

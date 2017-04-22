@@ -20,34 +20,21 @@
      </div> 
     
     <div class="container-fluid">
-	    <nav class="navbar navbar-default">
-	        <div class="container-fluid">
-	            <div class="navbar-header">
-	                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-	                    <span class="sr-only">Toggle navigation</span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                </button>
-	                <a class="navbar-brand" href="#">BootSideMenu</a>
-	            </div>
-	        </div>
-	    </nav>
           <div class="row">
-          		<div class="col-sm-3 col-md-2 sidebar" id="sidebar">
+          		<div class="col-sm-3 col-md-3 sidebar" id="sidebar">
           			<div class="list-group">
-								<a href="${ctx}/jsp/user/upmUserList.jsp"  class="list-group-item" >用户管理</span></a>
+								<a href="${ctx}/jsp/user/upmUserList.jsp"  class="list-group-item"  >用户管理</span></a>
 								<a href="${ctx}/jsp/user/upmUserGroupTreeList.jsp"  class="list-group-item"  >组织机构管理</a>
 								<a href="${ctx}/jsp/role/upmRoleList.jsp?appId=CRM"  class="list-group-item" >角色管理</a>
-								<a href="${ctx}/jsp/permission/permission.jsp?appId=CRM" class="list-group-item">权限管理</a>
-								<a href="${ctx}/jsp/upmApp/upmAppList.jsp" class="list-group-item">应用管理</a>
-								<a href="${ctx}/jsp/dictionary/upmDictionaryNoteList.jsp" class="list-group-item" >数据字典管理</a>
-								<a href="${ctx}/jsp/dictionary/upmConfigurationList.jsp" class="list-group-item">配置管理</a>
-								<a href="${ctx}/jsp/upmNotice/upmNoticeList.jsp" class="list-group-item" >通知管理</a>
-								<a href="${ctx}/jsp/flows/flowProcessList.jsp" class="list-group-item" >流程定义</a>
-								<a href="${ctx}/jsp/flows/flowOrderList.jsp" class="list-group-item">流程实例</a>
-								<a href="${ctx}/jsp/flows/flowCcorderList.jsp"  class="list-group-item">抄送实例</a>
-								<a href="${ctx}/jsp/flows/flowTaskList.jsp" class="list-group-item">代办任务</a>
+								<a href="${ctx}/jsp/permission/permission.jsp?appId=CRM" class="list-group-item" >权限管理</a>
+								<a href="${ctx}/jsp/upmApp/upmAppList.jsp" class="list-group-item" >应用管理</a>
+								<a href="${ctx}/jsp/dictionary/upmDictionaryNoteList.jsp" class="list-group-item"  >数据字典管理</a>
+								<a href="${ctx}/jsp/dictionary/upmConfigurationList.jsp" class="list-group-item" >配置管理</a>
+								<a href="${ctx}/jsp/upmNotice/upmNoticeList.jsp" class="list-group-item"  >通知管理</a>
+								<a href="${ctx}/jsp/flows/flowProcessList.jsp" class="list-group-item"  >流程定义</a>
+								<a href="${ctx}/jsp/flows/flowOrderList.jsp" class="list-group-item" >流程实例</a>
+								<a href="${ctx}/jsp/flows/flowCcorderList.jsp"  class="list-group-item" >抄送实例</a>
+								<a href="${ctx}/jsp/flows/flowTaskList.jsp" class="list-group-item"  >代办任务</a>
 								<a href="${ctx}/jsp/flows/flowTaskHistList.jsp" class="list-group-item" >历史任务</a>
           			</div>
 				</div>
@@ -55,7 +42,10 @@
 					<span class="glyphicon glyphicon-chevron-left"></span>
 				</div>
 				
-				<div class="col-sm-9 col-md-2 main" id="main"></div>
+				<div class="col-sm-12 col-md-12 main" id="main">
+					<iframe id="main_iframe" src="" scrolling="auto" frameborder="0" allowTransparency="true" style="width:100%;" name="main_iframe">
+					</iframe>
+				</div>
 
 			</div> 
 			
@@ -69,11 +59,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#sidebar').BootSideMenu({
+       /*  $('#sidebar').BootSideMenu({
             side: "left",
             pushBody:false,
             closeOnClick:false
-        });
+        }); */
     });
 </script>    
   </body>

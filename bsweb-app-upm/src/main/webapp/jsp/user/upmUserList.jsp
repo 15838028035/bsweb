@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>应用管理</title>
+	<title>用户管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -17,7 +17,7 @@
 	     
 	     $(".datetimepicker").datetimepicker({
 	      		language: 'zh-CN',
-	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             format: 'yyyy-mm-dd hh:ii:ss',//格式化时间,
 	             autoclose:true,//日期选择完成后是否关闭选择框
 	             //minView: "month",//设置只显示到月份
 	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
@@ -89,6 +89,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
@@ -108,6 +109,7 @@
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
+	                "upmUser.loginNo":$("#loginNo").val(),
 	                "upmUser.userName":$("#userName").val(),
 	 			 	"upmUser.orgDesc":$("#orgDesc").val(),
 	 			 	"upmUser.mobile": $("#mobile").val()
@@ -128,6 +130,10 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
+                    	 <label class="control-label col-sm-1" for="loginNo">登陆账号</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="loginNo">
+                        </div>
                         <label class="control-label col-sm-1" for="userName">用户名</label>
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="userName">
@@ -140,7 +146,7 @@
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="orgDesc">
                         </div>
-                        <div class="col-sm-6" style="text-align:left;">
+                        <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
                     </div>

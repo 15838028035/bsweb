@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>flowTask管理</title>
+<title>代办任务管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -78,13 +78,13 @@
                            },
 			 	{field:'id',title:'ID', sortable:true},
 			 	{field:'taskVefrsion',title:'任务版本', sortable:true},
-			 	{field:'flowOrderId',title:'流程实例ID', sortable:true},
+			 	{field:'flowOrderId',title:'流程实例ID', sortable:true, visible:false},
 			 	{field:'taskName',title:'任务名称', sortable:true},
 			 	{field:'displayName',title:'显示名称', sortable:true},
 			 	{field:'performType',title:'任务参与类型', sortable:true},
 			 	{field:'taskType',title:'任务类型', sortable:true},
 			 	{field:'operator',title:'作操者', sortable:true},
-			 	{field:'createTime',title:'建创时间', sortable:true},
+			 	{field:'createTime',title:'创建时间', sortable:true},
 			 	{field:'finishTime',title:'完成时间', sortable:true},
 			 	{field:'expireTime',title:'过期时间', sortable:true},
 			 	{field:'expireDate',title:'过期日期', sortable:true},
@@ -92,16 +92,16 @@
 			 	{field:'actionUrl',title:'实例化URL', sortable:true},
 			 	{field:'parentTaskId',title:'父ID', sortable:true},
 			 	{field:'variable',title:'流程变量', sortable:true},
-			 	{field:'createBy',title:'创建人', sortable:true},
+			 	{field:'createBy',title:'创建人ID', sortable:true, visible:false},
 			 	{field:'createByUname',title:'创建人姓名', sortable:true},
 			 	{field:'createDate',title:'创建日期', sortable:true},
-			 	{field:'updateBy',title:'更新人', sortable:true},
-			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
-			 	{field:'updateDate',title:'更新日期', sortable:true},
+			 	{field:'updateBy',title:'修改人', sortable:true},
+			 	{field:'updateByUname',title:'修改人姓名', sortable:true},
+			 	{field:'updateDate',title:'修改日期', sortable:true},
 			 	{field:'flowVersion',title:'流程版本', sortable:true},
 			 	{field:'flowName',title:'流程名称', sortable:true},
 			 	{field:'instanceUrl',title:'实例化URL', sortable:true},
-			 	{field:'flowProcessId',title:'流程定义ID', sortable:true},
+			 	{field:'flowProcessId',title:'流程定义ID', sortable:true , visible:false},
 			 	{field:'actorIds',title:'程流参与者', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
@@ -112,6 +112,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
@@ -246,28 +247,28 @@
                         
 			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createTimeBegin" id = "createTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="createTimeEnd" id = "createTimeEnd"  class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="createTimeBegin" id = "createTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="createTimeEnd" id = "createTimeEnd"  size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="finishTimeEnd" id = "finishTimeEnd" class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="finishTimeEnd" id = "finishTimeEnd"  size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="expireTimeEnd" id = "expireTimeEnd" class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="expireTimeBegin" id = "expireTimeBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="expireTimeEnd" id = "expireTimeEnd"  size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="expireDate">过期日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="expireDateBegin" id = "expireDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="expireDateEnd" id = "expireDateEnd" class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="expireDateBegin" id = "expireDateBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="expireDateEnd" id = "expireDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="remindDate">提醒日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="remindDateBegin" id = "remindDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="remindDateEnd" id = "remindDateEnd"  class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="remindDateBegin" id = "remindDateBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="remindDateEnd" id = "remindDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="actionUrl">实例化URL</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actionUrl"></div>
@@ -286,8 +287,8 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="createDateBegin" id = "createDateBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="createDateEnd" id = "createDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
@@ -297,8 +298,8 @@
                         
 			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd" class="datetimepicker" readonly="readonly"/>
+                            	<input type="text" name="updateDateBegin" id = "updateDateBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+				<input type="text" name="updateDateEnd" id = "updateDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
                          </div>
 			 	<label class="control-label col-sm-1" for="flowVersion">流程版本</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowVersion"></div>
@@ -314,11 +315,10 @@
                         
 			 	<label class="control-label col-sm-1" for="actorIds">程流参与者</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actorIds"></div>
-                        
 
-                        <div class="col-sm-6" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+                     <div class="col-sm-12" style="text-align:left;">
+                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                     </div>
                     </div>
                 </form>
             </div>

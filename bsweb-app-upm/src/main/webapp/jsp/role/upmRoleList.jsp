@@ -18,7 +18,7 @@
 	     
 	     $(".datetimepicker").datetimepicker({
 	      		language: 'zh-CN',
-	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	      		 format: 'yyyy-mm-dd hh:ii:ss',//格式化时间,
 	             autoclose:true,//日期选择完成后是否关闭选择框
 	             //minView: "month",//设置只显示到月份
 	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
@@ -78,10 +78,10 @@
 						 {field:'roleCode',title:'角色编码', sortable:true},
 						 {field:'appId',title:'应用编码', sortable:true},
 						 {field:'roleName',title:'角色名称', sortable:true},
-						 {field:'createBy',title:'创建人', sortable:true},
+						 {field:'createBy',title:'创建人ID', sortable:true, visible:false},
 						 {field:'createDate',title:'创建日期', sortable:true},
-						 {field:'updateBy',title:'更新人', sortable:true},
-						 {field:'updateDate',title:'更新日期', sortable:true},
+						 {field:'updateBy',title:'修改人ID', sortable:true , visible:false},
+						 {field:'updateDate',title:'修改日期', sortable:true},
 						 {field:'enableFlag',title:'否是有效', sortable:true,formatter : function(value, row, index) {  
 	               	   			if(value=='F') return '否';
 	               	   			return '是';
@@ -101,6 +101,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
@@ -120,14 +121,11 @@
 			var appId=$("#appId").val();
 			var roleName=$("#roleName").val();
 			var createBy=$("#createBy").val();
-	    		var createDateBegin=$("#createDateBegin").val();
-	    		var createDateEnd=$("#createDateEnd").val();
+    		var createDateBegin=$("#createDateBegin").val();
+    		var createDateEnd=$("#createDateEnd").val();
 			var updateBy=$("#updateBy").val();
-	    		var updateDateBegin=$("#updateDateBegin").val();
-	    		var updateDateEnd=$("#updateDateEnd").val();
-			var enableFlag=$("#enableFlag").val();
-			var lockStatus=$("#lockStatus").val();
-			var roleDesc=$("#roleDesc").val();
+    		var updateDateBegin=$("#updateDateBegin").val();
+    		var updateDateEnd=$("#updateDateEnd").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
@@ -143,10 +141,7 @@
 					"upmRole.createDateEnd":createDateEnd,
 					"upmRole.updateBy":updateBy,
 					"upmRole.updateDateBegin":updateDateBegin,
-					"upmRole.updateDateEnd":updateDateEnd,
-					"upmRole.enableFlag":enableFlag,
-					"upmRole.lockStatus":lockStatus,
-					"upmRole.roleDesc":roleDesc
+					"upmRole.updateDateEnd":updateDateEnd
             };
             return temp;
         };
@@ -184,31 +179,22 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
 			   <div class="col-sm-2">
-                 <input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker"   readonly="readonly" placeholder="请选择日期"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker"   readonly="readonly" placeholder="请选择日期"/>
+                 <input type="text" name="createDateBegin" id = "createDateBegin" size="16" class="datetimepicker"   readonly="readonly" /> --
+				<input type="text" name="createDateEnd" id = "createDateEnd"  size="16"  class="datetimepicker"   readonly="readonly"/>
                  </div>
-			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
+			 	<label class="control-label col-sm-1" for="updateBy">修改人ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
                         
-			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
+			 	<label class="control-label col-sm-1" for="updateDate">修改日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin" class="datetimepicker"  readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd" class="datetimepicker"   readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="enableFlag">否是有效</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="enableFlag"></div>
-                        
-			 	<label class="control-label col-sm-1" for="lockStatus">定锁状态</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="lockStatus"></div>
-                        
-			 	<label class="control-label col-sm-1" for="roleDesc">色角描述</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="roleDesc"></div>
-                        
+                      <input type="text" name="updateDateBegin" id = "updateDateBegin" size="16" class="datetimepicker"  readonly="readonly"/> --
+	                   <input type="text" name="updateDateEnd" id = "updateDateEnd" size="16" class="datetimepicker"   readonly="readonly"/>
+                 </div>
 
-                        <div class="col-sm-6" style="text-align:left;">
+                     <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
-                    </div>
+                       </div>
+                   </div>
                 </form>
             </div>
         </div>       

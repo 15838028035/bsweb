@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>upmConfiguration管理</title>
+<title>配置管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -69,15 +69,15 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [  
-			{ field: 'checkStatus', title: '',checkbox:true }, 
+							{ field: 'checkStatus', title: '',checkbox:true }, 
                            {field : 'Number', title : '行号', formatter : function(value, row, index) {  
                         	   			return index+1;
                            			}  
                            },
-			 	{field:'configId',title:'ID', sortable:true},
-			 	{field:'cfgKey',title:'置配项KEY', sortable:true},
-			 	{field:'cfgValue',title:'置配项值', sortable:true},
-			 	{field:'cfgDesc',title:'置配项描述', sortable:true}
+						 	{field:'configId',title:'ID', sortable:true},
+						 	{field:'cfgKey',title:'置配项KEY', sortable:true},
+						 	{field:'cfgValue',title:'置配项值', sortable:true},
+						 	{field:'cfgDesc',title:'置配项描述', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -87,6 +87,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
@@ -147,8 +148,7 @@
 			 	<label class="control-label col-sm-1" for="cfgDesc">置配项描述</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="cfgDesc"></div>
                         
-
-                        <div class="col-sm-6" style="text-align:left;">
+                        <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
                     </div>
