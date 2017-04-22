@@ -74,7 +74,7 @@
                        	   			return index+1;
                           			}  
                           },
-						 {field:'id',title:'', sortable:true},
+						 {field:'id',title:'ID', sortable:true},
 						 {field:'orderId',title:'流程实例编号', sortable:true},
 						 {field:'actorId',title:'执行人', sortable:true},
 						 {field:'creator',title:'创建人', sortable:true},
