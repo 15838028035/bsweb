@@ -38,14 +38,21 @@
 	       <isNotEmpty prepend="AND" property="roleName">
 	             role_name = #roleName#
 	       </isNotEmpty>
-	       <isNotEmpty prepend="AND" property="roleDesc">
-	             role_desc = #roleDesc#
-	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createBy">
 	             create_By = #createBy#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createDate">
 	             create_Date = #createDate#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDateBegin">
+	             <![CDATA[
+	             create_Date >= str_to_date('#createDatebegin#','%Y-%m-%d %H:%i:%s') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createDateEnd">
+	             <![CDATA[
+	             create_Date <= str_to_date('#createDateEnd#','%Y-%m-%d %H:%i:%s')
+	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="updateBy">
 	             update_By = #updateBy#
@@ -53,11 +60,24 @@
 	       <isNotEmpty prepend="AND" property="updateDate">
 	             update_Date = #updateDate#
 	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDateBegin">
+	             <![CDATA[
+	             update_Date >= str_to_date('#updateDatebegin#','%Y-%m-%d %H:%i:%s') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="updateDateEnd">
+	             <![CDATA[
+	             update_Date <= str_to_date('#updateDateEnd#','%Y-%m-%d %H:%i:%s')
+	             ]]>
+	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="enableFlag">
 	             enable_Flag = #enableFlag#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="lockStatus">
 	             lock_Status = #lockStatus#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="roleDesc">
+	             role_desc = #roleDesc#
 	       </isNotEmpty>
 	    </dynamic>	
 	</sql>
@@ -116,21 +136,46 @@
 
     <update id="update" parameterClass="upmRole">
     <![CDATA[
-        UPDATE upm_role SET
-			id = #id# ,
-			role_code = #roleCode# ,
-			app_id = #appId# ,
-			role_name = #roleName# ,
-			role_desc = #roleDesc# ,
-			create_By = #createBy# ,
-			create_Date = #createDate# ,
-			update_By = #updateBy# ,
-			update_Date = #updateDate# ,
-			enable_Flag = #enableFlag# ,
-			lock_Status = #lockStatus# 
+        UPDATE upm_role 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="roleCode">
+				role_code = #roleCode#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="appId">
+				app_id = #appId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="roleName">
+				role_name = #roleName#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createBy">
+				create_By = #createBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createDate">
+				create_Date = #createDate#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateBy">
+				update_By = #updateBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateDate">
+				update_Date = #updateDate#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="enableFlag">
+				enable_Flag = #enableFlag#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="lockStatus">
+				lock_Status = #lockStatus#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="roleDesc">
+				role_desc = #roleDesc#
+			</isNotEmpty>
+	        
+	   </dynamic>
         WHERE 
 	        id = #id# 
-    ]]>
     </update>
 
     <delete id="delete" parameterClass="java.lang.Integer">

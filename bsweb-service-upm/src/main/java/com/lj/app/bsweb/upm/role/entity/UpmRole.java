@@ -4,17 +4,28 @@ import com.lj.app.core.common.base.entity.BaseEntity;
 
 public class UpmRole extends BaseEntity{
 	
-	private java.lang.Integer id;
 	/**
-	 * 角色编码
+	 * ID  id
+	 */
+	private java.lang.Integer id;
+	
+	/**
+	 * 角色编码  role_code
 	 */
 	private String roleCode;
+	
 	/**
-	 * 角色名称
+	 * 应用ID  app_id
+	 */
+	private String appId;
+	
+	/**
+	 * 角色名称  role_name
 	 */
 	private String roleName;
+	
 	/**
-	 * 角色描述
+	 * 角色描述  role_desc
 	 */
 	private String roleDesc;
 	
@@ -64,5 +75,12 @@ public class UpmRole extends BaseEntity{
 	public void setRoleDesc(String roleDesc) {
 		this.roleDesc = roleDesc;
 	}
+	public String getAppId() {
+		return appId;
+	}
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+	
 	
 }

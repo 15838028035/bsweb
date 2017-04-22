@@ -112,6 +112,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {

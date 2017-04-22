@@ -18,7 +18,7 @@
 	     
 	     $(".datetimepicker").datetimepicker({
 	      		language: 'zh-CN',
-	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	      		 format: 'yyyy-mm-dd hh:ii:ss',//格式化时间,
 	             autoclose:true,//日期选择完成后是否关闭选择框
 	             //minView: "month",//设置只显示到月份
 	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
@@ -101,6 +101,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
@@ -120,11 +121,11 @@
 			var appId=$("#appId").val();
 			var roleName=$("#roleName").val();
 			var createBy=$("#createBy").val();
-	    		var createDateBegin=$("#createDateBegin").val();
-	    		var createDateEnd=$("#createDateEnd").val();
+    		var createDateBegin=$("#createDateBegin").val();
+    		var createDateEnd=$("#createDateEnd").val();
 			var updateBy=$("#updateBy").val();
-	    		var updateDateBegin=$("#updateDateBegin").val();
-	    		var updateDateEnd=$("#updateDateEnd").val();
+    		var updateDateBegin=$("#updateDateBegin").val();
+    		var updateDateEnd=$("#updateDateEnd").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,

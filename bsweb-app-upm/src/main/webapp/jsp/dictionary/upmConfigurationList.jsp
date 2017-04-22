@@ -69,15 +69,15 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [  
-			{ field: 'checkStatus', title: '',checkbox:true }, 
+							{ field: 'checkStatus', title: '',checkbox:true }, 
                            {field : 'Number', title : '行号', formatter : function(value, row, index) {  
                         	   			return index+1;
                            			}  
                            },
-			 	{field:'configId',title:'ID', sortable:true},
-			 	{field:'cfgKey',title:'置配项KEY', sortable:true},
-			 	{field:'cfgValue',title:'置配项值', sortable:true},
-			 	{field:'cfgDesc',title:'置配项描述', sortable:true}
+						 	{field:'configId',title:'ID', sortable:true},
+						 	{field:'cfgKey',title:'置配项KEY', sortable:true},
+						 	{field:'cfgValue',title:'置配项值', sortable:true},
+						 	{field:'cfgDesc',title:'置配项描述', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -87,6 +87,7 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
