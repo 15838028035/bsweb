@@ -220,7 +220,7 @@
     <![CDATA[
         select 
         count(*)
-        from upm_role
+        from upm_role  
     ]]>
 		<include refid="dynamicWhere"/>    
     </select>
