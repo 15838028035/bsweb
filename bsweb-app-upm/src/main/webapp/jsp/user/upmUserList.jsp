@@ -45,6 +45,7 @@
                 showToggle:true,
                 searchOnEnterKey:true,
                 showFooter:true,
+                trimOnSearch:true,
                 search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式

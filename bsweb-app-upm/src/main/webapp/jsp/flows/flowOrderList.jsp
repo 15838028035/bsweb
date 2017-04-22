@@ -46,6 +46,7 @@
                 showColumns:true,
                 showToggle:true,
                 searchOnEnterKey:true,
+                trimOnSearch:true,
                 showFooter:true,
                 search:false,
                 sortable: true,                     //是否启用排序
