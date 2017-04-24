@@ -26,3 +26,6 @@
 
 <link href="${ctx}/scripts/BootSideMenu/css/BootSideMenu.css" rel="stylesheet">
 <script src="${ctx}/scripts/BootSideMenu/js/BootSideMenu.js"></script>
+
+<link href="${ctx}/scripts/Magnific-Popup/magnific-popup.css" rel="stylesheet">
+<script src="${ctx}/scripts/Magnific-Popup/jquery.magnific-popup.js"></script>

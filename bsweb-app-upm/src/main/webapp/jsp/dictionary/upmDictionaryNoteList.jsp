@@ -260,12 +260,17 @@
 		   		return;
 		   	}
   				
-          	 bootbox.dialog({
-          		title: "编辑数据字典值",
-          		message: '',
-          		//url:"${ctx}/jsp/dictionary/upmDictionaryList.jsp?nodeId="+ids,
-          		min: false
-          		});
+          				
+		   	$("#btn_addDictionaryItemBtn").magnificPopup({   
+		   		items: [  
+		   		      {  
+		   		        src: "${ctx}/jsp/dictionary/upmDictionaryList.jsp?nodeId="+ids,
+		   		        type: 'iframe',
+		   		        closeBtnInside: true
+		   		      }
+		   		      
+		   		    ]
+		   	});  
   			    	
           })
       	

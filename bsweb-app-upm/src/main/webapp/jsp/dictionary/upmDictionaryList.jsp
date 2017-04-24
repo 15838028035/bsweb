@@ -69,18 +69,18 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [  
-			{ field: 'checkStatus', title: '',checkbox:true }, 
+						{ field: 'checkStatus', title: '',checkbox:true }, 
                            {field : 'Number', title : '行号', formatter : function(value, row, index) {  
                         	   			return index+1;
                            			}  
                            },
-			 	{field:'typeCode',title:'', sortable:true},
-			 	{field:'dataCode',title:'', sortable:true},
-			 	{field:'dataDesc',title:'', sortable:true},
-			 	{field:'sortNo',title:'', sortable:true},
-			 	{field:'id',title:'', sortable:true},
-			 	{field:'nodeId',title:'', sortable:true},
-			 	{field:'appId',title:'', sortable:true}
+					 	{field:'id',title:'ID', sortable:true},
+					 	{field:'typeCode',title:'数据字典编码', sortable:true},
+					 	{field:'dataCode',title:'数据字典类别', sortable:true},
+					 	{field:'dataDesc',title:'数据字典描述', sortable:true},
+					 	{field:'sortNo',title:'排序编号', sortable:true},
+					 	{field:'nodeId',title:'数据字典父节点编号', sortable:true},
+					 	{field:'appId',title:'应用ID', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -108,9 +108,6 @@
 			var typeCode=$("#typeCode").val();
 			var dataCode=$("#dataCode").val();
 			var dataDesc=$("#dataDesc").val();
-			var sortNo=$("#sortNo").val();
-			var id=$("#id").val();
-			var nodeId=$("#nodeId").val();
 			var appId=$("#appId").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
@@ -121,9 +118,6 @@
 					"upmDictionary.typeCode":typeCode,
 					"upmDictionary.dataCode":dataCode,
 					"upmDictionary.dataDesc":dataDesc,
-					"upmDictionary.sortNo":sortNo,
-					"upmDictionary.id":id,
-					"upmDictionary.nodeId":nodeId,
 					"upmDictionary.appId":appId
             };
             return temp;
@@ -145,31 +139,22 @@
                     <div class="form-group" style="margin-top:15px">
                       
 
-			 	<label class="control-label col-sm-1" for="typeCode"></label>
+			 	<label class="control-label col-sm-1" for="typeCode">数据字典编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="typeCode"></div>
                         
-			 	<label class="control-label col-sm-1" for="dataCode"></label>
+			 	<label class="control-label col-sm-1" for="dataCode">数据字典类别</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="dataCode"></div>
                         
-			 	<label class="control-label col-sm-1" for="dataDesc"></label>
+			 	<label class="control-label col-sm-1" for="dataDesc">数据字典描述</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="dataDesc"></div>
                         
-			 	<label class="control-label col-sm-1" for="sortNo"></label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="sortNo"></div>
-                        
-			 	<label class="control-label col-sm-1" for="id"></label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-                        
-			 	<label class="control-label col-sm-1" for="nodeId"></label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="nodeId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="appId"></label>
+			 	<label class="control-label col-sm-1" for="appId">应用ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
                         
 
-                        <div class="col-sm-6" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+                  <div class="col-sm-12" style="text-align:left;">
+                      <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                  </div>
                     </div>
                 </form>
             </div>
