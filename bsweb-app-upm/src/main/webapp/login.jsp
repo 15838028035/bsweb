@@ -133,7 +133,7 @@
 		 function login() {
 			var loginNo = $("#loginNo").val();
 			var pwd = $("#pwd").val();
-			window.location.href="${ctx}/loginAction!login.action?loginNo="+loginNo + "&pwd=" +pwd;
+			window.forms[0].submit();
 		} 
 	</script>
 </head>
@@ -145,11 +145,11 @@
             <form class="form-horizontal" action="${ctx}/loginAction!login.action" method="post">
                 <span class="heading">用户登录</span>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="loginNo" placeholder="用户名">
+                    <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="用户名">
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="form-group help">
-                    <input type="password" class="form-control" id="pwd" placeholder="密　码">
+                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密　码">
                     <i class="fa fa-lock"></i>
                     <a href="#" class="fa fa-question-circle"></a>
                 </div>
