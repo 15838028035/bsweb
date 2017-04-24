@@ -14,6 +14,8 @@
 		<link rel="stylesheet" href="${ctx}/scripts/flows/flow.css" type="text/css" />
 		<script src="${ctx}/scripts/flows/raphael-min.js" type="text/javascript"></script>
 		<script src="${ctx}/scripts/flows/dialog.js" type="text/javascript"></script>
+		<script src="${ctx}/scripts/flows/CleverTabs/scripts/jquery-ui.js" type="text/javascript"></script>
+		
 		<script src="${ctx}/scripts/flows/snaker.designer.js" type="text/javascript"></script>
 		<script src="${ctx}/scripts/flows/snaker.model.js" type="text/javascript"></script>
 		<script src="${ctx}/scripts/flows/snaker.editors.js" type="text/javascript"></script>

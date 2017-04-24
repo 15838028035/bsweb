@@ -1,20 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/common/taglibs.jsp"%>
 
-<!DOCTYPE HTML>
+<%@page language="java" isELIgnored="false"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/jsp/common/taglibs.jsp" %>
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link href="${ctx }/styles/bootstrap/2.2.2/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <!--[if lte IE 6]>
-    <link rel="stylesheet" type="text/css" href="${ctx }/styles/bootstrap/2.2.2/css/bootstrap-ie6.css">
-    <![endif]-->
-    <!--[if lte IE 7]>
-    <link rel="stylesheet" type="text/css" href="${ctx }/styles/bootstrap/2.2.2/css/ie.css">
-    <![endif]-->
-    <link href="${ctx }/styles/css/site.css" rel="stylesheet" type="text/css" />
+<title>流程设计</title>
+    <meta name="viewport" content="width=device-width" />
+<%@ include file="/jsp/common/meta.jsp" %>
+<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
+    
 </head>
 <body>
 
@@ -45,12 +41,11 @@
         </div><!--end row-->
     </form>
 </div><!--end container-->
-<script type="text/javascript" charset="utf-8" src="${ctx }/styles/js/jquery-1.8.3.min.js"></script>
 
-<script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/ueditor.all.js"> </script>
-<script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/formdesign/formdesign.v4.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/scripts/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/scripts/ueditor/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/scripts/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/scripts/ueditor/formdesign/formdesign.v4.js"></script>
 <!-- script start-->
 <script type="text/javascript">
 var formEditor = UE.getEditor('formEditor',{
