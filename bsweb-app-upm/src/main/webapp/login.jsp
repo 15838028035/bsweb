@@ -133,7 +133,7 @@
 		 function login() {
 			var loginNo = $("#loginNo").val();
 			var pwd = $("#pwd").val();
-			window.forms[0].submit();
+			document.forms[0].submit();
 		} 
 	</script>
 </head>
