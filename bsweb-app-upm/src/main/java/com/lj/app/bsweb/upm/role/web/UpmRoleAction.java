@@ -120,16 +120,16 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 		if (StringUtil.isNotBlank(strRoleId)) {
 			upmRole = (UpmRole)upmRoleService.getInfoByKey(strRoleId);
 			if (!upmRole.getRoleName().equals(roleName)&& result.size() != 0) {
-				Struts2Utils.renderText("false");
+				Struts2Utils.renderText("{\"valid\":false}");
 			} else {
-				Struts2Utils.renderText("true");
+				Struts2Utils.renderText("{\"valid\":true}");
 			}
 		} else {
 
 			if (result != null && result.size() > 0) {
-				Struts2Utils.renderText("false");
+				Struts2Utils.renderText("{\"valid\":false}");
 			} else {
-				Struts2Utils.renderText("true");
+				Struts2Utils.renderText("{\"valid\":true}");
 			}
 		}
 

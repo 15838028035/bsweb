@@ -139,6 +139,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 	public String processDeploy() throws Exception {
 		InputStream input = null;
 		String msg = this.OPT_SUCCESS;
+		String expMsg = "";
 		try {
 			if (id != null) {
 				flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
@@ -155,18 +156,21 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			msg = this.OPT_FAILURE;
+			expMsg = e.getMessage();
 		} finally {
 			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
 					e.printStackTrace();
+					expMsg = e.getMessage();
 				}
 			}
 		}
 
 		AjaxResult ajaxResult = new AjaxResult();
 		ajaxResult.setOpResult(msg);
+		ajaxResult.setOptFailureMsg(expMsg);
 		Struts2Utils.renderJson(ajaxResult);
 		return null;
 	}
@@ -174,6 +178,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 	public String processReDeploy() throws Exception {
 		InputStream input = null;
 		String msg = this.OPT_SUCCESS;
+		String expMsg = "";
 		try {
 			if (id != null) {
 				flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
@@ -189,18 +194,21 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			msg = this.OPT_FAILURE;
+			expMsg = e.getMessage();
 		} finally {
 			if (input != null) {
 				try {
 					input.close();
 				} catch (IOException e) {
 					e.printStackTrace();
+					expMsg = e.getMessage();
 				}
 			}
 		}
 
 		AjaxResult ajaxResult = new AjaxResult();
 		ajaxResult.setOpResult(msg);
+		ajaxResult.setOptFailureMsg(expMsg);
 		Struts2Utils.renderJson(ajaxResult);
 		return null;
 	}

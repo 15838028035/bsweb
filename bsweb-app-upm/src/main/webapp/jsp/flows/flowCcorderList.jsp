@@ -213,8 +213,8 @@
     		return;
     	}
     	
-		jquery.ajax({
-		    url:'${ctx}/jsp/flows/flowCcorderAction!ccread.action?flowCcorder.id' + id + "&flowCcorder.status=0"	
+		$.ajax({
+		    url:'${ctx}/jsp/flows/flowCcorderAction!ccread.action?flowCcorder.id=' + id + "&flowCcorder.status=0"	
 		});
 	
 	refreshGrid();
