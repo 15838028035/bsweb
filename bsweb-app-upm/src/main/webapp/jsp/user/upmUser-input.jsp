@@ -18,7 +18,8 @@
 	</script>
 </head>
 <body>
-<form action="upmUserAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="userForm" id="userForm">
+<div class="container">
+<form action="upmUserAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="userForm" id="userForm" role="form">
 <input type="hidden" name="id" value="${id}"/>
 <input type="hidden" name="upmUser.id" value="${id}"/>
 <input type="hidden" name="operate" value="${operate}" />
@@ -48,11 +49,13 @@
         </div>
         
         <div class="form-group"> 
-        		  <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
-        		   <button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
+        		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
         </div>
 </form>
-<script>
+</div>
+<script   type="text/javascript">
+
         $('#userForm').bootstrapValidator({  
             fields: {  
             	"upmUser.loginNo": {  

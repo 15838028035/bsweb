@@ -24,8 +24,8 @@
 
 </head>
 <body>
-
-<form action="flowTaskAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="flowTaskForm" id="flowTaskForm">
+<div class="container">
+<form action="flowTaskAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="flowTaskForm" id="flowTaskForm" role="form">
 <input type="hidden" name="flowTask.id" id="id" value="${id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
 		 
@@ -158,16 +158,16 @@
 			 <label for="actorIds">流程参与者</label>
 		 	  <input class="form-control" type="text"  name="flowTask.actorIds" id="actorIds"  value="${flowTask.actorIds}" />
 		 </div>
-		 
        
  	  <div class="form-group"> 
-        		 <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
-        		<button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
-        </div>	
-       
-    
+        		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+        </div>
+        
 </form>
-<script>
+</div>
+
+<script   type="text/javascript">
 
 		$("#flowTaskForm").bootstrapValidator({
 		 		 "flowTask.taskName": {

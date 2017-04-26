@@ -24,8 +24,8 @@
 
 </head>
 <body>
-
-<form action="flowTaskHistAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="flowTaskHistForm" id="flowTaskHistForm">
+<div class="container">
+<form action="flowTaskHistAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="flowTaskHistForm" id="flowTaskHistForm" role="form">
 <input type="hidden" name="flowTaskHist.id" id="id" value="${id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
    
@@ -133,19 +133,19 @@
 			 <label for="updateDate">更新日期</label>
 				<input class="form-control" type="text" name="flowTaskHist.updateDate" id = "updateDate" value="${flowTaskHist.updateDate}" class="datetimepicker"  readonly="readonly"/>
 		 </div>
-		 
        
- 	  <div class="form-group"> 
-        		 <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
-        		<button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
-        </div>	
+ 	   <div class="form-group"> 
+        		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+        </div>
        
     
 </form>
-<script>
+</div>
 
-		$("#flowTaskHistForm").bootstrapValidator({
-		    },
+<script   type="text/javascript">
+		$("#flowTaskHistForm").bootstrapValidator(
+				
  		submitHandler: function(validator, form, submitButton) {  
                		 validator.defaultSubmit();  
             	}  

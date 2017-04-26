@@ -24,8 +24,8 @@
 
 </head>
 <body>
-
-<form action="upmConfigurationAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmConfigurationForm" id="upmConfigurationForm">
+<div class="container">
+<form action="upmConfigurationAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmConfigurationForm" id="upmConfigurationForm" role="form">
 <input type="hidden" name="id" id="id" value="${id}"/>
 <input type="hidden" name="upmConfiguration.configId" id="configId" value="${id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
@@ -44,16 +44,16 @@
 			 <label for="cfgDesc">置配项描述</label>
 		 	  <input class="form-control" type="text"  name="upmConfiguration.cfgDesc" id="cfgDesc"  value="${upmConfiguration.cfgDesc}" />
 		 </div>
-		 
        
  	  <div class="form-group"> 
-        		 <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
-        		<button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
-        </div>	
-       
-    
+        		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+        </div>
 </form>
-<script>
+
+</div>
+
+<script   type="text/javascript">
 
 		$("#upmConfigurationForm").bootstrapValidator({
 			

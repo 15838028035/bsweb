@@ -25,8 +25,8 @@
 
 </head>
 <body>
-
-<form action="upmNoticeAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmNoticeForm" id="upmNoticeForm">
+<div class="container">
+<form action="upmNoticeAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmNoticeForm" id="upmNoticeForm" role="form">
 <input type="hidden" name="id" id="id" value="${id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
    
@@ -77,13 +77,14 @@
 		 </div>
 		 
        
- 	  <div class="form-group"> 
-        		 <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
-        		<button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
-        </div>	
+ 	 <div class="form-group"> 
+        		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+        </div>
        
     
 </form>
+</div>
 <script>
 
 		$("#upmNoticeForm").bootstrapValidator({

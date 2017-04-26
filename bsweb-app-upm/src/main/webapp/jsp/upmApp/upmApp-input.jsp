@@ -13,8 +13,8 @@
 	
 </head>
 <body>
-
-<form action="upmAppAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmAppForm" id="upmAppForm">
+<div class="container">
+<form action="upmAppAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmAppForm" id="upmAppForm" role="form">
 <input type="hidden" name="id" id="id" value="${id}"/>
 <input type="hidden" name="upmApp.id" id="appId" value="${upmApp.id}"/>
 <input type="hidden" name="upmApp.appId" id="appId" value="${upmApp.appId}"/>
@@ -40,13 +40,15 @@
 		</div>
        
  	  <div class="form-group"> 
-        		  <button type="submit" id="save" class="btn btn-success btn-shadow btn-shadow-success ">保存</button> 
-        		   <button type="button" id="backToHomeButton" class="btn btn-success ">保存</button> 
-        </div>	
+        		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+        </div>
        
     
 </form>
-<script>
+</div>
+
+<script type="text/javascript">
 
 		$("#upmAppForm").bootstrapValidator({
 			
