@@ -11,8 +11,8 @@
    	  	<result property="orderId" column="order_id"   />
    	  	<result property="actorId" column="actor_id"   />
    	  	<result property="creator" column="creator"   />
-   	  	<result property="createTime" column="createTime"   />
-   	  	<result property="finishTime" column="finishTime"   />
+   	  	<result property="createTime" column="create_time"   />
+   	  	<result property="finishTime" column="finish_time"   />
    	  	<result property="status" column="status"   />
     </resultMap>
 
@@ -31,29 +31,29 @@
 	             creator = #creator#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createTime">
-	             createTime = #createTime#
+	             create_time = #createTime#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createTimeBegin">
 	             <![CDATA[
-	             createTime >= str_to_date('#createTimebegin#','%Y-%m-%d') 
+	             create_time >= str_to_date('#createTimebegin#','%Y-%m-%d') 
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createTimeEnd">
 	             <![CDATA[
-	             createTime <= str_to_date('#createTimeEnd#','%Y-%m-%d')
+	             create_time <= str_to_date('#createTimeEnd#','%Y-%m-%d')
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="finishTime">
-	             finishTime = #finishTime#
+	             finish_time = #finishTime#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="finishTimeBegin">
 	             <![CDATA[
-	             finishTime >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
+	             finish_time >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="finishTimeEnd">
 	             <![CDATA[
-	             finishTime <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
+	             finish_time <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="status">
@@ -77,29 +77,29 @@
 	             creator = #creator#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createTime">
-	             createTime = #createTime#
+	             create_time = #createTime#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createTimeBegin">
 	             <![CDATA[
-	             createTime >= str_to_date('#createTimebegin#','%Y-%m-%d') 
+	             create_time >= str_to_date('#createTimebegin#','%Y-%m-%d') 
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="createTimeEnd">
 	             <![CDATA[
-	             createTime <= str_to_date('#createTimeEnd#','%Y-%m-%d')
+	             create_time <= str_to_date('#createTimeEnd#','%Y-%m-%d')
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="finishTime">
-	             finishTime = #finishTime#
+	             finish_time = #finishTime#
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="finishTimeBegin">
 	             <![CDATA[
-	             finishTime >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
+	             finish_time >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="finishTimeEnd">
 	             <![CDATA[
-	             finishTime <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
+	             finish_time <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
 	             ]]>
 	       </isNotEmpty>
 	       <isNotEmpty prepend="AND" property="status">
@@ -117,8 +117,8 @@
         	order_id ,
         	actor_id ,
         	creator ,
-        	createTime ,
-        	finishTime ,
+        	create_time ,
+        	finish_time ,
         	status 
 	    ]]>
 	</sql>
@@ -135,8 +135,8 @@
 	        	order_id ,
 	        	actor_id ,
 	        	creator ,
-	        	createTime ,
-	        	finishTime ,
+	        	create_time ,
+	        	finish_time ,
 	        	status 
 	        ) VALUES (
 				#id# ,
@@ -168,10 +168,10 @@
 				creator = #creator#
 			</isNotEmpty>
 	        <isNotEmpty prepend="," property="createTime">
-				createTime = #createTime#
+				create_time = #createTime#
 			</isNotEmpty>
 	        <isNotEmpty prepend="," property="finishTime">
-				finishTime = #finishTime#
+				finish_time = #finishTime#
 			</isNotEmpty>
 	        <isNotEmpty prepend="," property="status">
 				status = #status#
