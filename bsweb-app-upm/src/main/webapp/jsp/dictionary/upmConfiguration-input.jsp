@@ -80,8 +80,8 @@
                         				} ,
                         			stringLength: {
                           			  min: 1,
-                           		 max: 30,
-                           			 message: '置配项值必须在1到30之间'
+                           		 max: 1000,
+                           			 message: '置配项值必须在1到1000之间'
                         		} 
                     			}  
 				
