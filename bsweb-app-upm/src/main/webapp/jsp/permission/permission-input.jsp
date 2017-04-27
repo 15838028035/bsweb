@@ -1,215 +1,124 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/jsp/common/taglibs.jsp"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page language="java" isELIgnored="false"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/jsp/common/taglibs.jsp" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title></title>
-		<%@ include file="/jsp/common/meta.jsp"%>
-		<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
-		<%@ include file="/jsp/common/resource/styles_all.jsp"%>
-		<script language="javascript">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>upmPermission管理</title>
+    <%@ include file="/jsp/common/meta.jsp" %>
+    <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
+    <%@ include file="/jsp/common/resource/styles_all.jsp" %>
+	
+<script  type="text/javascript">
 	$(document).ready(function(){
-		contralEffect.contain();
-		contralEffect.tablelist();
-		contralEffect.blueButton();
-		
-		jQuery.validator.addMethod("specialChar", function(value, element) {      
-		 	   vkeyWords=/^[^\|"'<>()@#$%\'\"]*$/;
-			   if(!vkeyWords.test(value)){
-			   		return false;
-			   }else{
-			   		return true;
-			   }
-		 }, '不能包含特殊字符');
-		
-					 
-		$('#inputForm').validate({
-	    		
-	    		submitHandler:function(form){
-				//获取原来的名称
-				var oldName = $("#oldName").val(); 
-				//根据名称是否存在
-				var parentId = $("#parentId").val();
-				var name = $("#name").val();
-				//若是执行修改操作，先判断修改了菜单名称，如果没有修改，则过滤掉ajax重名验证
-				if(oldName!=name){
-				$.ajax({
-			 	url: "${ctx}/jsp/permission/upmPermissionAction!checkIsExistsPermission.action",
-			 	type: "post",
-			 	async:false,
-			 	data:{
-			 		"parentId":parentId,
-			 		"name":name
-			 	},
-			  	success: function(msg){
-			    	if("true"==msg){
-			    	showModalMessage( '操作失败' +name);
-			    	return false;
-			    	}else{
-			    $("#submitBtn").attr("disabled","disabled");
-			    $("#return").attr("disabled","disabled");
-			    form.submit();
-			    	}
-			    }
-			 });
-				}else{
-				 form.submit();
-				}
-				},
-	    		
-		    	rules: {
-			       "upmPermission.name": {
-						required: true,
-						specialChar:true,
-						minlength:2,
-						maxlength:32
-			       },
-			       "upmPermission.sortNo":{
-			       	number:true,
-			       	minlength:1,
-					maxlength:10
-			       },
-			       	"upmPermission.remark": {
-						maxlength:2000
-			       }
-		    },
-		
-			messages: {
-		       "uapNetWorkMapArea.areaName": {
-		        	required: "<span style='color:red'><s:text name='uap.networkmaparea.name.missMessage' /></span>",
-		        	specialChar: "<span style='color:red'><s:text name='uap.networkmaparea.name.specialCharMessage' /></span>"
-		       }
-	      }
-     });
-			
+			     
+	      $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii:ss',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	             //minView: "month",//设置只显示到月份
+	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
+	         });
 	});
 
-
 </script>
-	</head>
 
-	<body>
+</head>
+<body>
+<div class="container">
+<form action="upmPermissionAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmPermissionForm" id="upmPermissionForm" role="form">
+<input type="hidden" name="id" id="id" value="${id}"/>
+<input type="hidden" name="operate" id="operate" value="${operate}" />
 
-		<div class="padd10">
-			<!--start  contain容器-->
-			<div class="contain">
-				<div class="contain_wrap">
-					<div class="contain_title">
-						<div class="contain_t_wrap">
-							<div class="float_lef contain_t_text">
-								<span class="marg_lef5"><img src="${ctx}/images/next.gif"
-										align="absmiddle" /> </span><span class="marg_lef5">权限管理</span>
-							</div>
-							<!--end contain_t_text-->
-							<div class="float_rig contain_t_check">
-								<div class="contain_icon"></div>
-							</div>
-							<!--end contain_t_check-->
-							<div class="clear"></div>
-						</div>
-						<!--end contain_t_wrap-->
-					</div>
-					<!--end contain_title-->
+<input type="hidden" name="upmPermission.appId" id="appId" value="${appId }">
+<input type="hidden" name="upmPermission.parentId" id="parentId" value="${parentId}">
+<input type="hidden" name="upmPermission.id" id="permissionId" value="${permissionId}">
+<input type="hidden" name="oldName" id="oldName" value="${upmPermission.name }">
+   
+        
+      		<div class="form-group">
+			 <label for="id">ID</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.id" id="id"  value="${upmPermission.id}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="name">名称</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.name" id="name"  value="${upmPermission.name}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="type">类型</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.type" id="type"  value="${upmPermission.type}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="url">URL</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.url" id="url"  value="${upmPermission.url}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="code">code</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.code" id="code"  value="${upmPermission.code}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="keyCode">key_code</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.keyCode" id="keyCode"  value="${upmPermission.keyCode}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="state">状态</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.state" id="state"  value="${upmPermission.state}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="remark">备注</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.remark" id="remark"  value="${upmPermission.remark}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="sortNo">排序</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.sortNo" id="sortNo"  value="${upmPermission.sortNo}" />
+		 </div>
+		 
+      		<div class="form-group">
+			 <label for="iconPath">图片路径</label>
+		 	  <input class="form-control" type="text"  name="upmPermission.iconPath" id="iconPath"  value="${upmPermission.iconPath}" />
+		 </div>
+       
+ 	<div class="form-group"> 
+        		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
+        		   <button type="button" id="backToHomeButton" onclick="window.location='${ctx}/jsp/permission/upmPermissionAction!turnToPermissionList.action?appId=${appId}&parentId=${parentId }'" class="btn btn-default">取消</button> 
+        </div>	
+    
+</form>
 
+</div>
 
-					<div class="contain_search">
-						<form id="inputForm" action="upmPermissionAction!commonSaveOrUpdate.action" method="post">
-							<input type="hidden" name="upmPermission.appId" id="appId" value="${appId }">
-							<input type="hidden" name="upmPermission.parentId" id="parentId" value="${parentId}">
-							<input type="hidden" name="upmPermission.id" id="permissionId" value="${permissionId}">
-							<input type="hidden" name="oldName" id="oldName" value="${upmPermission.name }">
-							
-							<div class="contain_s_wrap">
-								<table width="100%" cellpadding="0" cellspacing="0" border="0">
-									<tr>
-										<td width="10%" align="right" class="font_wei">权限名称<span style="color: red">*</span>:</td>
-										
-										<td width="30%" align="left">
-											<input type="text" class="input_text" style="width: 150px" id="name" name="upmPermission.name" 	value="${upmPermission.name }" />
-										</td>
-									</tr>
-									<tr>
-										<td width="10%" align="right" class="font_wei">权限编码:
-										</td>
-										<td width="30%" align="left">
-											<input type="text" class="input_text" style="width: 150px" id="code" name="upmPermission.code" value="${upmPermission.code}" />
-										</td>
-									</tr>
-									<tr>
-										<td width="10%" align="right" class="font_wei">权限类型</td>
-										<td width="30%" align="left">
-											<select id="type" name="upmPermission.type" class="select" style="width: 80px">
-												<c:forEach var="upmDic" items="${permissionTypeList}">
-													<option value="${upmDic.dataCode}">${upmDic.dataDesc}</option>
-												</c:forEach>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td width="10%" align="right" class="font_wei">权限状态:</td>
-										<td width="30%" align="left">
-											<select id="state" name="upmPermission.state" class="select" style="width: 80px">
-												<c:forEach var="upmDic" items="${permissionStateList}">
-													<option value="${upmDic.dataCode}">${upmDic.dataDesc}</option>
-												</c:forEach>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td width="10%" align="right" class="font_wei">
-											URL:
-										</td>
-										<td width="30%" align="left">
-											<input type="text" class="input_text" style="width: 150px" id="url" name="upmPermission.url" value="${upmPermission.url }" />
-										</td>
-									</tr>
-									<tr>
-										<td width="10%" align="right" class="font_wei">排序编号:</td>
-										<td width="30%" align="left">
-											<input type="text" class="input_text" style="width: 150px" id="sortNo" name="upmPermission.sortNo" value="${upmPermission.sortNo }" />
-										</td>
-									</tr>
-									<tr>
-										<td width="10%" align="right" class="font_wei">权限描述:</td>
-										<td width="85%" align="left" colspan="4">
-											<textarea class="textarea80" name="upmPermission.remark"
-												id="description" style="width: 400px">${upmPermission.remark}</textarea>
-										</td>
-									</tr>
-								</table>
-							</div>
-							<!--end contain_s_wrap-->
-							<tr>
-								<td width="10%" align="right" class="font_wei">
-									&nbsp;
-								</td>
-								<td align="left" colspan="3">
-									<div class="marg_lef10 float_lef">
-										<input id="submitBtn" name="submitButton" type="submit"
-											class="window_button_centerInput window_button_centerInput1"
-											value="保存" />
-									</div>
-									<div class="marg_lef10 float_lef">
-										<input type="button" id="return"
-											class="window_button_centerInput window_button_centerInput1"
-											value="返回"
-											onclick="window.location='${ctx}/jsp/permission/upmPermissionAction!turnToPermissionList.action?appId=${appId}&parentId=${parentId }'" />
-									</div>
-								</td>
-							</tr>
-							</table>
-					</div>
-					<!--end contain_s_wrap-->
-				</div>
-				<!--end contain_search-->
+<script   type="text/javascript">
 
-			</div>
-			<!--end contain_wrap-->
-		</div>
-		<!--end contain-->
-		</div>
-		<!--end padding10-->
-	</body>
+		$("#upmPermissionForm").bootstrapValidator({
+			
+			fields: {
+		 		 "upmPermission.appId": {
+					message: '应用ID不能为空',
+					validators: {  
+                       				 notEmpty: {  
+                        				message: '应用ID不能为空'  
+                        				} 
+                    			}  
+				
+		       }
+		 		 
+		    },
+ 		submitHandler: function(validator, form, submitButton) {  
+               		 validator.defaultSubmit();  
+            	}  
+			
+		});
+		
+</script>
+</body>
 </html>

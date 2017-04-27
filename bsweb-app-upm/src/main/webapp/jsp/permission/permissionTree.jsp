@@ -6,22 +6,9 @@
 <head>
 	<title>权限树</title>
     <meta name="viewport" content="width=device-width" />
-<%@ include file="/jsp/common/meta.jsp" %>
-
-<!--css样式-->
-<link href="${ctx}/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${ctx}/scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
-<!--js-->
-
-<script src="${ctx}/scripts/jquery/jquery-3.2.0.min.js"></script>
-<script src="${ctx}/scripts/bootstrap/js/bootstrap.js"></script>
-<script src="${ctx}/scripts/bootstrap-table/bootstrap-table.js"></script>
-<script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
-<script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
-
-<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
-<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-	
+	<%@ include file="/jsp/common/meta.jsp" %>
+	<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
+	<%@ include file="/jsp/common/resource/styles_all.jsp"%>
 	
 	</head>
 	<body>
@@ -45,8 +32,20 @@
 			 $('#treediv').treeview({
 		            data:dataObj,
 		            levels: 5,
-		            multiSelect: true
-		        });
+		            showIcon: true,  
+		            multiSelect: false,
+		            highlightSelected: true, //是否高亮选中
+		            highlightSearchResults:true,
+		            showCheckbox:false,
+		            showIcon:true,
+		            onNodeSelected: function(event, data) {
+		            	 var treeNodeId = data.nodeId;
+                         $(parent.LT_main.window.document).find("#perssionParentId").val(treeNodeId);
+                         parent.LT_main.location = "${ctx}/jsp/permission/permissionData.jsp?appId="+appId+"&parentId="+treeNodeId;
+		            }
+		        }
+			 );
+			 
 		});
 	</script>
 	</body>

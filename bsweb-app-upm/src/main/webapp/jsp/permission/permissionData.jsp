@@ -8,18 +8,10 @@
 <head>
 <title>upmPermission管理</title>
     <meta name="viewport" content="width=device-width" />
-<%@ include file="/jsp/common/meta.jsp" %>
+	<%@ include file="/jsp/common/meta.jsp" %>
+	<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
+	<%@ include file="/jsp/common/resource/styles_all.jsp"%>
 
-<!--css样式-->
-<link href="${ctx}/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${ctx}/scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
-<!--js-->
-
-<script src="${ctx}/scripts/jquery/jquery-3.2.0.min.js"></script>
-<script src="${ctx}/scripts/bootstrap/js/bootstrap.js"></script>
-<script src="${ctx}/scripts/bootstrap-table/bootstrap-table.js"></script>
-<script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
-<script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
 <script   type="text/javascript">
 	$(document).ready(function(){
@@ -36,10 +28,13 @@
 	
 	var TableInit = function () {
         var oTableInit = new Object();
+        var appId=parent.document.getElementById("appId").value;
+        var perssionParentId = $("#perssionParentId").val();
+        
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/permission/upmPermissionAction!bootStrapList.action',         //请求后台的URL（*）
+                url: "${ctx}/jsp/permission/upmPermissionAction!bootStrapList.action?appId=" + appId + "&parentId="+ perssionParentId,         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",
@@ -176,7 +171,10 @@
 </head>
 
 <body>
-
+  <input type="hidden" name="perssionParentId" id="perssionParentId"
+                      value="${parentId}" />
+|              <input type="hidden" name="appId" id="appId"
+|                      value="${appId}" />
 
 <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
@@ -287,12 +285,12 @@
                  return row.id;
              	});
         	if(ids == ''|| ids==null){
-        		alert('请选择要编辑的记录');
+        		bootbox.alert('请选择要编辑的记录');
         		return;
         	}
         	
         	if(ids.length>1){
-        		alert('请选择一条编辑的记录');
+        		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
         	window.location.href = "${ctx}/jsp/permission/upmPermissionAction!input.action?operate=edit&id=" + ids;
@@ -304,11 +302,10 @@
              });
         	 
         	if(ids == ""){
-        		alert('请选择要删除的记录');
+        		bootbox.alert('请选择要删除的记录');
         		return;
         	}
 
-        	//showModalConfirmation('确认要删除么',"doDelete()");
         	doDelete();
         })
 
@@ -323,7 +320,7 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         

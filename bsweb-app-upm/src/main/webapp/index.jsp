@@ -26,7 +26,7 @@
 								<a href="${ctx}/jsp/user/upmUserList.jsp"  class="list-group-item"  >用户管理</span></a>
 								<a href="${ctx}/jsp/user/upmUserGroupTreeList.jsp"  class="list-group-item"  >组织机构管理</a>
 								<a href="${ctx}/jsp/role/upmRoleList.jsp?appId=CRM"  class="list-group-item" >角色管理</a>
-								<a href="${ctx}/jsp/permission/permission.jsp?appId=CRM" class="list-group-item" >权限管理</a>
+								<a href="${ctx}/jsp/permission/permission.jsp?appId=UPM" class="list-group-item" >权限管理</a>
 								<a href="${ctx}/jsp/upmApp/upmAppList.jsp" class="list-group-item" >应用管理</a>
 								<a href="${ctx}/jsp/dictionary/upmDictionaryNoteList.jsp" class="list-group-item"  >数据字典管理</a>
 								<a href="${ctx}/jsp/dictionary/upmConfigurationList.jsp" class="list-group-item" >配置管理</a>
