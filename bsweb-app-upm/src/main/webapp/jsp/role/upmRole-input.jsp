@@ -20,6 +20,33 @@
 	             //minView: "month",//设置只显示到月份
 	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
 	         });
+	      
+			//获取权限菜单树
+			var jsonData = $.ajax({
+				          url:"${ctx}/jsp/role/upmRoleAction!getPermissionTree.action?strRoleId=${upmRole.id}&appId=${upmRole.appId}",
+				          async:false,
+				          cache:false,
+				          dataType:"text"
+			}).responseText;
+			
+			alert(jsonData);
+			jsonData = "[" + jsonData + "]";
+			
+			var dataObj=eval("("+jsonData+")");
+			
+	        
+			  $('#treediv').treeview({
+		            data:dataObj,
+		            levels: 5,
+		            showIcon: true,  
+		            multiSelect: false,
+		            highlightSelected: true, //是否高亮选中
+		            highlightSearchResults:true,
+		            showCheckbox:true,
+		            showIcon:true
+			 }
+			 ); 
+			 
 	});
 
 </script>
@@ -27,10 +54,11 @@
 </head>
 <body>
 <div class="container">
-<form action="upmRoleAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmRoleForm" id="upmRoleForm" role="form">
+<form action="upmRoleAction!save.action" class="form-horizontal" method="post" name="upmRoleForm" id="upmRoleForm" role="form">
 <input type="hidden" name="id" id="id" value="${id}"/>
 <input type="hidden" name="upmRole.id" id="upmRole.id" value="${upmRole.id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
+<input type="hidden" name="permissions" id="permissions" value="" />
 		 
       		<div class="form-group">
 			 <label for="roleCode">角色编码</label>
@@ -45,6 +73,11 @@
       		<div class="form-group">
 			 <label for="roleName">角色名称</label>
 		 	  <input class="form-control" type="text"  name="upmRole.roleName" id="roleName"  value="${upmRole.roleName}" />
+		 </div>
+		 
+		 <div class="form-group">
+			 <label for="treediv">权限树</label>
+			 <div id="treediv"></div>
 		 </div>
 		 
       		<div class="form-group">
@@ -110,15 +143,56 @@
 				
 		       }
 		    },
- 		submitHandler: function(validator, form, submitButton) {  
-               		 validator.defaultSubmit();  
-            	}  
+ 		submitHandler: function(validator, form, submitButton) { 
+ 		}
 			
-		});
+		}).on('success.form.bv', function (e) {
+			e.preventDefault();
+ 			alert("submit");
+ 		   addRoleAction();
+		}
+		);
 		
         $("#backToHomeButton").click(function() {
 			window.parent.location.href="${ctx}/index.jsp";
         });
+        
+        var batchid="";
+    	function addRoleAction(){
+    		batchid="";
+			var treeNodeIds = $('#treediv').treeview('getSelected');
+			if(treeNodeIds.length==0){
+				bootbox.alert('请选择一条记录');
+				return;
+			}
+			var treeNodeText = "";
+			var treeIds = "";
+			for(var i=0;i<treeNodeIds.length;i++){
+				var tmp = getParentPath($.trim(treeNodeIds[i].toString()));
+				treeNodeText += tmp;
+				treeIds += treeNodeIds[i].toString();
+				
+				if(i < treeNodeIds.length - 1){
+					treeNodeText += ",";
+					treeIds += ",";
+				}
+			}
+			
+			document.getElementById("permissions").value = c;
+			alert("treeIds=" + treeIds);
+			$("#upmRoleForm").submit();
+		}
+    	
+		function getParentPath(id){
+	        var node = tree.getNodeById(id);
+	        path = node.attributes.text;
+	        while(node.parentNode != null){
+	            node = node.parentNode;
+	            path = (node.attributes.text + ' - ' + path );
+	        }
+	       
+	       return path;
+	    }
 </script>
 </body>
 </html>

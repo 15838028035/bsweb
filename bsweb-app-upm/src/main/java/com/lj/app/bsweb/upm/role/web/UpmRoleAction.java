@@ -1,6 +1,5 @@
 package com.lj.app.bsweb.upm.role.web;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
-import com.lj.app.bsweb.upm.role.entity.UpmPermission;
 import com.lj.app.bsweb.upm.role.entity.UpmRole;
 import com.lj.app.bsweb.upm.role.service.UpmRoleService;
 import com.lj.app.core.common.base.service.BaseService;
@@ -26,8 +24,6 @@ import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-
-import net.sf.json.JSONArray;
 
 @Controller
 @Namespace("/jsp/role")
@@ -165,37 +161,14 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 	}
 	
 	public String getPermissionTree() throws Exception {
-		List<UpmPermission> treeList = upmRoleService.findAllbyTreeNodeId(this.getTreeNodeId());
-		List<Integer> permissionIds = upmRoleService.getRolePermissionIds(Integer.parseInt(strRoleId));
-		
-		JSONArray jSONArray = new JSONArray();
-		
-		List<Map<String,Object>> childList = new ArrayList<Map<String,Object>>();
-		
-		for(int i=0;i<treeList.size();i++){
-			Map<String,Object> childMap = new HashMap<String,Object>();
-			childMap.put("id", treeList.get(i).getId());
-			childMap.put("text", treeList.get(i).getName());
-			if (permissionIds.contains(treeList.get(i).getId())) {
-				childMap.put("checked", "1");
-			}else{
-				childMap.put("checked", "0");
-			}
-			
-			childList.add(childMap);
+		// 根据当前登录人员获取权限菜单树
+		String jsonData = upmRoleService.getPermissionTreeDataJson(this.getLoginUserId(),getAppId(), this.getLoginUserId());
+				
+		if(StringUtil.isBlank(jsonData)){
+			jsonData = "";	
 		}
-		
-		String jsonResult = null;
-		try {
-			jsonResult =jSONArray.fromObject(childList).toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		Struts2Utils.renderText(jsonResult);
-		
+		Struts2Utils.renderText(jsonData);
 		return null;
-
 	}
 	
 	public String searchpermission() throws Exception {
@@ -269,13 +242,7 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 	public java.lang.Integer getId() {
 		return this.id;
 	}
-	public void setAppId(String value) {
-		this.appId = value;
-	}
 	
-	public String getAppId() {
-		return this.appId;
-	}
 	public void setRoleName(String value) {
 		this.roleName = value;
 	}
@@ -339,6 +306,5 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 	public void setStrRoleId(String strRoleId) {
 		this.strRoleId = strRoleId;
 	}
-
 }
 

@@ -100,13 +100,5 @@ public interface UpmRoleService<UpmRole> extends BaseService {
 	 */
 	public void deletePermissionById(Object roleId);
 	
-	/**
-	 * @Description : 根据系统编号，返回系统管理员的角色id
-	 * 
-	 * @param domainId
-	 *            系统编号
-	 * @return
-	 */
-	public  Integer getSysRoleId(String sysId);
-	
+	public int getSysRoleId(String appId);
 }

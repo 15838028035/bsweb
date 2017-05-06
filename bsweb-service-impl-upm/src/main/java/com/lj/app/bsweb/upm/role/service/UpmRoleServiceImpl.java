@@ -14,8 +14,6 @@ import com.lj.app.core.common.base.service.BaseServiceImpl;
 import com.lj.app.core.common.pagination.Page;
 import com.lj.app.core.common.tree.BootStrapTreeView;
 import com.lj.app.core.common.tree.BootStrapTreeViewCheck;
-import com.lj.app.core.common.tree.DefaultTreeNode;
-import com.lj.app.core.common.tree.SimpleTree;
 
 @Service("upmRoleService")
 public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implements UpmRoleService<UpmRole>{
@@ -103,7 +101,7 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 		
 		if (null != list && !list.isEmpty()) {
 			List<Integer> permissionIds = getRolePermissionIds(roleId);
-			List<DefaultTreeNode> treeNodeList = new ArrayList<DefaultTreeNode>();
+			List<BootStrapTreeView> treeNodeList = new ArrayList<BootStrapTreeView>();
 			for (int i = 0; i < list.size(); i++) {
 				UpmPermission up = list.get(i);
 				String id = up.getId() + "";
@@ -117,12 +115,12 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 					}
 				}
 				String parentId = up.getParentId().intValue() + "";
-				treeNodeList.add(SimpleTree.createNew(id, text, checked,
+				treeNodeList.add(BootStrapTreeViewCheck.createNew(id, text, checked,
 						parentId));
 			}
 			Integer rootId = upmPermissionService.findRootPermissionIdByAppId(appId);
 					
-			SimpleTree simpleTree = SimpleTree.valueOf(treeNodeList, rootId.toString());
+			BootStrapTreeViewCheck simpleTree = BootStrapTreeViewCheck.valueOf(treeNodeList, rootId.toString());
 					
 			if (null != simpleTree) {
 				return simpleTree.toJsonString();
@@ -225,28 +223,7 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 		delete("deleteRolePermissionByRoleId", param);
 	}
 	
-	/**
-	 * @Description : 根据系统编号，返回系统管理员的角色id
-	 * 
-	 * @param domainId
-	 *            系统编号
-	 * @return
-	 */
-	public  Integer getSysRoleId(String sysId){
-		String rold = "";
-		if ("UPM".equals(sysId)) {
-			rold = "10000";
-		} else if ("CRM".equals(sysId)) {
-			rold = "20000";
-		} else if ("3".equals(sysId)) {
-			rold = "30000";
-		} else if ("4".equals(sysId)) {
-			rold = "40000";
-		}else if ("5".equals(sysId)) {
-			rold = "50000";
-		}else if ("6".equals(sysId)) {
-			rold = "60000";
-		}
-		return Integer.valueOf(rold);
+	public int getSysRoleId(String appId){
+		return 1;//设置超级管理员
 	}
 }

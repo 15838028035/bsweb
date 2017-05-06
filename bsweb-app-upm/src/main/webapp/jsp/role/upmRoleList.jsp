@@ -233,6 +233,11 @@
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
              });
+        	 
+        	 var appId = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.appId;
+             });
+        	 
         	if(ids == ''|| ids==null){
         		bootbox.alert('请选择要编辑的记录');
         		return;
@@ -242,7 +247,7 @@
         		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/role/upmRoleAction!input.action?operate=edit&id=" + ids;
+        	window.location.href = "${ctx}/jsp/role/upmRoleAction!input.action?operate=edit&id=" + ids + "&appId=" + appId;
         });
 		
 		 $("#btn_delete").click(function() {
