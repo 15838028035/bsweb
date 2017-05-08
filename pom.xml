@@ -40,6 +40,28 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		 <repository>  
+                <id>nexus1</id>  
+                <name>Nexus1</name>  
+                <url>http://127.0.0.1:8081/repository/maven-public/</url>  
+                <releases>  
+                    <enabled>true</enabled>  
+                </releases>  
+                <snapshots>  
+                    <enabled>true</enabled>  
+                </snapshots>  
+            </repository>  
+	    <repository>  
+                <id>nexus3</id>  
+                <name>Nexus3</name>  
+                <url>http://127.0.0.1:8081/repository/maven-releases/</url>  
+                <releases>  
+                    <enabled>true</enabled>  
+                </releases>  
+                <snapshots>  
+                    <enabled>true</enabled>  
+                </snapshots>  
+            </repository>  
 		
 	</repositories>
 
