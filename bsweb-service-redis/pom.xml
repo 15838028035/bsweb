@@ -332,7 +332,7 @@
 	<dependency>  
         <groupId>com.lj.app.bsweb</groupId>  
        <artifactId>bsweb-common-core</artifactId>
-       <version>${project.version}</version>
+       <version>${bsweb-common-core.version}</version>
         <type>test-jar</type>  
         <scope>test</scope>  
     </dependency>  

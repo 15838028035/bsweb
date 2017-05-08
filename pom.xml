@@ -84,6 +84,9 @@
 		<fastjson.version>1.2.5</fastjson.version>
 		<druid.version>1.0.16</druid.version>
 		
+		<bsweb-common-core.version>0.0.1</bsweb-common-core.version>
+		<bsweb-common-web.version>0.0.1</bsweb-common-web.version>
+		
 		<maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
 
 		<!-- Plugin的属性定 -->
@@ -371,13 +374,13 @@
 			<dependency>
 			<groupId>com.lj.app.bsweb</groupId>
 			<artifactId>bsweb-common-core</artifactId>
-			 <version>${project.version}</version>
+			 <version>${bsweb-common-core.version}</version>
 			 </dependency>
 			 
 			 <dependency>
 			<groupId>com.lj.app.bsweb</groupId>
 			<artifactId>bsweb-common-web</artifactId>
-			 <version>${project.version}</version>
+			 <version>${bsweb-common-web.version}</version>
 			 </dependency>
 			 
 			 <!-- 连接池 -->
