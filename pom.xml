@@ -41,6 +41,15 @@
 			</snapshots>
 		</repository>
 		
+		<repository>
+            <id>nexus-public</id>
+            <url>http://127.0.0.1:8081/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://127.0.0.1:8081/repository/maven-releases/</url>
+        </repository>
+		
 	</repositories>
 
 	<distributionManagement>
