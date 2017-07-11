@@ -24,9 +24,9 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:https://github.com/liujie15838028035/bsweb.git</connection>
-		<developerConnection>scm:git:https://github.com/liujie15838028035/bsweb.git</developerConnection>
-		<url>scm:git:https://github.com/liujie15838028035/bsweb.git</url>
+		<connection>scm:git:https://github.com/15838028035/bsweb.git</connection>
+		<developerConnection>scm:git:https://github.com/15838028035/bsweb.git</developerConnection>
+		<url>scm:git:https://github.com/15838028035/bsweb.git</url>
 	</scm>
 
 
@@ -828,7 +828,6 @@
 		<module>bsweb-service-redis</module>
 		<module>bsweb-service-impl-redis</module>
 		<module>bsweb-app-redis</module>
-		<module>bsweb-app-xpplanner</module>
  	</modules>
 	
 </project>
