@@ -42,7 +42,9 @@
 			});
 			
 			function saveModel(data) {
-				alert(data);
+			
+				alert("提交信息:" + data);
+						
 				$.ajax({
 					type:'POST',
 					url:"${ctx}/jsp/flows/flowProcessAction!processDeployXml.action",
@@ -55,9 +57,13 @@
 					},
 					success: function(data){
 						if(data == 'true') {
-							window.location.href = "${ctx}/jsp/flows/flowProcessList.jsp";
+							bootbox.confirm('数据保存成功,您确认要返回流程定义页面吗?',function (result) {  
+				                if(result) {  
+				                	window.location.href = "${ctx}/jsp/flows/flowProcessList.jsp";
+				                }
+				        	});
 						} else {
-							alert('数据处理错误！出现异常 ');
+							bootbox.alert("数据处理错误！出现异常");
 						}
 					}
 				});

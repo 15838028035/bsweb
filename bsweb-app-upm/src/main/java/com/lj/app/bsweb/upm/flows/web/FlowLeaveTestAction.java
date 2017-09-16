@@ -55,7 +55,7 @@ public class FlowLeaveTestAction extends AbstractBaseUpmAction<FlowLeaveTest> {
 	 protected Logger logger = LoggerFactory.getLogger(FlowLeaveTestAction.class);
 
 	@Autowired
-	private FlowLeaveTestService flowLeaveTestService;
+	private FlowLeaveTestService<FlowLeaveTest> flowLeaveTestService;
 	
 	private FlowLeaveTest flowLeaveTest;
 	

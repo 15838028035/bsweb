@@ -183,22 +183,22 @@
                         
 			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="createDateBegin" id = "createDateBegin" size="14" class="datetimepicker"  readonly="readonly"/> --
+                <input type="text" name="createDateBegin" id = "createDateBegin" size="14" class="datetimepicker"  readonly="readonly"/> --
 				<input type="text" name="createDateEnd" id = "createDateEnd" size="14" class="datetimepicker"  readonly="readonly"/>
-                         </div>
+                </div>
                         
 			 	<label class="control-label col-sm-1" for="updateByUname">修改人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
                         
 			 	<label class="control-label col-sm-1" for="updateDate">修改日期</label>
 			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin" size="14" class="datetimepicker"  readonly="readonly"/> --
+                 <input type="text" name="updateDateBegin" id = "updateDateBegin" size="14" class="datetimepicker"  readonly="readonly"/> --
 				<input type="text" name="updateDateEnd" id = "updateDateEnd" size="14" class="datetimepicker"  readonly="readonly"/>
-                         </div>
+                 </div>
 
-                        <div class="col-sm-12" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+                    <div class="col-sm-12" style="text-align:left;">
+                        <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                    </div>
                     </div>
                 </form>
             </div>
