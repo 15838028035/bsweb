@@ -36,6 +36,7 @@
 								<a href="${ctx}/jsp/flows/flowCcorderList.jsp"  class="list-group-item" >抄送实例</a>
 								<a href="${ctx}/jsp/flows/flowTaskList.jsp" class="list-group-item"  >代办任务</a>
 								<a href="${ctx}/jsp/flows/flowTaskHistList.jsp" class="list-group-item" >历史任务</a>
+								<a href="${ctx}/systemInfoAction!input.action" class="list-group-item" >系统信息</a>
           			</div>
 				</div>
 				<div class="toggler" data-whois="toggler">
