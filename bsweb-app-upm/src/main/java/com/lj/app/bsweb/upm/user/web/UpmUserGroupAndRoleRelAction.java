@@ -42,7 +42,7 @@ public class UpmUserGroupAndRoleRelAction extends AbstractBaseUpmAction<UpmUserG
 	
 	private UpmUserGroupAndRoleRel upmUserGroupAndRoleRel;
 	
-	public   BaseService<UpmUserGroupAndRoleRelService> getBaseService(){
+	public   BaseService<UpmUserGroupAndRoleRel> getBaseService(){
 		return upmUserGroupAndRoleRelService;
 	}
 	

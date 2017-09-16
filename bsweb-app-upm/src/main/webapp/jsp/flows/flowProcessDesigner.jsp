@@ -57,7 +57,7 @@
 						if(data == 'true') {
 							window.location.href = "${ctx}/jsp/flows/flowProcessList.jsp";
 						} else {
-							alert('数据处理错误！');
+							alert('数据处理错误！出现异常 ');
 						}
 					}
 				});

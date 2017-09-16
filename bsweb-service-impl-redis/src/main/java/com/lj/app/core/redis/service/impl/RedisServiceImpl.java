@@ -383,7 +383,7 @@ public class RedisServiceImpl implements RedisService {
             byte[] keyBytes = keySerializer.serialize(key);
             byte[] valueBytes = valueSerializer.serialize(value);
             List<Object> execRes = null;
-            while (CollectionUtils.isEmpty(execRes)) {
+            while (execRes==null || (execRes!=null && execRes.size()==0 )){
                 if (Arrays.equals(jedis.get(keyBytes), valueBytes)) { // 值已存在
                     return false;
                 }

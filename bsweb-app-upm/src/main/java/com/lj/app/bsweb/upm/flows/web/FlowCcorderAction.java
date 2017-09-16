@@ -68,4 +68,13 @@ public class FlowCcorderAction extends AbstractBaseUpmAction<FlowCcorder> {
 	public void setFlowCcorder(FlowCcorder flowCcorder) {
 		this.flowCcorder = flowCcorder;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }
