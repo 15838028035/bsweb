@@ -1,141 +1,141 @@
+
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<title>历史任务</title>
+<title>历史任务管理</title>
+    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-<style>
-.altclass{background: #E5EFFD ;}
-</style>
 
-<script language="javascript">
+<script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
-		contralEffect.contain();
-		contralEffect.tablelist();
-		contralEffect.blueButton();
+		 var oTable = new TableInit();
+	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	             //minView: "month",//设置只显示到月份
+	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
+	         });
 	});
+
 	
-	jQuery(document).ready(function(){ 
-		var lastsel;
-		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/flows/flowTaskHistAction!jqGridList2.action?flowTaskHist.flowOrderId=${param.flowOrderId}',
-			datatype: 'json',
-			mtype: 'POST',
-			colNames:[
-			 		'ID',
-			 		'版本',
-			 		'流程实例ID',
-			 		'任务名称',
-			 		'显示名称',
-			 		'参与方式（0：普通任务；1：参与者会签任务）',
-			 		'任务类型（0：主办任务；1：协办任务）',
-			 		'任务处理者ID',
-			 		'任务创建时间',
-			 		'任务完成时间',
-			 		'期望任务完成时间',
-			 		'期望的完成时间date类型',
-			 		'提醒时间date类型',
-			 		'任务关联的表单url',
-			 		'任务参与者列表',
-			 		'父任务Id',
-			 		'任务附属变量',
-			 		'创建人',
-			 		'创建时间',
-			 		'更新人',
-			 		'更新时间',
-			 		'创建人',
-			 		'更新人'
-			],
-			colModel:[
-			 		{name:'id',index:'id'},
-			 		{name:'taskVefrsion',index:'taskVefrsion'},
-			 		{name:'flowOrderId',index:'flowOrderId'},
-			 		{name:'taskName',index:'taskName'},
-			 		{name:'displayName',index:'displayName'},
-			 		{name:'performType',index:'performType'},
-			 		{name:'taskType',index:'taskType'},
-			 		{name:'operator',index:'operator'},
-			 		{name:'createTime',index:'createTime'},
-			 		{name:'finishTime',index:'finishTime'},
-			 		{name:'expireTime',index:'expireTime'},
-			 		{name:'expireDate',index:'expireDate'},
-			 		{name:'remindDate',index:'remindDate'},
-			 		{name:'actionUrl',index:'actionUrl'},
-			 		{name:'actorIds',index:'actorIds'},
-			 		{name:'parentTaskId',index:'parentTaskId'},
-			 		{name:'variable',index:'variable'},
-			 		{name:'createBy',index:'createBy'},
-			 		{name:'createDate',index:'createDate'},
-			 		{name:'updateBy',index:'updateBy'},
-			 		{name:'updateDate',index:'updateDate'},
-			 		{name:'createByUname',index:'createByUname'},
-			 		{name:'updateByUname',index:'updateByUname'}
-				 ],
-			pager: '#pager',
-			sortable: true,
-			rowNum: 20,
-			rownumbers:true,
-			rowList:[10,20,30,50,100],
-			multiboxonly:true,
-			multiselect: true,
-			prmNames:{rows:"page.pageSize",page:"page.pageNumber",total:"page.totalPages"},     
-			jsonReader: {     
-				root: "rows",   
-				repeatitems : false,
-				id:"0"        		    
-				},
-			viewrecords: true,
-			autowidth:true,
-			shrinkToFit:true,
-			height: '100%',
-			sortname:'id',
-			sortorder:'asc',
-			hidegrid: false,
-			gridComplete:function(){},
-			loadtext: '正在加载,请稍等..',
-			scrollrows: true,
-			altRows:true,
-			altclass:'altclass'
-			
-		}); 
-		
-		});
+	var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tableList').bootstrapTable({
+                url: '${ctx}/jsp/flows/flowTaskHistAction!bootStrapList.action?flowOrderId=${param.flowOrderId}',         //请求后台的URL（*）
+                method: 'post',                     //请求方式（*）
+                dataType: "json",
+                contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+                dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+                totalField: 'total',
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                smartDisplay:false,
+                showRefresh:true,
+                showColumns:true,
+                showToggle:true,
+                searchOnEnterKey:true,
+                trimOnSearch:true,
+                showFooter:true,
+                search:false,
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                singleSelect:false,
+                clickToSelect: true,
+                smartDisplay:true,
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                queryParamsType:'',					//  queryParamsType = 'limit' 参数: limit, offset, search, sort, order;
+                									//  queryParamsType = '' 参数: pageSize, pageNumber, searchText, sortName, sortOrder.
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 25,                       //每页的记录行数（*）
+                pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
+                showPaginationSwitch:true,
+                strictSearch: true,
+                clickToSelect: true,                //是否启用点击选中行
+                //height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                idField:"id",
+                uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns: [  
+			 	{field:'flowOrderId',title:'流程实例ID', sortable:true},
+			 	{field:'taskName',title:'任务名称', sortable:true},
+			 	{field:'displayName',title:'显示名称', sortable:true},
+			 	{field:'performType',title:'参与类型', sortable:true},
+			 	{field:'taskType',title:'任务类型', sortable:true},
+			 	{field:'operator',title:'操作者', sortable:true},
+			 	{field:'createTime',title:'创建时间', sortable:true},
+			 	{field:'finishTime',title:'完成时间', sortable:true},
+			 	{field:'expireTime',title:'过期时间', sortable:true},
+			 	{field:'expireDate',title:'过期日期', sortable:true},
+			 	{field:'remindDate',title:'提醒日期', sortable:true},
+			 	{field:'parentTaskId',title:'父ID', sortable:true},
+			 	{field:'variable',title:'流程变量', sortable:true},
+			 	{field:'createBy',title:'创建人', sortable:true},
+			 	{field:'createByUname',title:'创建人姓名', sortable:true},
+			 	{field:'createDate',title:'创建日期', sortable:true},
+			 	{field:'updateBy',title:'更新人', sortable:true},
+			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
+			 	{field:'updateDate',title:'更新日期', sortable:true}
+                        ],               		
+             	formatLoadingMessage: function () {
+             		return "请稍等，正在加载中...";
+             	},
+             	formatNoMatches: function () { //没有匹配的结果
+             		return '无符合条件的记录';
+             	},
+             	onLoadError: function (data) {
+             		$('#tableList').bootstrapTable('removeAll');
+             		 bootbox.alert("数据加载失败！");
+             	},
+             	responseHandler: function (res) {
+             	    return {
+             	        total: res.total,
+             	        rows: res.rows
+             	    };
+             	}
+              
+            });
+            
+        };
+ 
+        //得到查询的参数
+      oTableInit.queryParams = function (params) {
+			var id=$("#id").val();
+			var flowOrderId=${param.flowOrderId};
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+            		 "page.pageSize":params.pageSize,
+                     "page.pageNumber":params.pageNumber,
+	                "sortName":this.sortName,
+	                "sortOrder":this.sortOrder,
+					"flowTaskHist.flowOrderId":flowOrderId,
+					
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
 		
 </script>
 </head>
 
 <body>
 
- <div class="padd10">
-        <div class="contain">
-            <div class="contain_wrap">
-            
-                <div class="contain_title">
-			    	<div class="contain_t_wrap">
-			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">历史任务</span>
-			            </div><!--end contain_t_text-->
-			            <div class="float_rig contain_t_check">
-			            </div><!--end contain_t_check-->
-			       </div><!--end contain_t_wrap-->
-			    </div><!--end contain_title-->
-			    
-				<div class="toolbar">
-					<div class="toolbar_wrap">
-					</div>
-				</div>
-				
-				<table id="list"></table>
-				<div id="pager"></div>
 
-            </div>
-        </div>
+<div class="panel-body" style="padding-bottom:0px;">
+        <table id="tableList"></table>
     </div>
-
 </body>
 </html>

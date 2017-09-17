@@ -16,7 +16,7 @@
 			<input type="hidden" name="processId" value="${processId }" />
 			<input type="hidden" name="orderId" value="${orderId }" />
 			<input type="hidden" name="taskId" value="${taskId }" />
-			<c:forEach items="${vars}" var="item">
+			<c:forEach items="${flowData.vars}" var="item">
 			<table class="table_all" align="center" border="0" cellpadding="0"
 				cellspacing="0" style="margin-top: 0px">
 				<tr>

@@ -33,7 +33,11 @@
 						<span>部门经理审批意见：</span>
 					</td>
 					<td class="td_table_2" colspan="3">
-						<textarea class="input_textarea_320" id="departmentDesc" name="approveDept.suggest"></textarea>
+						<textarea class="input_textarea_320" id="departmentDesc" name="approveDept.suggest">
+						<c:forEach items="${flowData.vars}" var="item">
+							{item['approveDept.suggest'] }
+						</c:forEach>
+						</textarea>
 					</td>
 				</tr>
 				<tr id="transferDIV" style="display: none">

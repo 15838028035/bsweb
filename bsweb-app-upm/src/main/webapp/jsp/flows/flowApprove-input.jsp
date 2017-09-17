@@ -23,12 +23,11 @@
 	</script>
 </head>
 <body>
-<form action="flowApproveAction!commonSaveOrUpdate.action" method="post" name="flowApproveForm" id="flowApproveForm">
-<input type="hidden" name="id" id="id" value="${id}"/>
-<input type="hidden" name="operate" id="operate" value="${operate}" />
-<input type="hidden" name="flowApprove.processId" id="processId" value="${flowApprove.processId}"/>
-<input type="hidden" name="flowApprove.orderId" id="orderId" value="${flowApprove.orderId}"/>
-<input type="hidden" name="flowApprove.taskId" id="taskId" value="${flowApprove.taskId}"/>
+<form action="${ctx}/jsp/flows/flowControllerAction!doApproval.action" method="post" name="flowApproveForm" id="flowApproveForm" target="mainFrame">
+<input type="hidden" name="flowApprove.processId" value="${param.processId}" />
+<input type="hidden" name="flowApprove.orderId" value="${param.orderId}" />
+<input type="hidden" name="flowApprove.taskId" value="${param.taskId}" />
+<input type="hidden" name="flowApprove.taskName" value="${param.taskName}" />
 
     <table>
         <tr>
@@ -48,16 +47,16 @@
         <tr>
 			 <td align="right">审批描述:<font color="red">*</font></td>
 			 <td>
-		 	  <input type="text"  name="flowApprove.optContent" id="optContent" value="${flowApprove.optContent}" />
+		 	  <textarea class="input_textarea_320" id="description" name="flowApprove.optContent"></textarea>
 		 	  
 		 	 </td>
-		 </tr>
+		</tr>
+				
         <tr>
             <td>
             </td>
             <td>
  				<div class="window_button marg_lef10 float_lef"><input type="button" id="submitButton" class="window_button_centerInput window_button_centerInput1" value="保存"/></div>
-		       	<div class="window_button marg_lef10 float_lef"><input type="button" id="backToHomeButton" class="window_button_centerInput window_button_centerInput1 CA_4A_select04" value="返回主页" /></div>
             </td>
         </tr>
     </table>

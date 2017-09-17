@@ -23,6 +23,8 @@ import com.lj.app.core.common.flows.model.ProcessModel;
 import com.lj.app.core.common.flows.service.FlowEngine;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
 import com.lj.app.core.common.flows.service.FlowProcessService;
+import com.lj.app.core.common.flows.service.FlowTaskHistService;
+import com.lj.app.core.common.flows.service.FlowTaskService;
 import com.lj.app.core.common.flows.util.FlowUtil;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.Assert;
@@ -65,11 +67,16 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 	@Autowired
 	private FlowEngineFacetsService flowEngineFacetsService;
 	
-	@Autowired
 	private FlowEngine flowEngine;
 	
 	@Autowired
 	private FlowProcessService<FlowProcess> flowProcessService;
+	
+	@Autowired
+	private FlowTaskService<FlowTask> flowTaskService;
+	
+	@Autowired
+	private FlowTaskHistService<FlowTaskHist> flowTaskHistService;
 
 	private String orderId;
 
@@ -286,12 +293,12 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 		}
 
 		if (StringUtil.isNotBlank(orderId)) {
-			List<FlowTask> tasks = flowEngine
-					.flowQueryService().getActiveTasks(orderId);
-			List<FlowTaskHist> historyTasks = flowEngine
-					.flowQueryService().getHistoryTasks(orderId);
-			jsonMap.put("state",
-					FlowUtil.getStateJson(model, tasks, historyTasks));
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("flowOrderId", orderId);
+			List<FlowTask> tasks = flowTaskService.queryForList(map);
+			
+			List<FlowTaskHist> historyTasks = flowTaskHistService.queryForList(map);
+			jsonMap.put("state",FlowUtil.getStateJson(model, tasks, historyTasks));
 		}
 		logger.debug(jsonMap.get("state"));
 		// {"historyRects":{"rects":[{"paths":["TO 任务1"],"name":"开始"},{"paths":["TO 分支"],"name":"任务1"},{"paths":["TO 任务3","TO 任务4","TO 任务2"],"name":"分支"}]}}

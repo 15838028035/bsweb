@@ -48,8 +48,8 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Namespace("/jsp/flows")
 @Results({
 		@Result(name = "flowAll", location = "/jsp/flows/flowAll.jsp"),
-	    @Result(name = "flowApproval", location = "/jsp/flows/flowApprove-input.jsp", type=AbstractBaseAction.REDIRECT),
-	    @Result(name = "approvalView", location = "/jsp/flows/flowApproval-view.jsp", type=AbstractBaseAction.REDIRECT),
+	    @Result(name = "flowApproval", location = "/jsp/flows/flowApprove-input.jsp"),
+	    @Result(name = "approvalView", location = "/jsp/flows/flowApproval-view.jsp"),
 	    @Result(name = "taskList", location = "/jsp/flows/flowTaskList.jsp", type=AbstractBaseAction.REDIRECT)
 })
 
@@ -75,13 +75,12 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	private FlowEngineFacetsService flowEngineFacetsService;
 	
 	@Autowired
-	private FlowProcessService flowProcessService;
+	private FlowProcessService<FlowProcess> flowProcessService;
 	
 	@Autowired
-	private FlowTaskService flowTaskService;
+	private FlowTaskService<FlowTask> flowTaskService;
 	
-	@Autowired
-	private FlowOrderService  flowOrderService;
+	private FlowOrderService<FlowOrder>  flowOrderService;
 	
 	@Autowired
 	private FlowQueryService flowQueryService;
@@ -96,7 +95,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	private FlowTask flowTask;
 	
 	@Autowired
-	private FlowApproveService flowApproveService;
+	private FlowApproveService<FlowApprove> flowApproveService;
 	
 	private FlowApprove flowApprove;
 	
@@ -224,7 +223,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         }
         String ccOperator = request.getParameter(PARA_CCOPERATOR);
         if(StringUtils.isNotEmpty(ccOperator)) {
-        	//flowEngineFacets.getEngine().order().createCCOrder(orderId, ShiroUtils.getUsername(), ccOperator.split(","));
+        	flowEngineFacetsService.getEngine().flowCcorderService().createCCOrder(orderId, this.getUserName(), ccOperator.split(","));
         }
         return "taskList";
     }
@@ -338,11 +337,43 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 		this.flowTask = flowTask;
 	}
 
-	public FlowApproveService getFlowApproveService() {
+	public FlowProcessService<FlowProcess> getFlowProcessService() {
+		return flowProcessService;
+	}
+
+	public void setFlowProcessService(FlowProcessService<FlowProcess> flowProcessService) {
+		this.flowProcessService = flowProcessService;
+	}
+
+	public FlowTaskService<FlowTask> getFlowTaskService() {
+		return flowTaskService;
+	}
+
+	public void setFlowTaskService(FlowTaskService<FlowTask> flowTaskService) {
+		this.flowTaskService = flowTaskService;
+	}
+
+	public FlowOrderService<FlowOrder> getFlowOrderService() {
+		return flowOrderService;
+	}
+
+	public void setFlowOrderService(FlowOrderService<FlowOrder> flowOrderService) {
+		this.flowOrderService = flowOrderService;
+	}
+
+	public FlowQueryService getFlowQueryService() {
+		return flowQueryService;
+	}
+
+	public void setFlowQueryService(FlowQueryService flowQueryService) {
+		this.flowQueryService = flowQueryService;
+	}
+
+	public FlowApproveService<FlowApprove> getFlowApproveService() {
 		return flowApproveService;
 	}
 
-	public void setFlowApproveService(FlowApproveService flowApproveService) {
+	public void setFlowApproveService(FlowApproveService<FlowApprove> flowApproveService) {
 		this.flowApproveService = flowApproveService;
 	}
 
@@ -360,38 +391,6 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 
 	public void setFlowApproveList(List<FlowApprove> flowApproveList) {
 		this.flowApproveList = flowApproveList;
-	}
-
-	public FlowProcessService getFlowProcessService() {
-		return flowProcessService;
-	}
-
-	public void setFlowProcessService(FlowProcessService flowProcessService) {
-		this.flowProcessService = flowProcessService;
-	}
-
-	public FlowTaskService getFlowTaskService() {
-		return flowTaskService;
-	}
-
-	public void setFlowTaskService(FlowTaskService flowTaskService) {
-		this.flowTaskService = flowTaskService;
-	}
-
-	public FlowOrderService getFlowOrderService() {
-		return flowOrderService;
-	}
-
-	public void setFlowOrderService(FlowOrderService flowOrderService) {
-		this.flowOrderService = flowOrderService;
-	}
-
-	public FlowQueryService getFlowQueryService() {
-		return flowQueryService;
-	}
-
-	public void setFlowQueryService(FlowQueryService flowQueryService) {
-		this.flowQueryService = flowQueryService;
 	}
 	
 }

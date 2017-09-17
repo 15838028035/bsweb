@@ -40,7 +40,7 @@
 				async: false,
 				globle:false,
 				error: function(){
-					alert('数据处理错误！');
+					bootbox.alert('数据处理错误！');
 					return false;
 				},
 				success: function(data) {
