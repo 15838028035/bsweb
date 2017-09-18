@@ -18,11 +18,6 @@ public class FlowOrderHistServiceImpl<FlowOrderHist> extends BaseServiceImpl<Flo
 	@Override
 	public com.lj.app.core.common.flows.entity.FlowOrderHist getHistOrder(String orderId) {
 		com.lj.app.core.common.flows.entity.FlowOrderHist flowOrderHist =  (com.lj.app.core.common.flows.entity.FlowOrderHist) this.getInfoByKey(orderId);
-		if(flowOrderHist==null){
-			flowOrderHist = new com.lj.app.core.common.flows.entity.FlowOrderHist();
-			flowOrderHist.setId(Integer.parseInt(orderId));
-		}
-		
 		return flowOrderHist;
 	}
 

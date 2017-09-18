@@ -70,25 +70,14 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [  
-			 	{field:'flowOrderId',title:'流程实例ID', sortable:true},
 			 	{field:'taskName',title:'任务名称', sortable:true},
 			 	{field:'displayName',title:'显示名称', sortable:true},
-			 	{field:'performType',title:'参与类型', sortable:true},
-			 	{field:'taskType',title:'任务类型', sortable:true},
 			 	{field:'operator',title:'操作者', sortable:true},
-			 	{field:'createTime',title:'创建时间', sortable:true},
+			 	{field:'createTime',title:'操作时间', sortable:true},
 			 	{field:'finishTime',title:'完成时间', sortable:true},
-			 	{field:'expireTime',title:'过期时间', sortable:true},
 			 	{field:'expireDate',title:'过期日期', sortable:true},
-			 	{field:'remindDate',title:'提醒日期', sortable:true},
-			 	{field:'parentTaskId',title:'父ID', sortable:true},
-			 	{field:'variable',title:'流程变量', sortable:true},
-			 	{field:'createBy',title:'创建人', sortable:true},
-			 	{field:'createByUname',title:'创建人姓名', sortable:true},
-			 	{field:'createDate',title:'创建日期', sortable:true},
-			 	{field:'updateBy',title:'更新人', sortable:true},
-			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
-			 	{field:'updateDate',title:'更新日期', sortable:true}
+			 	{field:'remindDate',title:'提醒日期', sortable:true}
+			 	
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";

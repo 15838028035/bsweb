@@ -27,6 +27,9 @@ public class FlowOrderServiceImpl<FlowOrder> extends BaseServiceImpl<FlowOrder> 
 	@Autowired
 	private FlowEngineFacetsServiceImpl flowEngineFacets;
 	
+	@Autowired
+	private FlowOrderHistService flowOrderHistService;
+	
 	/**
 	 *
 	 * @param process
@@ -61,8 +64,23 @@ public class FlowOrderServiceImpl<FlowOrder> extends BaseServiceImpl<FlowOrder> 
             }
 		}
 	
-		 int retKey = this.insertObjectReturnKey(flowOrder);
-		 return (com.lj.app.core.common.flows.entity.FlowOrder)this.getInfoByKey(retKey);
+		int retKey = this.insertObjectReturnKey(flowOrder);
+		flowOrder = (com.lj.app.core.common.flows.entity.FlowOrder)this.getInfoByKey(retKey);
+		
+		FlowOrderHist history = new FlowOrderHist(flowOrder);
+		history.setOrderState(FlowConstains.STATE_ACTIVE);
+		flowOrderHistService.insertObject(history);
+		 return flowOrder;
+	}
+	
+	/**
+	 * 流程实例数据会保存至活动实例表、历史实例表
+	 */
+	public void saveOrder(com.lj.app.core.common.flows.entity.FlowOrder flowOrder)  throws Exception{
+		FlowOrderHist history = new FlowOrderHist(flowOrder);
+		history.setOrderState(FlowConstains.STATE_ACTIVE);
+		int retKey = this.insertObjectReturnKey(flowOrder);
+		flowEngineFacets.getEngine().flowOrderHistService().insertObjectReturnKey(history);
 	}
 	
 	/**

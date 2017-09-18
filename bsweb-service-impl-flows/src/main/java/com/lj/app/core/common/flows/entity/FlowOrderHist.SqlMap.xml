@@ -24,6 +24,8 @@
    	  	<result property="updateDate" column="update_Date"   />
    	  	<result property="endTime" column="end_Time"   />
    	  	<result property="status" column="status"   />
+   	  	<result property="orderState" column="order_State"   />
+   	  	
     </resultMap>
 
 	<sql id="dynamicWhere">
@@ -106,6 +108,10 @@
 	       <isNotEmpty prepend="AND" property="updateByUname">
 	             update_By_Uname = #updateByUname#
 	       </isNotEmpty>
+	        <isNotEmpty prepend="AND" property="orderState">
+	             order_State = #orderState#
+	       </isNotEmpty>
+	       
 	    </dynamic>	
 	</sql>
 
@@ -128,7 +134,8 @@
         	end_Time,
         	status,
         	create_By_UName,
-        	update_By_Uname
+        	update_By_Uname,
+        	order_State
 	    ]]>
 	</sql>
 	
@@ -136,7 +143,7 @@
 	    <![CDATA[
 	        INSERT INTO
 	        flow_order_hist (
-	        	ID ,
+	        	id ,
 	        	ORDER_NO ,
 	        	ORDER_VERSION ,
 	        	FLOW_PROCESS_ID ,
@@ -146,13 +153,14 @@
 	        	priority ,
 	        	variable ,
 	        	create_By ,
+	        	create_By_UName ,
 	        	create_Date ,
 	        	update_By ,
+	        	update_By_Uname ,
 	        	update_Date ,
-	        	end_Time,
-	        	status,
-	        	create_By_UName,
-        		update_By_Uname
+	        	end_Time ,
+	        	status ,
+	        	order_State 
 	        ) VALUES (
 				#id# ,
 				#orderNo# ,
@@ -164,13 +172,14 @@
 				#priority# ,
 				#variable# ,
 				#createBy# ,
+				#createByUname# ,
 				#createDate# ,
 				#updateBy# ,
+				#updateByUname# ,
 				#updateDate# ,
-				#endTime#
-				#status#,
-				#createByUname#,
-				#updateByUname#
+				#endTime# ,
+				#status# ,
+				#orderState# 
 	        )
 	    ]]>
     </insert>
@@ -228,6 +237,10 @@
 	         <isNotEmpty prepend="," property="updateByUname">
 				update_By_Uname = #updateByUname#
 			</isNotEmpty>
+			<isNotEmpty prepend="," property="orderState">
+				order_State = #orderState#
+			</isNotEmpty>
+			
 	   </dynamic>
         WHERE 
 	        ID = #id# 

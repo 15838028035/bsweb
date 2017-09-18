@@ -45,7 +45,6 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/flows/flowTask-input.jsp"),
 		@Result(name = AbstractBaseAction.SAVE, location = "flowTaskAction!edit.action",type=AbstractBaseAction.REDIRECT),
 		@Result(name = AbstractBaseAction.LIST, location = "/jsp/flows/flowTaskList.jsp", type=AbstractBaseAction.REDIRECT),
-		@Result(name = "TASK_HIST_LIST", location = "/jsp/flows/flowTaskHistList.jsp", type=AbstractBaseAction.REDIRECT),
 	    @Result(name = "ADD_TASK_ACTOR", location = "/jsp/flows/flowTaskActor-Input.jsp", type=AbstractBaseAction.REDIRECT)
 })
 
@@ -244,12 +243,12 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 		String returnMessage = "";
 		try {
 			flowTaskServiceApi.withdrawTask(taskId, this.getUserName());
-			returnMessage = "任务撤回成功.";
+			returnMessage = "任务撤回成功";
 		} catch(Exception e) {
 			returnMessage = e.getMessage();
 		}
 		Struts2Utils.renderText(returnMessage);
-		return "TASK_HIST_LIST";
+		return null;
 }
 	
 	

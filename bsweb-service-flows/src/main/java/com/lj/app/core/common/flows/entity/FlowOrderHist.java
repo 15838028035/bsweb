@@ -64,6 +64,50 @@ public class FlowOrderHist extends BaseEntity{
 
 	private Date endTime;
 	
+	 /**
+     * 流程实例状态（0：结束；1：活动）
+     */
+	private String orderState;
+	
+	public FlowOrderHist() {
+		
+	}
+	
+	public FlowOrderHist(FlowOrder order) {
+    	this.id = order.getId();
+    	this.flowProcessId = order.getFlowProcessId();
+    	this.setCreateDate (order.getCreateDate());
+    	this.expireTime = order.getExpireTime();
+    	this.setCreateByUname(order.getCreateByUname());
+    	this.setUpdateByUname(order.getUpdateByUname());
+    	this.parentId = order.getParentId();
+    	this.priority = order.getPriority();
+    	this.orderNo = order.getOrderNo();
+    	this.variable = order.getVariable();
+    }
+
+    /**
+     * 根据历史实例撤回活动实例
+     * @return 活动实例对象
+     */
+    public FlowOrder undo() {
+    	FlowOrder order = new FlowOrder();
+        order.setId(this.id);
+        order.setFlowProcessId(this.flowProcessId);
+        order.setParentId(this.parentId);
+        order.setCreateByUname(this.getCreateByUname());
+        order.setCreateDate(this.getCreateDate());
+        order.setUpdateByUname(this.getUpdateByUname());
+        order.setUpdateDate(this.getUpdateDate());
+        order.setExpireTime(this.expireTime);
+        order.setOrderNo(this.orderNo);
+        order.setPriority(this.priority);
+        order.setVariable(this.variable);
+        order.setOrderVersion(0);
+        return order;
+    }
+
+	
 	public java.lang.Integer getId() {
 		return id;
 	}
@@ -160,6 +204,14 @@ public class FlowOrderHist extends BaseEntity{
 		return endTime;
 	}
 	
+	public String getOrderState() {
+		return orderState;
+	}
+
+	public void setOrderState(String orderState) {
+		this.orderState = orderState;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("HistoryOrder(id=").append(this.id);

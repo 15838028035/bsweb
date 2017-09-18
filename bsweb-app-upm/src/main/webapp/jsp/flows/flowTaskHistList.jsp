@@ -96,7 +96,9 @@
 			 	{field:'createDate',title:'创建日期', sortable:true},
 			 	{field:'updateBy',title:'更新人', sortable:true},
 			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
-			 	{field:'updateDate',title:'更新日期', sortable:true}
+			 	{field:'updateDate',title:'更新日期', sortable:true},
+			 	{field:'instanceUrl',title:'实例化 URL', sortable:true},
+			 	
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -304,6 +306,13 @@
             <button id="btn_delete" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
+<!--             <button id="btn_historyTaskUndo" type="button" class="btn btn-default"> -->
+<!--                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>驳回 -->
+<!--             </button> -->
+             <button id="btn_startHandleFlow" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看
+            </button>
+            
         </div>
         
         <table id="tableList"></table>
@@ -374,6 +383,66 @@
       	function refreshGrid(){
 		$tableList.bootstrapTable('refresh');
       	}
+      	
+      	//驳回
+      	 $("#btn_historyTaskUndo").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
+        	if(ids == ""){
+        		bootbox.alert('请选择一条的记录');
+        		return;
+        	}
+
+        	var parentTaskId =  $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.parentTaskId;
+            });
+        	
+        	bootbox.confirm('确认要驳回?',function (result) {  
+                if(result) {  
+                   	
+                    var result = jQuery.ajax({
+      		      	  url:"${ctx}//jsp/flows/flowTaskAction!historyTaskUndo.action?taskId="+parentTaskId,
+      		          async:false,
+      		          cache:false,
+      		          dataType:"json"
+      		      }).responseText;
+      			bootbox.alert(result);
+                }
+        	});
+        })
+      	
+      	 //处理
+        $("#btn_startHandleFlow").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+       	if(ids == ''){
+       		bootbox.alert('请选择要操作的记录');
+       		return;
+       	}
+       	if(ids.length > 1){
+       		bootbox.alert('请选择一条记录');
+       		return;
+       	}
+       	var instanceUrl = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.instanceUrl;
+        });
+       	var parentTaskId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.parentTaskId;
+        });
+       	var taskId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+       	var orderId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.flowOrderId;
+        });
+       	
+       	var url ="${ctx}" + instanceUrl +"?processId="+parentTaskId +"&orderId="+orderId+"&taskId="+taskId;
+       	alert("url="+url);
+       	window.location.href = url;
+       })
       	
     </script>
 

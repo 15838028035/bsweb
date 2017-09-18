@@ -137,6 +137,11 @@ public class FlowTaskHist extends BaseEntity{
 	 */
 	private String variable;
 	
+	/**
+	 * 实例化URL
+	 */
+	private String instanceUrl;
+	
 	public FlowTaskHist() {
 	}
 	
@@ -390,7 +395,15 @@ public class FlowTaskHist extends BaseEntity{
 		this.variable = variable;
 	}
 	
-	 public boolean isPerformAny() {
+	 public String getInstanceUrl() {
+		return instanceUrl;
+	}
+
+	public void setInstanceUrl(String instanceUrl) {
+		this.instanceUrl = instanceUrl;
+	}
+
+	public boolean isPerformAny() {
 	    	return this.performType.intValue() == PerformType.ANY.ordinal();
 	}
 	
