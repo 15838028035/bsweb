@@ -2,10 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en">
-	<head>
+<!DOCTYPE html>
+<html>
+<head>
 		<title>流程展现</title>
 		 <%@ include file="/jsp/common/meta.jsp" %>
 		<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -14,6 +13,7 @@
 		<link rel="stylesheet" href="${ctx}/scripts/flows/flow.css" type="text/css" />
 		<script src="${ctx}/scripts/flows/raphael-min.js" type="text/javascript"></script>
 		<script src="${ctx}/scripts/flows/dialog.js" type="text/javascript"></script>
+		<script src="${ctx}/scripts/flows/CleverTabs/scripts/jquery.js" type="text/javascript"></script>
 		<script src="${ctx}/scripts/flows/CleverTabs/scripts/jquery-ui.js" type="text/javascript"></script>
 		
 		<script src="${ctx}/scripts/flows/snaker.designer.js" type="text/javascript"></script>
