@@ -97,8 +97,8 @@
 			 	{field:'updateBy',title:'更新人', sortable:true},
 			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
 			 	{field:'updateDate',title:'更新日期', sortable:true},
-			 	{field:'instanceUrl',title:'实例化 URL', sortable:true},
-			 	{field:'flowProcessId',title:'流程定义ID', sortable:true}
+			 	{field:'instanceUrl',title:'实例化 URL', sortable:true,visible:false},
+			 	{field:'flowProcessId',title:'流程定义ID', sortable:true,visible:false}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
