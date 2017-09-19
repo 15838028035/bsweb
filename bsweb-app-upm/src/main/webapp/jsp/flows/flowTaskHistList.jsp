@@ -98,7 +98,7 @@
 			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
 			 	{field:'updateDate',title:'更新日期', sortable:true},
 			 	{field:'instanceUrl',title:'实例化 URL', sortable:true},
-			 	
+			 	{field:'flowProcessId',title:'流程定义ID', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -429,8 +429,9 @@
        	var instanceUrl = $.map($tableList.bootstrapTable('getSelections'), function (row) {
             return row.instanceUrl;
         });
-       	var parentTaskId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
-            return row.parentTaskId;
+     
+       	var flowProcessId = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+            return row.flowProcessId;
         });
        	var taskId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
             return row.id;
@@ -439,7 +440,7 @@
             return row.flowOrderId;
         });
        	
-       	var url ="${ctx}" + instanceUrl +"?processId="+parentTaskId +"&orderId="+orderId+"&taskId="+taskId;
+       	var url ="${ctx}" + instanceUrl +"?processId="+flowProcessId +"&orderId="+orderId+"&taskId="+taskId;
        	alert("url="+url);
        	window.location.href = url;
        })

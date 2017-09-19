@@ -142,6 +142,11 @@ public class FlowTaskHist extends BaseEntity{
 	 */
 	private String instanceUrl;
 	
+	/**
+	 * 流程处理ID
+	 */
+	private  String flowProcessId;
+	
 	public FlowTaskHist() {
 	}
 	
@@ -401,6 +406,14 @@ public class FlowTaskHist extends BaseEntity{
 
 	public void setInstanceUrl(String instanceUrl) {
 		this.instanceUrl = instanceUrl;
+	}
+
+	public String getFlowProcessId() {
+		return flowProcessId;
+	}
+
+	public void setFlowProcessId(String flowProcessId) {
+		this.flowProcessId = flowProcessId;
 	}
 
 	public boolean isPerformAny() {

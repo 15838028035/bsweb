@@ -95,11 +95,6 @@
 	        <ul>
 	        </ul>
 	    </div>
-	    <c:if test="${flowOrder != null }">
-	      <iframe src="${ctx}/jsp/flows/flowTaskHistViewList.jsp?flowOrderId=${orderId}" 
-	   width="100%;" height="auto";>
-	    </iframe>
-	    </c:if>
 	    
 	    <iframe src="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}" 
 	   width="100%;" height="auto";>

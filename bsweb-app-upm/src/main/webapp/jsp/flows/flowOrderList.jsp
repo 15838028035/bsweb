@@ -250,6 +250,9 @@
              <button id="btn_flowDiagram" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看流程图
             </button>
+            <button id="btn_viewFlow" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看
+            </button>
             
         </div>
         
@@ -322,7 +325,7 @@
       		$tableList.bootstrapTable('refresh');
       	}
       	
-      	
+      	//查看流程图
       	 $("#btn_flowDiagram").click(function() {
       		 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
@@ -348,6 +351,35 @@
             });
          	
          	var url ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + flowProcessId+"&orderId="+orderId;
+         	window.location.href = url;
+         })
+         
+         //查看
+         $("#btn_viewFlow").click(function() {
+      		 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要编辑的记录');
+        		return;
+        	}
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条编辑的记录');
+        		return;
+        	}
+        	
+         	var instanceUrl = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.instanceUrl;
+            });
+         	var flowProcessId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.flowProcessId;
+            });
+         	var orderId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.id;
+            });
+         	
+         	var url ="${ctx}/jsp/flows/flowControllerAction!all.action?processId=" + flowProcessId+"&orderId="+orderId;
          	window.location.href = url;
          })
       	
