@@ -10,63 +10,52 @@
  </head>
   
   <body>
-      
-       <div class="page-header">
-		<h1>统一用户角色权限流程管理系统</h1>
-		<small>${sessionScope.securityContext.loginName}:您好！欢迎登录!&nbsp;&nbsp;<a href="${ctx}/loginAction!logout.action">退出系统</a></small>
-     	<a class="toogle pull-right">
-			<i class="fa fa-chevron-left"></i>
-		</a>
-     </div> 
-    
-    <div class="container-fluid">
-          <div class="row">
-          		<div class="col-sm-3 col-md-3 sidebar" id="sidebar">
-          			<div class="list-group">
-								<a href="${ctx}/jsp/user/upmUserList.jsp"  class="list-group-item"  >用户管理</span></a>
-								<a href="${ctx}/jsp/user/upmUserGroupTreeList.jsp"  class="list-group-item"  >组织机构管理</a>
-								<a href="${ctx}/jsp/role/upmRoleList.jsp?appId=CRM"  class="list-group-item" >角色管理</a>
-								<a href="${ctx}/jsp/permission/permission.jsp?appId=UPM" class="list-group-item" >权限管理</a>
-								<a href="${ctx}/jsp/upmApp/upmAppList.jsp" class="list-group-item" >应用管理</a>
-								<a href="${ctx}/jsp/dictionary/upmDictionaryNoteList.jsp" class="list-group-item"  >数据字典管理</a>
-								<a href="${ctx}/jsp/dictionary/upmConfigurationList.jsp" class="list-group-item" >配置管理</a>
-								<a href="${ctx}/jsp/upmNotice/upmNoticeList.jsp" class="list-group-item"  >通知管理</a>
-								<a href="${ctx}/jsp/flows/flowProcessList.jsp" class="list-group-item"  >流程定义</a>
-								<a href="${ctx}/jsp/flows/flowOrderList.jsp" class="list-group-item" >流程实例</a>
-								<a href="${ctx}/jsp/flows/flowCcorderList.jsp"  class="list-group-item" >抄送实例</a>
-								<a href="${ctx}/jsp/flows/flowTaskList.jsp" class="list-group-item"  >代办任务</a>
-								<a href="${ctx}/jsp/flows/flowTaskHistList.jsp" class="list-group-item" >历史任务</a>
-								<a href="${ctx}/systemInfoAction!input.action" class="list-group-item" >系统信息</a>
-          			</div>
-				</div>
-				<div class="toggler" data-whois="toggler">
-					<span class="glyphicon glyphicon-chevron-left"></span>
-				</div>
-				
-				<div class="col-sm-12 col-md-12 main" id="main">
-					<iframe id="main_iframe" src="" scrolling="auto" frameborder="0" allowTransparency="true" style="width:100%;" name="main_iframe">
-					</iframe>
-				</div>
-
-			</div> 
-			
-			</div>
-			
-	    <footer  class="well">
-			<p>微信方式:15838028035</p>
-		</footer>
-    </div>
-    
-
-<script type="text/javascript">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle show pull-left" data-target="sidebar">
+                    <span class="sr-only">导航菜单</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="main3.jsp">统一用户权限流程管理系统</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid all">
+        <div class="sidebar col-sm-4" id="sidebar">
+            <ul class="nav list-group">
+               			<li><a href="${ctx}/jsp/user/upmUserList.jsp"  class="list-group-item"  target="main_frame">用户管理</span></a></li>
+						<li><a href="${ctx}/jsp/user/upmUserGroupTreeList.jsp"  class="list-group-item"  >组织机构管理</a></li>
+						<li><a href="${ctx}/jsp/role/upmRoleList.jsp?appId=CRM"  class="list-group-item" >角色管理</a></li>
+						<li><a href="${ctx}/jsp/permission/permission.jsp?appId=UPM" class="list-group-item" >权限管理</a></li>
+						<li><a href="${ctx}/jsp/upmApp/upmAppList.jsp" class="list-group-item" >应用管理</a></li>
+						<li><a href="${ctx}/jsp/dictionary/upmDictionaryNoteList.jsp" class="list-group-item"  >数据字典管理</a></li>
+						<li><a href="${ctx}/jsp/dictionary/upmConfigurationList.jsp" class="list-group-item" >配置管理</a></li>
+						<li><a href="${ctx}/jsp/upmNotice/upmNoticeList.jsp" class="list-group-item"  >通知管理</a></li>
+						<li><a href="${ctx}/jsp/flows/flowProcessList.jsp" class="list-group-item"  >流程定义</a></li>
+						<li><a href="${ctx}/jsp/flows/flowOrderList.jsp" class="list-group-item" >流程实例</a></li>
+						<li><a href="${ctx}/jsp/flows/flowCcorderList.jsp"  class="list-group-item" >抄送实例</a></li>
+						<li><a href="${ctx}/jsp/flows/flowTaskList.jsp" class="list-group-item"  >代办任务</a></li>
+						<li><a href="${ctx}/jsp/flows/flowTaskHistList.jsp" class="list-group-item" >历史任务</a></li>
+						<li><a href="${ctx}/systemInfoAction!input.action" class="list-group-item" >系统信息</a></li>
+            </ul>
+        </div>
+        <div class="maincontent row" id="main_frame">
+            <div class="col-sm-12">
+                <div class="jumbotron">
+                    <h1>开源的基于struts2、spring、ibaits、bootstrap构建</h1>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
     $(document).ready(function () {
-       /*  $('#sidebar').BootSideMenu({
+         $('#sidebar').BootSideMenu({
             side: "left",
             pushBody:false,
-            closeOnClick:false
-        }); */
+            closeOnClick:false,
+            autoClose:true
+        }); 
     });
-</script>    
-  </body>
-
+</script> 
+</body>
 </html>
