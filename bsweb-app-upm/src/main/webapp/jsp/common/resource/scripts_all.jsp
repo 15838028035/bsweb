@@ -12,6 +12,9 @@
 <link href="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 
+<link href="${ctx}/scripts/BootStrap-addTabs/bootstrap.addtabs.css" rel="stylesheet">
+<script src="${ctx}/scripts/BootStrap-addTabs/bootstrap.addtabs.js"></script>
+
 <script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
 
 <script src="${ctx}/scripts/bootstrap-datetimepicker/js/moment.js"></script>
