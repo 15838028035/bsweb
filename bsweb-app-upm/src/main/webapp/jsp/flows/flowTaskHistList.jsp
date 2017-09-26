@@ -441,7 +441,6 @@
         });
        	
        	var url ="${ctx}" + instanceUrl +"?processId="+flowProcessId +"&orderId="+orderId+"&taskId="+taskId;
-       	alert("url="+url);
        	window.location.href = url;
        })
       	
