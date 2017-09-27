@@ -10,6 +10,6 @@ public interface UpmUserGroupService<UpmUserGroup> extends BaseService {
 	 *查询用户组数据
 	 * @return
 	 */
-	public List<UpmUserGroup> findUpmUserByParentId(long treeNodeId);
+	public List<UpmUserGroup> findUpmUserByParentId(Long treeNodeId);
 	
 }

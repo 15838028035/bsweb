@@ -22,6 +22,7 @@
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowApprove.SqlMap.xml"/>
       
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowLeaveTest.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/core/common/flows/entity/FlowBorrowTest.SqlMap.xml"/>
       
 </sqlMapConfig>
     

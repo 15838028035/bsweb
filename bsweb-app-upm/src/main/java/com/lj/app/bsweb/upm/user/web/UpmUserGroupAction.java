@@ -17,15 +17,13 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.bsweb.upm.user.entity.UpmUserGroup;
 import com.lj.app.bsweb.upm.user.service.UpmUserGroupService;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.pagination.PageTool;
+import com.lj.app.core.common.tree.BootStrapTreeView;
+import com.lj.app.core.common.tree.BootStrapTreeViewCheck;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 @Controller
 @Namespace("/jsp/user")
@@ -111,34 +109,26 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 			Map<String,Object> condition = new HashMap<String,Object>();
 			condition.put("userGroupCode",  userGroupCode);
 			condition.put("userGroupName",  userGroupName);
-			//upmUserGroupService.findPageList(page, condition);
-			//Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
 			
 			String jsonStr = "";
 			if(treeNodeId==null){
 				treeNodeId = 0L;
 			}
 			List<UpmUserGroup> UpmUserGroupList=upmUserGroupService.findUpmUserByParentId(treeNodeId);
-			List<HashMap> childList = new ArrayList<HashMap>();
+			
+			List<BootStrapTreeView> treeNodeList = new ArrayList<BootStrapTreeView>();
+			
 			for (UpmUserGroup group : UpmUserGroupList) {
-				HashMap<String,Object> mapResult = new HashMap<String,Object>();
-				mapResult.put("id", group.getId());
-				mapResult.put("text", group.getUserGroupName()+"["+group.getUserGroupCode()+"]"+"["+group.getBussinessCode()+"]");
-				childList.add(mapResult);
+				String text = group.getUserGroupName()+"["+group.getUserGroupCode()+"]"+"["+group.getBussinessCode()+"]";
+				treeNodeList.add(BootStrapTreeViewCheck.createNew(String.valueOf(group.getId()), text, String.valueOf(group.getParentId())));
 			}
-			if (treeNodeId == rootId) {
-				Map<String,Object> condition2 = new HashMap<String,Object>();
-				condition2.put("id",  treeNodeId);
-				
-				UpmUserGroup parent =(UpmUserGroup) upmUserGroupService.getInfoByKey(condition2);
-				Map<String,Object> mapResult = new HashMap<String,Object>();
-				mapResult.put("id", treeNodeId+"");
-				mapResult.put("text", parent.getUserGroupName()+"["+parent.getUserGroupCode()+"]"+"["+parent.getBussinessCode()+"]");
-				mapResult.put("children", childList);
-				jsonStr=PageTool.jsonObjectToJsonJQGrid(JSONObject.fromObject(mapResult));
-			} else {
-				jsonStr=JSONArray.fromObject(childList).toString();
+			
+			BootStrapTreeViewCheck simpleTree = BootStrapTreeViewCheck.valueOf(treeNodeList, treeNodeId.toString());
+					
+			if (null != simpleTree) {
+				jsonStr=  simpleTree.toJsonString();
 			}
+			
 			Struts2Utils.renderText(jsonStr);
 			return null;
 		} catch (Exception e) {

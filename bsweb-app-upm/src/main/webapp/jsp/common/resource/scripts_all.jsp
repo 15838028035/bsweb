@@ -9,7 +9,7 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
-<link href="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet">
+<link href="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 
 <link href="${ctx}/scripts/BootStrap-addTabs/bootstrap.addtabs.css" rel="stylesheet">

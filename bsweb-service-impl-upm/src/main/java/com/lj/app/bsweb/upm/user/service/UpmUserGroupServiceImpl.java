@@ -14,7 +14,7 @@ public class UpmUserGroupServiceImpl<UpmUserGroup> extends BaseServiceImpl<UpmUs
 	 *查询用户组数据
 	 * @return
 	 */
-	public List<UpmUserGroup> findUpmUserByParentId(long treeNodeId){
+	public List<UpmUserGroup> findUpmUserByParentId(Long treeNodeId){
 		Map<String,Object> condition = new HashMap<String,Object>();
 		condition.put("userGroupCode",  null);
 		condition.put("userGroupName",  null);

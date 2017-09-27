@@ -84,7 +84,7 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 			condition.put("treeNodeId",  treeNodeId);
 			condition.put("email",  email);
 			upmUserService.findPageList(page, condition,"listUserByCondition");
-			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
+			Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page),new String[0]);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();

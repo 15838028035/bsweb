@@ -1,38 +1,48 @@
-﻿<%@page language="java" isELIgnored="false"%>
+﻿
+<%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>用户管理</title>
+<title>flowBorrowTest管理</title>
     <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
-<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 
-<script   type="text/javascript">
+<!--css样式-->
+<link href="${ctx}/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+<!--js-->
+
+<script src="${ctx}/scripts/jquery/jquery-3.2.0.min.js"></script>
+<script src="${ctx}/scripts/bootstrap/js/bootstrap.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/bootstrap-table.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+
+
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.css"></script>
+<script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
+
+<script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
-	     
-	     $(".datetimepicker").datetimepicker({
-	      		language: 'zh-CN',
-	             format: 'yyyy-mm-dd hh:ii:ss',//格式化时间,
-	             autoclose:true,//日期选择完成后是否关闭选择框
-	             //minView: "month",//设置只显示到月份
-	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
-	         });
 	});
 
+	
 	var TableInit = function () {
         var oTableInit = new Object();
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/user/upmUserAction!bootStrapList.action',         //请求后台的URL（*）
+                url: '${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!bootStrapList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
-                contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+                contentType : "application/x-www-form-urlencoded",
                 dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
                 totalField: 'total',
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -42,10 +52,8 @@
                 smartDisplay:false,
                 showRefresh:true,
                 showColumns:true,
-                showToggle:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                trimOnSearch:true,
                 search:false,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
@@ -57,33 +65,26 @@
                 									//  queryParamsType = '' 参数: pageSize, pageNumber, searchText, sortName, sortOrder.
                 sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
                 pageNumber:1,                       //初始化加载第一页，默认第一页
-                pageSize: 50,                       //每页的记录行数（*）
+                pageSize: 25,                       //每页的记录行数（*）
                 pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
-                showPaginationSwitch:true,
                 strictSearch: true,
                 clickToSelect: true,                //是否启用点击选中行
-                //height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-                idField:"id",
+                height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                columns: [ 
-                          { field: 'checkStatus', title: '全选',checkbox:true ,footerFormatter:function () {
-                        	  return '合计'
-                          }}, 
+                columns: [  
+			{ field: 'checkStatus', title: '',checkbox:true }, 
                            {field : 'Number', title : '行号', formatter : function(value, row, index) {  
                         	   			return index+1;
                            			}  
                            },
-                          { field: 'id', title: 'ID',sortable:true,footerFormatter:sumFormatter}, 
-                          { field: 'loginNo', title: '登陆账号',sortable:true }, 
-                          { field: 'userName', title: '用户名',sortable:true }, 
-                          { field: 'mobile', title: '手机号码',sortable:true },
-                          { field: 'email', title: '邮箱' ,sortable:true},
-                          { field: 'orgDesc', title: '组织机构描述',sortable:true },
-                          { field: 'createDate', title: '创建时间',sortable:true },
-                          { field: 'updateDate', title: '修改时间',sortable:true }
-               		 ],
+			 	{field:'id',title:'ID', sortable:true},
+			 	{field:'operator',title:'申请人', sortable:true},
+			 	{field:'operatorAmount',title:'借款金额', sortable:true},
+			 	{field:'operatorTime',title:'操作时间', sortable:true},
+			 	{field:'repayTime',title:'归还时间', sortable:true}
+                        ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
              	},
@@ -92,7 +93,6 @@
              	},
              	onLoadError: function (data) {
              		$('#tableList').bootstrapTable('removeAll');
-             		 bootbox.alert("数据加载失败！");
              	},
              	responseHandler: function (res) {
              	    return {
@@ -107,59 +107,74 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
+			var id=$("#id").val();
+			var operator=$("#operator").val();
+			var operatorAmount=$("#operatorAmount").val();
+	    		var operatorTimeBegin=$("#operatorTimeBegin").val();
+	    		var operatorTimeEnd=$("#operatorTimeEnd").val();
+	    		var repayTimeBegin=$("#repayTimeBegin").val();
+	    		var repayTimeEnd=$("#repayTimeEnd").val();
+
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-            		 "page.pageSize":params.pageSize,
-                     "page.pageNumber":params.pageNumber,
-	                "sortName":this.sortName,
-	                "sortOrder":this.sortOrder,
-	                "upmUser.loginNo":$("#loginNo").val(),
-	                "upmUser.userName":$("#userName").val(),
-	 			 	"upmUser.orgDesc":$("#orgDesc").val(),
-	 			 	"upmUser.mobile": $("#mobile").val()
+                //limit: params.limit, //第几条记录
+                //offset: params.offset, //显示一页多少记录
+                //maxrows: params.limit,
+                //pageindex:params.pageNumber,
+                rows:params.rows,
+                page:params.page,
+                total:params.total,
+                pageSize:params.limit,
+                offset:params.offset,
+                "sortName":this.sortName,
+                "sortOrder":this.sortOrder,
+		"flowBorrowTest.id":id,
+		"flowBorrowTest.operator":operator,
+		"flowBorrowTest.operatorAmount":operatorAmount,
+		"flowBorrowTest.operatorTimeBegin":operatorTimeBegin,
+		"flowBorrowTest.operatorTimeEnd":operatorTimeEnd,
+		"flowBorrowTest.repayTimeBegin":repayTimeBegin,
+		"flowBorrowTest.repayTimeEnd":repayTimeEnd
             };
             return temp;
         };
         return oTableInit;
     };
-	
-    function sumFormatter(data) {
-        var field = this.field;
-
-        var total_sum = data.reduce(function(sum, row) {
-                console.log(sum);
-            return (sum) + (parseInt(row[field]) || 0);
-        }, 0);
-        return total_sum;
-    }
-    
+		
 </script>
 </head>
 
 <body>
-    
-    <div class="panel-body" style="padding-bottom:0px;">
+
+
+<div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
             <div class="panel-heading">查询条件</div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                    	 <label class="control-label col-sm-1" for="loginNo">登陆账号</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="loginNo">
-                        </div>
-                        <label class="control-label col-sm-1" for="userName">用户名</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="userName">
-                        </div>
-                        <label class="control-label col-sm-1" for="mobile">手机号码</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="mobile">
-                        </div>
-                         <label class="control-label col-sm-1" for="orgDesc">组织机构</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="orgDesc">
-                        </div>
-                        <div class="col-sm-12" style="text-align:left;">
+                      
+
+			 	<label class="control-label col-sm-1" for="id">ID</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
+                        
+			 	<label class="control-label col-sm-1" for="operator">申请人</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
+                        
+			 	<label class="control-label col-sm-1" for="operatorAmount">借款金额</label>
+				<div class="col-sm-2"> <input type="text" class="form-control" id="operatorAmount"></div>
+                        
+			 	<label class="control-label col-sm-1" for="operatorTime">操作时间</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="operatorTimeBegin" id = "operatorTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="operatorTimeEnd" id = "operatorTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+			 	<label class="control-label col-sm-1" for="repayTime">归还时间</label>
+			   <div class="col-sm-2">
+                            	<input type="text" name="repayTimeBegin" id = "repayTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+				<input type="text" name="repayTimeEnd" id = "repayTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
+                         </div>
+
+                        <div class="col-sm-6" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>
                     </div>
@@ -182,22 +197,24 @@
         <table id="tableList"></table>
     </div>
 
+
     <script type="text/javascript">
-	    var $tableList = $('#tableList');
+    	    var $tableList = $('#tableList');
 	    var $btn_add = $('#btn_add');
 	    var $btn_edit = $('#btn_edit');
 	    var $btn_delete = $('#btn_delete');
 	    var $btn_query = $('#btn_query');
-    
+
+	
 		//新增
         $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/user/upmUserAction!input.action';
+        	window.location.href = '${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!input.action'
         })
 		//编辑
         $("#btn_edit").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
-             });
+             	});
         	if(ids == ''|| ids==null){
         		bootbox.alert('请选择要编辑的记录');
         		return;
@@ -207,11 +224,10 @@
         		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	
-        	window.location.href = "${ctx}/jsp/user/upmUserAction!input.action?operate=edit&id=" + ids;
+        	window.location.href = "${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!input.action?operate=edit&id=" + ids;
         })
-        
-        $("#btn_delete").click(function() {
+		//删除
+      $("#btn_delete").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
              });
@@ -226,31 +242,29 @@
                 	doDelete();
                 }
         	});
-        	
-        });
-		
+        })
+
         function doDelete(){
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
              });
             var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/user/upmUserAction!multidelete.action?multidelete=" + ids,
+		      	  url:"${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!multidelete.action?multidelete=" + ids,
 		          async:false,
 		          cache:false,
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
 			bootbox.alert(obj.opResult);
-			
 			refreshGrid();
         }
-        		
-        $btn_query.click(function () {
+        
+  	$btn_query.click(function () {
         	 refreshGrid();
         });
-        
+
       	function refreshGrid(){
-      		$tableList.bootstrapTable('refresh');
+		$tableList.bootstrapTable('refresh');
       	}
       	
     </script>

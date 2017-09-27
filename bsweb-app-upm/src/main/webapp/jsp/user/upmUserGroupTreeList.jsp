@@ -1,193 +1,256 @@
-﻿<%@ page contentType="text/html;charset=UTF-8"%>
+﻿<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!DOCTYPE html>
+<html>
 <head>
+	<title>组织机构管理</title>
+    <meta name="viewport" content="width=device-width" />
 	<%@ include file="/jsp/common/meta.jsp" %>
-	<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-<style>
-.altclass{background: #E5EFFD ;}
-</style>
+	<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
+	<%@ include file="/jsp/common/resource/styles_all.jsp"%>
+	
+	</head>
 
 <script type="text/javascript">
 var CHILDREN_SELECTED = "0";
 var CHILDREN_NOTSELECTED = "1";
 
-$(document).ready(function(){
-//渲染页面
-	contralEffect.contain();
-	contralEffect.tablelist();
-	contralEffect.blueButton();
-	var treeNodeId = "" ;
-	
-	onSelectRowaction = function(id){
-			var s = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-			var sc = s.toString();
-			var scindex = sc.indexOf(',');
-			
-			if(scindex >= 0){
-				jQuery("#list").jqGrid('setSelection',sc.substring(0,scindex)); 
-			}
-		}	
-		
-	//生成树
-      	var  root = jQuery.ajax({
-          url:"${ctx}/jsp/user/upmUserGroupAction.action" ,
-          async:false,
-          cache:false,
-          dataType:"text"
-        }).responseText;
-		
-		var dataObj=eval("("+root+")");
-		
-		var tree = new TreePanel({
-			renderTo:'upmUserGroupTreeDiv',
-			'root' : dataObj,
-			'iconPath' : "${ctx}/scripts/tree/img/",
-			'switchType' : 'ajax',
-			'ajaxAction' : "${ctx}/jsp/user/upmUserGroupAction.action"
-		});
-		tree.render();
+var treeNodeId = "" ;
 
-	//选择事件
-		tree.on(function(node){			
-			$("#auditactselectedOrgid").val("");
-		    treeNodeId = node.attributes.id;
-			var treeNodeName = node.attributes.text;
-			$.ajax({
-				dataType:'json',
-				type: "POST",
-				cache:false,
-				data: "orgId="+treeNodeId,			
-			  	url: "${ctx}/jsp/user/upmUserGroupAction.action",
-			  	success: function(data) {
-			  			$("#btnInsert").prop("disabled",false);
+$(document).ready(function(){
+		//获取权限菜单树
+		var jsonData = $.ajax({
+			          url:"${ctx}/jsp/user/upmUserGroupAction!list.action",
+			          async:false,
+			          cache:false,
+			          dataType:"text"
+		}).responseText;
+		
+		jsonData = "[" + jsonData + "]";
+		
+		var dataObj=eval("("+jsonData+")");
+        
+		 $('#upmUserGroupTreeDiv').treeview({
+	            data:dataObj,
+	            levels: 5,
+	            showIcon: true,  
+	            multiSelect: false,
+	            highlightSelected: true, //是否高亮选中
+	            highlightSearchResults:true,
+	            showCheckbox:false,
+	            showIcon:true,
+	            onNodeChecked: function(event, data) {
+	            	
+	            },
+				 onNodeSelected: function(event, data) {
+					  treeNodeId = data.id;
+	                    $("#btnInsert").prop("disabled",false);
 			  			$("#btnsaveorg").prop("disabled",false);//set btn-save
-			  			$("#btnDelete").prop("disabled",false);
+			  			$("#btn_delete").prop("disabled",false);
 			  			$("#btnAssignRole").prop("disabled",false);
-			  			
-			  			var childrenSelected = data.isselectchild;//set checkbox childrenSelected
-			  			//alert("current user childrenSelected:"+childrenSelected);
-				  		if(childrenSelected==CHILDREN_NOTSELECTED || childrenSelected==""){
-				  			$("[name='childrenSelected']").prop("checked",false);
-				  			$("[name='childrenSelected']").prop("disabled",true);
-				  		}else{
-				  			$("[name='childrenSelected']").prop("disabled",false);
-				  		}
-			  		$("#auditactselectedOrgid").val(treeNodeId);
-			  		$("#parentId").val(treeNodeId);
-			  		
-			  		//加载用户信息
-			  		refreshGrid();
-				 },
-				 error:function(){
-				 	showModalMessage("失败");
-				 	$("#btnInsert").prop("disabled",false);
-				 	$("#btnsaveorg").attr("disabled","disabled");
-				 	$("#btnDelete").prop("disabled",false);
-				 	$("#btnAssignRole").prop("disabled",false);
-				 }
-			});
-			
-			jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/user/upmUserAction!listUserByCondition.action&treeNodeId='+treeNodeId,
-			datatype: 'json',
-			mtype: 'POST',
-			colNames:['ID','用户ID','帐号','姓名','手机号码','组织机构'],
-			colModel:[
-			     {name:'userGroupAndUserRelId',index:'userGroupAndUserRelId'},
-				 {name:'id',index:'id'},
-				 {name:'loginNo',index:'loginNo'},
-				 {name:'userName',index:'userName'},
-				 {name:'mobile',index:'mobile'},
-				 {name:'orgDesc',index:'orgDesc'}
-				 ],
-			pager: '#pager',
-			sortable: true,
-			rowNum: 10,
-			rowList:[10,15,20,50],
-			multiboxonly:true,
-			multiselect: true,
-			prmNames:{rows:"page.pageSize",page:"page.pageNumber",total:"page.totalPages"},     
-			jsonReader: {     
-				root: "rows",   
-				repeatitems : false,
-				id:"0"        		    
-				},
-			viewrecords: true,
-			width: '100%',
-			height: '100%',
-			sortname:'loginNo',
-			sortorder:'asc',
-			hidegrid: false,
-			loadtext: '正在加载,请稍等..',
-			scrollrows: true,
-			altRows:true,
-			altclass:'altclass',
-			onSelectRow: onSelectRowaction
-		}); 
-		});
-				
-		 $("#auditactform").validate({
-			submitHandler: function(form){
-				$("#btnInsert").prop("disabled",true);
-			   $("#btnsaveorg").prop("disabled",true);
-			   $("#btnDelete").prop("disabled",true);
-			   $("#btnAssignRole").prop("disabled",true);
-				var auditactselectedOrgid = $("#auditactselectedOrgid").val();				
-				if(!auditactselectedOrgid){
-					showModalMessage("请一条记录");
-					return false;
-				}
-				
-				var options = {
-			        dataType:'json', 		        	
-			        cache:false,
-			        type:'post',
-			        contentType:'application/x-www-form-urlencoded; charset=UTF-8', 	       
-			        url:"${ctx}/jsp/user/upmUserGroupAction!save.action",
-			        success:function(respResult, statusText, xhr ) {
-			        	$("#btnInsert").prop("disabled",false);		        	
-			        	$("#btnsaveorg").prop("disabled",false); 
-			        	$("#btnDelete").prop("disabled",false);	
-			        	$("#btnAssignRole").prop("disabled",false);
-			        	 showModalMessage(respResult.opResult);
-					},
-					 error:function(){
-					 		showModalMessage("提示信息"+respResult.message);
-					 		$("#btnInsert").prop("disabled",false);
-					 		$("#btnsaveorg").prop("disabled",false);
-					 		$("#btnDelete").prop("disabled",false);
-					 		$("#btnAssignRole").prop("disabled",false);
-					 }
-		        };	
-		            	
-				$("#auditactform").ajaxSubmit(options);
-				
-			}
-		}); 
+				  			var childrenSelected = data.isselectchild;//set checkbox childrenSelected
+				  			//alert("current user childrenSelected:"+childrenSelected);
+					  		if(childrenSelected==CHILDREN_NOTSELECTED || childrenSelected==""){
+					  			$("[name='childrenSelected']").prop("checked",false);
+					  			$("[name='childrenSelected']").prop("disabled",true);
+					  		}else{
+					  			$("[name='childrenSelected']").prop("disabled",false);
+					  		}
+				  		$("#auditactselectedOrgid").val(treeNodeId);
+				  		$("#parentId").val(treeNodeId);
+		       },
+		       onNodeExpanded: addNextNode
+		      }
+		 );
+
+			 var oTable = new TableInit();
+		     oTable.Init();
 });
+
+/**
+ * 一个节点被展开 惰性加载
+ */
+function addNextNode(event, node) {
+    $.getJSON("${ctx}/jsp/user/upmUserGroupAction!list.action?treeNodeId="+node.nodeId, function (data) {
+        $tree.treeview("deleteChildrenNode", node.nodeId);
+        $tree.treeview("addNode", [node.nodeId, {node: data}]);
+    });
+}
+		 
+var TableInit = function () {
+    var oTableInit = new Object();
+    //初始化Table
+    oTableInit.Init = function () {
+        $('#tableList').bootstrapTable({
+        	url:'${ctx}/jsp/user/upmUserAction!listUserByCondition.action?treeNodeId='+treeNodeId, //请求后台的URL（*）
+            method: 'post',                     //请求方式（*）
+            dataType: "json",
+            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+            dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+            totalField: 'total',
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            smartDisplay:false,
+            showRefresh:true,
+            showColumns:true,
+            showToggle:true,
+            searchOnEnterKey:true,
+            showFooter:true,
+            trimOnSearch:true,
+            search:false,
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            singleSelect:false,
+            clickToSelect: true,
+            smartDisplay:true,
+            queryParams: oTableInit.queryParams,//传递参数（*）
+            queryParamsType:'',					//  queryParamsType = 'limit' 参数: limit, offset, search, sort, order;
+            									//  queryParamsType = '' 参数: pageSize, pageNumber, searchText, sortName, sortOrder.
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 50,                       //每页的记录行数（*）
+            pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
+            showPaginationSwitch:true,
+            strictSearch: true,
+            clickToSelect: true,                //是否启用点击选中行
+            //height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            idField:"userGroupAndUserRelId",
+            uniqueId: "userGroupAndUserRelId",                     //每一行的唯一标识，一般为主键列
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            columns: [ 
+                      { field: 'checkStatus', title: '全选',checkbox:true ,footerFormatter:function () {
+                    	  return '合计'
+                      }}, 
+                       {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                    	   			return index+1;
+                       			}  
+                       },
+                       { field: 'userGroupAndUserRelId', title: '用户组织机构关联表ID',sortable:true, visible:false},
+                       { field: 'id', title: 'ID',sortable:true}, 
+                      { field: 'loginNo', title: '登陆账号',sortable:true }, 
+                      { field: 'userName', title: '用户名',sortable:true }, 
+                      { field: 'mobile', title: '手机号码',sortable:true },
+                      { field: 'email', title: '邮箱' ,sortable:true},
+                      { field: 'orgDesc', title: '组织机构描述',sortable:true },
+                      { field: 'createDate', title: '创建时间',sortable:true },
+                      { field: 'updateDate', title: '修改时间',sortable:true }
+           		 ],
+         	formatLoadingMessage: function () {
+         		return "请稍等，正在加载中...";
+         	},
+         	formatNoMatches: function () { //没有匹配的结果
+         		return '无符合条件的记录';
+         	},
+         	onLoadError: function (data) {
+         		$('#tableList').bootstrapTable('removeAll');
+         		 bootbox.alert("数据加载失败！");
+         	},
+         	responseHandler: function (res) {
+         	    return {
+         	        total: res.total,
+         	        rows: res.rows
+         	    };
+         	}
+          
+        });
+        
+    };
+
+    //得到查询的参数
+  oTableInit.queryParams = function (params) {
+        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+        		 "page.pageSize":params.pageSize,
+                 "page.pageNumber":params.pageNumber,
+                "sortName":this.sortName,
+                "sortOrder":this.sortOrder,
+                "upmUser.loginNo":$("#loginNo").val(),
+                "upmUser.userName":$("#userName").val(),
+ 			 	"upmUser.orgDesc":$("#orgDesc").val(),
+ 			 	"upmUser.mobile": $("#mobile").val()
+        };
+        return temp;
+    };
+    return oTableInit;
+};
+
+$("#btnInsert").on("click", function(){
+	alert("Test");
+    //获取表单对象
+   var bootstrapValidator = form.data('bootstrapValidator');
+      //手动触发验证
+      bootstrapValidator.validate();
+      if(bootstrapValidator.isValid()){
+      }
+      
+      bootstrapValidator.on('success.form.bv', function (e) {
+    	    e.preventDefault();
+    	    //提交逻辑
+    	    var $form = $(e.target);
+
+    	    // Get the BootstrapValidator instance
+    	    var bv = $form.data('bootstrapValidator');
+    	    
+    	    $("#btnInsert").prop("disabled",true);
+    		   $("#btnsaveorg").prop("disabled",true);
+    		   $("#btnDelete").prop("disabled",true);
+    		   $("#btnAssignRole").prop("disabled",true);
+    			var auditactselectedOrgid = $("#auditactselectedOrgid").val();				
+    			if(!auditactselectedOrgid){
+    				bootbox.alert("请一条记录");
+    				return false;
+    			}
+    			
+    			var options = {
+    		        dataType:'json', 		        	
+    		        cache:false,
+    		        type:'post',
+    		        contentType:'application/x-www-form-urlencoded; charset=UTF-8', 	       
+    		        url:"${ctx}/jsp/user/upmUserGroupAction!save.action",
+    		        success:function(respResult, statusText, xhr ) {
+    		        	$("#btnInsert").prop("disabled",false);		        	
+    		        	$("#btnsaveorg").prop("disabled",false); 
+    		        	$("#btnDelete").prop("disabled",false);	
+    		        	$("#btnAssignRole").prop("disabled",false);
+    		        	 bootbox.alert(respResult.opResult);
+    				},
+    				 error:function(){
+    				 		bootbox.alert("提示信息"+respResult.message);
+    				 		$("#btnInsert").prop("disabled",false);
+    				 		$("#btnsaveorg").prop("disabled",false);
+    				 		$("#btnDelete").prop("disabled",false);
+    				 		$("#btnAssignRole").prop("disabled",false);
+    				 }
+    	     };	
+    	         	
+    			$("#saveUserGroupForm").ajaxSubmit(options);
+    	});
+});
+
+
 
 		function edit() {
 			$("#operate").val("edit");
 		}
 		//删除
         function mulDelete(){
-        	showModalConfirmation('确认要删除么',"doDeleteGroup()");
-        }
-        
-        function doDeleteGroup(){
-        	var ids = $("#parentId").val();
-            var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/user/upmUserGroupAction!multidelete.action?multidelete=" + ids,
-		          async:false,
-		          cache:false,
-		          dataType:"json"
-		      }).responseText;
-			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
-			refreshGrid();
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	var ids = $("#parentId").val();
+                    var result = jQuery.ajax({
+        		      	  url:"${ctx}/jsp/user/upmUserGroupAction!multidelete.action?multidelete=" + ids,
+        		          async:false,
+        		          cache:false,
+        		          dataType:"json"
+        		      }).responseText;
+        			var obj = eval("("+result+")");
+        			bootbox.alert(obj.opResult);
+        			//refreshGrid();
+                }
+        	});
         }
       	
       	function assignRole() {
@@ -212,37 +275,45 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<form id="auditactform" action="${ctx}/jsp/user/upmUserGroupAction!save.action">
+
+<div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">组织机构管理</div>
+            <div class="panel-body">
+	<form id="saveUserGroupForm" role="form"  name="saveUserGroupForm" action="${ctx}/jsp/user/upmUserGroupAction!save.action">
 	<input type="hidden" name="operate" id="operate"/>
 	<input type="hidden" name="parentId" id="parentId"/>
 	<input type="hidden" name="auditactselectedOrgid" id="auditactselectedOrgid"/>
 	
-	<div class="contain_search">
-    <div class="contain_s_wrap" style="height:350px">
-	<table align="center" width="100%" cellpadding="0" cellspacing="0">
-		 <tr>
-            <td>组织机构编码<font color="red">*</font> </td>
-            <td><input type="text" id=”userGroupCode" name="userGroupCode" value="${userGroupCode}" maxLength="200" /></td>
-        </tr>
-        <tr>
-            <td>业务编码<font color="red">*</font> </td>
-            <td><input type="text" id="bussinessCode" name="bussinessCode" value="${bussinessCode}" maxLength="200" /></td>
-        </tr>
-          <tr>
-            <td>组织机构名称<font color="red">*</font></td>
-             <td><input type="text" id="userGroupName" name="userGroupName" value="${userGroupName}" maxlength="200"/> </td>
-        </tr>
-		<tr>
-			<td>
-			<div class=" marg_lef10 float_lef">
-			  <input id="btnInsert" disabled="disabled" type="submit" class="window_button_centerInput" value="新增"/> 
-			 <input id="btnsaveorg" disabled="disabled" type="submit" class="window_button_centerInput" value="保存" onclick="edit()"/> 
-			 <input id="btnDelete" disabled="disabled" type="button" class="window_button_centerInput" value="删除" onclick="mulDelete()"/>
-			  <input id="btnAssignRole" disabled="disabled" type="button" class="window_button_centerInput" value="分配角色" onclick="assignRole()"/> 
-			</div>
-			</td>
-		</tr>
-	</table>
+		<div class="form-group" style="margin-top:15px">
+	     	 <label class="control-label col-sm-2" for="userGroupCode">组织机构编码</label>
+	         <div class="col-sm-2">
+	             <input type="text" class="form-control" id="userGroupCode" name="userGroupCode">
+	         </div>
+	         <label class="control-label col-sm-2" for="bussinessCode">业务编码</label>
+	         <div class="col-sm-2">
+	             <input type="text" class="form-control" id="bussinessCode" name="bussinessCode">
+	         </div>
+	         <label class="control-label col-sm-2" for="userGroupName">组织机构名称</label>
+	         <div class="col-sm-2">
+	             <input type="text" class="form-control" id="userGroupName" name="userGroupName">
+	         </div>
+     	</div>
+	 <div id="toolbar-A" class="btn-group">
+	  		<button id="btn_query" type="button" class="btn btn-default" >查询</button>
+            <button id="btnInsert" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+             <button id="btnsaveorg" type="submit" class="btn btn-default" onclick="edit()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>修改保存
+            </button>
+            <button id="btn_delete" type="button" class="btn btn-default"  onclick="mulDelete();">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+             <button id="btnAssignRole" type="button" class="btn btn-default"  onclick="assignRole();">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>分配角色
+            </button>
+        </div>
 	<div class="widget_tree" style="height: 300px;width:100%;overflow: no;font-weight: normal;">
 <div id="upmUserGroupTreeDiv"  ></div>
 </div>
@@ -250,47 +321,44 @@ $(document).ready(function(){
 </div>
 </div>
 </form>
+
+            </div>
+        </div>
+    </div>
  
- <div class="padd10">
-        <div class="contain">
-            <div class="contain_wrap">
-            
-                <div class="contain_title">
-			    	<div class="contain_t_wrap">
-			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">用户管理</span>
-			            </div><!--end contain_t_text-->
-			            <div class="float_rig contain_t_check">
-			            </div><!--end contain_t_check-->
-			       </div><!--end contain_t_wrap-->
-			    </div><!--end contain_title-->
-			    
-				<div class="toolbar">
-					<div class="toolbar_wrap">
-						<div class=" marg_lef10 float_lef">
-						<input type="button" id="addRel" class="window_button_centerInput"
-						 value="新增" /></div>
-						<div class=" marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDeleteRel();"/></div>
-					<table>
-						<tr>
-						<td>用户名</td>
-						<td><input name="userNameParam" id = "userNameParam" type="text"/></td>
-						<td>手机号码</td>
-						<td><input name="mobileParam" id = "mobileParam" type="text" style="width:100px;"/></td>
-						<td>组织机构</td>
-						<td><input name="orgDescParam" id = "orgDescParam" type="text"/></td>
-						<td>		
-							<div class=" marg_lef10 float_lef">
-								<input class="window_button_centerInput" name="select" id = "select" type="button" value="查询" /></div>
-							</div>
-						</td>
-						</tr>
-					</table>
-					</div>
-				</div>
+    <div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">用户管理</div>
+            <div class="panel-body">
+					<form id="formSearch" class="form-horizontal">
+                    <div class="form-group" style="margin-top:15px">
+                    	 <label class="control-label col-sm-1" for="loginNo">登陆账号</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="loginNo">
+                        </div>
+                        <label class="control-label col-sm-1" for="userName">用户名</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="userName">
+                        </div>
+                        <label class="control-label col-sm-1" for="mobile">手机号码</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="mobile">
+                        </div>
+                        <div class="col-sm-3" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </form>
 				
-				<table id="list"></table>
-				<div id="pager"></div>
+				 <div id="toolbar" class="btn-group">
+            <button id="addRel" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            <button id="btn_mulDeleteRel" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="mulDeleteRel();"></span>删除
+            </button>
+        </div>
+				<table id="tableList"></table>
 
             </div>
         </div>
@@ -351,24 +419,12 @@ $(document).ready(function(){
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         
       	function refreshGrid(){
-			var userName = $("#userNameParam").val();
-	    	    var address = $("#addressParam").val();
-	    	    var mobile = $("#mobileParam").val();
-				 	
-				jQuery("#list").jqGrid('setGridParam',{
-				     url:"${ctx}/jsp/user/upmUserAction!listUserByCondition.action",
-				     postData:{"userName":userName,
-				     		   "address":address,
-				     		   "mobile":mobile,
-				     		   "treeNodeId":$("#parentId").val()
-				     },
-				 	 page:1
-				 }).trigger("reloadGrid"); 
+				$tableList.bootstrapTable('refresh');
       	}
       	
     </script>

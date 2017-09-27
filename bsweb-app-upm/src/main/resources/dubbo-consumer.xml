@@ -28,8 +28,6 @@
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskActorService" id="flowTaskActorService" check="false" />
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskHistService" id="flowTaskHistService" check="false" />
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskService" id="flowTaskService" check="false" />
-	 
-	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowLeaveTestService" id="flowLeaveTestService" check="false" />
 	
  	<dubbo:reference interface="com.lj.app.core.common.flows.api.FlowTaskServiceApi" id="flowTaskServiceApi" check="false" /> 
  	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowEngineFacetsService" id="FlowEngineFacetsService" check="false" />
@@ -41,4 +39,7 @@
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserAndUserGroupRelService" id="upmUserAndUserGroupRelService" check="false" />
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupAndRoleRelService" id="upmUserGroupAndRoleRelService" check="false" />
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupService" id="upmUserGroupService" check="false" />
+ 	
+ 	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowLeaveTestService" id="flowLeaveTestService" check="false" />
+ 	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowBorrowTestService" id="flowBorrowTestService" check="false" />
 </beans> 
