@@ -1,3 +1,4 @@
+
 package com.lj.app.bsweb.upm.flows.web;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import com.lj.app.core.common.flows.service.FlowOrderService;
 import com.lj.app.core.common.flows.service.FlowProcessService;
 import com.lj.app.core.common.flows.service.FlowQueryService;
 import com.lj.app.core.common.flows.service.FlowTaskService;
+import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.util.ConvertUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
@@ -48,6 +50,7 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Namespace("/jsp/flows")
 @Results({
 		@Result(name = "flowAll", location = "/jsp/flows/flowAll.jsp"),
+		@Result(name = "flowAllStyleA", location = "/jsp/flows/flowAllStyleA.jsp"),
 	    @Result(name = "flowApproval", location = "/jsp/flows/flowApprove-input.jsp"),
 	    @Result(name = "approvalView", location = "/jsp/flows/flowApproval-view.jsp"),
 	    @Result(name = "taskList", location = "/jsp/flows/flowTaskList.jsp", type=AbstractBaseAction.REDIRECT)
@@ -85,8 +88,6 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	@Autowired
 	private FlowQueryService flowQueryService;
 	
-	
-	
 	private String processId;
 	private String orderId;
 	private String taskId;
@@ -101,6 +102,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	
 	private List<FlowApprove> flowApproveList;
 	
+	private String isAllowAddTaskActor ="false";//是否允许配置任务参与者
 	
 	public   BaseService getBaseService(){
 		return flowEngineFacetsService.getEngine().flowProcessService();
@@ -142,6 +144,23 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         	flowTask = (FlowTask)flowTaskService.getInfoByKey(taskId);
         }
         return "flowAll";
+    }
+    
+    /**
+     * 通用的流程展现页面入口
+     * 将流程中的各环节表单以flowAllStyleA方式展现
+     */
+    public String flowAllStyleA() throws Exception{
+    	if(StringUtil.isNotBlank(processId)) {
+            flowProcess =flowProcessService.getProcessById(processId);
+        }
+        if(StringUtil.isNotBlank(orderId)) {
+        	 flowOrder = (FlowOrder)flowOrderService.getInfoByKey(orderId);
+        }
+        if(StringUtil.isNotBlank(taskId)) {
+        	flowTask = (FlowTask)flowTaskService.getInfoByKey(taskId);
+        }
+        return "flowAllStyleA";
     }
 
     public String flowProcess()  throws Exception{
@@ -255,6 +274,29 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         flowEngineFacetsService.execute(flowApprove.getTaskId().toString(), this.getUserName(), params);
     	return "taskList";
     }
+    
+    /**
+	 * 流程审批信息
+	 */
+	public String flowApproveInfoBootStrapList() throws Exception {
+		try {
+			Map<String,Object> condition = new HashMap<String,Object>();
+			condition.put("orderId", orderId);
+			condition.put("taskId", taskId);
+			
+			if (StringUtil.isNotBlank(this.getSortName())) {
+				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
+				page.setSortColumns(orderBy);
+			}
+			
+			page = flowApproveService.findPageList(page, condition);
+			Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page),new String[0]);
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
     
     public String flowNodeJson() throws Exception {
         FlowProcess process = flowProcessService.getProcessById(processId);
@@ -391,6 +433,14 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 
 	public void setFlowApproveList(List<FlowApprove> flowApproveList) {
 		this.flowApproveList = flowApproveList;
+	}
+
+	public String getIsAllowAddTaskActor() {
+		return isAllowAddTaskActor;
+	}
+
+	public void setIsAllowAddTaskActor(String isAllowAddTaskActor) {
+		this.isAllowAddTaskActor = isAllowAddTaskActor;
 	}
 	
 }

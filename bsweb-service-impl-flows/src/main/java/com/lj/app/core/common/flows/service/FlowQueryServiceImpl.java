@@ -43,8 +43,8 @@ public class FlowQueryServiceImpl implements FlowQueryService,Serializable {
 	
 	public List<FlowApprove> queryApprove(String orderId, String taskId)throws Exception{
 		FlowApprove flowApprove = new FlowApprove();
-		flowApprove.setOrderId(Integer.parseInt(orderId));
-		flowApprove.setTaskId(Integer.parseInt(taskId));
+		flowApprove.setOrderId(Integer.valueOf(orderId));
+		flowApprove.setTaskId(Integer.valueOf(taskId));
 		return flowEngineFacets.getEngine().flowApproveService().queryForList(flowApprove);
 	}
 	
@@ -54,13 +54,13 @@ public class FlowQueryServiceImpl implements FlowQueryService,Serializable {
 
 	public List<FlowTaskHist> getHistoryTasks(String orderId){
 		FlowTaskHist flowTaskHist = new FlowTaskHist();
-		flowTaskHist.setFlowOrderId(Integer.parseInt(orderId));
+		flowTaskHist.setFlowOrderId(Integer.valueOf(orderId));
 		return flowEngineFacets.getEngine().FlowTaskHistService().queryForList(flowTaskHist);
 	}
 	
 	public List<FlowTaskHist> getHistoryTasks(String orderId, String taskName){
 		FlowTaskHist flowTaskHist = new FlowTaskHist();
-		flowTaskHist.setFlowOrderId(Integer.parseInt(orderId));
+		flowTaskHist.setFlowOrderId(Integer.valueOf(orderId));
 		flowTaskHist.setTaskName(taskName);
 		return flowEngineFacets.getEngine().FlowTaskHistService().queryForList(flowTaskHist);
 	}

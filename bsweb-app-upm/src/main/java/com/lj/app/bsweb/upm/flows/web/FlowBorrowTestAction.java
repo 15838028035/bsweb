@@ -2,6 +2,7 @@ package com.lj.app.bsweb.upm.flows.web;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -145,9 +146,18 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 	 * @return
 	 */
 	public String apply() {
-		if(StringUtil.isBlank(orderId) || StringUtil.isBlank(taskId)) {
+		if(StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
 			return "flowBorrowTestApply";
 		} else {
+			Map<String,String> querMap = new HashMap<String,String>();
+			querMap.put("flowOrderId", orderId);
+			querMap.put("flowTaskId", taskId);
+			
+			List list = flowBorrowTestService.queryForList(querMap);
+			if(list!=null && list.size()>0){
+			flowBorrowTest =(FlowBorrowTest) list.get(0);
+			}
+			
 			return "flowBorrowTestView";
 		}
 	}
@@ -161,7 +171,6 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 		 /** 流程数据构造开始 */
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("apply.operator", this.getUserName());
-        params.put("approval.operator", this.getUserName());
         /** 流程数据构造结束 */
 
         /**

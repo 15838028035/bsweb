@@ -126,13 +126,16 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
      * @throws Exception
      */
     public String addTaskActor() throws Exception{
-    	 List<FlowTask> tasks =flowQueryService.getActiveTasks(orderId);
+    	Map<String,Object> map = new HashMap<String,Object>();
+		map.put("flowOrderId", orderId);
+        List<FlowTask> tasks = flowTaskService.queryForList(map);
         for(FlowTask task : tasks) {
             if(task.getTaskName().equalsIgnoreCase(taskName) && StringUtil.isNotBlank(operator)) {
             	flowTaskServiceApi.addTaskActor(task.getId().toString(), operator);
             }
         }
-        return "ADD_TASK_ACTOR";
+        Struts2Utils.renderJson("success");
+        return null;
     }
 
     /**
@@ -140,7 +143,11 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
      * @return
      */
     public  String  addTaskActorJsonTip() {
-        List<FlowTask> tasks = flowEngineFacetsService.getEngine().flowQueryService().getActiveTasks(orderId);
+    	Map<String,Object> map = new HashMap<String,Object>();
+		map.put("flowOrderId", orderId);
+		
+        List<FlowTask> tasks = flowTaskService.queryForList(map);
+        
         StringBuilder builder = new StringBuilder();
         String createTime = "";
         for(FlowTask task : tasks) {

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>借款测试流程业务数据查询管理</title>
+<title>审批流水</title>
    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
@@ -22,7 +22,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!bootStrapList.action',         //请求后台的URL（*）
+                url: '${ctx}/jsp/flows/flowControllerAction!flowApproveInfoBootStrapList.action?orderId=${param.orderId}&taskId=${param.taskId}',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",
@@ -62,12 +62,23 @@
                         	   			return index+1;
                            			}  
                            },
-			 	{field:'id',title:'ID', sortable:true},
-			 	{field:'operator',title:'申请人', sortable:true},
-			 	{field:'operatorAmount',title:'借款金额', sortable:true},
-			 	{field:'operatorTime',title:'操作时间', sortable:true},
-			 	{field:'repayTime',title:'归还时间', sortable:true},
-			 	{field:'appMemo',title:'申请备注', sortable:true}
+			 	{field:'id',title:'ID', sortable:true, visible:false},
+			 	{field:'processId',title:'流程定义ID', sortable:true, visible:false},
+			 	{field:'orderId',title:'流程实例ID', sortable:true, visible:false},
+			 	{field:'taskId',title:'任务ID', sortable:true, visible:false},
+			 	{field:'operator',title:'操作者', sortable:true},
+			 	{field:'operateTime',title:'操作时间', sortable:true},
+			 	{field:'optResult',title:'操作结果', sortable:true,formatter : function(value, row, index) {  
+			 		if(value=="agree"){
+			 			return "同意";
+			 		}
+			 		if(value=="disagree"){
+			 			return "拒绝";
+			 		}
+			 		return value;
+       			} },
+			 	{field:'optContent',title:'操作内容', sortable:true},
+			 	{field:'taskName',title:'任务名称', sortable:true}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -91,13 +102,9 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var operator=$("#operator").val();
-    		var operatorTimeBegin=$("#operatorTimeBegin").val();
-    		var operatorTimeEnd=$("#operatorTimeEnd").val();
-    		var repayTimeBegin=$("#repayTimeBegin").val();
-    		var repayTimeEnd=$("#repayTimeEnd").val();
-
-            var temp = {//这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+			var id=$("#id").val();
+			var orderId=${param.orderId};
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 rows:params.rows,
                 page:params.page,
                 total:params.total,
@@ -105,11 +112,7 @@
                 offset:params.offset,
                 "sortName":this.sortName,
                 "sortOrder":this.sortOrder,
-				"flowBorrowTest.operator":operator,
-				"flowBorrowTest.operatorTimeBegin":operatorTimeBegin,
-				"flowBorrowTest.operatorTimeEnd":operatorTimeEnd,
-				"flowBorrowTest.repayTimeBegin":repayTimeBegin,
-				"flowBorrowTest.repayTimeEnd":repayTimeEnd
+				"flowApprove.orderId":orderId
             };
             return temp;
         };
@@ -123,31 +126,6 @@
 
 
 <div class="panel-body" style="padding-bottom:0px;">
-        <div class="panel panel-default">
-            <div class="panel-heading">查询条件</div>
-            <div class="panel-body">
-                <form id="formSearch" class="form-horizontal">
-                    <div class="form-group" style="margin-top:15px">
-			 	<label class="control-label col-sm-1" for="operator">申请人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
-			 	<label class="control-label col-sm-1" for="operatorTime">操作时间</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="operatorTimeBegin" id = "operatorTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="operatorTimeEnd" id = "operatorTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="repayTime">归还时间</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="repayTimeBegin" id = "repayTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="repayTimeEnd" id = "repayTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-                         </div>
-
-                        <div class="col-sm-6" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>       
         <table id="tableList"></table>
     </div>
 
@@ -155,7 +133,6 @@
     <script type="text/javascript">
     	    var $tableList = $('#tableList');
 	    var $btn_query = $('#btn_query');
-
   	$btn_query.click(function () {
         	 refreshGrid();
         });

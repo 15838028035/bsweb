@@ -10,13 +10,21 @@
  </head>
   
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-defalut navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle show pull-left" data-target="sidebar">
                     <span class="sr-only">导航菜单</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="main3.jsp">统一用户权限流程管理系统</a>
+                <a class="navbar-brand" href="index.jsp">统一用户权限流程管理系统</a>
+                 <ul class="nav navbar-nav navbar-right hidden-sm">
+		            <li>
+		          <a href='#'>${sessionScope.securityContext.loginName}:您好！欢迎登录!&nbsp;&nbsp;</a>
+		            </li>
+		            <li>
+		          <a href="${ctx}/loginAction!logout.action">退出</a>
+		            </li>
+		          </ul>
             </div>
         </div>
     </nav>
@@ -36,6 +44,7 @@
             	<li><a class="list-group-item" data-addtab='{"id":"11","url": "${ctx}/jsp/flows/flowCcorderList.jsp","target": "#tabs"}'>抄送实例</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"12","url": "${ctx}/jsp/flows/flowTaskList.jsp","target": "#tabs"}'>代办任务</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"13","url": "${ctx}/jsp/flows/flowTaskHistList.jsp","target": "#tabs"}'>历史任务</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"13","url": "${ctx}/jsp/flowBorrowTest/flowBorrowTestList.jsp","target": "#tabs"}'>借款测试流程业务数据</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"14","url": "${ctx}/systemInfoAction!input.action","target": "#tabs"}'>系统信息</a></li>
             </ul>
         </div>

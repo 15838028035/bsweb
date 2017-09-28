@@ -9,23 +9,37 @@
 		 <%@ include file="/jsp/common/meta.jsp" %>
 		<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 		<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-		
-		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-    	<link rel="stylesheet" href="${ctx}/scripts/flows/CleverTabs/context/themes/base/style.css" type="text/css" />
-    	<link rel="stylesheet" href="${ctx}/scripts/flows/CleverTabs/context/themes/base/jquery-ui.css" type="text/css" />
     	
-	    <script src="${ctx}/scripts/flows/CleverTabs/scripts/jquery.js" type="text/javascript"></script>
-	    <script src="${ctx}/scripts/flows/CleverTabs/scripts/jquery-ui.js" type="text/javascript"></script>
-	    <script src="${ctx}/scripts/flows/CleverTabs/scripts/jquery.contextMenu.js" type="text/javascript"></script>
-	    <script src="${ctx}/scripts/flows/CleverTabs/scripts/jquery.cleverTabs.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<table border="0" width=100% align="center">
+    		<tr>
+        		<td align="center" class="snaker_title">${flowProcess.displayName}
+        			<hr width=100% size=2 color="#71B2CF">
+        		</td>
+    		</tr>
+		</table>
+		<c:if test="${flowOrder != null }">
+		<table border="0" width=98% align="center" style="margin-top:5">
+    		<tr>
+        		<td align="left">
+        			<font color="blue">编号：</font><font color="#800080">${flowOrder.orderNo}</font> &nbsp;
+        			<font color="blue">派单时间：</font><font color="#800080">${flowOrder.createDate}</font>&nbsp;
+				</td>
+			</tr>
+		</table>
+		</c:if>
+	    <div id="tabsDiv" style="margin: 0px;">
+	         <ul class="nav nav-tabs " id="tabs">
+  				</ul>
+  				<div class="tab-content "></div>
+	    </div>
+	    
 	    <script type="text/javascript">
         var tabs;
         var taskName = "${flowTask.taskName}";
         $(function () {
-            tabs = $('#tabs').cleverTabs();
-            $(window).bind('resize', function () {
-                tabs.resizePanelContainer();
-            });
+          
             $.ajax({
 				type:'GET',
 				url:"${ctx}/jsp/flows/flowControllerAction!flowNodeJson.action",
@@ -42,6 +56,9 @@
 					var iscurrent = false;
 					for(var i = 0; i < data.length; i++) {
 						var node = data[i];
+						
+						//TODO:替换特殊字符 node.form = node.form.replaceAll('#7','&');//替换特殊字符
+						
 						var indexOfIframe = node.form.indexOf("iframe:");
 						var indexOfSpecliA = node.form.indexOf("?");
 						
@@ -72,63 +89,34 @@
 						}
 						
 						var tab;
+						
 						if(iscurrent){
-							 tab = tabs.add({
-				                url: iframeUrl,
-				                label: node.displayName,
-				                locked: true
-				            });
+							$.addtabs.add({"id":i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
 						}
 						
 						if((taskName == '' &&  i == 0) || (!iscurrent && isAppNode==-1) )  {
-							 tab = tabs.add({
-				                url: iframeUrl,
-				                label: node.displayName,
-				                locked: true
-				            });
+							//$.addtabs.add({"id":i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
 						}
 						
 						if((taskName == '' &&  i == 0) || ((!iscurrent && isAppNode!=-1) )  ){
 							
 						}
 						
-			            tab.activate();
+						if(i == 0&& !iscurrent)  {
+							$.addtabs.add({"id":i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
+						}
+						
 			            if(iscurrent) {
 			            	curTab = tab;
-			            	tab.mark();
 			            }
 					}
-					if(curTab) curTab.activate();
+					//if(curTab)
+					
+					$.addtabs.add({"id":"3333","title":"审批流水","url": "${ctx}/jsp/flows/flowApproveList.jsp?processId=${processId}&orderId=${orderId}","target": "#tabs"});
+					$.addtabs.add({"id":"10333","title":"流程图","url": "${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}","target": "#tabs"});
 				}
 			});
         });
     	</script>
-	</head>
-	<body>
-		<table border="0" width=100% align="center">
-    		<tr>
-        		<td align="center" class="snaker_title">${flowProcess.displayName }
-        			<hr width=100% size=2 color="#71B2CF">
-        		</td>
-    		</tr>
-		</table>
-		<c:if test="${flowOrder != null }">
-		<table border="0" width=98% align="center" style="margin-top:5">
-    		<tr>
-        		<td align="left">
-        			<font color="blue">编号：</font><font color="#800080">${flowOrder.orderNo }</font> &nbsp;
-        			<font color="blue">派单时间：</font><font color="#800080">${flowOrder.createDate}</font>&nbsp;
-				</td>
-			</tr>
-		</table>
-		</c:if>
-	    <div id="tabs" style="margin: 0px;">
-	        <ul>
-	        </ul>
-	    </div>
-	    
-	    <iframe src="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}" 
-	   width="100%;" height="auto";>
-	    </iframe>
 	</body>
 </html>
