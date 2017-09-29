@@ -29,7 +29,7 @@
         </div>
     </nav>
     <div class="container-fluid all">
-        <div class="sidebar col-sm-4" id="sidebar">
+        <div class="sidebar col-sm-3" id="sidebar">
             <ul class="nav list-group">
             	<li><a class="list-group-item" data-addtab='{"id":"1","url": "${ctx}/jsp/user/upmUserList.jsp","target": "#tabs"}'>用户管理</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"2","url": "${ctx}/jsp/user/upmUserGroupTreeList.jsp","target": "#tabs"}'>组织机构管理</a></li>
@@ -49,7 +49,7 @@
             </ul>
         </div>
         <div class="maincontent row" style="margin-top:60px;">
-       		 <div class="col-sm-10 pull-right">
+       		 <div class="col-sm-12 pull-right">
                <ul class="nav nav-tabs" id="tabs">
   				</ul>
   				<div class="tab-content"></div>
