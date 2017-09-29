@@ -69,11 +69,14 @@
 			 	{field:'operator',title:'操作者', sortable:true},
 			 	{field:'operateTime',title:'操作时间', sortable:true},
 			 	{field:'optResult',title:'操作结果', sortable:true,formatter : function(value, row, index) {  
-			 		if(value=="agree"){
+			 		if(value=="0"){
 			 			return "同意";
 			 		}
-			 		if(value=="disagree"){
+			 		if(value=="-1"){
 			 			return "拒绝";
+			 		}
+			 		if(value=="1"){
+			 			return "转派";
 			 		}
 			 		return value;
        			} },

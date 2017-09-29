@@ -2,7 +2,7 @@ function selectOrg(ctx, e1, e2) {
 	var element1 = document.getElementById(e1);
 	var element2 = document.getElementById(e2);
 	var l = window.showModalDialog(ctx
-			+ "/dialogs/selectDialog.jsp?type=orgTree", " ",
+			+ "/jsp/user/upmUserSelectNew.jsp", " ",
 			"dialogWidth:800px;dialogHeight:540px;center:yes;scrolling:yes");
 	if (l == null)
 		return;
@@ -16,7 +16,7 @@ function selectOrgUser(ctx, e1, e2) {
 	var element1 = document.getElementById(e1);
 	var element2 = document.getElementById(e2);
 	var l = window.showModalDialog(ctx
-			+ "/dialogs/selectDialog.jsp?type=orgUserTree", " ",
+			+ "/jsp/user/upmUserSelectNew.jsp", " ",
 			"dialogWidth:800px;dialogHeight:540px;center:yes;scrolling:yes");
 	if (l == null)
 		return;

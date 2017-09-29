@@ -12,7 +12,7 @@ import com.lj.app.core.common.util.DateUtil;
 public class DefaultNoGenerator implements INoGenerator {
 	public String generate(ProcessModel model) {
 		//一定要确保流程编号的唯一性
-		String time =DateUtil.getNowDate("yyyyMMdd-HH:mm:ss-SSS");
+		String time =DateUtil.getNowDate("yyyyMMdd HHmmss").replaceAll(" ", "");
 		Random random = new Random();
 		return time + "-" + random.nextInt(1000);
 	}

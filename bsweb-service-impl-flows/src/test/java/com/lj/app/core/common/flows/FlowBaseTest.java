@@ -11,8 +11,7 @@ import com.lj.app.core.common.flows.service.FlowEngineFacetsServiceImpl;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations ={"classpath:spring-common.xml"})
-
+@ContextConfiguration(locations ={"classpath:spring-common-test.xml"})
 public class FlowBaseTest   {
 	protected String processId;
 	@Autowired
@@ -23,7 +22,7 @@ public class FlowBaseTest   {
 	
 	@BeforeClass
 	public  static  void setUpRunEnvNew() {
-		 
+		System.setProperty("spring.profiles.active","dev");
 	}
 	
 }

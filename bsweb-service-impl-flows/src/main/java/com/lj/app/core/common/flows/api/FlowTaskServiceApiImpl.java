@@ -322,7 +322,7 @@ public class FlowTaskServiceApiImpl implements FlowTaskServiceApi{
 			newTask.setTaskType(taskType);
 			newTask.setCreateTime(new Date());
 			newTask.setParentTaskId(Integer.parseInt(taskId));
-			tasks.add(saveTask(newTask, actors));
+			tasks.add(saveNewTask(newTask, actors));
 		} catch (CloneNotSupportedException e) {
 			throw new FlowException("任务对象不支持复制", e.getCause());
 		}
@@ -425,12 +425,21 @@ public class FlowTaskServiceApiImpl implements FlowTaskServiceApi{
 	
 	private FlowTask saveTask(FlowTask task, String... actors) throws Exception{
 		task.setPerformType(PerformType.ANY.ordinal());
-		int id = flowEngineFacets.getEngine().flowTaskService().insertObjectReturnKey(task);
-		
+		Integer id = flowEngineFacets.getEngine().flowTaskService().insertObjectReturnKey(task);
 		assignTask(String.valueOf(id), actors);
 		task.setActorIds(actors);
 		return task;
 	}
+	
+	private FlowTask saveNewTask(FlowTask task, String... actors) throws Exception{
+		task.setPerformType(PerformType.ANY.ordinal());
+		task.setId(null);
+		Integer id = flowEngineFacets.getEngine().flowTaskService().insertObjectReturnKey(task);
+		assignTask(String.valueOf(id), actors);
+		task.setActorIds(actors);
+		return task;
+	}
+	
 
 	/**
 	 * 根据Task模型的assignee、assignmentHandler属性以及运行时数据，确定参与者

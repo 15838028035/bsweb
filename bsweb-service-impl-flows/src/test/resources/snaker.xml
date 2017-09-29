@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	
+<bean class="com.lj.app.core.common.flows.spring.SpelExpression"/>
+<bean class="com.lj.app.core.common.flows.service.LogInterceptor"/>
+<bean class="com.lj.app.core.common.flows.scheduling.impl.SchedulerInterceptor"/>
+
+</config>

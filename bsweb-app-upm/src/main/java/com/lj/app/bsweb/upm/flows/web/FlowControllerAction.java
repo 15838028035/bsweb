@@ -21,11 +21,13 @@ import org.springframework.stereotype.Controller;
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.flows.entity.FlowApprove;
+import com.lj.app.core.common.flows.entity.FlowCcorder;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowProcess;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.model.TaskModel;
 import com.lj.app.core.common.flows.service.FlowApproveService;
+import com.lj.app.core.common.flows.service.FlowCcorderService;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
 import com.lj.app.core.common.flows.service.FlowOrderService;
 import com.lj.app.core.common.flows.service.FlowProcessService;
@@ -83,7 +85,11 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	@Autowired
 	private FlowTaskService<FlowTask> flowTaskService;
 	
+	@Autowired
 	private FlowOrderService<FlowOrder>  flowOrderService;
+	
+	@Autowired
+	private FlowCcorderService<FlowCcorder>  flowCcorderService;
 	
 	@Autowired
 	private FlowQueryService flowQueryService;
@@ -103,6 +109,8 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	private List<FlowApprove> flowApproveList;
 	
 	private String isAllowAddTaskActor ="false";//是否允许配置任务参与者
+	
+	private String nextOperatorName;//下一节点处理人
 	
 	public   BaseService getBaseService(){
 		return flowEngineFacetsService.getEngine().flowProcessService();
@@ -242,7 +250,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         }
         String ccOperator = request.getParameter(PARA_CCOPERATOR);
         if(StringUtils.isNotEmpty(ccOperator)) {
-        	flowEngineFacetsService.getEngine().flowCcorderService().createCCOrder(orderId, this.getUserName(), ccOperator.split(","));
+        	flowCcorderService.createCCOrder(orderId, this.getUserName(), ccOperator.split(","));
         }
         return "taskList";
     }
@@ -264,14 +272,109 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         }
     }
     
+    /**
+     * 任务审批
+     * @return
+     * @throws Exception
+     */
     public String doApproval() throws Exception {
         flowApprove.setOperateTime(new Date());
         flowApprove.setOperator(this.getUserName());
+        
+        String optResult = flowApprove.getOptResult();//审批结果
+        String optContent = flowApprove.getOptContent();//操作内容
+        
+        if(StringUtil.isNotBlank(optResult) && "1".equals(optResult) && StringUtil.isBlank(optContent)){
+        	optContent = this.getUserName() + "转派给" + nextOperatorName;
+        	
+        	flowApprove.setOptContent(optContent);
+        }
+        
         flowApproveService.insertObject(flowApprove);
         
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("result", flowApprove.getOptResult());
-        flowEngineFacetsService.execute(flowApprove.getTaskId().toString(), this.getUserName(), params);
+        
+    	HttpServletRequest request =   Struts2Utils.getRequest();
+        Enumeration<String> paraNames =request.getParameterNames();
+        
+        while (paraNames.hasMoreElements()) {
+            String element = paraNames.nextElement();
+            int index = element.indexOf("_");
+            String paraValue = Struts2Utils.getRequest().getParameter(element);
+            if(index == -1) {
+                params.put(element, paraValue);
+            } else {
+                char type = element.charAt(0);
+                String name = element.substring(index + 1);
+                Object value = null;
+                switch(type) {
+                    case 'S':
+                        value = paraValue;
+                        break;
+                    case 'I':
+                        value = ConvertUtil.convertStringToObject(paraValue, Integer.class);
+                        break;
+                    case 'L':
+                        value = ConvertUtil.convertStringToObject(paraValue, Long.class);
+                        break;
+                    case 'B':
+                        value = ConvertUtil.convertStringToObject(paraValue, Boolean.class);
+                        break;
+                    case 'D':
+                        value = ConvertUtil.convertStringToObject(paraValue, Date.class);
+                        break;
+                    case 'N':
+                        value = ConvertUtil.convertStringToObject(paraValue, Double.class);
+                        break;
+                    default:
+                        value = paraValue;
+                        break;
+                }
+                params.put(name, value);
+            }
+        }
+        String processId = request.getParameter(PARA_PROCESSID);
+        String orderId = request.getParameter(PARA_ORDERID);
+        String taskId = request.getParameter(PARA_TASKID);
+        String nextOperator = request.getParameter(PARA_NEXTOPERATOR);
+        if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+        	flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
+        } else {
+            String methodStr = flowApprove.getOptResult();//审批结果
+            int method;
+            try {
+                method = Integer.parseInt(methodStr);
+            } catch(Exception e) {
+                method = 0;
+            }
+            switch(method) {
+                case 0://任务执行
+                	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+                    break;
+                case -1://驳回、任意跳转
+                	flowEngineFacetsService.executeAndJump(taskId, this.getUserName(), params, request.getParameter(PARA_NODENAME));
+                    break;
+                case 1://转办
+                    if(StringUtils.isNotEmpty(nextOperator)) {
+                    	flowEngineFacetsService.transferMajor(taskId, this.getUserName(), nextOperator.split(","));
+                    }
+                    break;
+                case 2://协办
+                    if(StringUtils.isNotEmpty(nextOperator)) {
+                    	flowEngineFacetsService.transferAidant(taskId, this.getUserName(), nextOperator.split(","));
+                    }
+                    break;
+                default:
+                	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+                    break;
+            }
+        }
+        String ccOperator = request.getParameter(PARA_CCOPERATOR);
+        if(StringUtils.isNotEmpty(ccOperator)) {
+        	flowCcorderService.createCCOrder(orderId, this.getUserName(), ccOperator.split(","));
+        }
+        
     	return "taskList";
     }
     
@@ -441,6 +544,14 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 
 	public void setIsAllowAddTaskActor(String isAllowAddTaskActor) {
 		this.isAllowAddTaskActor = isAllowAddTaskActor;
+	}
+
+	public String getNextOperatorName() {
+		return nextOperatorName;
+	}
+
+	public void setNextOperatorName(String nextOperatorName) {
+		this.nextOperatorName = nextOperatorName;
 	}
 	
 }

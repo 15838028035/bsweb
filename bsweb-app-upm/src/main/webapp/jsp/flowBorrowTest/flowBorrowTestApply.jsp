@@ -42,7 +42,7 @@
       		</div>
 	       
 	        <div class="form-group col-sm-12"> 
-	       		  <button type="submit" id="submitButton"  class="btn btn-default">保存</button> 
+	       		  <button type="submit" id="submitButton"  class="btn btn-default">提交</button> 
 	       		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
 	       </div>
 				
