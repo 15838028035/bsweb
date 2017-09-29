@@ -12,28 +12,22 @@
     	
 	</head>
 	<body>
-		<table border="0" width=100% align="center">
-    		<tr>
-        		<td align="center" class="snaker_title">${flowProcess.displayName}
-        			<hr width=100% size=2 color="#71B2CF">
-        		</td>
-    		</tr>
-		</table>
-		<c:if test="${flowOrder != null }">
-		<table border="0" width=98% align="center" style="margin-top:5">
-    		<tr>
-        		<td align="left">
-        			<font color="blue">编号：</font><font color="#800080">${flowOrder.orderNo}</font> &nbsp;
-        			<font color="blue">派单时间：</font><font color="#800080">${flowOrder.createDate}</font>&nbsp;
-				</td>
-			</tr>
-		</table>
-		</c:if>
-	    <div id="tabsDiv" style="margin: 0px;">
-	         <ul class="nav nav-tabs " id="tabs">
-  				</ul>
-  				<div class="tab-content "></div>
-	    </div>
+	<div class="container">
+		<div class="row">
+	      <div class="col-sm-12">流程名称:${flowProcess.displayName}</div>
+	      <c:if test="${flowOrder != null }">
+	      <div class="col-sm-12">流程编号:${flowOrder.orderNo}</div>
+	      <div class="col-sm-12">派单时间:${flowOrder.createDate}</div>
+	      </c:if>
+	   </div>
+		<div class="row">	
+		    <div class="col-sm-12" id="tabsDiv" style="margin: 0px;">
+		         <ul class="nav nav-tabs " id="tabs">
+	  				</ul>
+	  				<div class="tab-content "></div>
+		    </div>
+		  </div>
+	  </div>
 	    
 	    <script type="text/javascript">
         var tabs;
