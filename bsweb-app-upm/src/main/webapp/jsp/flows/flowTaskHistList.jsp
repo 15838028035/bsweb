@@ -1,4 +1,3 @@
-
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
@@ -75,30 +74,30 @@
                         	   			return index+1;
                            			}  
                            },
-			 	{field:'id',title:'ID', sortable:true},
-			 	{field:'taskVefrsion',title:'任务版本', sortable:true},
-			 	{field:'flowOrderId',title:'流程实例ID', sortable:true},
-			 	{field:'taskName',title:'任务名称', sortable:true},
+			 	{field:'id',title:'ID', sortable:true, visible:false},
+			 	{field:'taskVefrsion',title:'任务版本', sortable:true, visible:false},
+			 	{field:'flowOrderId',title:'流程实例ID', sortable:true, visible:false},
+			 	{field:'taskName',title:'任务名称', sortable:true, visible:false},
 			 	{field:'displayName',title:'显示名称', sortable:true},
-			 	{field:'performType',title:'参与类型', sortable:true},
-			 	{field:'taskType',title:'任务类型', sortable:true},
+			 	{field:'performType',title:'参与类型', sortable:true, visible:false},
+			 	{field:'taskType',title:'任务类型', sortable:true, visible:false},
 			 	{field:'operator',title:'操作者', sortable:true},
 			 	{field:'createTime',title:'创建时间', sortable:true},
 			 	{field:'finishTime',title:'完成时间', sortable:true},
 			 	{field:'expireTime',title:'过期时间', sortable:true},
 			 	{field:'expireDate',title:'过期日期', sortable:true},
 			 	{field:'remindDate',title:'提醒日期', sortable:true},
-			 	{field:'actionUrl',title:'action_URL', sortable:true},
-			 	{field:'parentTaskId',title:'父ID', sortable:true},
-			 	{field:'variable',title:'流程变量', sortable:true},
-			 	{field:'createBy',title:'创建人', sortable:true},
-			 	{field:'createByUname',title:'创建人姓名', sortable:true},
-			 	{field:'createDate',title:'创建日期', sortable:true},
-			 	{field:'updateBy',title:'更新人', sortable:true},
-			 	{field:'updateByUname',title:'更新人姓名', sortable:true},
-			 	{field:'updateDate',title:'更新日期', sortable:true},
-			 	{field:'instanceUrl',title:'实例化 URL', sortable:true,visible:false},
-			 	{field:'flowProcessId',title:'流程定义ID', sortable:true,visible:false}
+			 	{field:'actionUrl',title:'action_URL', sortable:true, visible:false},
+			 	{field:'parentTaskId',title:'父ID', sortable:true, visible:false},
+			 	{field:'variable',title:'流程变量', sortable:true, visible:false},
+			 	{field:'createBy',title:'创建人', sortable:true, visible:false},
+			 	{field:'createByUname',title:'创建人姓名', sortable:true, visible:false},
+			 	{field:'createDate',title:'创建日期', sortable:true, visible:false},
+			 	{field:'updateBy',title:'更新人', sortable:true, visible:false},
+			 	{field:'updateByUname',title:'更新人姓名', sortable:true, visible:false},
+			 	{field:'updateDate',title:'更新日期', sortable:true, visible:false},
+			 	{field:'instanceUrl',title:'实例化 URL', sortable:true,visible:false, visible:false},
+			 	{field:'flowProcessId',title:'流程定义ID', sortable:true,visible:false, visible:false}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -123,70 +122,20 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var id=$("#id").val();
-			var taskVefrsion=$("#taskVefrsion").val();
-			var flowOrderId=$("#flowOrderId").val();
-			var taskName=$("#taskName").val();
 			var displayName=$("#displayName").val();
-			var performType=$("#performType").val();
-			var taskType=$("#taskType").val();
 			var operator=$("#operator").val();
-	    		var createTimeBegin=$("#createTimeBegin").val();
-	    		var createTimeEnd=$("#createTimeEnd").val();
-	    		var finishTimeBegin=$("#finishTimeBegin").val();
-	    		var finishTimeEnd=$("#finishTimeEnd").val();
-	    		var expireTimeBegin=$("#expireTimeBegin").val();
-	    		var expireTimeEnd=$("#expireTimeEnd").val();
-	    		var expireDateBegin=$("#expireDateBegin").val();
-	    		var expireDateEnd=$("#expireDateEnd").val();
-	    		var remindDateBegin=$("#remindDateBegin").val();
-	    		var remindDateEnd=$("#remindDateEnd").val();
-			var actionUrl=$("#actionUrl").val();
-			var parentTaskId=$("#parentTaskId").val();
-			var variable=$("#variable").val();
-			var createBy=$("#createBy").val();
-			var createByUname=$("#createByUname").val();
-	    		var createDateBegin=$("#createDateBegin").val();
-	    		var createDateEnd=$("#createDateEnd").val();
-			var updateBy=$("#updateBy").val();
-			var updateByUname=$("#updateByUname").val();
-	    		var updateDateBegin=$("#updateDateBegin").val();
-	    		var updateDateEnd=$("#updateDateEnd").val();
+    		var createTimeBegin=$("#createTimeBegin").val();
+    		var createTimeEnd=$("#createTimeEnd").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
-					"flowTaskHist.id":id,
-					"flowTaskHist.taskVefrsion":taskVefrsion,
-					"flowTaskHist.flowOrderId":flowOrderId,
-					"flowTaskHist.taskName":taskName,
 					"flowTaskHist.displayName":displayName,
-					"flowTaskHist.performType":performType,
-					"flowTaskHist.taskType":taskType,
 					"flowTaskHist.operator":operator,
 					"flowTaskHist.createTimeBegin":createTimeBegin,
-					"flowTaskHist.createTimeEnd":createTimeEnd,
-					"flowTaskHist.finishTimeBegin":finishTimeBegin,
-					"flowTaskHist.finishTimeEnd":finishTimeEnd,
-					"flowTaskHist.expireTimeBegin":expireTimeBegin,
-					"flowTaskHist.expireTimeEnd":expireTimeEnd,
-					"flowTaskHist.expireDateBegin":expireDateBegin,
-					"flowTaskHist.expireDateEnd":expireDateEnd,
-					"flowTaskHist.remindDateBegin":remindDateBegin,
-					"flowTaskHist.remindDateEnd":remindDateEnd,
-					"flowTaskHist.actionUrl":actionUrl,
-					"flowTaskHist.parentTaskId":parentTaskId,
-					"flowTaskHist.variable":variable,
-					"flowTaskHist.createBy":createBy,
-					"flowTaskHist.createByUname":createByUname,
-					"flowTaskHist.createDateBegin":createDateBegin,
-					"flowTaskHist.createDateEnd":createDateEnd,
-					"flowTaskHist.updateBy":updateBy,
-					"flowTaskHist.updateByUname":updateByUname,
-					"flowTaskHist.updateDateBegin":updateDateBegin,
-					"flowTaskHist.updateDateEnd":updateDateEnd
+					"flowTaskHist.createTimeEnd":createTimeEnd
             };
             return temp;
         };
@@ -205,93 +154,22 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-                        
-			 	<label class="control-label col-sm-1" for="taskVefrsion">任务版本</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="taskVefrsion"></div>
-                        
-			 	<label class="control-label col-sm-1" for="flowOrderId">流程实例ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="flowOrderId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="taskName">任务名称</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="taskName"></div>
-                        
 			 	<label class="control-label col-sm-1" for="displayName">显示名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="displayName"></div>
-                        
-			 	<label class="control-label col-sm-1" for="performType">参与类型</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="performType"></div>
-                        
-			 	<label class="control-label col-sm-1" for="taskType">任务类型</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="taskType"></div>
                         
 			 	<label class="control-label col-sm-1" for="operator">操作者</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
                         
 			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>
-			   <div class="col-sm-2">
+			   <div class="col-sm-4">
                     <input type="text" name="createTimeBegin" id = "createTimeBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
 					<input type="text" name="createTimeEnd" id = "createTimeEnd" size="16" class="datetimepicker" readonly="readonly"/>
                 </div>
-			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
-			   <div class="col-sm-2">
-                     <input type="text" name="finishTimeBegin" id = "finishTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
-					<input type="text" name="finishTimeEnd" id = "finishTimeEnd" size="16" cclass="datetimepicker" readonly="readonly"/>
-                </div>
-			 	<label class="control-label col-sm-1" for="expireTime">过期时间</label>
-			   <div class="col-sm-2">
-                     <input type="text" name="expireTimeBegin" id = "expireTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
-					<input type="text" name="expireTimeEnd" id = "expireTimeEnd" size="16" class="datetimepicker" readonly="readonly"/>
-                 </div>
-			 	<label class="control-label col-sm-1" for="expireDate">过期日期</label>
-			   <div class="col-sm-2">
-                     <input type="text" name="expireDateBegin" id = "expireDateBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
-					<input type="text" name="expireDateEnd" id = "expireDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
-                </div>
-			 	<label class="control-label col-sm-1" for="remindDate">提醒日期</label>
-			   <div class="col-sm-2">
-                     <input type="text" name="remindDateBegin" id = "remindDateBegin" size="16" class="datetimepicker" readonly="readonly"/> --
-					<input type="text" name="remindDateEnd" id = "remindDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
-                 </div>
-			 	<label class="control-label col-sm-1" for="actionUrl">action_URL</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="actionUrl"></div>
-                        
-			 	<label class="control-label col-sm-1" for="parentTaskId">父ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="parentTaskId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="variable">流程变量</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="variable"></div>
-                        
-			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
-                        
-			 	<label class="control-label col-sm-1" for="createByUname">建创人姓名</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="createByUname"></div>
-                        
-			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
-			   <div class="col-sm-2">
-                     <input type="text" name="createDateBegin" id = "createDateBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
-					<input type="text" name="createDateEnd" id = "createDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
-                 </div>
-			 	<label class="control-label col-sm-1" for="updateBy">更新人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
-                        
-			 	<label class="control-label col-sm-1" for="updateByUname">更新人姓名</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
-                        
-			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
-			   <div class="col-sm-2">
-                      <input type="text" name="updateDateBegin" id = "updateDateBegin" size="16" class="datetimepicker" readonly="readonly"/> --
-					<input type="text" name="updateDateEnd" id = "updateDateEnd" size="16" class="datetimepicker" readonly="readonly"/>
-                 </div>
-
-                        <div class="col-sm-12" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+			  
+                    <div class="col-sm-12" style="text-align:left;">
+                        <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                     </div>
+                   </div>
                 </form>
             </div>
         </div>       
@@ -379,6 +257,10 @@
 			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
+        
+        $btn_query.click(function () {
+        	refreshGrid();
+       });
         
       	function refreshGrid(){
 		$tableList.bootstrapTable('refresh');

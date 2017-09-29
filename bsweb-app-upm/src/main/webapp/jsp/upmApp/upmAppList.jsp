@@ -72,7 +72,7 @@
                         	   			return index+1;
                            			}  
                            },
-			 	{field:'id',title:'ID', sortable:true},
+			 	{field:'id',title:'ID', sortable:true, visible:false},
 			 	{field:'appId',title:'应用ID', sortable:true},
 			 	{field:'appCode',title:'应用编码', sortable:true},
 			 	{field:'appName',title:'应用名称', sortable:true},

@@ -69,7 +69,7 @@
                columns: [
                          { field: 'checkStatus', title: '',checkbox:true }, 
                          {field : 'Number', title : '行号',    formatter : function(value, row, index) {return index+1;}  },
-                         { field: 'id', title: '序号',sortable:true }, 
+                         { field: 'id', title: '编号',sortable:true, visible:false }, 
                          { field: 'flowNo', title: '流程编号',sortable:true}, 
                          { field: 'flowName', title: '流程名称',sortable:true }, 
                          { field: 'displayName', title: '显示名称',sortable:true },

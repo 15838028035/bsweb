@@ -74,7 +74,7 @@
                         	   			return index+1;
                            			}  
                            },
-						 	{field:'configId',title:'ID', sortable:true},
+						 	{field:'configId',title:'ID', sortable:true, visible:false},
 						 	{field:'cfgKey',title:'置配项KEY', sortable:true},
 						 	{field:'cfgValue',title:'置配项值', sortable:true},
 						 	{field:'cfgDesc',title:'置配项描述', sortable:true}

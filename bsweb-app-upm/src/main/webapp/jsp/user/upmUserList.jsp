@@ -75,12 +75,12 @@
                         	   			return index+1;
                            			}  
                            },
-                          { field: 'id', title: 'ID',sortable:true,footerFormatter:sumFormatter}, 
+                          { field: 'id', title: 'ID',sortable:true,footerFormatter:sumFormatter, visible:false}, 
                           { field: 'loginNo', title: '登陆账号',sortable:true }, 
                           { field: 'userName', title: '用户名',sortable:true }, 
                           { field: 'mobile', title: '手机号码',sortable:true },
                           { field: 'email', title: '邮箱' ,sortable:true},
-                          { field: 'orgDesc', title: '组织机构描述',sortable:true },
+                          { field: 'orgDesc', title: '组织机构',sortable:true },
                           { field: 'createDate', title: '创建时间',sortable:true },
                           { field: 'updateDate', title: '修改时间',sortable:true }
                		 ],

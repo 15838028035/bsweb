@@ -74,7 +74,7 @@
                	   			return index+1;
                   			}  
                   			},
-						 {field:'id',title:'ID', sortable:true},
+						 {field:'id',title:'ID', sortable:true, visible:false},
 						 {field:'roleCode',title:'角色编码', sortable:true},
 						 {field:'appId',title:'应用编码', sortable:true},
 						 {field:'roleName',title:'角色名称', sortable:true},
