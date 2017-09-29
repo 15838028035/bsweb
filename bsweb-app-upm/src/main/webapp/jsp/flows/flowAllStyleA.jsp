@@ -54,6 +54,8 @@
 				success: function(data) {
 					var curTab;
 					var iscurrent = false;
+					var currentTabNo = 0;
+					
 					for(var i = 0; i < data.length; i++) {
 						var node = data[i];
 						
@@ -91,7 +93,7 @@
 						var tab;
 						
 						if(iscurrent){
-							$.addtabs.add({"id":i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
+							$.addtabs.add({"id":"00"+i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
 						}
 						
 						if((taskName == '' &&  i == 0) || (!iscurrent && isAppNode==-1) )  {
@@ -103,17 +105,22 @@
 						}
 						
 						if(i == 0&& !iscurrent)  {
-							$.addtabs.add({"id":i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
+							$.addtabs.add({"id":"00"+i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
 						}
 						
 			            if(iscurrent) {
 			            	curTab = tab;
+			            	currentTabNo=i;
 			            }
 					}
-					//if(curTab)
 					
-					$.addtabs.add({"id":"3333","title":"审批流水","url": "${ctx}/jsp/flows/flowApproveList.jsp?processId=${processId}&orderId=${orderId}","target": "#tabs"});
-					$.addtabs.add({"id":"10333","title":"流程图","url": "${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}","target": "#tabs"});
+					$.addtabs.add({"id":"8888","title":"审批流水","url": "${ctx}/jsp/flows/flowApproveList.jsp?processId=${processId}&orderId=${orderId}","target": "#tabs"});
+					$.addtabs.add({"id":"9999","title":"流程图","url": "${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}","target": "#tabs"});
+					
+					//激活当前流程节点
+					$("#tab_tab_00"+currentTabNo).addClass("active");
+					$("#tab_00"+currentTabNo).addClass("active");
+					
 				}
 			});
         });

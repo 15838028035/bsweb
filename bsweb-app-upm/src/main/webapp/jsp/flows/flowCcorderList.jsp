@@ -75,8 +75,9 @@
                        	   			return index+1;
                           			}  
                           },
-						 {field:'id',title:'ID', sortable:true},
-						 {field:'orderId',title:'流程实例编号', sortable:true},
+						 {field:'id',title:'ID', sortable:true,visible:false},
+						 {field:'flowProcessId',title:'流程定义ID', sortable:true,visible:false},
+						 {field:'orderId',title:'流程实例编号', sortable:true,visible:false},
 						 {field:'actorId',title:'执行人', sortable:true},
 						 {field:'creator',title:'创建人', sortable:true},
 						 {field:'createTime',title:'创建时间', sortable:true},
@@ -188,6 +189,9 @@
             <button id="btn_ccRead" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>阅读
             </button>
+            <button id="btn_viewFlow" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看
+            </button>
         </div>
         
         <table id="tableList"></table>
@@ -225,6 +229,35 @@
       	function refreshGrid(){
       		$tableList.bootstrapTable('refresh');
       	}
+      	
+      //查看
+        $("#btn_viewFlow").click(function() {
+     		 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.id;
+            });
+       	if(ids == ''|| ids==null){
+       		bootbox.alert('请选择要编辑的记录');
+       		return;
+       	}
+       	
+       	if(ids.length>1){
+       		bootbox.alert('请选择一条编辑的记录');
+       		return;
+       	}
+       	
+        	var instanceUrl = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+               return row.instanceUrl;
+           });
+        	var flowProcessId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+               return row.flowProcessId;
+           });
+        	var orderId =$.map($tableList.bootstrapTable('getSelections'), function (row) {
+               return row.orderId;
+           });
+        	
+        	var url ="${ctx}/jsp/flows/flowControllerAction!flowAllStyleA.action?processId=" + flowProcessId+"&orderId="+orderId;
+        	window.location.href = url;
+        })
       	
     </script>
 

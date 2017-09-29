@@ -14,7 +14,7 @@
 <body>
 <div class="container">
 	<form action="flowBorrowTestAction!applySave.action"  class="form-horizontal"  method="post" name="flowBorrowTestForm" id="flowBorrowTestForm" >
-	<input type="hidden" name="flowBorrowTest.id" id="id" value="${id}"/>
+	<input type="hidden" name="flowBorrowTest.id" id="id" value="${flowBorrowTest.id}"/>
 	<input type="hidden" name="operate" id="operate" value="${operate}" />
 	<input type="hidden" name="processId" value="${processId}" />
 	<input type="hidden" name="orderId" value="${orderId}" />
@@ -30,11 +30,11 @@
 	       </div>
 	        <div class="form-group">  
 	             <label for="userName">操作时间</label>  
-	            <input class="form-control" type="text" id="operatorTime" name="flowBorrowTest.operatorTime" value="${flowBorrowTest.operatorTime}"  readonly="readonly"/>
+	            <input class="form-control" type="text" id="operatorTime" name="flowBorrowTest.operatorTime" value="<s:date name="flowBorrowTest.operatorTime"  format="yyyy-MM-dd  HH:mm:ss" />"  readonly="readonly"/>
 	        </div>
 	        <div class="form-group">  
 	             <label for="orgDesc">归还时间</label>  
-	          <input  class="form-control" type="text" id="repayTime" name="flowBorrowTest.repayTime" value="${flowBorrowTest.repayTime}"  readonly="readonly"/>
+	          <input  class="form-control" type="text" id="repayTime" name="flowBorrowTest.repayTime" value="<s:date name="flowBorrowTest.repayTime"  format="yyyy-MM-dd HH:mm:ss" />"  readonly="readonly"/>
 	     	</div>
 	     	 <div class="form-group">  
               <label for="orgDesc">申请备注</label>  

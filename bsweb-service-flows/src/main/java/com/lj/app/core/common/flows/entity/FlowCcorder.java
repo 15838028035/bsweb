@@ -53,6 +53,11 @@ public class FlowCcorder extends BaseEntity{
 	 * 完成时间End
 	 */
 	private String finishTimeEnd;
+	
+	/**
+	 * 流程定义ID  FLOW_PROCESS_ID
+	 */
+	private String flowProcessId;
 
 	public void setId(java.lang.Integer value) {
 		this.id = value;
@@ -127,6 +132,14 @@ public class FlowCcorder extends BaseEntity{
 
 	public void setFinishTimeEnd(String finishTimeEnd) {
 		this.finishTimeEnd = finishTimeEnd;
+	}
+
+	public String getFlowProcessId() {
+		return flowProcessId;
+	}
+
+	public void setFlowProcessId(String flowProcessId) {
+		this.flowProcessId = flowProcessId;
 	}
 
 }

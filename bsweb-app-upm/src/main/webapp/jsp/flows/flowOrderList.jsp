@@ -75,11 +75,11 @@
                        	   			return index+1;
                           			}  
                           },
-					 {field:'id',title:'编号', sortable:true},
+					 {field:'id',title:'编号', sortable:true,visible:false},
 					 {field:'orderNo',title:'流程编号', sortable:true},
 					 {field:'orderVersion',title:'版本号', sortable:true},
-					 {field:'flowProcessId',title:'流程定义ID', sortable:true},
-					 {field:'parentId',title:'父ID', sortable:true},
+					 {field:'flowProcessId',title:'流程定义ID', sortable:true,visible:false},
+					 {field:'parentId',title:'父ID', sortable:true,visible:false},
 					 {field:'parentNodeName',title:'父节点名称', sortable:true},
 					 {field:'expireTime',title:'过期时间', sortable:true},
 					 {field:'priority',title:'优先级', sortable:true},
@@ -379,7 +379,7 @@
                 return row.id;
             });
          	
-         	var url ="${ctx}/jsp/flows/flowControllerAction!all.action?processId=" + flowProcessId+"&orderId="+orderId;
+         	var url ="${ctx}/jsp/flows/flowControllerAction!flowAllStyleA.action?processId=" + flowProcessId+"&orderId="+orderId;
          	window.location.href = url;
          })
       	

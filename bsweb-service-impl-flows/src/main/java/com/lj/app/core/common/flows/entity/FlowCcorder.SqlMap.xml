@@ -15,6 +15,10 @@
    	  	<result property="finishTime" column="finish_time"   />
    	  	<result property="status" column="status"   />
     </resultMap>
+    
+    <resultMap id="flowCcorderResult2" extends="flowCcorderResult" class="flowCcorder">
+   	  	<result property="flowProcessId" column="FLOW_PROCESS_ID"   />
+    </resultMap>
 
 	<sql id="dynamicWhere">
 	    <dynamic prepend="WHERE">
@@ -206,12 +210,64 @@
 	    ]]>
     </select>
 
- 	<select id="pagenate" resultMap="flowCcorderResult">
-    	<include refid="commonSelectColumnsPrefix"/>
+ 	<select id="pagenate" resultMap="flowCcorderResult2">
 	    <![CDATA[
-	        from flow_ccorder 
+	        select
+        	a.id ,
+        	a.order_id ,
+        	a.actor_id ,
+        	a.creator ,
+        	a.create_time ,
+        	a.finish_time ,
+        	a. status ,
+        	b.FLOW_PROCESS_ID
+			from flow_ccorder a , flow_order    b
+			where a.order_id=b.id
 	    ]]>
-		<include refid="dynamicWhere"/>
+	    <dynamic prepend=" ">
+	       <isNotEmpty prepend="AND" property="id">
+	             a.id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderId">
+	             a.order_id = #orderId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="actorId">
+	            a. actor_id = #actorId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="creator">
+	             a.creator = #creator#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTime">
+	             a.create_time = #createTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeBegin">
+	             <![CDATA[
+	             a.create_time >= str_to_date('#createTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeEnd">
+	             <![CDATA[
+	            a. create_time <= str_to_date('#createTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTime">
+	             a.finish_time = #finishTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeBegin">
+	             <![CDATA[
+	            a. finish_time >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeEnd">
+	             <![CDATA[
+	             a.finish_time <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="status">
+	             a.status = #status#
+	       </isNotEmpty>
+	       
+	       </dynamic>
 		<dynamic prepend="ORDER BY">
 			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
 		</dynamic>
@@ -219,11 +275,58 @@
     
     <select id="pagenate_count" resultClass="long">
     <![CDATA[
-        select 
-        count(*)
-        from flow_ccorder
+        select
+        	count(*)
+			from flow_ccorder a , flow_order    b
+			where a.order_id=b.id
     ]]>
-		<include refid="dynamicWhere"/>    
+     <dynamic prepend=" ">
+	       <isNotEmpty prepend="AND" property="id">
+	             a.id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderId">
+	             a.order_id = #orderId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="actorId">
+	            a. actor_id = #actorId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="creator">
+	             a.creator = #creator#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTime">
+	             a.create_time = #createTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeBegin">
+	             <![CDATA[
+	             a.create_time >= str_to_date('#createTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="createTimeEnd">
+	             <![CDATA[
+	            a. create_time <= str_to_date('#createTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTime">
+	             a.finish_time = #finishTime#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeBegin">
+	             <![CDATA[
+	            a. finish_time >= str_to_date('#finishTimebegin#','%Y-%m-%d') 
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="finishTimeEnd">
+	             <![CDATA[
+	             a.finish_time <= str_to_date('#finishTimeEnd#','%Y-%m-%d')
+	             ]]>
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="status">
+	             a.status = #status#
+	       </isNotEmpty>
+	       
+	       </dynamic>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
     </select>
     
     <select id="homePage" resultMap="flowCcorderResult">

@@ -61,6 +61,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 	private String taskName;
 	
 	private String operator;
+	private String readonly = "0";//当前节点1,非当前节点0
 	
 	@Autowired
     private FlowEngineFacetsService flowEngineFacetsService;
@@ -146,7 +147,17 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 	 * @return
 	 */
 	public String apply() {
-		if(StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+		if((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId))|| (readonly!=null&& "1".equals(readonly))) {
+			if(StringUtil.isNotBlank(orderId)){//查询流程申请数据
+				Map<String,String> querMap = new HashMap<String,String>();
+				querMap.put("flowOrderId", orderId);
+				List list = flowBorrowTestService.queryForList(querMap);
+				if(list!=null && list.size()>0){
+				flowBorrowTest =(FlowBorrowTest) list.get(0);
+				}
+				operate="edit";
+			}
+			
 			return "flowBorrowTestApply";
 		} else {
 			Map<String,String> querMap = new HashMap<String,String>();
@@ -188,8 +199,21 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
         	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
             /** 业务数据处理开始*/
         	flowBorrowTest.setOperator(this.getUserName());
-        	flowBorrowTestService.insertObject(flowBorrowTest);
+        	
+        	 if (operate != null && operate.equals("edit")) {
+     			flowBorrowTest.setUpdateBy(getLoginUserId());
+     			flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+     			flowBorrowTestService.updateObject(flowBorrowTest);
+     			
+     			returnMessage = UPDATE_SUCCESS;
+     		}else{
+     			flowBorrowTest.setCreateBy(getLoginUserId());
+     			flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+     			flowBorrowTestService.insertObject(flowBorrowTest);
+     			returnMessage = CREATE_SUCCESS;
+     		}
         }
+       
 		return LIST;
 	}
 
@@ -268,6 +292,14 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 
 	public void setOperator(String operator) {
 		this.operator = operator;
+	}
+
+	public String getReadonly() {
+		return readonly;
+	}
+
+	public void setReadonly(String readonly) {
+		this.readonly = readonly;
 	}
 
 	public FlowEngineFacetsService getFlowEngineFacetsService() {
