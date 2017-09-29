@@ -39,10 +39,17 @@
 </script>
 </head>
 	<body>
-		<table class="properties_all" align="center" border="1" cellpadding="0" cellspacing="0" style="margin-top: 0px">
-			<div id="snakerflow" style="border: 1px solid #d2dde2; margin-top:10px; margin-left:10px; margin-bottom:10px; width:98%;">
+	<div class="container">
+		<div class="row">
+	      <div class="col-sm-12">
+	      	<div id="properties_all" >
+				<div id="snakerflow" style="border: 1px solid #d2dde2; margin-top:10px; margin-left:10px; margin-bottom:10px; width:98%;">
+				</div>
 			</div>
-		</table>
+	      </div>
+   		</div>
+   
+	</div>
 		<script type="text/javascript">
 		$.ajax({
 				type:'GET',
