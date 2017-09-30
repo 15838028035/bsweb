@@ -108,7 +108,9 @@
 			            }
 					}
 					
-					$.addtabs.add({"id":"8888","title":"审批流水","url": "${ctx}/jsp/flows/flowApproveList.jsp?processId=${processId}&orderId=${orderId}","target": "#tabs"});
+					if(currentTabNo>0){
+						$.addtabs.add({"id":"8888","title":"审批流水","url": "${ctx}/jsp/flows/flowApproveList.jsp?processId=${processId}&orderId=${orderId}","target": "#tabs"});
+					}
 					$.addtabs.add({"id":"9999","title":"流程图","url": "${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}","target": "#tabs"});
 					
 					//激活当前流程节点
@@ -118,6 +120,7 @@
 				}
 			});
         });
+        
     	</script>
 	</body>
 </html>

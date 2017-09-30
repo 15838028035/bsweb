@@ -22,7 +22,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/flows/flowControllerAction!flowApproveInfoBootStrapList.action?orderId=${param.orderId}&taskId=${param.taskId}',         //请求后台的URL（*）
+                url: '${ctx}/jsp/flows/flowControllerAction!flowApproveInfoBootStrapList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",
@@ -106,7 +106,8 @@
         //得到查询的参数
       oTableInit.queryParams = function (params) {
 			var id=$("#id").val();
-			var orderId=${param.orderId};
+			var orderId="${param.orderId}";
+			var taskId ="${param.taskId}";
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 rows:params.rows,
                 page:params.page,
@@ -115,7 +116,8 @@
                 offset:params.offset,
                 "sortName":this.sortName,
                 "sortOrder":this.sortOrder,
-				"flowApprove.orderId":orderId
+				"flowApprove.orderId":orderId,
+				"flowApprove.taskId":taskId
             };
             return temp;
         };

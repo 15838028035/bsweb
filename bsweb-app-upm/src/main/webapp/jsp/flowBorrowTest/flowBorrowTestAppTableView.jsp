@@ -21,7 +21,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!bootStrapList.action?flowBorrowTest.flowOrderId=${param.orderId}',         //请求后台的URL（*）
+                url: '${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!bootStrapList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",

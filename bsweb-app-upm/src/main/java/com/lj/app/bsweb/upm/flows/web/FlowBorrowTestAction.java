@@ -65,6 +65,8 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 	private String operator;
 	private String readonly = "0";//当前节点1,非当前节点0
 	
+	private String isApplyWhere = "";//条件查询
+	
 	@Autowired
     private FlowEngineFacetsService flowEngineFacetsService;
 	
@@ -103,7 +105,9 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
 				page.setSortColumns(orderBy);
 			}
-			
+			if(StringUtil.isNotBlank(isApplyWhere)){
+				condition.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
+			}
 			page = getBaseService().findPageList(page, condition);
 			Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page),new String[0]);
 			return null;
@@ -291,6 +295,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 	        	Map<String,String> querMap = new HashMap<String,String>();
 				querMap.put("processId", processId);
 				querMap.put("operator", this.getUserName());
+				querMap.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
 				
 				List<FlowBorrowTest> list = flowBorrowTestService.queryForList(querMap);
 				
@@ -406,6 +411,14 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 
 	public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
 		this.flowEngineFacetsService = flowEngineFacetsService;
+	}
+
+	public String getIsApplyWhere() {
+		return isApplyWhere;
+	}
+
+	public void setIsApplyWhere(String isApplyWhere) {
+		this.isApplyWhere = isApplyWhere;
 	}
 	
 }

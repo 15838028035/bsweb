@@ -30,7 +30,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!bootStrapList.action?flowBorrowTest.flowOrderId=${param.orderId}',         //请求后台的URL（*）
+                url: '${ctx}/jsp/flowBorrowTest/flowBorrowTestAction!bootStrapList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",
@@ -120,8 +120,7 @@
       			var obj = eval("("+result+")");
       			bootbox.alert(obj.opResult);
       			
-      			//refreshGrid();
-      			
+      			refreshGrid();
               }
               
             });
@@ -138,7 +137,8 @@
                 offset:params.offset,
                 "sortName":this.sortName,
                 "sortOrder":this.sortOrder,
-				"flowBorrowTest.flowOrderId":"${param.orderId}"
+				"flowBorrowTest.processId":"${param.processId}",
+				"isApplyWhere":"true"//申请查询,包含之前草稿箱的记录
             };
             return temp;
         };
@@ -275,11 +275,13 @@
 				          data:postData
 				      }).responseText;
 					var obj = eval("("+result+")");
-					bootbox.alert(obj.opResult);
+					//bootbox.alert(obj.opResult);
 					//自动关闭窗口
-					window.close();
+					parent.window.close();
 	               }
     	 	});
+    	 	
+    	 	 
  	    });
        
   	$btn_query.click(function () {
