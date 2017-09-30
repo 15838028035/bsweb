@@ -19,6 +19,7 @@ import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.service.FlowBorrowTestService;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
 import com.lj.app.core.common.pagination.PageTool;
+import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
@@ -40,6 +41,7 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/flowBorrowTest/flowBorrowTest-input.jsp"),
 		@Result(name ="flowBorrowTestApply", location = "/jsp/flowBorrowTest/flowBorrowTestApply.jsp"),
 		@Result(name ="flowBorrowTestView", location = "/jsp/flowBorrowTest/flowBorrowTestView.jsp"),
+		@Result(name ="flowBorrowTestAppTable", location = "/jsp/flowBorrowTest/flowBorrowTestAppTable.jsp"),
 		@Result(name = AbstractBaseAction.SAVE, location = "flowBorrowTestAction!edit.action",type=AbstractBaseAction.REDIRECT),
 		@Result(name = AbstractBaseAction.LIST, location = "/jsp/flowBorrowTest/flowBorrowTestList.jsp", type=AbstractBaseAction.REDIRECT)
 })
@@ -128,6 +130,8 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 				returnMessage = UPDATE_SUCCESS;
 			}else{
 				flowBorrowTest.setCreateBy(getLoginUserId());
+				flowBorrowTest.setOperator(this.getUserName());
+				flowBorrowTest.setCreateByUname(this.getUserName());
 				flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
 				flowBorrowTestService.insertObject(flowBorrowTest);
 				returnMessage = CREATE_SUCCESS;
@@ -140,6 +144,42 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 			throw e;
 		}
 		
+	}
+	
+	/**
+	 *保存数据
+	 * @return
+	 * @throws Exception
+	 */
+	public String ajaxSave() throws Exception {
+		
+	try{
+			if(flowBorrowTest.getId()!=null &&flowBorrowTest.getId()>0){
+				flowBorrowTest.setUpdateBy(getLoginUserId());
+				flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+				flowBorrowTestService.updateObject(flowBorrowTest);
+				returnMessage = UPDATE_SUCCESS;
+			}else{
+				flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+				flowBorrowTest.setCreateBy(getLoginUserId());
+				flowBorrowTest.setOperator(this.getUserName());
+				flowBorrowTest.setOperatorTime(new Date());
+				flowBorrowTest.setCreateByUname(this.getUserName());
+				
+				flowBorrowTestService.insertObject(flowBorrowTest);
+				returnMessage = CREATE_SUCCESS;
+			}
+			
+		}catch(Exception e){
+			returnMessage = CREATE_FAILURE;
+			e.printStackTrace();
+			throw e;
+		}
+	
+		AjaxResult ar = new AjaxResult();
+		ar.setOpResult(returnMessage);
+		Struts2Utils.renderJson(ar);
+		return null;
 	}
 	
 	/**
@@ -215,6 +255,64 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
         }
        
 		return LIST;
+	}
+	
+	/**
+	 * 批量借款申请测试
+	 * @return
+	 */
+	public String flowBorrowTestAppTable() {
+		if( readonly!=null && "1".equals(readonly)) {
+			return "flowBorrowTestAppTable";
+		}else{
+			return "flowBorrowTestAppTableView";
+		}
+	}
+	
+	/**
+	 * 申请保存
+	 * @return
+	 * @throws Exception
+	 */
+	public String flowBorrowTestAppTableSubmit() throws  Exception {
+		 /** 流程数据构造开始 */
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("apply.operator", this.getUserName());
+        /** 流程数据构造结束 */
+
+        try{
+	        /**
+	         * 启动流程并且执行申请任务
+	         */
+	        if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+	        	FlowOrder FlowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
+	            /** 业务数据处理开始*/
+	        	
+	        	Map<String,String> querMap = new HashMap<String,String>();
+				querMap.put("processId", processId);
+				querMap.put("operator", this.getUserName());
+				
+				List<FlowBorrowTest> list = flowBorrowTestService.queryForList(querMap);
+				
+				for(FlowBorrowTest flowBorrowTest:list){
+					flowBorrowTest.setFlowOrderId(FlowOrder.getId());
+					flowBorrowTestService.updateObject(flowBorrowTest);
+				}
+	        	
+	        } else {
+	        	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+	        	/** 业务数据处理开始*/
+	        }
+	        returnMessage="提交成功";
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	returnMessage="提交失败,失败原因:" + e.getMessage();
+        }
+       
+    	AjaxResult ar = new AjaxResult();
+		ar.setOpResult(returnMessage);
+		Struts2Utils.renderJson(ar);
+		return null;
 	}
 
 	@Override

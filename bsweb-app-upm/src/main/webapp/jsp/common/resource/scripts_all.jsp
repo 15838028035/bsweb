@@ -9,6 +9,11 @@
 <script src="${ctx}/scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script src="${ctx}/scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
+<link href="${ctx}/scripts/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+<script src="${ctx}/scripts/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="${ctx}/scripts/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
+
+
 <link href="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 
