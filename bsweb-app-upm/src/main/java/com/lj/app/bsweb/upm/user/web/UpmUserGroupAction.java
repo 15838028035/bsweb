@@ -123,11 +123,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 				treeNodeList.add(BootStrapTreeViewCheck.createNew(String.valueOf(group.getId()), text, String.valueOf(group.getParentId())));
 			}
 			
-			BootStrapTreeViewCheck simpleTree = BootStrapTreeViewCheck.valueOf(treeNodeList, treeNodeId.toString());
-					
-			if (null != simpleTree) {
-				jsonStr=  simpleTree.toJsonString();
-			}
+			jsonStr = BootStrapTreeViewCheck.valueOfString(treeNodeList, treeNodeId.toString());
 			
 			Struts2Utils.renderText(jsonStr);
 			return null;

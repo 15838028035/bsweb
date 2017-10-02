@@ -235,6 +235,30 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 		return RELOAD;
 	}
 
+	/**查找已经分配的角色列表
+	 * @return
+	 * @throws Exception
+	 */
+	public String findAssignedRoleList() throws Exception {
+		try {
+			Map<String,Object> condition = new HashMap<String,Object>();
+			page.setFilters(getModel());
+			condition.put("userGroupId", userGroupId);
+			
+			if (StringUtil.isNotBlank(this.getSortName())) {
+				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
+				page.setSortColumns(orderBy);
+			}
+			
+			page = getBaseService().findPageList(page, condition,"findAssignedRoleList");
+			Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page),new String[0]);
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 	public void setId(java.lang.Integer value) {
 		this.id = value;
 	}

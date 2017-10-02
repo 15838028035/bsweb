@@ -10,7 +10,21 @@
 	<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
 	<%@ include file="/jsp/common/resource/styles_all.jsp"%>
 	
-	</head>
+	<style type="text/css" >
+	 .login-dialog .modal-dialog  {
+                width: 98%;
+                height:1000px;
+                min-height:1000px;
+            }
+             .speial-dialog .modal-dialog-body {
+                width: 92%;
+            }
+            .speial-dialog .bootstrap-dialog-message {
+            }
+           
+	</style>
+	
+</head>
 
 <script type="text/javascript">
 var CHILDREN_SELECTED = "0";
@@ -33,7 +47,7 @@ $(document).ready(function(){
         
 		 $('#upmUserGroupTreeDiv').treeview({
 	            data:dataObj,
-	            levels: 5,
+	            levels: 10,
 	            showIcon: true,  
 	            multiSelect: false,
 	            highlightSelected: true, //是否高亮选中
@@ -44,6 +58,19 @@ $(document).ready(function(){
 	            	
 	            },
 				 onNodeSelected: function(event, data) {
+					 
+					 if(data.nodes!=null){                               
+					        var select_node = $('#upmUserGroupTreeDiv').treeview('getSelected');
+					        if(select_node[0].state.expanded){
+					            $('#upmUserGroupTreeDiv').treeview('collapseNode',select_node);
+					            select_node[0].state.selected=false;
+					        }
+					        else{
+					            $('#upmUserGroupTreeDiv').treeview('expandNode',select_node);
+					            select_node[0].state.selected=false;
+					        }
+					    }
+					 
 					  treeNodeId = data.id;
 	                    $("#btnInsert").prop("disabled",false);
 			  			$("#btnsaveorg").prop("disabled",false);//set btn-save
@@ -59,6 +86,8 @@ $(document).ready(function(){
 					  		}
 				  		$("#auditactselectedOrgid").val(treeNodeId);
 				  		$("#parentId").val(treeNodeId);
+				  		//加载用户信息
+				  		refreshGrid();
 		       },
 		       onNodeExpanded: addNextNode
 		      }
@@ -73,9 +102,17 @@ $(document).ready(function(){
  */
 function addNextNode(event, node) {
     $.getJSON("${ctx}/jsp/user/upmUserGroupAction!list.action?treeNodeId="+node.nodeId, function (data) {
-        $tree.treeview("deleteChildrenNode", node.nodeId);
-        $tree.treeview("addNode", [node.nodeId, {node: data}]);
+    	$('#upmUserGroupTreeDiv').treeview("deleteChildrenNode", node.nodeId);
+    	$('#upmUserGroupTreeDiv').treeview("remove", node.nodeId);
+    	
+    	$.each(data, function (index, nodeItem) {
+    				var nodeId = nodeItem.id;
+					$('#upmUserGroupTreeDiv').treeview("addNode", [node.nodeId, {node: nodeItem}]);
+				});
+    	
+        // $("#upmUserGroupTreeDiv").treeview("addNode", [{ node: { text: "新加的菜单","parentId":"1"} }]);
     });
+    
 }
 		 
 var TableInit = function () {
@@ -178,7 +215,6 @@ var TableInit = function () {
 };
 
 $("#btnInsert").on("click", function(){
-	alert("Test");
     //获取表单对象
    var bootstrapValidator = form.data('bootstrapValidator');
       //手动触发验证
@@ -257,21 +293,25 @@ $("#btnInsert").on("click", function(){
 	      	//分配角色
         	var userGroupId = $("#auditactselectedOrgid").val();				
 			if(!userGroupId){
-				showModalMessage("请一条记录");
+				bootbox.alert("请一条记录");
 				return false;
 			}
-				
-        	jQuery.FrameDialog.create({
-						url: "${ctx}/jsp/role/upmRoleGroupAssignList.jsp?userGroupId="+userGroupId,
-						title: "角色管理",
-						width: 800,
-						height: 600,
-						hide: 'slide',
-						buttons:{}							
-					}).bind('dialogclose', function(event, ui) {
-							//refreshGrid();
-			    	});
+			
+      		var dialog = new BootstrapDialog({
+      		  	title:"分配角色",
+      		  cssClass :"speial-dialog",
+      		  size:BootstrapDialog.SIZE_WIDE,
+      		    message: $('<iframe  width="100%;" height="800px"; src="${ctx}/jsp/role/upmRoleGroupAssignList.jsp?userGroupId=" +userGroupId + ""></iframe>'),
+      		  buttons: [ {
+                  label: '关闭',
+                  action: function(dialogRef){
+                      dialogRef.close();
+                  }
+              }]
+      		});
+      		dialog.open();
         }
+      	
 </script>
 </head>
 <body>
@@ -354,8 +394,8 @@ $("#btnInsert").on("click", function(){
             <button id="addRel" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
-            <button id="btn_mulDeleteRel" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="mulDeleteRel();"></span>删除
+            <button id="btn_mulDeleteRel" type="button" class="btn btn-default" onClick="mulDeleteRel();">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>删除
             </button>
         </div>
 				<table id="tableList"></table>
@@ -364,67 +404,65 @@ $("#btnInsert").on("click", function(){
         </div>
     </div>
      <script type="text/javascript">
-    
-	    $("#select").click(function() {
-	    	var userName = $("#userNameParam").val();
-	    	var orgDesc = $("#orgDescParam").val();
-	    	var mobile = $("#mobileParam").val();
-	    	
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/user/upmUserAction!listUserByCondition.action',
-				postData : {"userName" : userName,
-							"orgDesc" : orgDesc,
-							"mobile" : mobile
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
-	    
+     var $tableList = $('#tableList');
+     var $btn_query = $('#btn_query');
+     
+     $btn_query.click(function () {
+    	 refreshGrid();
+    });
+     
 		//新增
         $("#addRel").click(function() {
-        	var groupId = $("#auditactselectedOrgid").val();				
-			if(!groupId){
-				showModalMessage("请一条记录");
-				return false;
-			}
-				
-        	jQuery.FrameDialog.create({
-						url: "${ctx}/jsp/user/upmUserSelectList.jsp?groupId="+groupId,
-						title: "用户管理",
-						width: 800,
-						height: 600,
-						hide: 'slide',
-						buttons:{}							
-					}).bind('dialogclose', function(event, ui) {
-							refreshGrid();
-			    	});
+        	var groupId = $("#auditactselectedOrgid").val();	
+        	if(groupId==""){
+        		bootbox.alert("请选择组织机构");
+        		return false;
+        	}
+			 
+			 var dialog = new BootstrapDialog({
+	      		  	title:"用户管理",
+	      		  cssClass :"speial-dialog",
+	      		  size:BootstrapDialog.SIZE_WIDE,
+	      		    message: $('<iframe  width="100%;" height="800px"; src="${ctx}/jsp/user/upmUserSelectAssignList.jsp?groupId=" +groupId + ""></iframe>'),
+	      		  buttons: [ {
+	                  label: '关闭',
+	                  action: function(dialogRef){
+	                      dialogRef.close();
+	                      refreshGrid();
+	                  }
+	              }]
+	      		});
+	      		dialog.open();
+	      		
         })
 		//删除
         function mulDeleteRel(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+	    	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.userGroupAndUserRelId;
+             });
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		bootbox.alert("请一条记录");
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }
-        	
-        function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-            var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/user/upmUserAndUserGroupRelAction!multidelete.action?multidelete=" + ids,
-		          async:false,
-		          cache:false,
-		          dataType:"json"
-		      }).responseText;
-			var obj = eval("("+result+")");
-			bootbox.alert(obj.opResult);
-			refreshGrid();
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                    var result = jQuery.ajax({
+        		      	  url:"${ctx}/jsp/user/upmUserAndUserGroupRelAction!multidelete.action?multidelete=" + ids,
+        		          async:false,
+        		          cache:false,
+        		          dataType:"json"
+        		      }).responseText;
+        			var obj = eval("("+result+")");
+        			bootbox.alert(obj.opResult);
+        			refreshGrid();
+                }
+        	});
         }
         
       	function refreshGrid(){
-				$tableList.bootstrapTable('refresh');
+      		var parentId =$("#parentId").val();
+			$tableList.bootstrapTable('refresh', "${ctx}/jsp/user/upmUserAction!listUserByCondition.action?treeNodeId="+parentId);
       	}
       	
     </script>
