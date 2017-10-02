@@ -29,21 +29,20 @@
 				          dataType:"text"
 			}).responseText;
 			
-			alert(jsonData);
 			jsonData = "[" + jsonData + "]";
 			
 			var dataObj=eval("("+jsonData+")");
-			
 	        
 			  $('#treediv').treeview({
 		            data:dataObj,
 		            levels: 5,
 		            showIcon: true,  
-		            multiSelect: false,
+		            multiSelect: true,
 		            highlightSelected: true, //是否高亮选中
 		            highlightSearchResults:true,
 		            showCheckbox:true,
-		            showIcon:true
+		            showIcon:true,
+		            toggleNodeSelected:true
 			 }
 			 ); 
 			 
@@ -148,7 +147,6 @@
 			
 		}).on('success.form.bv', function (e) {
 			e.preventDefault();
- 			alert("submit");
  		   addRoleAction();
 		}
 		);
@@ -160,27 +158,30 @@
         var batchid="";
     	function addRoleAction(){
     		batchid="";
-			var treeNodeIds = $('#treediv').treeview('getSelected');
-			if(treeNodeIds.length==0){
+			var treeNodeIds = $("#treediv").treeview("getSelected");
+			
+			var treeNodeText = "";
+			var treeIds = "";
+			
+			$.each(treeNodeIds, function (index, nodeItem) {
+				var nodeId = nodeItem.id;
+				treeIds = treeIds+ nodeId;
+				//if(i < index - 1){
+					treeIds += ",";
+				//}
+			});
+			
+			if(treeIds==""){
 				bootbox.alert('请选择一条记录');
 				return;
 			}
-			var treeNodeText = "";
-			var treeIds = "";
-			for(var i=0;i<treeNodeIds.length;i++){
-				var tmp = getParentPath($.trim(treeNodeIds[i].toString()));
-				treeNodeText += tmp;
-				treeIds += treeNodeIds[i].toString();
-				
-				if(i < treeNodeIds.length - 1){
-					treeNodeText += ",";
-					treeIds += ",";
-				}
-			}
 			
-			document.getElementById("permissions").value = c;
-			alert("treeIds=" + treeIds);
+			treeIds=treeIds.substring(0,treeIds.length-1);
+			document.getElementById("permissions").value = treeIds;
 			$("#upmRoleForm").submit();
+			
+			bootbox.alert("保存成功");
+			window.close();
 		}
     	
 		function getParentPath(id){

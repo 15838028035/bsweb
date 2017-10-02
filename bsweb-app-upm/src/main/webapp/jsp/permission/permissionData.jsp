@@ -74,9 +74,9 @@
                         	   			return index+1;
                            			}  
                            },
-			 	{field:'id',title:'ID', sortable:true},
+			 	{field:'id',title:'ID', sortable:true, visible:false},
 			 	{field:'appId',title:'应用ID', sortable:true},
-			 	{field:'parentId',title:'父ID', sortable:true},
+			 	{field:'parentId',title:'父ID', sortable:true, visible:false},
 			 	{field:'name',title:'名称', sortable:true},
 			 	{field:'type',title:'类型', sortable:true},
 			 	{field:'url',title:'URL', sortable:true},
@@ -85,13 +85,13 @@
 			 	{field:'state',title:'态状', sortable:true},
 			 	{field:'remark',title:'注备', sortable:true},
 			 	{field:'sortNo',title:'排序', sortable:true},
-			 	{field:'iconPath',title:'图片路径', sortable:true},
-			 	{field:'createBy',title:'创建人', sortable:true},
-			 	{field:'createDate',title:'创建日期', sortable:true},
-			 	{field:'updateBy',title:'新更人', sortable:true},
-			 	{field:'updateDate',title:'更新日期', sortable:true},
-			 	{field:'enableFlag',title:'是否有效', sortable:true},
-			 	{field:'lockStatus',title:'锁定状态', sortable:true}
+			 	{field:'iconPath',title:'图片路径', sortable:true, visible:false},
+			 	{field:'createBy',title:'创建人', sortable:true, visible:false},
+			 	{field:'createDate',title:'创建日期', sortable:true, visible:false},
+			 	{field:'updateBy',title:'新更人', sortable:true, visible:false},
+			 	{field:'updateDate',title:'更新日期', sortable:true, visible:false},
+			 	{field:'enableFlag',title:'是否有效', sortable:true, visible:false},
+			 	{field:'lockStatus',title:'锁定状态', sortable:true, visible:false}
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -115,52 +115,13 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var id=$("#id").val();
-			var appId=$("#appId").val();
-			var parentId=$("#parentId").val();
 			var name=$("#name").val();
-			var type=$("#type").val();
-			var url=$("#url").val();
-			var code=$("#code").val();
-			var keyCode=$("#keyCode").val();
-			var state=$("#state").val();
-			var remark=$("#remark").val();
-			var sortNo=$("#sortNo").val();
-			var iconPath=$("#iconPath").val();
-			var createBy=$("#createBy").val();
-	    		var createDateBegin=$("#createDateBegin").val();
-	    		var createDateEnd=$("#createDateEnd").val();
-			var updateBy=$("#updateBy").val();
-	    		var updateDateBegin=$("#updateDateBegin").val();
-	    		var updateDateEnd=$("#updateDateEnd").val();
-			var enableFlag=$("#enableFlag").val();
-			var lockStatus=$("#lockStatus").val();
-
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
-					"upmPermission.id":id,
-					"upmPermission.appId":appId,
-					"upmPermission.parentId":parentId,
-					"upmPermission.name":name,
-					"upmPermission.type":type,
-					"upmPermission.url":url,
-					"upmPermission.code":code,
-					"upmPermission.keyCode":keyCode,
-					"upmPermission.state":state,
-					"upmPermission.remark":remark,
-					"upmPermission.sortNo":sortNo,
-					"upmPermission.iconPath":iconPath,
-					"upmPermission.createBy":createBy,
-					"upmPermission.createDateBegin":createDateBegin,
-					"upmPermission.createDateEnd":createDateEnd,
-					"upmPermission.updateBy":updateBy,
-					"upmPermission.updateDateBegin":updateDateBegin,
-					"upmPermission.updateDateEnd":updateDateEnd,
-					"upmPermission.enableFlag":enableFlag,
-					"upmPermission.lockStatus":lockStatus
+					"upmPermission.name":name
             };
             return temp;
         };
@@ -182,67 +143,8 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-                        
-			 	<label class="control-label col-sm-1" for="appId">应用ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="parentId">父ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="parentId"></div>
-                        
 			 	<label class="control-label col-sm-1" for="name">名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="name"></div>
-                        
-			 	<label class="control-label col-sm-1" for="type">类型</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="type"></div>
-                        
-			 	<label class="control-label col-sm-1" for="url">URL</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="url"></div>
-                        
-			 	<label class="control-label col-sm-1" for="code">code</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="code"></div>
-                        
-			 	<label class="control-label col-sm-1" for="keyCode">key_code</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="keyCode"></div>
-                        
-			 	<label class="control-label col-sm-1" for="state">态状</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="state"></div>
-                        
-			 	<label class="control-label col-sm-1" for="remark">注备</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="remark"></div>
-                        
-			 	<label class="control-label col-sm-1" for="sortNo">排序</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="sortNo"></div>
-                        
-			 	<label class="control-label col-sm-1" for="iconPath">图片路径</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="iconPath"></div>
-                        
-			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
-                        
-			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="createDateBegin" id = "createDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="createDateEnd" id = "createDateEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="updateBy">新更人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
-                        
-			 	<label class="control-label col-sm-1" for="updateDate">更新日期</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="updateDateBegin" id = "updateDateBegin"  class="datetimepicker" readonly="readonly"/>
-				<input type="text" name="updateDateEnd" id = "updateDateEnd"  class="datetimepicker" readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="enableFlag">是否有效</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="enableFlag"></div>
-                        
-			 	<label class="control-label col-sm-1" for="lockStatus">锁定状态</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="lockStatus"></div>
-                        
-
                         <div class="col-sm-6" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                         </div>

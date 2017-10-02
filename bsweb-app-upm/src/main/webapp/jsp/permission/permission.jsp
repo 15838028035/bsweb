@@ -11,7 +11,7 @@
   <script>
   </script>
   <body>
-  <input type="hidden" name="appId" id="appId" value=${param.appId}>
+  <input type="hidden" name="appId" id="appId" value="${param.appId}">
 	 <table width="100%"  hight="100%" cellpadding="0" cellspacing="0" border="0">
 	    <tr>
 	    	 	<td width="20%" valign="top">

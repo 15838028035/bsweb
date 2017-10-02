@@ -107,7 +107,7 @@ function addNextNode(event, node) {
     	
     	$.each(data, function (index, nodeItem) {
     				var nodeId = nodeItem.id;
-					$('#upmUserGroupTreeDiv').treeview("addNode", [node.nodeId, {node: nodeItem}]);
+					$('#upmUserGroupTreeDiv').treeview("addNode", [node.nodeId, {levels: 2,node: nodeItem}]);
 				});
     	
         // $("#upmUserGroupTreeDiv").treeview("addNode", [{ node: { text: "新加的菜单","parentId":"1"} }]);
