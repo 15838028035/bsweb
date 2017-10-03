@@ -39,11 +39,12 @@
 		            showCheckbox:false,
 		            showIcon:true,
 		            onNodeSelected: function(event, data) {
-		            	 var treeNodeId = data.nodeId;
+		            	 var treeNodeId = data.id;
                          $("#LT_main",parent.document.body).contents().find("#perssionParentId").val(treeNodeId);
                          var aa = $("#LT_main",parent.document.body).contents().find("#perssionParentId").val();
-                         var newUrl="${ctx}/jsp/permission/permissionData.jsp?appId="+appId+"&parentId="+treeNodeId;
-                         parent.LT_main.location = newUrl;
+                         //"${ctx}/jsp/permission/permissionData.jsp?appId="+appId+"&parentId="+treeNodeId;
+                         var newUrl="${ctx}/jsp/permission/upmPermissionAction!turnToPermissionList.action?appId="+appId+"&parentId="+treeNodeId;
+                         parent.LT_main.src = newUrl;
 		            }
 		        }
 			 );

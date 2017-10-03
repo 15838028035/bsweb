@@ -18,7 +18,7 @@
 			    	<iframe id="LT_menu" src="${ctx}/jsp/permission/permissionTree.jsp" scrolling="auto" width="100%" height="600" frameborder="0"></iframe>
 			    </td>
 			    <td width="80%" valign="top">
-				       <iframe id="LT_main" src="${ctx}/jsp/permission/permissionData.jsp" scrolling="auto" width="100%" height="600" frameborder="0" allowTransparency="true" style="overflow-x:hidden;"></iframe>
+				       <iframe id="LT_main" src="${ctx}/jsp/permission/upmPermissionAction!turnToPermissionList.action?appId=${param.appId}&parentId=0" scrolling="auto" width="100%" height="600" frameborder="0" allowTransparency="true" style="overflow-x:hidden;"></iframe>
 			    </td>
 	    </tr>
     </table>

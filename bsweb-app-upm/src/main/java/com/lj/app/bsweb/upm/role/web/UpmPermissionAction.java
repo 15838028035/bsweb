@@ -29,7 +29,6 @@ import net.sf.json.JSONArray;
 @Controller
 @Namespace("/jsp/permission")
 @Results({
-		@Result(name = "turnToPermissionList", location = "permissionData.jsp"),
 		@Result(name = AbstractBaseAction.RELOAD, location = "permission.jsp"),
 		@Result(name = AbstractBaseAction.INPUT, location = "permission-input.jsp"),
 		@Result(name = "turnToPermissionList", location = "permissionData.jsp")
@@ -216,6 +215,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 
 	public String reload() throws Exception {
 		this.appId = Struts2Utils.getParameter("appId");
+		this.parentId = Struts2Utils.getParameter("parentId");
 		return RELOAD;
 	}
 	

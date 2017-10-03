@@ -33,7 +33,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: "${ctx}/jsp/permission/upmPermissionAction!bootStrapList.action?appId=" + appId + "&parentId="+ perssionParentId,         //请求后台的URL（*）
+                url: "${ctx}/jsp/permission/upmPermissionAction!bootStrapList.action",         //请求后台的URL（*）
                 method: "post",                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded",
@@ -115,12 +115,17 @@
         //得到查询的参数
       oTableInit.queryParams = function (params) {
 			var name=$("#name").val();
+			 var appId=parent.document.getElementById("appId").value;
+		     var perssionParentId = $("#perssionParentId").val();
+		        
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
-					"upmPermission.name":name
+					"upmPermission.name":name,
+					"appId":appId,
+					"parentId":perssionParentId
             };
             return temp;
         };
