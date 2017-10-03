@@ -5,7 +5,6 @@ import com.lj.app.core.common.base.entity.BaseEntity;
 public class UpmPermission extends BaseEntity{
 	
 	private java.lang.Integer id;
-	private String appId;
 	private java.lang.Integer parentId;
 	private String name;
 	private String type;
@@ -26,12 +25,6 @@ public class UpmPermission extends BaseEntity{
 	}
 	public void setId(java.lang.Integer id) {
 		this.id = id;
-	}
-	public String getAppId() {
-		return appId;
-	}
-	public void setAppId(String appId) {
-		this.appId = appId;
 	}
 	public java.lang.Integer getParentId() {
 		return parentId;

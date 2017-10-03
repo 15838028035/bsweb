@@ -183,7 +183,7 @@
         $("#btn_add").click(function() {
         	var appId = $("#appId").val();
         	var perssionParentId = $("#perssionParentId").val();
-        	window.location.href = "${ctx}/jsp/permission/upmPermissionAction!input.action?upmPermission.appId="+appId+"&upmPermission.parentId="+perssionParentId;
+        	window.location.href = "${ctx}/jsp/permission/upmPermissionAction!input.action?appId="+appId+"&upmPermission.parentId="+perssionParentId;
         })
 		//编辑
         $("#btn_edit").click(function() {
@@ -199,7 +199,8 @@
         		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/permission/upmPermissionAction!input.action?operate=edit&id=" + ids;
+        	var appId = $("#appId").val();
+        	window.location.href = "${ctx}/jsp/permission/upmPermissionAction!input.action?operate=edit&id=" + ids +"&appId="+appId;
         })
 		//删除
       $("#btn_delete").click(function() {

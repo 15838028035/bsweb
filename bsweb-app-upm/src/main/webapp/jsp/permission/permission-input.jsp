@@ -32,7 +32,7 @@
 <input type="hidden" name="upmPermission.id" id="id" value="${upmPermission.id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
 
-<input type="hidden" name="upmPermission.appId" id="appId" value="${appId }">
+<input type="hidden" name="upmPermission.appId" id="appId" value="${upmPermission.appId}">
 <input type="hidden" name="upmPermission.parentId" id="parentId" value="${parentId}">
 <input type="hidden" name="oldName" id="oldName" value="${upmPermission.name }">
         

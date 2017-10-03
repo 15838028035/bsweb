@@ -87,6 +87,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 			upmPermission = (UpmPermission)upmPermissionService.getInfoByKey(id);
 		} else {
 			upmPermission = new UpmPermission();
+			upmPermission.setAppId(appId);
 		}
 	}
 	
