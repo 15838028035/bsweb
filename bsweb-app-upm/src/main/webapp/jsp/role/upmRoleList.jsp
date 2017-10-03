@@ -225,7 +225,7 @@
 	 
 		//新增
         $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/role/upmRoleAction!input.action'
+        	window.location.href = '${ctx}/jsp/role/upmRoleAction!input.action?appId=${param.appId}'
         });
 		
 		//编辑

@@ -106,11 +106,11 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 				UpmPermission up = list.get(i);
 				String id = up.getId() + "";
 				String text = up.getName();
-				int checked = 0;
+				Boolean checked = false;
 				for (int j = 0; j < permissionIds.size(); j++) {
 					Integer tmpId = permissionIds.get(j);
 					if (up.getId().equals(tmpId)) {
-						checked = 1;
+						checked = true;
 						break;
 					}
 				}
@@ -172,25 +172,20 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 				UpmPermission up = list.get(i);
 				String id = up.getId() + "";
 				String text = up.getName();
-				int checked = 0;
+				Boolean checked = false;
 				for (int j = 0; j < permissionIds.size(); j++) {
 					Integer tmpId = permissionIds.get(j);
 					if (up.getId().equals(tmpId)) {
-						checked = 1;
+						checked = true;
 						break;
 					}
 				}
 				String parentId = up.getParentId().intValue() + "";
-				treeNodeList.add(BootStrapTreeViewCheck.createNew(id, text, parentId));
+				treeNodeList.add(BootStrapTreeViewCheck.createNew(id, text,checked, parentId));
 			}
 			
 			Integer rootId = upmPermissionService.findRootPermissionIdByAppId(appId);
-					
-			BootStrapTreeViewCheck simpleTree = BootStrapTreeViewCheck.valueOf(treeNodeList, rootId.toString());
-					
-			if (null != simpleTree) {
-				return simpleTree.toJsonString();
-			}
+			return BootStrapTreeViewCheck.valueOfString(treeNodeList, rootId.toString());
 		}
 		return null;
 	}

@@ -41,11 +41,27 @@
 		            highlightSelected: true, //是否高亮选中
 		            highlightSearchResults:true,
 		            showCheckbox:true,
-		            showIcon:true,
-		            toggleNodeSelected:true
+		            showIcon:true
 			 }
 			 ); 
+			  
 			 
+			  $("#searchTreeBtn").click(function(){
+				  var searchText =$("#searchText").val();
+				  $('#treediv').treeview('search', [searchText, {
+					    ignoreCase: true,     // case insensitive
+					    exactMatch: false,    // like or equals
+					    revealResults: true,  // reveal matching nodes
+					  }]);
+			  });
+			  
+			  $("#selectAll").click(function(){
+				  $('#treediv').treeview('checkAll', { silent: true });
+			  });
+			  
+			  $("#unselectAll").click(function(){
+				  $('#treediv').treeview('uncheckAll', { silent: true });
+			  });
 	});
 
 </script>
@@ -76,6 +92,10 @@
 		 
 		 <div class="form-group">
 			 <label for="treediv">权限树</label>
+		 	  <input class="form-control" type="text"  name="searchText" id="searchText"/>
+		 	   <button type="button" id="searchTreeBtn"  class="btn btn-default">搜索</button> 
+		 	   <button type="button" id="selectAll"  class="btn btn-default">全选</button> 
+		 	   <button type="button" id="unselectAll"  class="btn btn-default">取消全选</button> 
 			 <div id="treediv"></div>
 		 </div>
 		 
@@ -89,7 +109,6 @@
         		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
         		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
         </div>	
-       
     
 </form>
 
@@ -98,56 +117,23 @@
 <script   type="text/javascript">
 
 		$("#upmRoleForm").bootstrapValidator({
-			
 			fields: {
 		 		 "upmRole.roleCode": {
-					message: '角色编码不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '角色编码不能为空'  
-                        				},
-                        				remote: {
-                        					url: "upmRoleAction!checkRoleIsExist.action",
-                                            message: '角色已存在',//提示消息
-                                            delay :  2000,
-                                            type: 'POST',
-                                            data: function(validator) {
-                                                  return {
-                                                	  "strRoleId": "${upmRole.id}",
-                          		         			"appId": "${appId}",
-                          		         			"roleName": function(){return $("#roleName").val();
-                          		         			}
-                                                  };
-                                               }
-                                        },
-                    			}  
-				
+					message: '角色编码不能为空'
 		       },
 		 		 "upmRole.appId": {
-					message: '应用ID不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '应用ID不能为空'  
-                        				} 
-                    			}  
+					message: '应用ID不能为空'
 				
 		       },
 		 		 "upmRole.roleName": {
-					message: '角色名称不能为空',
-					validators: {  
-                       				 notEmpty: {  
-                        				message: '角色名称不能为空'  
-                        				} 
-                    			}  
-				
+					message: '角色名称不能为空'
 		       }
 		    },
- 		submitHandler: function(validator, form, submitButton) { 
- 		}
-			
+            submitHandler: function (validator, form, submitButton) {
+            }
 		}).on('success.form.bv', function (e) {
-			e.preventDefault();
- 		   addRoleAction();
+			 e.preventDefault();
+    		   addRoleAction();
 		}
 		);
 		
@@ -166,9 +152,7 @@
 			$.each(treeNodeIds, function (index, nodeItem) {
 				var nodeId = nodeItem.id;
 				treeIds = treeIds+ nodeId;
-				//if(i < index - 1){
 					treeIds += ",";
-				//}
 			});
 			
 			if(treeIds==""){
@@ -178,22 +162,21 @@
 			
 			treeIds=treeIds.substring(0,treeIds.length-1);
 			document.getElementById("permissions").value = treeIds;
-			$("#upmRoleForm").submit();
-			
-			bootbox.alert("保存成功");
-			window.close();
+    			
+   			 $.ajax({
+   					type:'POST',
+   					url:"${ctx}/jsp/role/upmRoleAction!save.action",
+   					contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+   					data: $("#upmRoleForm").serialize(),
+   					dataType:'json',
+   					async: false,
+   					globle:false,
+   					success: function(data) {
+   						bootbox.alert(data.opResult);
+   					}
+   			 });
 		}
-    	
-		function getParentPath(id){
-	        var node = tree.getNodeById(id);
-	        path = node.attributes.text;
-	        while(node.parentNode != null){
-	            node = node.parentNode;
-	            path = (node.attributes.text + ' - ' + path );
-	        }
-	       
-	       return path;
-	    }
+	
 </script>
 </body>
 </html>

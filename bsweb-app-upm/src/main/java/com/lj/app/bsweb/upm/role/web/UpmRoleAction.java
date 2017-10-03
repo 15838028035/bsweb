@@ -48,7 +48,7 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 	private String permissions;
 	
 	private Integer roleId;
-	private String strRoleId;
+	private String strRoleId = "0";
 
 	@Autowired
 	private UpmRoleService<UpmRole> upmRoleService;
@@ -69,6 +69,8 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 			upmRole = (UpmRole)upmRoleService.getInfoByKey(id);
 		} else {
 			upmRole = new UpmRole();
+			upmRole.setAppId(appId);
+			upmRole.setId(0);
 		}
 	}
 	
@@ -162,7 +164,10 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 	
 	public String getPermissionTree() throws Exception {
 		// 根据当前登录人员获取权限菜单树
-		String jsonData = upmRoleService.getPermissionTreeDataJson(this.getLoginUserId(),getAppId(), this.getLoginUserId());
+		if(StringUtil.isBlank(strRoleId)){
+			strRoleId="0";
+		}
+		String jsonData = upmRoleService.getPermissionTreeDataJson(Integer.valueOf(strRoleId),getAppId(), this.getLoginUserId());
 				
 		if(StringUtil.isBlank(jsonData)){
 			jsonData = "";	
