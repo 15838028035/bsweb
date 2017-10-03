@@ -58,19 +58,6 @@ $(document).ready(function(){
 	            	
 	            },
 				 onNodeSelected: function(event, data) {
-					 
-					 if(data.nodes!=null){                               
-					        var select_node = $('#upmUserGroupTreeDiv').treeview('getSelected');
-					        if(select_node[0].state.expanded){
-					            $('#upmUserGroupTreeDiv').treeview('collapseNode',select_node);
-					            select_node[0].state.selected=false;
-					        }
-					        else{
-					            $('#upmUserGroupTreeDiv').treeview('expandNode',select_node);
-					            select_node[0].state.selected=false;
-					        }
-					    }
-					 
 					  treeNodeId = data.id;
 	                    $("#btnInsert").prop("disabled",false);
 			  			$("#btnsaveorg").prop("disabled",false);//set btn-save
@@ -297,11 +284,12 @@ $("#btnInsert").on("click", function(){
 				return false;
 			}
 			
+			var url = "${ctx}/jsp/role/upmRoleGroupAssignList.jsp?userGroupId=" +userGroupId;
       		var dialog = new BootstrapDialog({
       		  	title:"分配角色",
       		  cssClass :"speial-dialog",
       		  size:BootstrapDialog.SIZE_WIDE,
-      		    message: $('<iframe  width="100%;" height="800px"; src="${ctx}/jsp/role/upmRoleGroupAssignList.jsp?userGroupId=" +userGroupId + ""></iframe>'),
+      		    message: $("<iframe  width=\"100%;\" height=\"800px\"; src="+url+"></iframe>"),
       		  buttons: [ {
                   label: '关闭',
                   action: function(dialogRef){
@@ -418,12 +406,13 @@ $("#btnInsert").on("click", function(){
         		bootbox.alert("请选择组织机构");
         		return false;
         	}
-			 
+        	var url = "${ctx}/jsp/user/upmUserSelectAssignList.jsp?groupId=" +groupId;
+        	
 			 var dialog = new BootstrapDialog({
 	      		  	title:"用户管理",
 	      		  cssClass :"speial-dialog",
 	      		  size:BootstrapDialog.SIZE_WIDE,
-	      		    message: $('<iframe  width="100%;" height="800px"; src="${ctx}/jsp/user/upmUserSelectAssignList.jsp?groupId=" +groupId + ""></iframe>'),
+	      		  message: $("<iframe  width=\"100%;\" height=\"800px\"; src="+url+"></iframe>"),
 	      		  buttons: [ {
 	                  label: '关闭',
 	                  action: function(dialogRef){
