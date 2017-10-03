@@ -40,13 +40,10 @@
 		            showIcon:true,
 		            onNodeSelected: function(event, data) {
 		            	 var treeNodeId = data.nodeId;
-                         $(window.parent.frames["LT_main"].document).find("#perssionParentId").val(treeNodeId);
-                         
-                         var aa = $(window.parent.frames["LT_main"].document).find("#perssionParentId").val();
-                         aa =  $(self.parent.LT_main.window.document).find("#perssionParentId").val();
-                         alert("aa=" + aa);
-                         
-                         parent.LT_main.location = "${ctx}/jsp/permission/permissionData.jsp?appId="+appId+"&parentId="+treeNodeId;
+                         $("#LT_main",parent.document.body).contents().find("#perssionParentId").val(treeNodeId);
+                         var aa = $("#LT_main",parent.document.body).contents().find("#perssionParentId").val();
+                         var newUrl="${ctx}/jsp/permission/permissionData.jsp?appId="+appId+"&parentId="+treeNodeId;
+                         parent.LT_main.location = newUrl;
 		            }
 		        }
 			 );

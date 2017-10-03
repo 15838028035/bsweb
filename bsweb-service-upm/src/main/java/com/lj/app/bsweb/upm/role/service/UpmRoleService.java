@@ -78,6 +78,16 @@ public interface UpmRoleService<UpmRole> extends BaseService {
 	 * @throws IOException
 	 */
 	public String getPermissionTreeDataJson(Integer roleId, String appId,Integer operatorId) throws Exception;
+
+	/**
+	 * @Description : 查看菜单json
+	 * 
+	 * @param roleId
+	 * @param appId
+	 * @return
+	 * @throws IOException
+	 */
+	public String getPermissionTreeMenuDataJson(String appId, List<UpmPermission> list) throws Exception;
 	
 	/**
 	 * 查询当前登录这人员的权限

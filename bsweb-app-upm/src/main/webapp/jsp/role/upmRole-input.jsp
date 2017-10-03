@@ -144,7 +144,7 @@
         var batchid="";
     	function addRoleAction(){
     		batchid="";
-			var treeNodeIds = $("#treediv").treeview("getSelected");
+			var treeNodeIds = $("#treediv").treeview("getChecked");
 			
 			var treeNodeText = "";
 			var treeIds = "";

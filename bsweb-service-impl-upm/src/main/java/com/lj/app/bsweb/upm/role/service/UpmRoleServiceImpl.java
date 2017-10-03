@@ -191,6 +191,31 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 	}
 	
 	/**
+	 * @Description : 查看菜单json
+	 * 
+	 * @param roleId
+	 * @param appId
+	 * @return
+	 * @throws IOException
+	 */
+	public String getPermissionTreeMenuDataJson(String appId, List<UpmPermission> list) throws Exception{
+		if (null != list && !list.isEmpty()) {
+			List<BootStrapTreeView> treeNodeList = new ArrayList<BootStrapTreeView>();
+			for (int i = 0; i < list.size(); i++) {
+				UpmPermission up = list.get(i);
+				String id = up.getId() + "";
+				String text = up.getName();
+				String parentId = up.getParentId().intValue() + "";
+				treeNodeList.add(BootStrapTreeViewCheck.createNew(id, text,true, parentId));
+			}
+			
+			Integer rootId = upmPermissionService.findRootPermissionIdByAppId(appId);
+			return BootStrapTreeViewCheck.valueOfString(treeNodeList, rootId.toString());
+		}
+		return null;
+	}
+	
+	/**
 	 * 查询当前登录这人员的权限
 	 * @param page
 	 * @param treeNodeId

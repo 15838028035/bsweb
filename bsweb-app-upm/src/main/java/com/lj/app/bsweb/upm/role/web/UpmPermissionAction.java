@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONArray;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -25,6 +23,8 @@ import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @Namespace("/jsp/permission")
@@ -111,6 +111,29 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 	}
 	
 	/**
+	 * 查询用户分配的某个应用的权限
+	 * @return
+	 * @throws Exception
+	 */
+	public String findPermissionMenuByUserIdApi() throws Exception {
+		try {
+			List<UpmPermission> upmPermissionList = upmPermissionService.findPermissionByUserId(this.getLoginUserId(),appId,upmPermission.getType());
+			// 根据当前登录人员获取权限菜单树
+			String jsonData = upmRoleService.getPermissionTreeMenuDataJson(appId, upmPermissionList);
+					
+			if(StringUtil.isBlank(jsonData)){
+				jsonData = "";	
+			}
+			Struts2Utils.renderText(jsonData);
+			
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
 	 * 判断在同级权限菜单下 是否存在重名的权限菜单
 	 * 
 	 */
@@ -174,11 +197,12 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 			}else{
 				upmPermission.setCreateBy(getLoginUserId());
 				upmPermission.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				upmPermissionService.insertObject(upmPermission);
+				
+				Integer retKey = upmPermissionService.insertObjectReturnKey(upmPermission);
 				returnMessage = CREATE_SUCCESS;
 				
 				int sysUserRoleId = upmRoleService.getSysRoleId(upmPermission.getAppId());
-				upmRoleService.addPermissionToRole(sysUserRoleId, upmPermission.getParentId().toString(),upmPermission.getId().toString());
+				upmRoleService.addPermissionToRole(sysUserRoleId, upmPermission.getParentId().toString(),String.valueOf(retKey));
 			}
 			
 			return "turnToPermissionList";

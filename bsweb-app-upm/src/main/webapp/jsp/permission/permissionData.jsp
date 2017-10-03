@@ -1,4 +1,3 @@
-
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
@@ -6,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>upmPermission管理</title>
+<title>权限管理</title>
     <meta name="viewport" content="width=device-width" />
 	<%@ include file="/jsp/common/meta.jsp" %>
 	<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
@@ -132,10 +131,8 @@
 </head>
 
 <body>
-  <input type="hidden" name="perssionParentId" id="perssionParentId"
-                      value="${parentId}" />
-|              <input type="hidden" name="appId" id="appId"
-|                      value="${appId}" />
+  <input type="hidden" name="perssionParentId" id="perssionParentId"  value="${parentId}" />
+   <input type="hidden" name="appId" id="appId"    value="${appId}" />                  
 
 <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
@@ -179,7 +176,9 @@
 	
 		//新增
         $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/permission/upmPermissionAction!input.action'
+        	var appId = $("#appId").val();
+        	var perssionParentId = $("#perssionParentId").val();
+        	window.location.href = "${ctx}/jsp/permission/upmPermissionAction!input.action?upmPermission.appId="+appId+"&upmPermission.parentId="+perssionParentId;
         })
 		//编辑
         $("#btn_edit").click(function() {

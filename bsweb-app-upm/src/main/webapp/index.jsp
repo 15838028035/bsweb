@@ -34,7 +34,7 @@
             	<li><a class="list-group-item" data-addtab='{"id":"1","url": "${ctx}/jsp/user/upmUserList.jsp","target": "#tabs"}'>用户管理</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"2","url": "${ctx}/jsp/user/upmUserGroupTreeList.jsp","target": "#tabs"}'>组织机构管理</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"3","url": "${ctx}/jsp/role/upmRoleList.jsp?appId=UPM","target": "#tabs"}'>角色管理</a></li>
-            	<li><a class="list-group-item" data-addtab='{"id":"4","url": "${ctx}/jsp/permission/permission.jsp","target": "#tabs"}'>权限管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"4","url": "${ctx}/jsp/permission/permission.jsp?appId=UPM","target": "#tabs"}'>权限管理</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"5","url": "${ctx}/jsp/upmApp/upmAppList.jsp","target": "#tabs"}'>应用管理</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"6","url": "${ctx}/jsp/dictionary/upmDictionaryNoteList.jsp","target": "#tabs"}'>数据字典管理</a></li>
             	<li><a class="list-group-item" data-addtab='{"id":"7","url": "${ctx}/jsp/dictionary/upmConfigurationList.jsp","target": "#tabs"}'>配置管理</a></li>

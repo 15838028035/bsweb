@@ -29,19 +29,13 @@
 <body>
 <div class="container">
 <form action="upmPermissionAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmPermissionForm" id="upmPermissionForm" role="form">
-<input type="hidden" name="id" id="id" value="${id}"/>
+<input type="hidden" name="upmPermission.id" id="id" value="${upmPermission.id}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
 
 <input type="hidden" name="upmPermission.appId" id="appId" value="${appId }">
 <input type="hidden" name="upmPermission.parentId" id="parentId" value="${parentId}">
-<input type="hidden" name="upmPermission.id" id="permissionId" value="${permissionId}">
 <input type="hidden" name="oldName" id="oldName" value="${upmPermission.name }">
-   
         
-      		<div class="form-group">
-			 <label for="id">ID</label>
-		 	  <input class="form-control" type="text"  name="upmPermission.id" id="id"  value="${upmPermission.id}" />
-		 </div>
 		 
       		<div class="form-group">
 			 <label for="name">名称</label>
