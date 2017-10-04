@@ -52,14 +52,14 @@
                  <ul class="nav navbar-nav navbar-right hidden-sm">
 		            <li><a href='#'>${sessionScope.securityContext.loginName}:您好！欢迎登录!&nbsp;&nbsp;</a></li>
 		            <li><a href="${ctx}/loginAction!logout.action">退出</a></li>
-		            <li><a href="${ctx}//jsp/user/changepwd.jsp">修改密码</a></li>
+		            <li><a href="${ctx}/jsp/user/changepwd.jsp">修改密码</a></li>
 		          </ul>
             </div>
         </div>
     </nav>
 	    
 	   <div class="container-fluid all">
-        <div class="sidebar col-sm-2" id="sidebar">
+        <div class="sidebar col-sm-1" id="sidebar">
         	<div id="treediv"></div>
 		 </div>
         <div class="maincontent row" style="margin-top:60px;">
@@ -72,18 +72,17 @@
 	    
 	    </div>
         
-        <script type="text/javascript">
-        <script type="text/javascript">
-        $(document).ready(function () {
+       <script type="text/javascript">
+       /*  $(document).ready(function () {
              $('#sidebar').BootSideMenu({
                 side: "left",
                 pushBody:false,
-                closeOnClick:false,
-                autoClose:false
+                closeOnClick:true,
+                autoClose:true
             }); 
-        });
+        }); */
 
-    </script> 
+    </script>  
 </script> 
 </body>
 </html>

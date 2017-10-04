@@ -114,7 +114,6 @@
 	                "sortOrder":this.sortOrder,
 	                "upmUser.loginNo":$("#loginNo").val(),
 	                "upmUser.userName":$("#userName").val(),
-	 			 	"upmUser.orgDesc":$("#orgDesc").val(),
 	 			 	"upmUser.mobile": $("#mobile").val()
             };
             return temp;
@@ -154,10 +153,6 @@
                         <label class="control-label col-sm-1" for="mobile">手机号码</label>
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="mobile">
-                        </div>
-                         <label class="control-label col-sm-1" for="orgDesc">组织机构</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="orgDesc">
                         </div>
                         <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
