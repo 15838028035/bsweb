@@ -100,6 +100,19 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 	}
 	
 	/**
+	 * 根据appId查询permissionId
+	 * 
+	 * @param appId
+	 * @return
+	 */
+	public Integer findRootPermissionIdMenuByAppId(String appId) throws Exception{
+		Map<String, Object> condition = new HashMap<String, Object>();
+		condition.put("appId", appId);
+		Integer result = (Integer)queryForObject("findRootPermissionIdMenuByAppId", condition);
+		return result;
+	}
+	
+	/**
 	 * @Description : 根据名称查询同级的菜单是否存在聪明
 	 * 
 	 * @param parentId

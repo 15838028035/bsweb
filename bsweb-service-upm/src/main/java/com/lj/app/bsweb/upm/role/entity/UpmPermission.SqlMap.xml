@@ -430,6 +430,11 @@ and ur.groupId=ur.groupId
 			select id from UPM_PERMISSION where parent_id=0 and app_id=#appId#
 	    ]]>
 	</select>
+	<select id="findRootPermissionIdMenuByAppId" resultClass="Integer">
+		<![CDATA[
+			select min(parent_id) from UPM_PERMISSION where  app_id=#appId# and type='MENU'
+	    ]]>
+	</select>
 	
 	<select id="queryByNameAndParentId" resultClass="Integer">
 		SELECT count(1) FROM UPM_PERMISSION t WHERE t.parent_id = #parentId#   AND t.name=#name#

@@ -206,11 +206,16 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 				String id = up.getId() + "";
 				String text = up.getName();
 				String parentId = up.getParentId().intValue() + "";
-				treeNodeList.add(BootStrapTreeViewCheck.createNew(id, text,true, parentId));
+				String url = up.getUrl();
+				treeNodeList.add(BootStrapTreeViewCheck.createNew(id, text,true, parentId,url));
 			}
 			
-			Integer rootId = upmPermissionService.findRootPermissionIdByAppId(appId);
-			return BootStrapTreeViewCheck.valueOfString(treeNodeList, rootId.toString());
+			Integer rootId = upmPermissionService.findRootPermissionIdMenuByAppId(appId);
+			BootStrapTreeViewCheck bootStrapTreeViewCheck = new BootStrapTreeViewCheck(String.valueOf(rootId), "菜单");
+			
+			bootStrapTreeViewCheck.getRootNode().setNodes(treeNodeList);
+			
+			return bootStrapTreeViewCheck.toJsonString();
 		}
 		return null;
 	}

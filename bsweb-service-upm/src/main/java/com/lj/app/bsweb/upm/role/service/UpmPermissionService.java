@@ -32,6 +32,13 @@ public interface UpmPermissionService<UpmPermission> extends BaseService {
 	 * @return
 	 */
 	public Integer findRootPermissionIdByAppId(String appId) throws Exception;
+	/**
+	 * 根据appId查询permissionId
+	 * 
+	 * @param appId
+	 * @return
+	 */
+	public Integer findRootPermissionIdMenuByAppId(String appId) throws Exception;
 	
 	/**
 	 * @Description : 根据名称查询同级的菜单是否存在聪明

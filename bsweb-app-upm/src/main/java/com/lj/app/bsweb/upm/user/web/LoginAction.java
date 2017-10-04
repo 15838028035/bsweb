@@ -24,6 +24,7 @@ import com.lj.app.core.common.base.service.UpmUserService;
 import com.lj.app.core.common.notify.email.MailSender;
 import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.security.CMSecurityContext;
+import com.lj.app.core.common.security.DesUtil;
 import com.lj.app.core.common.security.SecurityConstants;
 import com.lj.app.core.common.util.SessionCode;
 import com.lj.app.core.common.util.SpringContextHolder;
@@ -73,7 +74,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 
 		UpmUser user = new UpmUser();
 		user.setLoginNo(loginNo);
-		user.setPwd(pwd);
 		
 		List<UpmUser> userList = upmUserService.findBaseModeList(user);
 				
@@ -89,8 +89,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 				return SecurityConstants.LOGIN;
 			}
 			
-			String encryptPwd = pwd;
-			//FIXME: DesUtil.encrypt(pwd); 
+			String encryptPwd  = DesUtil.encrypt(pwd); 
 			String dbpwd = loginUser.getPwd();
 			if (!encryptPwd.equals(dbpwd)) {
 				logger.info("password wrong!!!");

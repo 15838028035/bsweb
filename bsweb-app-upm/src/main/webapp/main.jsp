@@ -10,65 +10,64 @@
  </head>
   
   <body>
+    <nav class="navbar navbar-defalut navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle show pull-left" data-target="sidebar">
+                    <span class="sr-only">导航菜单</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.jsp">统一用户权限流程管理系统</a>
+                 <ul class="nav navbar-nav navbar-right hidden-sm">
+		            <li>
+		          <a href='#'>${sessionScope.securityContext.loginName}:您好！欢迎登录!&nbsp;&nbsp;</a>
+		            </li>
+		            <li>
+		          <a href="${ctx}/loginAction!logout.action">退出</a>
+		            </li>
+		          </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid all">
+        <div class="sidebar col-sm-3" id="sidebar">
+            <ul class="nav list-group">
+            	<li><a class="list-group-item" data-addtab='{"id":"1","url": "${ctx}/jsp/user/upmUserList.jsp","target": "#tabs"}'>用户管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"2","url": "${ctx}/jsp/user/upmUserGroupTreeList.jsp","target": "#tabs"}'>组织机构管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"3","url": "${ctx}/jsp/role/upmRoleList.jsp?appId=UPM","target": "#tabs"}'>角色管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"4","url": "${ctx}/jsp/permission/permission.jsp?appId=UPM","target": "#tabs"}'>权限管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"5","url": "${ctx}/jsp/upmApp/upmAppList.jsp","target": "#tabs"}'>应用管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"6","url": "${ctx}/jsp/dictionary/upmDictionaryNoteList.jsp","target": "#tabs"}'>数据字典管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"7","url": "${ctx}/jsp/dictionary/upmConfigurationList.jsp","target": "#tabs"}'>配置管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"8","url": "${ctx}/jsp/upmNotice/upmNoticeList.jsp","target": "#tabs"}'>通知管理</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"9","url": "${ctx}/jsp/flows/flowProcessList.jsp","target": "#tabs"}'>流程定义</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"10","url": "${ctx}/jsp/flows/flowOrderList.jsp","target": "#tabs"}'>流程实例</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"11","url": "${ctx}/jsp/flows/flowCcorderList.jsp","target": "#tabs"}'>抄送实例</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"12","url": "${ctx}/jsp/flows/flowTaskList.jsp","target": "#tabs"}'>代办任务</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"13","url": "${ctx}/jsp/flows/flowTaskHistList.jsp","target": "#tabs"}'>历史任务</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"13","url": "${ctx}/jsp/flowBorrowTest/flowBorrowTestList.jsp","target": "#tabs"}'>借款测试流程业务数据</a></li>
+            	<li><a class="list-group-item" data-addtab='{"id":"14","url": "${ctx}/systemInfoAction!input.action","target": "#tabs"}'>系统信息</a></li>
+            </ul>
+        </div>
+        <div class="maincontent row" style="margin-top:60px;">
+       		 <div class="col-sm-12 pull-right">
+               <ul class="nav nav-tabs" id="tabs">
+  				</ul>
+  				<div class="tab-content"></div>
+            </div>
+	    </div>
+	    
+	    </div>
+        
+        <script type="text/javascript">
+    $(document).ready(function () {
+         $('#sidebar').BootSideMenu({
+            side: "left",
+            pushBody:false,
+            closeOnClick:false,
+            autoClose:false
+        }); 
+    });
 
-
-<div style="width: 200px;">
-			<div class="panel-group" id="accordion2">
-			<div class="panel-heading">
-				<strong style="font-size: 30px;">论坛分类</strong>
-			</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" data-toggle="collapse"
-						data-parent="#accordion2" href="#collapseOne">
-						<a class="accordion-toggle">Java</a>
-					</div>
-					<div id="collapseOne" class="panel-collapse collapse"
-						style="height: 0px;">
-						<div class="panel-body">
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Java基础</a></li>
-								<li><a href="#">Java面向对象</a></li>
-								<li><a href="#">Java核心API</a></li>
-								<li><a href="#">JavaEE</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" data-toggle="collapse"
-						data-parent="#accordion2" href="#collapseTwo">
-						<a class="accordion-toggle">数据库</a>
-					</div>
-					<div id="collapseTwo" class="panel-collapse collapse"
-						style="height: 0px;">
-						<div class="panel-body">
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">SQL基础</a></li>
-								<li><a href="#">Oracle</a></li>
-								<li><a href="#">MySQL</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" data-toggle="collapse"
-						data-parent="#accordion2" href="#collapseThree">
-						<a class="accordion-toggle">技术前沿</a>
-					</div>
-					<div id="collapseThree" class="panel-collapse in"
-						style="height: 0px;">
-						<div class="panel-body">
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">NoSQL</a></li>
-								<li><a href="#">Hadoop</a></li>
-								<li><a href="#">WebService</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		</body>
-		
-		</html>
+</script> 
+</body>
+</html>

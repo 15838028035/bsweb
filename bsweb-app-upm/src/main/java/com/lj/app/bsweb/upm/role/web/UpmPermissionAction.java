@@ -101,7 +101,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 			Map<String,Object> condition = new HashMap<String,Object>();
 			condition.put("userId",  userId);
 			condition.put( "appId",  appId);
-			List<UpmPermission> upmPermissionList = upmPermissionService. findPermissionByUserId(userId,appId);
+			List<UpmPermission> upmPermissionList = upmPermissionService.findPermissionByUserId(userId,appId);
 			Struts2Utils.renderText(JSONArray.fromObject(upmPermissionList).toString());
 			return null;
 		} catch (Exception e) {

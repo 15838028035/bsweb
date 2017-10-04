@@ -11,11 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
+import com.lj.app.core.common.base.entity.BaseEntity;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmUserService;
 import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.pagination.PageTool;
+import com.lj.app.core.common.security.DesUtil;
+import com.lj.app.core.common.util.AjaxResult;
+import com.lj.app.core.common.util.DateUtil;
+import com.lj.app.core.common.util.SessionCode;
+import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
 import com.opensymphony.xwork2.util.logging.Logger;
@@ -50,6 +56,8 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 	
 	private Long treeNodeId;
 	
+	private String oldPwd;
+	private String newPwd;
 
 	@Autowired
 	private UpmUserService upmUserService;
@@ -68,6 +76,9 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 	protected void prepareModel() throws Exception {
 		if(id!=null){
 			upmUser = (UpmUser)upmUserService.getInfoByKey(id);
+			String password = upmUser.getPwd();
+			upmUser.setPwd(DesUtil.decrypt(password));
+			
 		}else {
 			upmUser =new UpmUser();
 		}
@@ -93,6 +104,44 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	/**
+	 * 公共保存或者更新方法
+	 * @return
+	 */
+	@Override
+	public String commonSaveOrUpdate() throws Exception {
+		
+	try{
+			if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+				BaseEntity entity = (BaseEntity)getModel();
+				entity.setUpdateBy(this.getLoginUserId());
+				entity.setUpdateByUname(this.getUserName());
+				entity.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+				
+				String password = upmUser.getPwd();
+				upmUser.setPwd(DesUtil.encrypt(password));
+				
+				getBaseService().updateObject(entity);
+				returnMessage = UPDATE_SUCCESS;
+			}else{
+				upmUser.setCreateBy(this.getLoginUserId());
+				upmUser.setCreateByUname(this.getUserName());
+				upmUser.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+				
+				String password = upmUser.getPwd();
+				upmUser.setPwd(DesUtil.encrypt(password));
+				
+				getBaseService().insertObject(upmUser);
+				returnMessage = CREATE_SUCCESS;
+			}
+			
+			return LIST;
+		}catch(Exception e){
+			returnMessage = CREATE_FAILURE;
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	/**
 	 * AJAX方式 导入文件并进行检查
 	 * 
 	 * @return
@@ -111,6 +160,44 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 
 		return null;
 	}
+	
+	public String updateAcctPwd() throws Exception {
+		AjaxResult ar = new AjaxResult();
+			
+		try{
+				
+				UpmUser loginUser = (UpmUser)Struts2Utils.getSession().getAttribute(SessionCode.MAIN_ACCT);
+				if(!loginUser.getPwd().equals(DesUtil.encrypt(oldPwd))){
+					ar.setOpResult("对不起!旧密码不正确,请重新输入");
+					Struts2Utils.renderJson(ar);
+					return null;
+				}
+				
+				if(!pwd.equals(newPwd)){
+					ar.setOpResult("对不起!输入新密码两次不一致，请重新输入");
+					Struts2Utils.renderJson(ar);
+					return null;
+				}
+					
+				loginUser.setId(getLoginUserId());
+				loginUser.setPwd(DesUtil.encrypt(pwd));
+				loginUser.setUpdateBy(getLoginUserId());
+				loginUser.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+				upmUserService.updateObject(loginUser);
+				
+				Struts2Utils.getSession().setAttribute(SessionCode.MAIN_ACCT,loginUser);
+				
+				ar.setOpResult(UPDATE_SUCCESS);
+				Struts2Utils.renderJson(ar);
+			}catch(Exception e){
+				ar.setOpResult(UPDATE_FAILURE);
+				Struts2Utils.renderJson(ar);
+				throw e;
+			}
+		
+			return null;
+			
+		}
 	
 	public void setId(java.lang.Integer value) {
 		this.id = value;
@@ -191,6 +278,22 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getOldPwd() {
+		return oldPwd;
+	}
+
+	public void setOldPwd(String oldPwd) {
+		this.oldPwd = oldPwd;
+	}
+
+	public String getNewPwd() {
+		return newPwd;
+	}
+
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
 	}
 	
 }
