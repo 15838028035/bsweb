@@ -46,7 +46,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle show pull-left" data-target="sidebar">
-                    <span class="sr-only">导航菜单</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    <span class="sr-only">导航菜单</span>
                 </button>
                 <a class="navbar-brand" href="index.jsp">统一用户权限流程管理系统</a>
                  <ul class="nav navbar-nav navbar-right hidden-sm">
