@@ -82,7 +82,14 @@
                           { field: 'email', title: '邮箱' ,sortable:true},
                           { field: 'orgDesc', title: '组织机构',sortable:true },
                           { field: 'createDate', title: '创建时间',sortable:true },
-                          { field: 'updateDate', title: '修改时间',sortable:true }
+                          { field: 'updateDate', title: '修改时间',sortable:true },
+                          { field: 'lockStatus', title: '锁定状态',sortable:true , formatter : function(value, row, index) {  
+                        	  if(value=='1'){
+                        		  return "加锁";
+                        	  }
+                        	  return "正常";
+                 			}  
+                          }
                		 ],
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";

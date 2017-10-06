@@ -21,32 +21,38 @@
 <div class="container">
 <form action="upmUserAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="userForm" id="userForm" role="form">
 <input type="hidden" name="id" value="${id}"/>
-<input type="hidden" name="upmUser.id" value="${id}"/>
+<input type="hidden" name="upmUser.id" value="${upmUser.id}"/>
 <input type="hidden" name="operate" value="${operate}" />
         <div class="form-group">  
               <label for="loginNo">登录名</label>  
-            <input  class="form-control" type="text" id="loginNo" name="upmUser.loginNo" value="${loginNo}"  />
+            <input  class="form-control" type="text" id="loginNo" name="upmUser.loginNo" value="${upmUser.loginNo}"  />
        	</div>
        <div class="form-group">  
              <label for="pwd">密码</label>  
-            <input  class="form-control" type="text" id="pwd" name="upmUser.pwd" value="${pwd}" />
+            <input  class="form-control" type="text" id="pwd" name="upmUser.pwd" value="${upmUser.pwd}" />
         </div>
          <div class="form-group">  
               <label for="userName">用户名</label>  
-             <input class="form-control" type="text" id="userName" name="upmUser.userName" value="${userName}" />
+             <input class="form-control" type="text" id="userName" name="upmUser.userName" value="${upmUser.userName}" />
          </div>
          <div class="form-group">  
               <label for="orgDesc">组织机构描述</label>  
-           <input  class="form-control" type="text" id="orgDesc" name="upmUser.orgDesc" value="${orgDesc}"/>
+           <input  class="form-control" type="text" id="orgDesc" name="upmUser.orgDesc" value="${upmUser.orgDesc}"/>
       	</div>
          <div class="form-group">  
               <label for="mobile">手机号码 </label>  
-             <input  class="form-control" type="text" id="mobile" name="upmUser.mobile" value="${mobile}" />
+             <input  class="form-control" type="text" id="mobile" name="upmUser.mobile" value="${upmUser.mobile}" />
         </div>
          <div class="form-group">  
              <label for="email">email</label>  
-             <input  class="form-control" type="text" id="email" name="upmUser.email" value="${email}"/>
+             <input  class="form-control" type="text" id="email" name="upmUser.email" value="${upmUser.email}"/>
         </div>
+          <label class="control-label col-sm-1" for="serviceRate">锁定状态 </label>  
+              <div class="col-sm-3"> 
+              <input type="radio" id="lockStatus" name="upmUser.lockStatus" value="0"   <c:if test="${upmUser.lockStatus==0}">checked</c:if>/>否
+              <input type="radio" id="lockStatus" name="upmUser.lockStatus" value="1"  <c:if test="${upmUser.lockStatus==1}">checked</c:if>/>是
+              
+              </div>
         
         <div class="form-group"> 
         		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
