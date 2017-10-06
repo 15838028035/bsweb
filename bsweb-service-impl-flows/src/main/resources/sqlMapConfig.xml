@@ -9,8 +9,6 @@
        maxTransactions="32" useStatementNamespaces="true"/>
        <typeHandler jdbcType="BLOB" javaType="[B" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler"/>
  	   <typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler"/>
- 
-      
       
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowProcess.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowOrder.SqlMap.xml"/>
@@ -23,6 +21,7 @@
       
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowLeaveTest.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowBorrowTest.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/core/common/flows/entity/FlowExpenseTest.SqlMap.xml"/>
       
 </sqlMapConfig>
     

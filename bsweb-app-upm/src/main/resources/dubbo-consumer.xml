@@ -42,4 +42,6 @@
  	
  	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowLeaveTestService" id="flowLeaveTestService" check="false" timeout="${dubbo.reference.timeout}"/>
  	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowBorrowTestService" id="flowBorrowTestService" check="false"  timeout="${dubbo.reference.timeout}"/>
+ 	<dubbo:reference interface="com.lj.app.core.common.flows.service.FlowExpenseTestService" id="flowExpenseTestService" check="false"  timeout="${dubbo.reference.timeout}"/>
+
 </beans> 

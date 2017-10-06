@@ -38,5 +38,6 @@
  	
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowLeaveTestService" ref="flowLeaveTestService"  />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowBorrowTestService" ref="flowBorrowTestService"  />
+	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowExpenseTestService" ref="flowExpenseTestService"  />
 	
 </beans>  
