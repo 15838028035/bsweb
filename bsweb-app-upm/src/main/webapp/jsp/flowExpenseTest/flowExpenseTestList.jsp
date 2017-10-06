@@ -14,6 +14,14 @@
 	$(document).ready(function(){
 		 var oTable = new TableInit();
 	     oTable.Init();
+	     
+	     $(".datetimepicker").datetimepicker({
+	      		language: 'zh-CN',
+	             format: 'yyyy-mm-dd hh:ii',//格式化时间,
+	             autoclose:true,//日期选择完成后是否关闭选择框
+	             //minView: "month",//设置只显示到月份
+	             clearBtn:true // 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
+	         });
 	});
 	
 	var TableInit = function () {
@@ -128,11 +136,11 @@
 			 	<label class="control-label col-sm-1" for="operator">申请人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
 			 	<label class="control-label col-sm-1" for="operatorTime">操作时间</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="operatorTimeBegin" id = "operatorTimeBegin"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-				<input type="text" name="operatorTimeEnd" id = "operatorTimeEnd"  class="Wdate" onClick="WdatePicker()" readonly="readonly"/>
-                         </div>
-                  <div class="col-sm-6" style="text-align:left;">
+			   <div class="col-sm-4">
+                  <input type="text" name="operatorTimeBegin" id = "operatorTimeBegin"  class="datetimepicker" readonly="readonly"/>到
+				 <input type="text" name="operatorTimeEnd" id = "operatorTimeEnd"  class="datetimepicker"  readonly="readonly"/>
+                </div>
+                  <div class="col-sm-12" style="text-align:left;">
                       <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                   </div>
                     </div>
