@@ -1,6 +1,8 @@
 package com.lj.app.bsweb.upm.user.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
@@ -72,10 +74,10 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			return SecurityConstants.LOGIN;
 		}
 
-		UpmUser user = new UpmUser();
-		user.setLoginNo(loginNo);
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("conditionWhere", " and  (login_no='" + loginNo+"' or mobile='" + loginNo + "')");
 		
-		List<UpmUser> userList = upmUserService.findBaseModeList(user);
+		List<UpmUser> userList = upmUserService.findBaseModeList(condition);
 				
 		UpmUser loginUser = null;
 		if (StringUtil.isBlank(loginNo)) {
@@ -119,7 +121,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			
 			CMSecurityContext securityContext = new CMSecurityContext();
 			
-			securityContext.setMainAcctId(Long.getLong(String.valueOf(user.getId())));
+			securityContext.setMainAcctId(Long.getLong(String.valueOf(loginUser.getId())));
 			
 			String contextPath = Struts2Utils
 					.getRequest().getContextPath();

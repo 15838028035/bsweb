@@ -145,7 +145,7 @@
             <form class="form-horizontal" action="${ctx}/loginAction!login.action" method="post">
                 <span class="heading">用户登录</span>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="用户名">
+                    <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="form-group help">
