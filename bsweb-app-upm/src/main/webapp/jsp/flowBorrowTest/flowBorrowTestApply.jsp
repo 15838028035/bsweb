@@ -53,7 +53,7 @@
         $('#flowBorrowTestForm').bootstrapValidator({  
             fields: {  
                 "flowBorrowTest.operatorAmount": {
-                    message: '手机号码不能为空',
+                    message: '借款金额不能为空',
                     validators: {
                         notEmpty: {
                             message: '借款金额不能为空'

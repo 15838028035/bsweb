@@ -47,12 +47,11 @@
              <label for="email">email</label>  
              <input  class="form-control" type="text" id="email" name="upmUser.email" value="${upmUser.email}"/>
         </div>
-          <label class="control-label col-sm-1" for="serviceRate">锁定状态 </label>  
-              <div class="col-sm-3"> 
+        <div class="form-group"> 
+          		<label for="upmUser.lockStatus">锁定状态 </label>  
               <input type="radio" id="lockStatus" name="upmUser.lockStatus" value="0"   <c:if test="${upmUser.lockStatus==0}">checked</c:if>/>否
               <input type="radio" id="lockStatus" name="upmUser.lockStatus" value="1"  <c:if test="${upmUser.lockStatus==1}">checked</c:if>/>是
-              
-              </div>
+         </div>
         
         <div class="form-group"> 
         		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
