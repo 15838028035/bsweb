@@ -25,19 +25,3 @@ src/main/webapp/WEB-INF/lib/
 src/main/webapp/WEB-INF/logs/
 
 target/
-
-
-#保证核心代码的安全性,取消注释
-core/
-
-core/src/main/webapp/WEB-INF/classes/
-core/src/main/webapp/WEB-INF/lib/
-core/src/main/webapp/WEB-INF/logs/
-core/src/test/java/com/lj/app/core/common/generator/GeneratorMainTest.java
-core/src/main/resources/generator.properties
-
-core/target/
-core/template/
-core/src/main/java/com/lj/app/core/common/generator
-core/src/main/resources/template/
-
