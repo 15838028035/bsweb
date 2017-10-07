@@ -308,6 +308,8 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 			
 			ProcessModel model = ModelParser.parse(bytes);
 			entity.setModel(model);
+			entity.setFlowName(model.getName());
+			entity.setDisplayName(model.getDisplayName());
 			entity.setFlowContent(bytes);
 			entity.setInstanceUrl(model.getInstanceUrl());
 			entity.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
