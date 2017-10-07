@@ -329,18 +329,27 @@ $("#btnInsert").on("click", function(){
      	</div>
 	 <div id="toolbar-A" class="btn-group">
 	  		<button id="btn_query" type="button" class="btn btn-default" >查询</button>
+	  		
+	  		<sec:authorize code="upm_upmUserGroupTreeList_btnInsert" >
             <button id="btnInsert" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
+            </sec:authorize>
+            <sec:authorize code="upm_upmUserGroupTreeList_btnsaveorg" >
              <button id="btnsaveorg" type="submit" class="btn btn-default" onclick="edit()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>修改保存
             </button>
+            </sec:authorize>
+            <sec:authorize code="upm_upmUserGroupTreeList_btn_delete" >
             <button id="btn_delete" type="button" class="btn btn-default"  onclick="mulDelete();">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
+            </sec:authorize>
+            <sec:authorize code="upm_upmUserGroupTreeList_btnAssignRole" >
              <button id="btnAssignRole" type="button" class="btn btn-default"  onclick="assignRole();">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>分配角色
             </button>
+            </sec:authorize>
         </div>
 	<div class="widget_tree" style="height: 300px;width:100%;overflow: no;font-weight: normal;">
 <div id="upmUserGroupTreeDiv"  ></div>
@@ -379,13 +388,17 @@ $("#btnInsert").on("click", function(){
                 </form>
 				
 				 <div id="toolbar" class="btn-group">
-            <button id="addRel" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_mulDeleteRel" type="button" class="btn btn-default" onClick="mulDeleteRel();">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>删除
-            </button>
-        </div>
+				 <sec:authorize code="upm_upmUserGroupTreeList_addRel" >
+		            <button id="addRel" type="button" class="btn btn-default">
+		                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+		            </button>
+            		</sec:authorize>
+            		<sec:authorize code="upm_upmUserGroupTreeList_btn_mulDeleteRel" >
+			            <button id="btn_mulDeleteRel" type="button" class="btn btn-default" onClick="mulDeleteRel();">
+			                <span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>删除
+			            </button>
+           		     </sec:authorize>
+        			</div>
 				<table id="tableList"></table>
 
             </div>

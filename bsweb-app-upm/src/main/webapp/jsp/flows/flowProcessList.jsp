@@ -106,21 +106,10 @@
 
        //得到查询的参数
        oTableInit.queryParams = function (params) {
- 			var id=$("#id").val();
  			var flowNo=$("#flowNo").val();
- 			var flowVersion=$("#flowVersion").val();
  			var flowName=$("#flowName").val();
- 			var displayName=$("#displayName").val();
- 			var flowType=$("#flowType").val();
  			var createByUname=$("#createByUname").val();
-    		var createDateBegin=$("#createDateBegin").val();
-    		var createDateEnd=$("#createDateEnd").val();
  			var updateByUname=$("#updateByUname").val();
-    		var updateDateBegin=$("#updateDateBegin").val();
-    		var updateDateEnd=$("#updateDateEnd").val();
- 			var enableFlag=$("#enableFlag").val();
- 			var lockStatus=$("#lockStatus").val();
- 			var instanceUrl=$("#instanceUrl").val();
 
              var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 
@@ -128,18 +117,10 @@
                  "page.pageNumber":params.pageNumber,
                  "sortName":this.sortName,
                  "sortOrder":this.sortOrder,
-	 			"flowProcess.id":id,
 	 			"flowProcess.flowNo":flowNo,
-	 			"flowProcess.flowVersion":flowVersion,
 	 			"flowProcess.flowName":flowName,
-	 			"flowProcess.displayName":displayName,
-	 			"flowProcess.flowType":flowType,
 	 			"flowProcess.createByUname":createByUname,
-	 			"flowProcess.createDateBegin":createDateBegin,
-	 			"flowProcess.createDateEnd":createDateEnd,
-	 			"flowProcess.updateByUname":updateByUname,
-	 			"flowProcess.updateDateBegin":updateDateBegin,
-	 			"flowProcess.updateDateEnd":updateDateEnd,
+	 			"flowProcess.updateByUname":updateByUname
              };
              return temp;
          };
@@ -158,43 +139,15 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                      <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-                        
 			 	<label class="control-label col-sm-1" for="flowNo">流程编号</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowNo"></div>
-                        
-			 	<label class="control-label col-sm-1" for="flowVersion">流程版本</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="flowVersion"></div>
-                        
 			 	<label class="control-label col-sm-1" for="flowName">流程名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowName"></div>
-                        
-			 	<label class="control-label col-sm-1" for="displayName">显示名称</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="displayName"></div>
-                        
-			 	<label class="control-label col-sm-1" for="flowType">流程类型</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="flowType"></div>
-                        
 			 	<label class="control-label col-sm-1" for="createByUname">创建人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="createByUname"></div>
                         
-			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
-			   <div class="col-sm-2">
-                <input type="text" name="createDateBegin" id = "createDateBegin" size="14" class="datetimepicker"  readonly="readonly"/> --
-				<input type="text" name="createDateEnd" id = "createDateEnd" size="14" class="datetimepicker"  readonly="readonly"/>
-                </div>
-                        
 			 	<label class="control-label col-sm-1" for="updateByUname">修改人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
-                        
-			 	<label class="control-label col-sm-1" for="updateDate">修改日期</label>
-			   <div class="col-sm-2">
-                 <input type="text" name="updateDateBegin" id = "updateDateBegin" size="14" class="datetimepicker"  readonly="readonly"/> --
-				<input type="text" name="updateDateEnd" id = "updateDateEnd" size="14" class="datetimepicker"  readonly="readonly"/>
-                 </div>
 
                     <div class="col-sm-12" style="text-align:left;">
                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
@@ -205,21 +158,31 @@
         </div>       
 
         <div id="toolbar" class="btn-group">
-             <button id="btn_design" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设计
-            </button>
+        	<sec:authorize code="upm_flowProcessList_btn_design" >
+	             <button id="btn_design" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设计
+	            </button>
+            </sec:authorize>
+            <sec:authorize code="upm_flowProcessList_btn_deploy" >
              <button id="btn_deploy" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>部署
             </button>
+            </sec:authorize>
+            <sec:authorize code="upm_flowProcessList_btn_redeploy" >
              <button id="btn_redeploy" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>重新部署
             </button>
+            </sec:authorize>
+            <sec:authorize code="upm_flowProcessList_btn_startflow" >
               <button id="btn_startflow" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>启动流程
             </button>
+            </sec:authorize>
+            <sec:authorize code="upm_flowProcessList_btn_delete" >
             <button id="btn_delete" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
+            </sec:authorize>
         </div>
         
         <table id="tableList"></table>

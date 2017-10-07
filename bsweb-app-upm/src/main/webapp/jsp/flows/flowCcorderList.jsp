@@ -107,30 +107,20 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var id=$("#id").val();
 			var orderId=$("#orderId").val();
 			var actorId=$("#actorId").val();
-			var creator=$("#creator").val();
-	    		var createTimeBegin=$("#createTimeBegin").val();
-	    		var createTimeEnd=$("#createTimeEnd").val();
-	    		var finishTimeBegin=$("#finishTimeBegin").val();
-	    		var finishTimeEnd=$("#finishTimeEnd").val();
-			var status=$("#status").val();
+    		var createTimeBegin=$("#createTimeBegin").val();
+    		var createTimeEnd=$("#createTimeEnd").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
-					"flowCcorder.id":id,
 					"flowCcorder.orderId":orderId,
 					"flowCcorder.actorId":actorId,
-					"flowCcorder.creator":creator,
 					"flowCcorder.createTimeBegin":createTimeBegin,
-					"flowCcorder.createTimeEnd":createTimeEnd,
-					"flowCcorder.finishTimeBegin":finishTimeBegin,
-					"flowCcorder.finishTimeEnd":finishTimeEnd,
-					"flowCcorder.status":status
+					"flowCcorder.createTimeEnd":createTimeEnd
             };
             return temp;
         };
@@ -149,49 +139,35 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-                        
 			 	<label class="control-label col-sm-1" for="orderId">流程实例编号</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="orderId"></div>
-                        
 			 	<label class="control-label col-sm-1" for="actorId">执行人</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="actorId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="creator">创建人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="creator"></div>
-                        
 			 	<label class="control-label col-sm-1" for="createTime">创建时间</label>
-			   <div class="col-sm-2">
-                     <input type="text" name="createTimeBegin" id = "createTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
+			   <div class="col-sm-4">
+                <input type="text" name="createTimeBegin" id = "createTimeBegin" size="16" class="datetimepicker" readonly="readonly"/> --
 				<input type="text" name="createTimeEnd" id = "createTimeEnd" size="16"  class="datetimepicker" readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="finishTime">完成时间</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="finishTimeBegin" id = "finishTimeBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
-				<input type="text" name="finishTimeEnd" id = "finishTimeEnd" size="16"  class="datetimepicker" readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="status">状态</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="status"></div>
-                        
+               </div>
 
-                        <div class="col-sm-12" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+                  <div class="col-sm-12" style="text-align:left;">
+                      <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                  </div>
                     </div>
                 </form>
             </div>
         </div>       
 
         <div id="toolbar" class="btn-group">
-            <button id="btn_ccRead" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>阅读
-            </button>
-            <button id="btn_viewFlow" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看
-            </button>
+       		 <sec:authorize code="upm_flowCcorderList_btn_ccRead" >
+	            <button id="btn_ccRead" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>阅读
+	            </button>
+            </sec:authorize>
+            <sec:authorize code="upm_flowCcorderList_btn_viewFlow" >
+	            <button id="btn_viewFlow" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看
+	            </button>
+            </sec:authorize>
         </div>
         
         <table id="tableList"></table>

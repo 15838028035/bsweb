@@ -12,7 +12,7 @@
     <tag> 
     <name>authorize</name> 
     <description>权限标签</description> 
-    <tag-class>com.lj.app.core.common.security.SecurityTag</tag-class> 
+    <tag-class>com.lj.app.core.common.security.SecurityTag3</tag-class> 
 	<body-content>scriptless</body-content> 
     
     <attribute> 
