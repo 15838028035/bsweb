@@ -2,202 +2,180 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<title>upmFile管理</title>
+<title>文件管理</title>
+    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-<style>
-.altclass{background: #E5EFFD ;}
-</style>
 
-<script language="javascript">
+<script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
-		contralEffect.contain();
-		contralEffect.tablelist();
-		contralEffect.blueButton();
-		var isAlert = '${saveSuc}';
-		if(isAlert == "1"){
-			showModalMessage("编辑");
-		}
+		 var oTable = new TableInit();
+	     oTable.Init();
 	});
+
 	
-	jQuery(document).ready(function(){ 
-		var lastsel;
-		jQuery("#list").jqGrid({
-			url:'${ctx}/jsp/upmFile/upmFileAction!list.action',
-			datatype: 'json',
-			mtype: 'POST',
-			colNames:[
-			 		'ID',
-			 		'relateId1',
-			 		'',
-			 		'',
-			 		'optdate',
-			 		'operator',
-			 		'content'
-			],
-			colModel:[
-			 		{name:'id',index:'id'},
-			 		{name:'relateId1',index:'relateId1'},
-			 		{name:'relateId2',index:'relateId2'},
-			 		{name:'name',index:'name'},
-			 		{name:'optdate',index:'optdate'},
-			 		{name:'operator',index:'operator'},
-			 		{name:'content',index:'content'}
-				 ],
-			pager: '#pager',
-			sortable: true,
-			rowNum: 20,
-			rownumbers:true,
-			rowList:[10,20,30,50,100],
-			multiboxonly:true,
-			multiselect: true,
-			prmNames:{rows:"page.pageSize",page:"page.pageNumber",total:"page.totalPages"},     
-			jsonReader: {     
-				root: "rows",   
-				repeatitems : false,
-				id:"0"        		    
-				},
-			viewrecords: true,
-			autowidth:true,
-			shrinkToFit:true,
-			height: '100%',
-			sortname:'loginNo',
-			sortorder:'asc',
-			hidegrid: false,
-			gridComplete:function(){},
-			loadtext: '正在加载,请稍等..',
-			scrollrows: true,
-			altRows:true,
-			altclass:'altclass'
-			
-		}); 
-		
-		});
+	var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tableList').bootstrapTable({
+                url: '${ctx}/jsp/upmFile/upmFileAction!bootStrapList.action',         //请求后台的URL（*）
+                method: 'post',                     //请求方式（*）
+                dataType: "json",
+                contentType : "application/x-www-form-urlencoded",
+                dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+                totalField: 'total',
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                smartDisplay:false,
+                showRefresh:true,
+                showColumns:true,
+                searchOnEnterKey:true,
+                showFooter:true,
+                search:false,
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                singleSelect:false,
+                clickToSelect: true,
+                smartDisplay:true,
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                queryParamsType:'',					//  queryParamsType = 'limit' 参数: limit, offset, search, sort, order;
+                									//  queryParamsType = '' 参数: pageSize, pageNumber, searchText, sortName, sortOrder.
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 25,                       //每页的记录行数（*）
+                pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
+                strictSearch: true,
+                clickToSelect: true,                //是否启用点击选中行
+                height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns: [  
+			{ field: 'checkStatus', title: '',checkbox:true }, 
+                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                        	   			return index+1;
+                           			}  
+                           },
+			 	{field:'id',title:'ID', sortable:true , visible:false},
+			 	{field:'relateId1',title:'关联ID1', sortable:true},
+			 	{field:'relateId2',title:'关联ID2', sortable:true},
+			 	{field:'name',title:'文件名称', sortable:true},
+			 	{field:'optdate',title:'操作日期', sortable:true},
+			 	{field:'operator',title:'操作者', sortable:true},
+			 	{field:'content',title:'文件内容', sortable:true, visible:false}
+                        ],               		
+             	formatLoadingMessage: function () {
+             		return "请稍等，正在加载中...";
+             	},
+             	formatNoMatches: function () { //没有匹配的结果
+             		return '无符合条件的记录';
+             	},
+             	onLoadError: function (data) {
+             		$('#tableList').bootstrapTable('removeAll');
+             	},
+             	responseHandler: function (res) {
+             	    return {
+             	        total: res.total,
+             	        rows: res.rows
+             	    };
+             	}
+              
+            });
+            
+        };
+ 
+        //得到查询的参数
+      oTableInit.queryParams = function (params) {
+			var relateId1=$("#relateId1").val();
+			var relateId2=$("#relateId2").val();
+			var name=$("#name").val();
+
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                rows:params.rows,
+                page:params.page,
+                total:params.total,
+                pageSize:params.limit,
+                offset:params.offset,
+                "sortName":this.sortName,
+                "sortOrder":this.sortOrder,
+				"upmFile.relateId1":relateId1,
+				"upmFile.relateId2":relateId2,
+				"upmFile.name":name
+            };
+            return temp;
+        };
+        return oTableInit;
+    };
 		
 </script>
 </head>
 
 <body>
 
- <div class="padd10">
-        <div class="contain">
-            <div class="contain_wrap">
-            
-                <div class="contain_title">
-			    	<div class="contain_t_wrap">
-			            <div class="float_lef contain_t_text">
-			            	<span class="marg_lef5">upmFile管理</span>
-			            </div><!--end contain_t_text-->
-			            <div class="float_rig contain_t_check">
-			            </div><!--end contain_t_check-->
-			       </div><!--end contain_t_wrap-->
-			    </div><!--end contain_title-->
-			    
-				<div class="toolbar">
-					<div class="toolbar_wrap">
-						<div class="window_button marg_lef10 float_lef">
-						<input type="button" id="add" class="window_button_centerInput"
-						 value="新增" /></div>
-						<div class="window_button marg_lef10 float_lef">
-						<input type="button" id="edit" class="window_button_centerInput" value="编辑" /></div>
-						<div class="window_button marg_lef10 float_lef"><input type="button" class="window_button_centerInput" value="删除" onclick="mulDelete();"/></div>
-					<table>
-						<tr>
-			 			<td>ID</td>
-						<td><input name="id" id = "id" type="text"/></td>
-			 			<td>relateId1</td>
-						<td><input name="relateId1" id = "relateId1" type="text"/></td>
-			 			<td></td>
-						<td><input name="relateId2" id = "relateId2" type="text"/></td>
-			 			<td></td>
-						<td><input name="name" id = "name" type="text"/></td>
-			 			<td>optdate</td>
-						<td><input type="text" name="optdateBegin" id = "optdateBegin"  class="datetimepicker" readonly="readonly"/>
-							<input type="text" name="optdateEnd" id = "optdateEnd"  class="datetimepicker" readonly="readonly"/>
-						</td>
-			 			<td>operator</td>
-						<td><input name="operator" id = "operator" type="text"/></td>
-			 			<td>content</td>
-						<td><input name="content" id = "content" type="text"/></td>
-						<td>		
-							<div class="window_button marg_lef10 float_lef">
-								<input class="window_button_centerInput" name="select" id = "select" type="button" value="查询" /></div>
-							</div>
-						</td>
-						</tr>
-					</table>
-					</div>
-				</div>
-				
-				<table id="list"></table>
-				<div id="pager"></div>
 
+<div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">查询条件</div>
+            <div class="panel-body">
+                <form id="formSearch" class="form-horizontal">
+                    <div class="form-group" style="margin-top:15px">
+				 	<label class="control-label col-sm-1" for="relateId1">关联ID1</label>
+					<div class="col-sm-2"> <input type="text" class="form-control" id="relateId1"></div>
+	                        
+				 	<label class="control-label col-sm-1" for="relateId2">关联ID2</label>
+					<div class="col-sm-2"> <input type="text" class="form-control" id="relateId2"></div>
+				 	<label class="control-label col-sm-1" for="name">文件名称</label>
+					<div class="col-sm-2"> <input type="text" class="form-control" id="name"></div>
+                        <div class="col-sm-12" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>       
+
+        <div id="toolbar" class="btn-group">
+            <button id="btn_delete" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
         </div>
+        
+        <table id="tableList"></table>
     </div>
 
+
     <script type="text/javascript">
-    
-	  //查询
-	    $("#select").click(function() {
-			 	var id=$("#id").val();
-			 	var relateId1=$("#relateId1").val();
-			 	var relateId2=$("#relateId2").val();
-			 	var name=$("#name").val();
-	    		var optdateBegin=$("#optdateBegin").val();
-	    		var optdateEnd=$("#optdateEnd").val();
-			 	var operator=$("#operator").val();
-			 	var content=$("#content").val();
-	    	
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/upmFile/upmFileAction!list.action',
-				postData : {
-			 			 	"id":id,
-			 			 	"relateId1":relateId1,
-			 			 	"relateId2":relateId2,
-			 			 	"name":name,
-							"optdateBegin":optdateBegin,
-							"optdateEnd":optdateEnd,
-			 			 	"operator":operator,
-			 			 	"content":content
-				}, 
-			 	page:1
-			}).trigger("reloadGrid");
-	    })
-	    
-		//新增
-        $("#add").click(function() {
-        	window.location.href = '${ctx}/jsp/upmFile/upmFileAction!input.action'
-        })
-		//编辑
-        $("#edit").click(function() {
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
-        	if(ids == ''){
-        		showModalMessage('请选择要编辑的记录');
-        		return;
-        	}
-        	if(ids.length > 1){
-        		showModalMessage('请选择一条记录');
-        		return;
-        	}
-        	window.location.href = "${ctx}/jsp/upmFile/upmFileAction!input.action?operate=edit&id=" + ids;
-        })
+    	    var $tableList = $('#tableList');
+	    var $btn_delete = $('#btn_delete');
+	    var $btn_query = $('#btn_query');
 		//删除
-        function mulDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+      $("#btn_delete").click(function() {
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	 
         	if(ids == ""){
-        		showModalMessage('请选择一条记录');
+        		bootbox.alert('请选择要删除的记录');
         		return;
         	}
 
-        	showModalConfirmation('确认要删除么',"doDelete()");
-        }	
+        	bootbox.confirm('确认要删除么?',function (result) {  
+                if(result) {  
+                	doDelete();
+                }
+        	});
+        })
+
         function doDelete(){
-        	var ids = jQuery("#list").jqGrid('getGridParam','selarrrow'); 
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
             var result = jQuery.ajax({
 		      	  url:"${ctx}/jsp/upmFile/upmFileAction!multidelete.action?multidelete=" + ids,
 		          async:false,
@@ -205,15 +183,16 @@
 		          dataType:"json"
 		      }).responseText;
 			var obj = eval("("+result+")");
-			showModalMessage(obj.opResult);
+			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
         
+  	$btn_query.click(function () {
+        	 refreshGrid();
+        });
+
       	function refreshGrid(){
-			jQuery("#list").jqGrid('setGridParam',{
-			    url:'${ctx}/jsp/upmFile/upmFileAction!list.action',
-			 	page:1
-			 }).trigger("reloadGrid");
+		$tableList.bootstrapTable('refresh');
       	}
       	
     </script>

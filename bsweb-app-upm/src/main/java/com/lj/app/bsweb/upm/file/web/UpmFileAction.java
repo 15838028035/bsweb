@@ -143,7 +143,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
 			condition.put(CREATE_BY, getLoginUserId());
 			
 			upmFileService.findPageList(page, condition);
-			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
+			Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page),new String[0]);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
