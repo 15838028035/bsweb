@@ -12,9 +12,9 @@ import com.lj.app.core.common.util.IdentifyingCodeUtil;
 
 public class IdentifyingCodeAction{
 	
-	public String getIdentifyingCode(){
+	public String getIdentifyingCodeNew(){
 		IdentifyingCodeUtil ddentifyingCodeUtil = new IdentifyingCodeUtil();
-		return ddentifyingCodeUtil.getIdentifyingCode();
+		return ddentifyingCodeUtil.getIdentifyingCodeNew();
 	}
 	
 }

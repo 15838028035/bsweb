@@ -57,57 +57,7 @@
 .form-horizontal .form-control:focus + i{
     color: #00b4ef;
 }
-.form-horizontal .fa-question-circle{
-    display: inline-block;
-    position: absolute;
-    top: 12px;
-    right: 60px;
-    font-size: 20px;
-    color: #808080;
-    transition: all 0.5s ease 0s;
-}
-.form-horizontal .fa-question-circle:hover{
-    color: #000;
-}
-.form-horizontal .main-checkbox{
-    float: left;
-    width: 20px;
-    height: 20px;
-    background: #11a3fc;
-    border-radius: 50%;
-    position: relative;
-    margin: 5px 0 0 5px;
-    border: 1px solid #11a3fc;
-}
-.form-horizontal .main-checkbox label{
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: pointer;
-}
-.form-horizontal .main-checkbox label:after{
-    content: "";
-    width: 10px;
-    height: 5px;
-    position: absolute;
-    top: 5px;
-    left: 4px;
-    border: 3px solid #fff;
-    border-top: none;
-    border-right: none;
-    background: transparent;
-    opacity: 0;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-}
-.form-horizontal .main-checkbox input[type=checkbox]{
-    visibility: hidden;
-}
-.form-horizontal .main-checkbox input[type=checkbox]:checked + label:after{
-    opacity: 1;
-}
+
 .form-horizontal .text{
     float: left;
     margin-left: 7px;
@@ -128,14 +78,6 @@
 }
 	</style>
 	
-	
-	<script type="text/javascript">
-		 function login() {
-			var loginNo = $("#loginNo").val();
-			var pwd = $("#pwd").val();
-			document.forms[0].submit();
-		} 
-	</script>
 </head>
 <body>
 
@@ -146,12 +88,14 @@
                 <span class="heading">用户登录</span>
                 <div class="form-group">
                     <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
-                    <i class="fa fa-user"></i>
                 </div>
                 <div class="form-group help">
                     <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密　码">
-                    <i class="fa fa-lock"></i>
-                    <a href="#" class="fa fa-question-circle"></a>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码">
+                    <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
+                    <a id="identifyingCodeChange" href="javascript:" class="aBlue">看不清</a>
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-default" onclick="login();">登录</button>
@@ -160,6 +104,14 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+		 function login() {
+			document.forms[0].submit();
+		} 
+		 $("#identifyingCodeChange").click(function(){
+			 $("#identifyingCodeImg").attr("src",'${ctx}/identifyingcode!getIdentifyingCodeNew.action?nocache='+new Date().getTime());
+		 }
+		);
+	</script>
 </body>
 </html>

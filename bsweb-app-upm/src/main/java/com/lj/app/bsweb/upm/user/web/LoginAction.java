@@ -54,7 +54,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	/**
 	 * 验证码
 	 */
-	private String identifyingCodeInput;
+	private String identifyingCode;
 	
 	@Autowired
 	private UpmUserService upmUserService;
@@ -70,10 +70,15 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	public String login() throws Exception {
-		if (StringUtil.isBlank(loginNo)|| StringUtil.isBlank(pwd)) {
+		String rand = (String) Struts2Utils.getSession().getAttribute("rand");
+		if (StringUtil.isBlank(loginNo)|| StringUtil.isBlank(pwd)|| StringUtil.isBlank(identifyingCode) ||StringUtil.isBlank(rand)) {
 			return SecurityConstants.LOGIN;
 		}
-
+		
+		if(!identifyingCode.equalsIgnoreCase(rand)){//验证码错误
+			return SecurityConstants.LOGIN;
+		}
+		
 		Map<String,Object> condition = new HashMap<String,Object>();
 		condition.put("conditionWhere", " and  (login_no='" + loginNo+"' or mobile='" + loginNo + "') and lock_status<>'1' ");
 		
@@ -245,7 +250,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		Integer passwordErrorMaxTimes = (Integer) Struts2Utils.getSession()
 				.getServletContext().getAttribute("passwordErrorMaxTimes");
 		return upmUserService.identifyingCodeCheck(passwordCheckCount, rand,
-				passwordErrorMaxTimes, identifyingCodeInput);
+				passwordErrorMaxTimes, identifyingCode);
 	}
 	
 	public String passwordCheck() throws Exception{
@@ -396,4 +401,13 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
+	public String getIdentifyingCode() {
+		return identifyingCode;
+	}
+
+	public void setIdentifyingCode(String identifyingCode) {
+		this.identifyingCode = identifyingCode;
+	}
+	
 }

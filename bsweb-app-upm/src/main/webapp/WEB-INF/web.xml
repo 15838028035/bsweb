@@ -24,7 +24,7 @@
 				/loginAction!getLoginMode.action,
 				/jsp/common/sessionexpire.jsp,
 				/identifying-code-img.jsp,
-				/identifyingcode!getIdentifyingCode.action,
+				/identifyingcode!getIdentifyingCodeNew.action,
 				/loginAction!sendMail.action
 			</param-value>
     </init-param>
