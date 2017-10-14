@@ -9,13 +9,6 @@
     <%@ include file="/jsp/common/meta.jsp" %>
 	<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 	<%@ include file="/jsp/common/resource/styles_all.jsp" %>
-	<script>
-		$(document).ready(function(){
-			if('${returnMessage}' != ""){
-				bootbox.alert("${returnMessage}");
-			}
-		});
-	</script>
 </head>
 <body>
 <div class="container">

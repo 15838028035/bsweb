@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -83,29 +82,22 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		condition.put("conditionWhere", " and  (login_no='" + loginNo+"' or mobile='" + loginNo + "') and lock_status<>'1' ");
 		
 		List<UpmUser> userList = upmUserService.findBaseModeList(condition);
-				
-		UpmUser loginUser = null;
-		if (StringUtil.isBlank(loginNo)) {
-			logger.debug("no user loginNo:" + userList + " found.");
+	
+		if (userList==null || userList.size()==0) {
 			return SecurityConstants.LOGIN;
-		} else {
-			if (userList!=null && userList.size()>0) {
-				loginUser = userList.get(0);
-			}else {
-				logger.debug("no user loginNo:" + userList + " found.");
-				return SecurityConstants.LOGIN;
-			}
-			
-			String encryptPwd  = DesUtil.encrypt(pwd); 
-			String dbpwd = loginUser.getPwd();
-			if (!encryptPwd.equals(dbpwd)) {
-				logger.info("password wrong!!!");
-				return SecurityConstants.LOGIN;
-			} else if (StringUtil.isEqual(loginUser.getLockStatus(),"1")) {
-				logger
-						.info("lockstatus is not 0(common status),so login denied!");
-				return SecurityConstants.LOGIN;
-			}
+		}
+		
+		UpmUser loginUser = userList.get(0);
+		
+		String encryptPwd  = DesUtil.encrypt(pwd); 
+		String dbpwd = loginUser.getPwd();
+		if (!encryptPwd.equals(dbpwd)) {
+			logger.info("password wrong!!!");
+			return SecurityConstants.LOGIN;
+		} else if (StringUtil.isEqual(loginUser.getLockStatus(),"1")) {
+			logger
+					.info("lockstatus is not 0(common status),so login denied!");
+			return SecurityConstants.LOGIN;
 		}
 		
 		// FIXME loginUser.setLastLoginTime(new Date());
@@ -113,10 +105,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		HttpSession session2 = Struts2Utils.getSession();// 清空session
 		if (session2 != null) {
 			session2.invalidate();
-		}
-		Cookie[] cookies = Struts2Utils.getRequest().getCookies();
-		if (cookies != null && cookies.length > 0) {
-			cookies[0].setMaxAge(0);
 		}
 
 		if (Struts2Utils.getSessionAttribute(SecurityConstants.SECURITY_CONTEXT) == null) {
@@ -128,8 +116,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			
 			securityContext.setMainAcctId(Long.getLong(String.valueOf(loginUser.getId())));
 			
-			String contextPath = Struts2Utils
-					.getRequest().getContextPath();
+			String contextPath = Struts2Utils.getRequest().getContextPath();
 			
 			 securityContext =	upmPermissionService.getSecurityContext(loginUser.getId(),contextPath , SecurityConstants.APPID_UPM);
 			 securityContext.setLoginName(loginUser.getUserName());
@@ -242,85 +229,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	public UpmUser getModel() {
 		return null;
 	}
-	
-	public boolean identifyingCodeCheck() {
-		Integer passwordCheckCount = (Integer) Struts2Utils.getSession()
-				.getAttribute(SessionCode.PASSWORD_CHECK_COUNT);
-		String rand = (String) Struts2Utils.getSession().getAttribute("rand");
-		Integer passwordErrorMaxTimes = (Integer) Struts2Utils.getSession()
-				.getServletContext().getAttribute("passwordErrorMaxTimes");
-		return upmUserService.identifyingCodeCheck(passwordCheckCount, rand,
-				passwordErrorMaxTimes, identifyingCode);
-	}
-	
-	public String passwordCheck() throws Exception{
-		HttpSession session2 = Struts2Utils.getSession();// 清空session
-		Integer passwordCheckCountInit = (Integer) session2
-				.getAttribute(SessionCode.PASSWORD_CHECK_COUNT);
-		String rand = (String) session2.getAttribute("rand");
-		if (session2 != null) {
-			session2.invalidate();
-		}
-		Cookie[] cookies = Struts2Utils.getRequest().getCookies();
-		if (cookies != null && cookies.length > 0) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName() != null
-						&& cookie.getName().equalsIgnoreCase("JSESSIONID")) {
-					cookie.setMaxAge(0);
-				}
-			}
-		}
-		Struts2Utils.getSession().setAttribute("StaticPwdCheckForLogin", "Y");
-		
-		HttpSession session = Struts2Utils.getSession();
-		if (passwordCheckCountInit == null) {
-			passwordCheckCountInit = 0;
-			session.setAttribute(SessionCode.PASSWORD_CHECK_COUNT,
-					passwordCheckCountInit);
-		} else {
-			session.setAttribute(SessionCode.PASSWORD_CHECK_COUNT,
-					passwordCheckCountInit);
-		}
-		if (rand != null) {
-			session.setAttribute("rand", rand);
-		}
-		String smKey = Struts2Utils.getParameter("smKey");
-		String dateString = Struts2Utils.getParameter("dateString");
-		
-		
-		UpmUser user = new UpmUser();
-		user.setLoginNo(loginNo);
-		user.setPwd(pwd);
-		user.setLockStatus(CMCode.LOCK_SATE_0);
-		
-		UpmUser loginUser = null;
-		
-		List<UpmUser> userList = upmUserService.findBaseModeList(user);
-		
-		if (userList!=null && userList.size()>0) {
-			loginUser = userList.get(0);
-		}else {
-			logger.debug("no user loginNo:" + userList + " found.");
-			return SecurityConstants.LOGIN;
-		}
-		
-		String encryptPwd = pwd;
-		//FIXME: DesUtil.encrypt(pwd); 
-		String dbpwd = loginUser.getPwd();
-		if (!encryptPwd.equals(dbpwd)) {
-			logger.info("password wrong!!!");
-			Struts2Utils.renderText("pwdError");
-		} 
-		
-		// 检查验证码
-		if (identifyingCodeCheck()) {
-			Struts2Utils.renderText("success");
-		} else {
-			Struts2Utils.renderText("NidentifyingCodeCheckError");
-		}
-		return null;
-	}
-	
 	
 	@Override
 	public String list() throws Exception {
