@@ -2,7 +2,7 @@
 
 <config>
 	<bean name="start" class="com.lj.app.core.common.flows.parser.impl.StartParser"/>
-	<bean name="task" class="com.lj.app.core.common.flows.parser.impl.TaskParser"/>
+	<bean name="task" class="com.lj.app.core.common.flows.parser.impl.ExtTaskParser"/>
 	<bean name="custom" class="com.lj.app.core.common.flows.parser.impl.CustomParser"/>
 	<bean name="decision" class="com.lj.app.core.common.flows.parser.impl.DecisionParser"/>
 	<bean name="subprocess" class="com.lj.app.core.common.flows.parser.impl.SubProcessParser"/>
