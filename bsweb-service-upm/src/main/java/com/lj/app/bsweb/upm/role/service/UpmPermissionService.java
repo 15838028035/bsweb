@@ -1,6 +1,7 @@
 package com.lj.app.bsweb.upm.role.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.security.CMSecurityContext;
@@ -50,4 +51,17 @@ public interface UpmPermissionService<UpmPermission> extends BaseService {
 	 * @return boolean true 存在重名 ，false 不存在
 	 */
 	public boolean isExisitPermissionByNameAndParent(String parentId,String name) throws Exception;
+	
+	/**
+	 * 查找appId有效的权限
+	 * @param domainId
+	 * @return
+	 */
+	public Set<String> findPermissionUrlByAppId(String appId);
+	/**
+	 * 查找appId无效的权限
+	 * @param appId
+	 * @return
+	 */
+	public Set<String> findDisabledPermissionUrlByAppId(String appId);
 }

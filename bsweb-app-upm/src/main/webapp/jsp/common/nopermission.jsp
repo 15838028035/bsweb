@@ -1,13 +1,19 @@
+<%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ include file="/jsp/common/taglibs.jsp" %>
+
+<!DOCTYPE html>
+<html>
 <head>
 	<title>没有权限</title>
+	 <meta name="viewport" content="width=device-width" />
+	<%@ include file="/jsp/common/meta.jsp" %>
+	<%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 </head>
 
 <body>
-<div>
-没有权限
+<div class="container">
+	<div class="alert alert-warning">对不起，您没有操作权限</div>
 </div>
 </body>
 </html>

@@ -439,5 +439,20 @@ and ur.groupId=ur.groupId
 	<select id="queryByNameAndParentId" resultClass="Integer">
 		SELECT count(1) FROM UPM_PERMISSION t WHERE t.parent_id = #parentId#   AND t.name=#name#
 	</select>
+	
+	<!-- 根据domainId查询所有权限对应的URL列表（即UPM_PERMISSION中state为0的。0表示正常，1表示注销） and nvl(t.state,'0')!='1' -->
+	<select id="findPermissionUrlByAppId"
+		resultClass="java.lang.String">
+		<![CDATA[
+			select t.url from UPM_PERMISSION t where t.url is not null and (t.state = '0' or t.state is null) and t.app_id=#appId#
+	    ]]>
+	</select>
+	<!-- 根据domainId查询所有无效的URL列表（即UPM_PERMISSION中state为1的。0表示正常，1表示注销） -->
+	<select id="findDisabledPermissionUrlByAppId"
+		resultClass="java.lang.String">
+		<![CDATA[
+			select t.url from UPM_PERMISSION t where t.url is not null and ifnull(t.state,'0')='1' and t.app_id=#appId#
+	    ]]>
+	</select>
 
 </sqlMap>

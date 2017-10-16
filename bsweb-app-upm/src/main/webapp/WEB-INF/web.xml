@@ -5,7 +5,7 @@
          
           <filter>
     <filter-name>CheckLoginFilter</filter-name>
-    <filter-class>com.lj.app.core.common.security.SecurityFilter</filter-class>
+    <filter-class>com.lj.app.bsweb.upm.filter.SecurityFilterExt</filter-class>
     <init-param>
       <param-name>isNeedAuthen</param-name>
       <param-value>false</param-value>
@@ -37,14 +37,15 @@
       <description>跳过认证的页面和请求</description>
       <param-name>skipPrivilegeValidatePage</param-name>
       <param-value>
-				
 				/index.jsp,
 				/login.jsp,
 				/loginAction!login.action,
 				/loginAction!getLoginMode.action,
 				/loginAction!ssoLogin.action,
-				/jsp/common/sessionexpire.jsp
-				
+				/jsp/common/sessionexpire.jsp,
+				/identifyingcode!getIdentifyingCodeNew.action,
+				/loginAction!sendMail.action,
+				/identifying-code-img.jsp
 			</param-value>
     </init-param>
   </filter>

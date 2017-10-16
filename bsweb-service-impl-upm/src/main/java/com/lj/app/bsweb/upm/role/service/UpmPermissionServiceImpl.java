@@ -2,6 +2,7 @@ package com.lj.app.bsweb.upm.role.service;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -131,5 +132,67 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 			flag = true;
 		}
 		return flag;
+	}
+	
+	/**
+	 * 查找appId有效的权限
+	 * @param domainId
+	 * @return
+	 */
+	public Set<String> findPermissionUrlByAppId(String appId){
+		Set<String> result = new HashSet<String>();
+		Map<String,String> condition = new HashMap<String,String>();
+		condition.put("appId", appId);
+		List<String> list =  queryForList("findPermissionUrlByAppId", condition);
+		
+		if(null != list && list.size() > 0){
+			for (Iterator iter = list.iterator(); iter.hasNext();) {
+				String tmp = (String) iter.next();
+				tmp = null == tmp ? "" : tmp.trim();
+				if(!"".equals(tmp)){
+					String[] urls = tmp.split(",");
+					if(null != urls){
+						for(int i = 0; i < urls.length; i++){
+							urls[i] = null == urls[i] ? "" : urls[i].trim();
+							if(!"".equals(urls[i])){
+								result.add(urls[i]);
+							}
+						}
+					}
+				}
+			}
+		}
+		return result;
+		
+	}
+	/**
+	 * 查找appId无效的权限
+	 * @param appId
+	 * @return
+	 */
+	public Set<String> findDisabledPermissionUrlByAppId(String appId){
+		Set<String> result = new HashSet<String>();
+		Map<String,String> condition = new HashMap<String,String>();
+		condition.put("appId", appId);
+		List<String> list = queryForList("findDisabledPermissionUrlByAppId", condition);
+		
+		if(null != list && list.size() > 0){
+			for (Iterator iter = list.iterator(); iter.hasNext();) {
+				String tmp = (String) iter.next();
+				tmp = null == tmp ? "" : tmp.trim();
+				if(!"".equals(tmp)){
+					String[] urls = tmp.split(",");
+					if(null != urls){
+						for(int i = 0; i < urls.length; i++){
+							urls[i] = null == urls[i] ? "" : urls[i].trim();
+							if(!"".equals(urls[i])){
+								result.add(urls[i]);
+							}
+						}
+					}
+				}
+			}
+		}
+		return result;
 	}
 }
