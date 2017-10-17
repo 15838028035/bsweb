@@ -21,6 +21,8 @@
 			</interceptor-stack>
 		</interceptors>
 
+	<default-interceptor-ref name="crudStack" />
+
 		<!-- 暴露异常信息，方便查看错误信息
 		<default-interceptor-ref name="crudStack" />
 		<global-results>
