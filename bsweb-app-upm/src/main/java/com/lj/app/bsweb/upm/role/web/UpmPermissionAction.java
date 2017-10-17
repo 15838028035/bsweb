@@ -19,6 +19,7 @@ import com.lj.app.bsweb.upm.role.service.UpmRoleService;
 import com.lj.app.core.common.base.entity.UpmDictionary;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.DictionaryApiService;
+import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
@@ -229,6 +230,26 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 		return "turnToPermissionList";
 	}
 
+	/**
+	 * 启用停用菜单
+	 * @return
+	 */
+	public String updataStat() {
+		try {
+			upmPermissionService.updateObject(upmPermission);
+			returnMessage="操作成功";
+		} catch (Exception e) {
+			e.printStackTrace();
+			returnMessage="操作失败";
+		}
+		AjaxResult ar = new AjaxResult();
+		ar.setOpResult(returnMessage);
+		
+		Struts2Utils.renderJson(ar);
+		return null;
+	}
+
+	
 	public java.lang.Integer getId() {
 		return id;
 	}

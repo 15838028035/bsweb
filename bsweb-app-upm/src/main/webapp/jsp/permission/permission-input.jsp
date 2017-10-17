@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>upmPermission管理</title>
+    <title>权限管理</title>
     <%@ include file="/jsp/common/meta.jsp" %>
     <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
     <%@ include file="/jsp/common/resource/styles_all.jsp" %>
@@ -63,7 +63,7 @@
 		 </div>
 		 
       		<div class="form-group">
-			 <label for="state">状态</label>
+			 <label for="state">状态(0:启用，1停用)</label>
 		 	  <input class="form-control" type="text"  name="upmPermission.state" id="state"  value="${upmPermission.state}" />
 		 </div>
 		 

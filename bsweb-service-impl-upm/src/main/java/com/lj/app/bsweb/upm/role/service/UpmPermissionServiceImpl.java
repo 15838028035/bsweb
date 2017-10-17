@@ -39,6 +39,7 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 		Map<String,Object> condition = new HashMap<String,Object>();
 		condition.put("userId",  userId);
 		condition.put("appId",  appId);
+		condition.put("state",  "0");
 		return this.queryForList("findPermissionByUserId",condition);
 	}
 	
@@ -50,6 +51,7 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 		condition.put("userId",  userId);
 		condition.put("appId",  appId);
 		condition.put("type",  type);
+		condition.put("state",  "0");
 		return this.queryForList("findPermissionByUserId",condition);
 	}
 	
@@ -96,6 +98,7 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 	public Integer findRootPermissionIdByAppId(String appId) throws Exception{
 		Map<String, Object> condition = new HashMap<String, Object>();
 		condition.put("appId", appId);
+		condition.put("state",  "0");
 		Integer result = (Integer)queryForObject("findRootPermissionIdByDomainId", condition);
 		return result;
 	}
@@ -109,6 +112,7 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 	public Integer findRootPermissionIdMenuByAppId(String appId) throws Exception{
 		Map<String, Object> condition = new HashMap<String, Object>();
 		condition.put("appId", appId);
+		condition.put("state",  "0");
 		Integer result = (Integer)queryForObject("findRootPermissionIdMenuByAppId", condition);
 		return result;
 	}

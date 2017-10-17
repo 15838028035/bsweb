@@ -160,30 +160,69 @@
 	    ]]>
     </insert>
 
-    <update id="update" parameterClass="upmPermission">
+     <update id="update" parameterClass="upmPermission">
     <![CDATA[
-        UPDATE upm_permission SET
-			id = #id# ,
-			app_id = #appId# ,
-			parent_Id = #parentId# ,
-			name = #name# ,
-			type = #type# ,
-			url = #url# ,
-			code = #code# ,
-			key_code = #keyCode# ,
-			state = #state# ,
-			remark = #remark# ,
-			sortNo = #sortNo# ,
-			icon_Path = #iconPath# ,
-			create_By = #createBy# ,
-			create_Date = #createDate# ,
-			updateBy = #updateBy# ,
-			update_Date = #updateDate# ,
-			enable_Flag = #enableFlag# ,
-			lock_Status = #lockStatus# 
+        UPDATE upm_permission 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="appId">
+				app_id = #appId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="parentId">
+				parent_Id = #parentId#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="name">
+				name = #name#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="type">
+				type = #type#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="url">
+				url = #url#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="code">
+				code = #code#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="keyCode">
+				key_code = #keyCode#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="state">
+				state = #state#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="remark">
+				remark = #remark#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="sortNo">
+				sortNo = #sortNo#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="iconPath">
+				icon_Path = #iconPath#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createBy">
+				create_By = #createBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="createDate">
+				create_Date = #createDate#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateBy">
+				updateBy = #updateBy#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="updateDate">
+				update_Date = #updateDate#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="enableFlag">
+				enable_Flag = #enableFlag#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="lockStatus">
+				lock_Status = #lockStatus#
+			</isNotEmpty>
+	        
+	   </dynamic>
         WHERE 
 	        id = #id# 
-    ]]>
     </update>
 
     <delete id="delete" parameterClass="java.lang.Integer">

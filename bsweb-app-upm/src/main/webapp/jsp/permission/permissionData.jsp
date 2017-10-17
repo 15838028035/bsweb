@@ -81,7 +81,16 @@
 			 	{field:'url',title:'URL', sortable:true},
 			 	{field:'code',title:'code', sortable:true},
 			 	{field:'keyCode',title:'key_code', sortable:true},
-			 	{field:'state',title:'态状', sortable:true},
+			 	{field:'state',title:'态状', sortable:true,formatter : function(value, row, index) {  
+			 		if(value=='0'){
+			 			return '启用';
+			 		}
+			 		if(value=='1'){
+			 			return '停用';
+			 		}
+			 		return value;
+       				}  
+			 	},
 			 	{field:'remark',title:'注备', sortable:true},
 			 	{field:'sortNo',title:'排序', sortable:true},
 			 	{field:'iconPath',title:'图片路径', sortable:true, visible:false},
@@ -156,15 +165,31 @@
         </div>       
 
         <div id="toolbar" class="btn-group">
-            <button id="btn_add" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_edit" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
-            <button id="btn_delete" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
+       	    <sec:authorize code="upm_permissionData_btn_add" >
+	            <button id="btn_add" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+	            </button>
+            </sec:authorize>
+            <sec:authorize code="upm_permissionData_btn_edit" >
+	            <button id="btn_edit" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+	            </button>
+            </sec:authorize>
+            <sec:authorize code="upm_permissionData_btn_delete" >
+	            <button id="btn_delete" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+	            </button>
+            </sec:authorize>
+            <sec:authorize code="upm_permissionData_btn_startButton" >
+	             <button id="btn_startButton" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>启动
+	            </button>
+            </sec:authorize>
+            <sec:authorize code="upm_permissionData_btn_cancelButton" >
+	             <button id="btn_cancelButton" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>停用
+	            </button>
+            </sec:authorize>
         </div>
         
         <table id="tableList"></table>
@@ -177,6 +202,8 @@
 	    var $btn_edit = $('#btn_edit');
 	    var $btn_delete = $('#btn_delete');
 	    var $btn_query = $('#btn_query');
+	    var $btn_startButton = $('#btn_startButton');
+	    var $btn_cancelButton = $('#btn_cancelButton');
 
 	
 		//新增
@@ -230,6 +257,50 @@
 			bootbox.alert(obj.opResult);
 			refreshGrid();
         }
+		
+      //启用
+        $("#btn_startButton").click(function() {
+          	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                   return row.id;
+               });
+          	 
+          	if(ids == ""){
+          		bootbox.alert('请选择要操作的记录');
+          		return;
+          	}
+            var result = jQuery.ajax({
+		      	  url:"${ctx}/jsp/permission/upmPermissionAction!updataStat.action?upmPermission.id=" + ids +"&upmPermission.state=0",
+		          async:false,
+		          cache:false,
+		          dataType:"json"
+		      }).responseText;
+			var obj = eval("("+result+")");
+			bootbox.alert(obj.opResult);
+			refreshGrid();
+
+          })
+          
+           //停用
+        $("#btn_cancelButton").click(function() {
+          	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                   return row.id;
+               });
+          	 
+          	if(ids == ""){
+          		bootbox.alert('请选择要操作的记录');
+          		return;
+          	}
+            var result = jQuery.ajax({
+            	url:"${ctx}/jsp/permission/upmPermissionAction!updataStat.action?upmPermission.id=" + ids +"&upmPermission.state=1",
+		          async:false,
+		          cache:false,
+		          dataType:"json"
+		      }).responseText;
+			var obj = eval("("+result+")");
+			bootbox.alert(obj.opResult);
+			refreshGrid();
+
+          })
         
   	$btn_query.click(function () {
         	 refreshGrid();
