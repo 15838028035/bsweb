@@ -5,3 +5,5 @@
 <meta http-equiv="Expires" content="0"/>
 <!-- 解决：IE8中使用document.getElementById(...)会js报错 -->
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">

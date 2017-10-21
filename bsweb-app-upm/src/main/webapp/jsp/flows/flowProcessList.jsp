@@ -6,7 +6,6 @@
 <html>
 <head>
 	<title>流程定义</title>
-    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 <script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>

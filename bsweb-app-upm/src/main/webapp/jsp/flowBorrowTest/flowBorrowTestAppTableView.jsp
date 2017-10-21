@@ -6,7 +6,6 @@
 <html>
 <head>
 <title>借款测试流程</title>
-   <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 

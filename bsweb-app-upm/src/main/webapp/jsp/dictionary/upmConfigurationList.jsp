@@ -7,7 +7,6 @@
 <html>
 <head>
 <title>配置管理</title>
-    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 

@@ -7,7 +7,6 @@
 <html>
 <head>
 <title>upmRoleGroup管理</title>
-    <meta name="viewport" content="width=device-width" />
 <%@ include file="/jsp/common/meta.jsp" %>
 
 <!--css样式-->
