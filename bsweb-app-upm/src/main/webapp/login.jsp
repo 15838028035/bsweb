@@ -1,6 +1,7 @@
 ﻿<%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,14 +89,30 @@
                 <div class="form-group">
                     <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
                 </div>
-                <div class="form-group help">
-                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密　码">
-                </div>
-                <div class="form-group">
+                
+                 <c:if test="${springProfilesActive == 'dev' || springProfilesActive == 'test'}">
+	                <div class="form-group">
+	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密　码" value="123456">
+	                </div>
+	                 <div class="form-group">
+                    <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码" value="">
+                    <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
+                    <a id="identifyingCodeChange" href="javascript:" class="aBlue">看不清</a>
+                	</div>
+                </c:if>
+                
+                <c:if test="${springProfilesActive == 'pro'}">
+	                <div class="form-group">
+	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密　码">
+	                </div>
+	                 <div class="form-group">
                     <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码">
                     <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
                     <a id="identifyingCodeChange" href="javascript:" class="aBlue">看不清</a>
-                </div>
+               		 </div>
+                </c:if>
+                
+               
                 <div class="form-group">
                     <button type="button" class="btn btn-default" onclick="login();">登录</button>
                 </div>

@@ -100,7 +100,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			return SecurityConstants.LOGIN;
 		}
 		
-		// FIXME loginUser.setLastLoginTime(new Date());
 		
 		HttpSession session2 = Struts2Utils.getSession();// 清空session
 		if (session2 != null) {
@@ -250,17 +249,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	@Override
 	protected void prepareModel() throws Exception {
 		
-	}
-
-	public String getLoginMode() throws Exception {
-		String loginMode ="dev";
-		logger.warn("==loginMode==" + loginMode);
-		if (loginMode != null){
-			Struts2Utils.renderText(loginMode);
-		}else {
-			Struts2Utils.renderText("product");
-		}
-		return null;
 	}
 
 	public String logout() {
