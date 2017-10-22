@@ -20,7 +20,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.lj.app.bsweb.upm.role.service.UpmPermissionService;
 import com.lj.app.core.common.base.entity.UpmUser;
-import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.security.CMSecurityContext;
 import com.lj.app.core.common.security.SecurityConstants;
 import com.lj.app.core.common.util.SessionCode;
