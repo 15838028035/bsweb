@@ -87,5 +87,14 @@ public class UpmJobAction extends AbstractBaseUpmAction<UpmJob> {
 	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
+
+	public UpmJob getUpmJob() {
+		return upmJob;
+	}
+
+	public void setUpmJob(UpmJob upmJob) {
+		this.upmJob = upmJob;
+	}
+	
 }
 
