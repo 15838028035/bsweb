@@ -9,7 +9,6 @@
     <%@ include file="/jsp/common/meta.jsp" %>
     <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 
-
 <script language="javascript"  type="text/javascript">
 	$(document).ready(function(){
 		 var oTable = new TableInit();
@@ -63,7 +62,7 @@
                 height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
-                detailView: false,                   //是否显示父子表
+                detailView: true,                   //是否显示父子表
                 columns: [  
 			{ field: 'checkStatus', title: '',checkbox:true }, 
                            {field : 'Number', title : '行号', formatter : function(value, row, index) {  
@@ -80,7 +79,11 @@
 			 	{field:'createDate',title:'创建时间', sortable:true},
 			 	{field:'updateByUname',title:'修改人', sortable:true},
 			 	{field:'updateDate',title:'修改时间', sortable:true}
-                        ],               		
+                        ], 
+                      //注册加载子表的事件。注意下这里的三个参数！
+                  onExpandRow: function (index, row, $detail) {
+                	 InitSubTable(index, row, $detail);
+                  },
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
              	},
@@ -119,9 +122,38 @@
             };
             return temp;
         };
+            
         return oTableInit;
     };
-		
+  //初始化子表格(无线循环)
+    InitSubTable = function (index, row, $detail) {
+        var id = row.id;
+        var cur_table = $detail.html('<table></table>').find('table');
+        $(cur_table).bootstrapTable({
+            url: '${ctx}/jsp/upmJobSechdu/upmJobSechduAction!bootStrapList.action?jobId='+id,
+            method: 'post',
+            dataType: "json",
+            clickToSelect: true,
+            detailView: true,//父子表
+            uniqueId: "id",
+            pageSize: 10,
+            pageList: [10, 25],
+            columns: [{field:'id',title:'ID', sortable:true},
+                      {field:'startTime',title:'开始时间', sortable:true},
+      			 	   {field:'endTime',title:'结束时间', sortable:true},
+    			 	  {field:'jodStatus',title:'状态', sortable:true,formatter : function(value, row, index) {  
+    			 		  if(value=="1"){
+    			 			  return "执行中...";
+    			 		  }
+    			 		 if(value=="2"){
+   			 			  return "执行完成";
+   			 		  		}
+    			 		  return value;
+             			}  
+      			 	   }
+          		]
+        });
+    };
 </script>
 </head>
 
