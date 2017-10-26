@@ -74,10 +74,10 @@
 	<bean id="sqlMapClient" class="com.lj.app.core.common.ibatis.dao.SqlMapClientFactoryBean">
 	   <property name="configLocation"> 
           		 <value>classpath:sqlMapConfig.xml</value> 
-        </property>  
+        </property>
 		<property name="dataSource" ref="dataSource" />
-		<property name="lobHandler" ref="lobHandler"/>
-	</bean>         
+		<property name="lobHandler" ref="lobHandler"></property>
+	</bean>        
 	
 	<bean  id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
   		<constructor-arg><ref bean="dataSource"/></constructor-arg>

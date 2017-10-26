@@ -27,6 +27,5 @@
       <sqlMap resource="com/lj/app/bsweb/upm/role/entity/UpmRole.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/bsweb/upm/role/entity/UpmRoleGroup.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/bsweb/upm/role/entity/UpmPermission.SqlMap.xml"/>
-      
 </sqlMapConfig>
     

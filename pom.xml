@@ -74,12 +74,6 @@
 		<aspectjweaver.version>1.6.2</aspectjweaver.version>
 		<cglib-nodep.version>2.2</cglib-nodep.version>
 
-		<maven-antrun-plugin.version>1.6</maven-antrun-plugin.version>
-
-		<selenium.version>2.44.0</selenium.version>
-		<fitnesse.version>20130530</fitnesse.version>
-		<fitnesse.port>8000</fitnesse.port>
-		<fitnesse.expiration>0</fitnesse.expiration>
 		<orgjson.version>20140107</orgjson.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<commons-lang.version>2.6</commons-lang.version>
@@ -133,7 +127,18 @@
 				<artifactId>spring-context-support</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
+			<dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-orm</artifactId>
+	            <version>${spring.version}</version>
+	            <exclusions>
+	                <exclusion>
+	                    <groupId>*</groupId>
+	                    <artifactId>*</artifactId>
+	                </exclusion>
+	            </exclusions>
+	        </dependency>
+	        
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
@@ -198,12 +203,6 @@
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>5.1.9</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-ibatis</artifactId>
-				<version>${ibatis.version}</version>
 			</dependency>
 
 			<dependency>
