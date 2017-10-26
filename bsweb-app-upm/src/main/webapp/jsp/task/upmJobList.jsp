@@ -82,7 +82,7 @@
                         ], 
                       //注册加载子表的事件。注意下这里的三个参数！
                   onExpandRow: function (index, row, $detail) {
-                	 InitSubTable(index, row, $detail);
+                	  oTableInit.InitSubTable(index, row, $detail);
                   },
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -122,38 +122,73 @@
             };
             return temp;
         };
+        
+        //初始化子表格(无线循环)
+         oTableInit.InitSubTable = function (index, row, $detail) {
+            var id = row.id;
+            var cur_table = $detail.html('<table></table>').find('table');
+            $(cur_table).bootstrapTable({
+                url: '${ctx}/jsp/upmJobSechdu/upmJobSechduAction!bootStrapList.action',
+                method: "get",
+                dataType: "json",
+                contentType : "application/x-www-form-urlencoded",
+                queryParams: {"jobId":id},
+                queryParamsType:'',
+                dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+                totalField: 'total',
+                clickToSelect: true,
+                detailView: false,//父子表
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                uniqueId: "id",
+                pageSize: 10,
+                pageList: [10, 25],
+                columns: [
+                          {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+              	   			return index+1;
+                 			}  
+                 		},
+						{field:'id',title:'ID', sortable:true,visible:false},
+						{field:'startTime',title:'开始时间', sortable:true},
+							   {field:'endTime',title:'结束时间', sortable:true},
+						 {field:'jodStatus',title:'状态', sortable:true,formatter : function(value, row, index) {  
+							  if(value=="1"){
+								  return "执行中...";
+							  }
+							 if(value=="2"){
+								  return "执行完成";
+							  		}
+							  return value;
+							}  
+							   },
+							{field:'isSuccess',title:'是否成功', sortable:true,formatter : function(value, row, index) {  
+							  if(value=="0"){
+							  return "失败";
+						 }
+						if(value=="1"){
+							  return "成功";
+								}
+						 return value;
+							}  
+						},
+						{field:'resultMsg',title:'执行结果', sortable:true}
+              		],
+                onLoadError: function (data) {
+                	bootbox.alert("数据加载失败");
+                 	},
+                 	responseHandler: function (res) {
+                 	    return {
+                 	        total: res.total,
+                 	        rows: res.rows
+                 	    };
+                 	}
+            });
+        };
             
         return oTableInit;
     };
-  //初始化子表格(无线循环)
-    InitSubTable = function (index, row, $detail) {
-        var id = row.id;
-        var cur_table = $detail.html('<table></table>').find('table');
-        $(cur_table).bootstrapTable({
-            url: '${ctx}/jsp/upmJobSechdu/upmJobSechduAction!bootStrapList.action?jobId='+id,
-            method: 'post',
-            dataType: "json",
-            clickToSelect: true,
-            detailView: true,//父子表
-            uniqueId: "id",
-            pageSize: 10,
-            pageList: [10, 25],
-            columns: [{field:'id',title:'ID', sortable:true},
-                      {field:'startTime',title:'开始时间', sortable:true},
-      			 	   {field:'endTime',title:'结束时间', sortable:true},
-    			 	  {field:'jodStatus',title:'状态', sortable:true,formatter : function(value, row, index) {  
-    			 		  if(value=="1"){
-    			 			  return "执行中...";
-    			 		  }
-    			 		 if(value=="2"){
-   			 			  return "执行完成";
-   			 		  		}
-    			 		  return value;
-             			}  
-      			 	   }
-          		]
-        });
-    };
+
 </script>
 </head>
 
@@ -225,6 +260,16 @@
         		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
+        	var  isProcessJobStatus =  jQuery.ajax({
+		          url:"${ctx}/jsp/task/upmJobAction!isProcessJobStatus.action?id="+ids,
+		          async:false,
+		          dataType:"text"
+		        }).responseText;
+				if(isProcessJobStatus=="true"){
+					bootbox.alert('定时任务正在处理中，请稍等');
+					return ;
+				}
+				
         	window.location.href = "${ctx}/jsp/task/upmJobAction!input.action?operate=edit&id=" + ids;
         })
 		//删除
@@ -237,7 +282,17 @@
         		bootbox.alert('请选择要删除的记录');
         		return;
         	}
-
+			
+        	var  isProcessJobStatus =  jQuery.ajax({
+		          url:"${ctx}/jsp/task/upmJobAction!isProcessJobStatus.action?id="+ids,
+		          async:false,
+		          dataType:"text"
+		        }).responseText;
+				if(isProcessJobStatus=="true"){
+					bootbox.alert('定时任务正在处理中，请稍等');
+					return ;
+				}
+				
         	bootbox.confirm('确认要删除么?',function (result) {  
                 if(result) {  
                 	doDelete();
