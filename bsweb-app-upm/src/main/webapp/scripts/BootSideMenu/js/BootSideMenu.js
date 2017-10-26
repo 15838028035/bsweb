@@ -22,6 +22,7 @@
             pushBody: true,
             closeOnClick: true,
             width: "15%",
+            height:auto;
             onTogglerClick: function () {
                 //code to be executed when the toggler arrow was clicked
             },
@@ -66,6 +67,7 @@
         menu.addClass("container");
         menu.addClass("sidebar");
         menu.css("width", options.width);
+        menu.css("height", options.height);
 
         if (options.side == "left") {
             menu.addClass("sidebar-left");

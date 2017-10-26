@@ -6,6 +6,15 @@
   <title>UPM权限管理系统</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
+
+<style type="text/css">
+ 
+ #treediv {
+    height: 100%;
+    overflow:scroll;
+ }
+
+</style>
  
  <script   type="text/javascript">
 		$(function(){
@@ -73,14 +82,14 @@
 	    </div>
         
        <script type="text/javascript">
-       /*  $(document).ready(function () {
+        $(document).ready(function () {
              $('#sidebar').BootSideMenu({
                 side: "left",
                 pushBody:false,
                 closeOnClick:true,
                 autoClose:true
             }); 
-        }); */
+        }); 
 
     </script>  
 </script> 
