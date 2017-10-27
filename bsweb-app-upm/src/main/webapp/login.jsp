@@ -84,7 +84,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
-            <form class="form-horizontal" action="${ctx}/loginAction!login.action" method="post">
+            <form class="form-horizontal" action="${ctx}/loginAction!login.action" method="post" name="loginForm" id="loginForm">
                 <span class="heading">用户登录</span>
                 <div class="form-group">
                     <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
@@ -92,21 +92,25 @@
                 
                  <c:if test="${springProfilesActive == 'dev' || springProfilesActive == 'test'}">
 	                <div class="form-group">
-	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密　码" value="123456">
+	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码" value="123456">
 	                </div>
 	                 <div class="form-group">
                     <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码" value="">
+                	</div>
+                	 <div class="form-group">
                     <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
                     <a id="identifyingCodeChange" href="javascript:" class="aBlue">看不清</a>
-                	</div>
+               		 </div>
                 </c:if>
                 
                 <c:if test="${springProfilesActive == 'pro'}">
 	                <div class="form-group">
-	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密　码">
+	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码">
 	                </div>
 	                 <div class="form-group">
                     <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码">
+               		 </div>
+               		  <div class="form-group">
                     <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
                     <a id="identifyingCodeChange" href="javascript:" class="aBlue">看不清</a>
                		 </div>
@@ -114,16 +118,59 @@
                 
                
                 <div class="form-group">
-                    <button type="button" class="btn btn-default" onclick="login();">登录</button>
+                    <button type="submit" class="btn btn-default" >登录</button>
                 </div>
+	            <s:if test="hasActionErrors()">
+		   			<div class="alert alert-danger" style="list-style:none">
+		     			 <s:actionerror/>
+		   			</div>
+				</s:if>
             </form>
+           
         </div>
     </div>
 </div>
 <script type="text/javascript">
-		 function login() {
-			document.forms[0].submit();
-		} 
+
+$("#loginForm").bootstrapValidator({
+	fields: {
+ 		 "loginNo": {
+			message: '登陆账号或手机号码不能为空',
+			validators: {  
+               				 notEmpty: {  
+                				message: '登陆账号或手机号码不能为空'  
+                			} 
+                			
+            			}  
+		
+       },
+ 		 "pwd": {
+			message: '密码不能为空',
+			validators: {  
+               				 notEmpty: {  
+                				message: '密码不能为空'  
+                			} 
+                			
+            			}  
+		
+       },
+ 		 "identifyingCode": {
+			message: '验证码不能为空',
+			validators: {  
+               				 notEmpty: {  
+                				message: '验证码不能为空'  
+                			} 
+                			
+            			}  
+		
+       }
+	},
+	submitHandler: function(validator, form, submitButton) {  
+       		 validator.defaultSubmit();  
+    	}  
+	
+});
+		 
 		 $("#identifyingCodeChange").click(function(){
 			 $("#identifyingCodeImg").attr("src",'${ctx}/identifyingcode!getIdentifyingCodeNew.action?nocache='+new Date().getTime());
 		 }

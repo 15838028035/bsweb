@@ -20,10 +20,9 @@
       <param-value>
 				/jsp/common,
 				/login.jsp,
+				/loginAction!goToLogin.action,
 				/loginAction!login.action,
-				/loginAction!getLoginMode.action,
 				/jsp/common/sessionexpire.jsp,
-				/identifying-code-img.jsp,
 				/identifyingcode!getIdentifyingCodeNew.action,
 				/loginAction!sendMail.action
 			</param-value>
@@ -37,15 +36,13 @@
       <description>跳过认证的页面和请求</description>
       <param-name>skipPrivilegeValidatePage</param-name>
       <param-value>
-				/index.jsp,
 				/login.jsp,
+				/loginAction!goToLogin.action,
 				/loginAction!login.action,
-				/loginAction!getLoginMode.action,
 				/loginAction!ssoLogin.action,
 				/jsp/common/sessionexpire.jsp,
 				/identifyingcode!getIdentifyingCodeNew.action,
 				/loginAction!sendMail.action,
-				/identifying-code-img.jsp
 			</param-value>
     </init-param>
   </filter>

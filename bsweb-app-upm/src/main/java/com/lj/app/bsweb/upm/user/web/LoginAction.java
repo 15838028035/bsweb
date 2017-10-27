@@ -68,13 +68,19 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		return upmUserService;
 	}
 	
+	public String goToLogin() throws Exception {
+			return SecurityConstants.LOGIN;
+	}
+	
 	public String login() throws Exception {
 		String rand = (String) Struts2Utils.getSession().getAttribute("rand");
 		if (StringUtil.isBlank(loginNo)|| StringUtil.isBlank(pwd)|| StringUtil.isBlank(identifyingCode) ||StringUtil.isBlank(rand)) {
+			addActionError("参数不能为空");
 			return SecurityConstants.LOGIN;
 		}
 		
 		if(!identifyingCode.equalsIgnoreCase(rand)){//验证码错误
+			addActionError("验证码错误");
 			return SecurityConstants.LOGIN;
 		}
 		
@@ -84,6 +90,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		List<UpmUser> userList = upmUserService.findBaseModeList(condition);
 	
 		if (userList==null || userList.size()==0) {
+			addActionError("用户不存在");
 			return SecurityConstants.LOGIN;
 		}
 		
@@ -92,9 +99,11 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		String encryptPwd  = DesUtil.encrypt(pwd); 
 		String dbpwd = loginUser.getPwd();
 		if (!encryptPwd.equals(dbpwd)) {
+			addActionError("密码错误");
 			logger.info("password wrong!!!");
 			return SecurityConstants.LOGIN;
 		} else if (StringUtil.isEqual(loginUser.getLockStatus(),"1")) {
+			addActionError("账号被加锁,无法登陆");
 			logger
 					.info("lockstatus is not 0(common status),so login denied!");
 			return SecurityConstants.LOGIN;

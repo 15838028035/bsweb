@@ -82,14 +82,14 @@
 	    </div>
         
        <script type="text/javascript">
-        $(document).ready(function () {
+       /*  $(document).ready(function () {
              $('#sidebar').BootSideMenu({
                 side: "left",
                 pushBody:false,
                 closeOnClick:true,
                 autoClose:true
             }); 
-        }); 
+        });  */
 
     </script>  
 </script> 

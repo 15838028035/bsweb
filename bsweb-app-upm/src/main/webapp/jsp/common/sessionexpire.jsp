@@ -9,12 +9,7 @@
 
 <body>
 	<div><h1>登录超时,请重新登录</h1></div>
-		<a href="javascript:login()">登录</a>
+		<a href="${ctx }/loginAction!goToLogin.action">登录</a>
 </body>
 
-<script language="javascript">
-		function login() {
-			window.parent.location.href="${ctx }/loginAction!login.action";
-		}
-</script>
 </html>
