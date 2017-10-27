@@ -23,9 +23,11 @@ import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmUserService;
 import com.lj.app.core.common.pagination.PageTool;
+import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.security.CMSecurityContext;
 import com.lj.app.core.common.security.DesUtil;
 import com.lj.app.core.common.security.SecurityConstants;
+import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.SessionCode;
 import com.lj.app.core.common.util.SpringContextHolder;
 import com.lj.app.core.common.util.StringUtil;
@@ -268,6 +270,33 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		}
 
 		return SecurityConstants.LOGIN;
+	}
+	
+	/**
+	 * 获得测试短信验证码
+	 * @return
+	 */
+	public String getRand() {
+		String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");
+		
+		if(StringUtil.isBlank(springProfilesActive)){
+			AjaxResult ar = new AjaxResult();
+			ar.setOpResult("请配置开发模式");
+			Struts2Utils.renderJson(ar);
+			return null;
+		}
+		if(StringUtil.isEqual(springProfilesActive, "dev")||StringUtil.isEqual(springProfilesActive, "test")){
+			String rand = (String) Struts2Utils.getSession().getAttribute("rand");
+			AjaxResult ar = new AjaxResult();
+			ar.setOpResult(rand);
+			Struts2Utils.renderJson(ar);
+			return null;
+		}
+		
+		AjaxResult ar = new AjaxResult();
+		ar.setOpResult("");
+		Struts2Utils.renderJson(ar);
+		return null;
 	}
 
 	public static Log getLogger() {

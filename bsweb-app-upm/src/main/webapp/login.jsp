@@ -138,6 +138,19 @@
 </div>
 <script type="text/javascript">
 
+		$(document).ready(function(){
+		     var result = jQuery.ajax({
+		      	  url:"${ctx}/loginAction!getRand.action",
+		          async:false,
+		          cache:false,
+		          dataType:"json",
+		          method:"post"
+		      }).responseText;
+			var obj = eval("("+result+")");
+			$("#identifyingCode").val(obj.opResult);
+		});
+			
+			
 $("#loginForm").bootstrapValidator({
 	fields: {
  		 "loginNo": {

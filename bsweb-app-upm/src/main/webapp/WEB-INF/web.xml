@@ -24,7 +24,8 @@
 				/loginAction!login.action,
 				/jsp/common/sessionexpire.jsp,
 				/identifyingcode!getIdentifyingCodeNew.action,
-				/loginAction!sendMail.action
+				/loginAction!sendMail.action,
+				/loginAction!getRand.action
 			</param-value>
     </init-param>
     <init-param>
@@ -43,6 +44,7 @@
 				/jsp/common/sessionexpire.jsp,
 				/identifyingcode!getIdentifyingCodeNew.action,
 				/loginAction!sendMail.action,
+				/loginAction!getRand.action
 			</param-value>
     </init-param>
   </filter>
