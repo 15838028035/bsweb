@@ -99,11 +99,11 @@ public class CommonWebAction extends ActionSupport {
 	}
 	
 	public void logintimeout() {
-		Struts2Utils.renderText("logintimeout");
+		Struts2Utils.renderText("登陆超时");
 	}
 
 	public void ajaxtimeout() {
-		Struts2Utils.renderText("timeout");
+		Struts2Utils.renderText("超时");
 	}
 
 }

@@ -9,7 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,12 @@ import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.Struts2Utils;
 
 import net.sf.json.JSONObject;
+
+@ParentPackage("timeout")
+@InterceptorRefs({
+	@InterceptorRef("crudStack"),
+	@InterceptorRef("timeoutInterceptor")
+})
 
 @Controller
 @Namespace("/")
@@ -273,7 +282,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	/**
-	 * 获得测试短信验证码
+	 * 获得测试验证码
 	 * @return
 	 */
 	public String getRand() {
@@ -285,6 +294,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			Struts2Utils.renderJson(ar);
 			return null;
 		}
+		
 		if(StringUtil.isEqual(springProfilesActive, "dev")||StringUtil.isEqual(springProfilesActive, "test")){
 			String rand = (String) Struts2Utils.getSession().getAttribute("rand");
 			AjaxResult ar = new AjaxResult();

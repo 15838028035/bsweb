@@ -25,8 +25,7 @@
 		</interceptors>
 
 	<default-interceptor-ref name="crudStack" />
-
-		<!-- 暴露异常信息，方便查看错误信息
+	<!-- 暴露异常信息，方便查看错误信息
 		<default-interceptor-ref name="crudStack" />
 		<global-results>
 			<result name="error">/jsp/common/500.jsp</result>
@@ -35,6 +34,26 @@
 		<exception-mapping result="error"
 				exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings> -->
+	</package>
+	
+	<package name="timeout" extends="crud-default">
+		<interceptors>
+			<interceptor name="timeoutInterceptor"
+				class="com.lj.app.bsweb.upm.interceptor.TimeoutInterceptor">
+				<param name="includeMethods">
+					login
+				</param>
+			</interceptor>
+		</interceptors>
+		<global-results>
+			<result name="timeout">/jsp/common/timeout.jsp</result>
+			<result name="ajaxTimeOut">
+				/commonWebAction!ajaxtimeout.action
+			</result>
+			<result name="loginAjaxTimeOut">
+				commonWebAction!logintimeout.action
+			</result>
+		</global-results>
 	</package>
 	
 </struts>
