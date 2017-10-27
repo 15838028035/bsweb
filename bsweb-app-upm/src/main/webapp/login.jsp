@@ -89,6 +89,7 @@
                 <c:if test="${springProfilesActive == 'dev'}">[开发环境]</c:if>
                 <c:if test="${springProfilesActive == 'test'}">[测试环境]</c:if>
                 <c:if test="${springProfilesActive == 'pro'}">[生产环境]</c:if>
+                [${upmVersion}]
                 </h3>UPM用户登录</span>
                
                 <div class="form-group">

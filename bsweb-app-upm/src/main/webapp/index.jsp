@@ -57,7 +57,7 @@
                 <button type="button" class="navbar-toggle show pull-left" data-target="sidebar">
                     <span class="sr-only">导航菜单</span>
                 </button>
-                <a class="navbar-brand" href="index.jsp">统一用户权限流程管理系统</a>
+                <a class="navbar-brand" href="index.jsp">统一用户权限流程管理系统[${upmVersion}]</a>
                  <ul class="nav navbar-nav navbar-right hidden-sm">
 		            <li><a href='#'>${sessionScope.securityContext.loginName}:您好！欢迎登录!&nbsp;&nbsp;</a></li>
 		            <li><a href="${ctx}/loginAction!logout.action">退出</a></li>
