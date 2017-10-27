@@ -22,7 +22,6 @@ import com.lj.app.core.common.audit.CMCode;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmUserService;
-import com.lj.app.core.common.notify.email.MailSender;
 import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.security.CMSecurityContext;
 import com.lj.app.core.common.security.DesUtil;
@@ -56,15 +55,12 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	private String identifyingCode;
 	
 	@Autowired
-	private UpmUserService upmUserService;
+	private UpmUserService<UpmUser> upmUserService;
 	
 	@Autowired
 	private SecurityApiService securityApiService;
-	
-	@Autowired
-	private MailSender mailSender;
 
-	public   BaseService getBaseService(){
+	public   BaseService<UpmUser> getBaseService(){
 		return upmUserService;
 	}
 	
@@ -73,6 +69,12 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	public String login() throws Exception {
+		String method = Struts2Utils.getRequest().getMethod();
+		if ("GET".equalsIgnoreCase(method)) {
+			addActionError("不支持get请求");
+			return SecurityConstants.LOGIN;
+		}
+		
 		String rand = (String) Struts2Utils.getSession().getAttribute("rand");
 		if (StringUtil.isBlank(loginNo)|| StringUtil.isBlank(pwd)|| StringUtil.isBlank(identifyingCode) ||StringUtil.isBlank(rand)) {
 			addActionError("参数不能为空");

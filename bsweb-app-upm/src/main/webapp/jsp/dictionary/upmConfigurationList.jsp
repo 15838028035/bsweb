@@ -101,20 +101,16 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var configId=$("#configId").val();
 			var cfgKey=$("#cfgKey").val();
 			var cfgValue=$("#cfgValue").val();
-			var cfgDesc=$("#cfgDesc").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
-					"upmConfiguration.configId":configId,
 					"upmConfiguration.cfgKey":cfgKey,
 					"upmConfiguration.cfgValue":cfgValue,
-					"upmConfiguration.cfgDesc":cfgDesc
             };
             return temp;
         };
@@ -133,23 +129,13 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="configId">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="configId"></div>
-                        
 			 	<label class="control-label col-sm-1" for="cfgKey">置配项KEY</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="cfgKey"></div>
-                        
 			 	<label class="control-label col-sm-1" for="cfgValue">置配项值</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="cfgValue"></div>
-                        
-			 	<label class="control-label col-sm-1" for="cfgDesc">置配项描述</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="cfgDesc"></div>
-                        
-                        <div class="col-sm-12" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
+                  <div class="col-sm-12" style="text-align:left;">
+                      <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                  </div>
                     </div>
                 </form>
             </div>
@@ -171,6 +157,11 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
             </sec:authorize>
+            <sec:authorize code="upm_upmConfigurationList_btn_reloadConfigPro" >
+            <button id="btn_reloadConfigPro" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>加载配置
+            </button>
+            </sec:authorize>
         </div>
         
         <table id="tableList"></table>
@@ -183,7 +174,7 @@
 	    var $btn_edit = $('#btn_edit');
 	    var $btn_delete = $('#btn_delete');
 	    var $btn_query = $('#btn_query');
-
+	    var $btn_reloadConfigPro = $('#btn_reloadConfigPro');
 	
 		//新增
         $("#btn_add").click(function() {
@@ -242,6 +233,31 @@
        	 refreshGrid();
        });
         
+        $("#btn_reloadConfigPro").click(function() {
+       	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.configId;
+            });
+       	 
+       	if(ids == ""){
+       		bootbox.alert('请选择要操作的记录');
+       		return;
+       	}
+
+       	bootbox.confirm('确认要操作?',function (result) {  
+               if(result) {  
+            	   var result = jQuery.ajax({
+     		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!reloadConfigPro.action?multidelete=" + ids,
+     		          async:false,
+     		          cache:false,
+     		          dataType:"json"
+     		      }).responseText;
+     			var obj = eval("("+result+")");
+     			bootbox.alert(obj.opResult);
+     			refreshGrid();
+               }
+       	});
+       })
+       
       	function refreshGrid(){
 		$tableList.bootstrapTable('refresh');
       	}

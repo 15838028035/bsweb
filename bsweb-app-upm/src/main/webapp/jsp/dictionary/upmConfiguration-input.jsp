@@ -26,8 +26,7 @@
 <body>
 <div class="container">
 <form action="upmConfigurationAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmConfigurationForm" id="upmConfigurationForm" role="form">
-<input type="hidden" name="id" id="id" value="${id}"/>
-<input type="hidden" name="upmConfiguration.configId" id="configId" value="${id}"/>
+<input type="hidden" name="upmConfiguration.configId" id="configId" value="${upmConfiguration.configId}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
    
       		<div class="form-group">

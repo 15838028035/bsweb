@@ -11,6 +11,7 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.entity.UpmConfiguration;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmConfigurationService;
+import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;

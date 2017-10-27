@@ -28,8 +28,8 @@
     margin-bottom: 30px;
 }
 .form-horizontal .form-group{
-    padding: 0 40px;
-    margin: 0 0 25px 0;
+    padding: 0 30px;
+    margin: 0 0 20px 0;
     position: relative;
 }
 .form-horizontal .form-control{
@@ -85,7 +85,12 @@
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <form class="form-horizontal" action="${ctx}/loginAction!login.action" method="post" name="loginForm" id="loginForm">
-                <span class="heading">用户登录</span>
+                <span class="heading"><h3> 
+                <c:if test="${springProfilesActive == 'dev'}">[开发环境]</c:if>
+                <c:if test="${springProfilesActive == 'test'}">[测试环境]</c:if>
+                <c:if test="${springProfilesActive == 'pro'}">[生产环境]</c:if>
+                </h3>UPM用户登录</span>
+               
                 <div class="form-group">
                     <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
                 </div>
@@ -118,7 +123,7 @@
                 
                
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default" >登录</button>
+                    <button type="submit" class="btn btn-default btn-block" >登录</button>
                 </div>
 	            <s:if test="hasActionErrors()">
 		   			<div class="alert alert-danger" style="list-style:none">
