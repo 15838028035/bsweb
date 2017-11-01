@@ -22,9 +22,11 @@ import com.lj.app.bsweb.upm.role.service.UpmPermissionService;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.security.CMSecurityContext;
 import com.lj.app.core.common.security.SecurityConstants;
+import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.SessionCode;
 import com.lj.app.core.common.util.SpringContextHolder;
 import com.lj.app.core.common.util.StringUtil;
+import com.lj.app.core.common.web.Struts2Utils;
 
 /**
  * 自定义权限验证
@@ -107,8 +109,15 @@ public class SecurityFilterExt implements Filter {
 			
 			//session验证
 			boolean sessionValidate = validateSession(securityContext, requestUri, contextPath);
-			if(!sessionValidate) {
+			
+			if(!sessionValidate && !isAjax(request)) {
 				response.sendRedirect(contextPath + "/jsp/common/sessionexpire.jsp");
+				return;
+			}
+			if(!sessionValidate && isAjax(request)) {
+				AjaxResult ar = new AjaxResult();
+				ar.setOpResult("登陆超时");
+				Struts2Utils.renderJson(ar);
 				return;
 			}
 			
@@ -116,8 +125,14 @@ public class SecurityFilterExt implements Filter {
 			if(isNeedAuthen.equals("true")) {
 				boolean permissionValidate = validatePermission(securityContext, requestUri, contextPath);
 				
-				if(!permissionValidate) {
+				if(!permissionValidate && !isAjax(request)) {
 					response.sendRedirect(contextPath + "/jsp/common/nopermission.jsp");
+					return ;
+				}
+				if(!permissionValidate && isAjax(request)) {
+					AjaxResult ar = new AjaxResult();
+					ar.setOpResult("对不起,您没有操作权限");
+					Struts2Utils.renderJson(ar);
 					return ;
 				}
 			}
@@ -132,9 +147,15 @@ public class SecurityFilterExt implements Filter {
 				for (Iterator iter = needValidateUrlSet.iterator(); iter.hasNext();) {
 					String url = contextPath + (String) iter.next();
 					if(fullRequestUri.indexOf(url) != -1){
-						if(!securityContext.hasUrlPermission(url)){
+						if(!securityContext.hasUrlPermission(url) && !isAjax(request)){
 							response.sendRedirect(contextPath + "/jsp/common/nopermission.jsp");
 							return;
+						}
+						if(!securityContext.hasUrlPermission(url) && isAjax(request)){
+							AjaxResult ar = new AjaxResult();
+							ar.setOpResult("对不起,您没有操作权限");
+							Struts2Utils.renderJson(ar);
+							return ;
 						}
 					}
 				}
@@ -210,6 +231,19 @@ public class SecurityFilterExt implements Filter {
 		
 		return false ;
 	}	
+	
+	/**
+	 * 校验是否是ajax请求
+	 * @param request
+	 * @return
+	 */
+	private boolean isAjax(HttpServletRequest request) {
+		if (request != null && request.getHeader("x-requested-with") != null
+				&& request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
+			return true;
+		}
+		return false;
+	}
 	
 	public void destroy() {
 
