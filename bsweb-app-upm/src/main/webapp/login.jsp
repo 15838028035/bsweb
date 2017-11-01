@@ -93,7 +93,7 @@
                 </h3>UPM用户登录</span>
                
                 <div class="form-group">
-                    <input type="text" class="form-control" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
+                    <input type="text" class="form-control fa fa-user" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
                 </div>
                 
                  <c:if test="${springProfilesActive == 'dev' || springProfilesActive == 'test'}">
@@ -134,6 +134,15 @@
             </form>
            
         </div>
+    </div>
+    <div class="row">
+    	<div class="footer">
+    		<div class="alert alert-info">Copyright ©版权所有2017-2019 <br/>
+    		 技术支持:${upmTeachMobile} <br/>
+    		 微信号码:${upmWeiXinCode} <br/>
+    		  邮箱号码:${upmEmailCode} <br/>
+    		</div>
+    	</div>
     </div>
 </div>
 <script type="text/javascript">

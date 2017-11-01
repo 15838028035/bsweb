@@ -26,6 +26,7 @@ import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmUserService;
 import com.lj.app.core.common.pagination.PageTool;
+import com.lj.app.core.common.properties.PropertiesFromTableUtil;
 import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.security.CMSecurityContext;
 import com.lj.app.core.common.security.DesUtil;
@@ -76,7 +77,14 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	public String goToLogin() throws Exception {
-			return SecurityConstants.LOGIN;
+		String upmTeachMobile = PropertiesFromTableUtil.getProperty("upmTeachMobile");
+		String upmWeiXinCode = PropertiesFromTableUtil.getProperty("upmWeiXinCode");
+		String upmEmailCode = PropertiesFromTableUtil.getProperty("upmEmailCode");
+		
+		Struts2Utils.getRequest().setAttribute("upmTeachMobile", upmTeachMobile);
+		Struts2Utils.getRequest().setAttribute("upmWeiXinCode", upmWeiXinCode);
+		Struts2Utils.getRequest().setAttribute("upmEmailCode", upmEmailCode);
+		return SecurityConstants.LOGIN;
 	}
 	
 	public String login() throws Exception {
@@ -273,12 +281,12 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		
 	}
 
-	public String logout() {
+	public String logout()  throws Exception{
 		if (Struts2Utils.getSessionAttribute(SecurityConstants.SECURITY_CONTEXT) != null) {
 			Struts2Utils.getSession().invalidate();
 		}
 
-		return SecurityConstants.LOGIN;
+		return goToLogin();
 	}
 	
 	/**

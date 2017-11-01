@@ -19,6 +19,7 @@ public class InitContextListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent context) {
 		String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");
 		String upmVersion = PropertiesUtil.getProperty("upmVersion");
+		
 		logger.debug("InitContextListener spring.profiles.active= " +springProfilesActive);
 		context.getServletContext().setAttribute("springProfilesActive", springProfilesActive);
 		context.getServletContext().setAttribute("upmVersion", upmVersion);
