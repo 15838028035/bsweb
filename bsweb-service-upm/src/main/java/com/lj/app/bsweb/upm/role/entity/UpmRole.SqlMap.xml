@@ -359,34 +359,13 @@
 	    ]]>
 	</select>
 	
-	<!-- 分页查询权限菜单总数 FIXME  -->
-	<!-- <select id="pageQueryPermissionCount" resultClass="int">
-		select count(*) from ( select distinct d.* from uap_role a,
-		uap_main_acct_role b , uap_role_permission c, uap_permission d
-		where a.role_id = b.role_id and d.domain_id = #domainId# and
-		b.main_acct_id = #mainAcctId# and b.role_id = c.role_id and
-		c.permission_id = d.permission_id order by d.sort_no asc ) e
-		where e.parent_id = #parentId#
-	</select> -->
-	<!-- 分页查询权限菜单集合  FIXME -->
-	<!-- <select id="pageQueryPermission"
-		resultMap="upmPermission.upmPermissionResult">
+	<!-- 根据权限查找对应的角色信息 -->
+	<select id="findRoleByPermisonId" resultMap="upmRoleResult">
 		<![CDATA[
-		select e.* from 
-		( 	select distinct d.* from uap_role a, uap_main_acct_role b , uap_role_permission c, uap_permission d
-			where a.role_id = b.role_id
-			and d.domain_id = #domainId#
-			and b.main_acct_id = #mainAcctId# 
-			and b.role_id = c.role_id
-			and c.permission_id = d.permission_id order by d.sort_no asc
-		) e
-		where e.parent_id = #parentId#
-		  ]]>
-		<dynamic prepend="ORDER BY">
-			<isNotEmpty property="sortColumns">
-				$sortColumns$
-			</isNotEmpty>
-		</dynamic>
-	</select> -->
+	       SELECT b.*  FROM    upm_role_and_permission_rel  a , upm_role b
+		where a.role_id=b.id
+		and permission_id=#permissionId#
+	    ]]>
+	</select>
 	
 </sqlMap>

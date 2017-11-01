@@ -111,4 +111,11 @@ public interface UpmRoleService<UpmRole> extends BaseService {
 	public void deletePermissionById(Object roleId);
 	
 	public int getSysRoleId(String appId);
+	
+	/**
+	 * 根据权限查找对应的角色信息
+	 * @param permissionId 权限ID
+	 * @return
+	 */
+	public List<UpmRole> findRoleByPermisonId(Integer permissionId);
 }

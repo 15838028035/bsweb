@@ -16,6 +16,7 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.bsweb.upm.role.entity.UpmRole;
 import com.lj.app.bsweb.upm.role.service.UpmRoleService;
 import com.lj.app.core.common.base.service.BaseService;
+import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.security.CMSecurityContext;
 import com.lj.app.core.common.security.SecurityConstants;

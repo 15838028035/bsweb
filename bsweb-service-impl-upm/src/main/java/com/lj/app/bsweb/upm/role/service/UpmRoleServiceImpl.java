@@ -251,4 +251,15 @@ public class UpmRoleServiceImpl<UpmRole> extends BaseServiceImpl<UpmRole> implem
 	public int getSysRoleId(String appId){
 		return 1;//设置超级管理员
 	}
+	
+	/**
+	 * 根据权限查找对应的角色信息
+	 * @param permissionId 权限ID
+	 * @return
+	 */
+	public List<UpmRole> findRoleByPermisonId(Integer permissionId){
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("permissionId", permissionId);
+		return queryForList("findRoleByPermisonId",condition);
+	}
 }

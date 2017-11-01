@@ -19,6 +19,7 @@ import com.lj.app.bsweb.upm.role.service.UpmRoleService;
 import com.lj.app.core.common.base.entity.UpmDictionary;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.DictionaryApiService;
+import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
@@ -249,6 +250,16 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 		return null;
 	}
 
+	/**
+	 * 删除校验
+	 */
+	@Override
+	public void multideleteValidate(Integer deleteId) throws BusinessException {
+		List<UpmRole> list = upmRoleService.findRoleByPermisonId(deleteId);
+		if(list!=null && list.size()>0){
+			throw new BusinessException("删除失败,权限关联了[" + list.size() + "]个角色,要解除所有后，才可以进行删除,其中一个角色名称为:"  + list.get(0).getRoleName());
+		}
+	}
 	
 	public java.lang.Integer getId() {
 		return id;
