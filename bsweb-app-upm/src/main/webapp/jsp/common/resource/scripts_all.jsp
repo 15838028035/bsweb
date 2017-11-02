@@ -35,8 +35,8 @@
 <script src="${ctx}/scripts/bootstrapvalidator/js/bootstrapValidator.js"></script>
 <script src="${ctx}/scripts/bootstrapvalidator/js/language/zh_CN.js"></script>
 
-<link href="${ctx}/scripts/BootSideMenu/css/BootSideMenu.css" rel="stylesheet">
-<script src="${ctx}/scripts/BootSideMenu/js/BootSideMenu.js"></script>
+<%-- <link href="${ctx}/scripts/BootSideMenu/css/BootSideMenu.css" rel="stylesheet"> --%>
+<%-- <script src="${ctx}/scripts/BootSideMenu/js/BootSideMenu.js"></script> --%>
 
 <link href="${ctx}/scripts/Magnific-Popup/magnific-popup.css" rel="stylesheet">
 <script src="${ctx}/scripts/Magnific-Popup/jquery.magnific-popup.js"></script>
@@ -47,4 +47,11 @@
 <link href="${ctx}/scripts/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-fileinput/js/fileinput.js"></script>
 
-	
+<link href="${ctx}/scripts/adminLTE/css/AdminLTE.css" rel="stylesheet">
+<link href="${ctx}/scripts/adminLTE/css/skins/_all-skins.css" rel="stylesheet">
+<link href="${ctx}/scripts/adminLTE/css/ionicons.css" rel="stylesheet">
+<link href="${ctx}/scripts/adminLTE/css/font-awesome.css" rel="stylesheet">
+
+<script src="${ctx}/scripts/adminLTE/js/adminlte.js"></script>
+<script src="${ctx}/scripts/adminLTE/plugins/slimScroll/jquery.slimscroll.js"></script>
+<script src="${ctx}/scripts/adminLTE/js/app.js"></script>

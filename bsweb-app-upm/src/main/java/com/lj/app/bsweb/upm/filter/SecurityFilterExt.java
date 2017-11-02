@@ -102,7 +102,7 @@ public class SecurityFilterExt implements Filter {
 			//如果用户已经登录，那么就直接到首页，防止重复登录
 			if(requestUri.equals(contextPath + "/login.jsp")) {
 				if(securityContext != null) {
-					response.sendRedirect(contextPath+ "/index.jsp");
+					response.sendRedirect(contextPath+ "/loginAction!goToIndex.action");
 					return;
 				}
 			}

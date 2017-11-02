@@ -8,11 +8,13 @@
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 </head>
 
+<style type="text/css">
+</style>
 <body class="hold-transition ajax-template skin-blue fixed">
 <div class="wrapper">
   <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="${ctx}/index2.jsp" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-lg"><b>统一用户权限流程管理系统[${upmVersion}]</b></span>
     </a>
@@ -50,16 +52,38 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">系统菜单</li>
-        
-        <c:forEach var="upmPermission" items="${sessionScope.appMenuPermissionList}" varStatus="status">
-         <li class="treeview">
-          <a href="${ctx }/${upmPermission.url}">
-            <span>${upmPermission.name}</span>
+      	<li class="treeview">
+          <a href="${ctx }/jsp/role/upmRoleList.jsp?appId=CRM">
+            <i class="fa fa-dashboard"></i> <span>角色</span>
             <span class="pull-right-container">
             </span>
           </a>
         </li>
-		</c:forEach>
+       <li class="treeview">
+          <a href="${ctx }/jsp/user/upmUserList.jsp">
+            <i class="fa fa-dashboard"></i> <span>用户管理 </span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+        
+       <li class="treeview">
+          <a href="${ctx }/jsp/role/upmRoleList.jsp?appId=CRM">
+            <i class="fa fa-dashboard"></i> <span>角色</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+        
+         <s:iterator value="upmPermissionList" id="upmPermission">
+            <li class="treeview">
+          <a href="${ctx }/<s:property value="url" />">
+            <i class="fa fa-dashboard"></i> <span><s:property value="name" /></span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+        </s:iterator>
         
       </ul>
     </section>
@@ -70,10 +94,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-        	<div class="jumbotron">
-                    <h1>基于struts2、spring、ibaits、bootstrap构建</h1>
-                    <p>轻量级工作流组件</p>
-            </div>
+         
         </div>
         <!-- /.col -->
       </div>
@@ -86,7 +107,7 @@
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
     </div>
-    Copyright ©版权所有2017-2019 当前版本:${upmVersion}
+    Copyright ©版权所有2017-2019
   </footer>
 
   <!-- /.control-sidebar -->

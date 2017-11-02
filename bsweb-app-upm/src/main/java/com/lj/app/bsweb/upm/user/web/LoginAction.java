@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
+import com.lj.app.bsweb.upm.role.entity.UpmPermission;
 import com.lj.app.bsweb.upm.role.service.UpmPermissionService;
 import com.lj.app.core.common.api.SecurityApiService;
 import com.lj.app.core.common.audit.CMCode;
@@ -35,6 +36,7 @@ import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.SessionCode;
 import com.lj.app.core.common.util.SpringContextHolder;
 import com.lj.app.core.common.util.StringUtil;
+import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
 
 import net.sf.json.JSONObject;
@@ -49,7 +51,7 @@ import net.sf.json.JSONObject;
 @Namespace("/")
 @Results( {
 		@Result(name = SecurityConstants.LOGIN, location = "/login.jsp"),
-		@Result(name = SecurityConstants.INDEX, location = "/index.jsp", type = "redirect"),
+		@Result(name = SecurityConstants.INDEX, location = "/index.jsp",type=AbstractBaseAction.REDIRECT),
 		@Result(name = SecurityConstants.NOPERMISSION, location = "/jsp/common/nopermission.jsp"),
 		@Result(name = SecurityConstants.SYSERROR, location = "/jsp/common/500.jsp") })
 
@@ -71,6 +73,11 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	
 	@Autowired
 	private SecurityApiService securityApiService;
+	
+	@Autowired
+	private UpmPermissionService<UpmPermission> upmPermissionService;
+	
+	private List<UpmPermission> upmPermissionList;//权限列表
 
 	public   BaseService<UpmUser> getBaseService(){
 		return upmUserService;
@@ -150,8 +157,11 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			 securityContext =	upmPermissionService.getSecurityContext(loginUser.getId(),contextPath , SecurityConstants.APPID_UPM);
 			 securityContext.setLoginName(loginUser.getUserName());
 			
+			 upmPermissionList = upmPermissionService.findPermissionByUserId(loginUser.getId(),appId,"MENU");
+			 
 			Struts2Utils.getSession().setAttribute(SecurityConstants.SECURITY_CONTEXT, securityContext);
 			Struts2Utils.getSession().setAttribute(SessionCode.MAIN_ACCT,loginUser);
+			Struts2Utils.getSession().setAttribute(SessionCode.APP_MENU_PERMISSION_LIST,upmPermissionList);
 					
 		}
 		//FIXME 修改为从配置文件读取
@@ -168,8 +178,11 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		Struts2Utils.getSession().setAttribute(SessionCode.LOGIN_NAME,loginUser.getLoginNo());
 		Struts2Utils.getSession().setAttribute(SessionCode.USER_NAME,loginUser.getUserName());
 		
-		Struts2Utils.getResponse().sendRedirect(Struts2Utils.getRequest().getContextPath() + "/index.jsp");
-		return null;
+		return goToIndex();
+	}
+	
+	public String goToIndex() throws Exception {
+		return SecurityConstants.INDEX;
 	}
 	
 	/**
@@ -224,9 +237,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		Struts2Utils.getSession().setAttribute(SessionCode.LOGIN_NAME,loginUser.getLoginNo());
 		Struts2Utils.getSession().setAttribute(SessionCode.USER_NAME,loginUser.getUserName());
 		
-		Struts2Utils.getResponse().sendRedirect(Struts2Utils.getRequest().getContextPath() + "/index.jsp");
-		return null;
-		
+		return goToIndex();
 	}
 	
 	/***
@@ -363,5 +374,29 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	public void setIdentifyingCode(String identifyingCode) {
 		this.identifyingCode = identifyingCode;
 	}
-	
+
+	public SecurityApiService getSecurityApiService() {
+		return securityApiService;
+	}
+
+	public void setSecurityApiService(SecurityApiService securityApiService) {
+		this.securityApiService = securityApiService;
+	}
+
+	public UpmPermissionService<UpmPermission> getUpmPermissionService() {
+		return upmPermissionService;
+	}
+
+	public void setUpmPermissionService(UpmPermissionService<UpmPermission> upmPermissionService) {
+		this.upmPermissionService = upmPermissionService;
+	}
+
+	public List<UpmPermission> getUpmPermissionList() {
+		return upmPermissionList;
+	}
+
+	public void setUpmPermissionList(List<UpmPermission> upmPermissionList) {
+		this.upmPermissionList = upmPermissionList;
+	}
+
 }
