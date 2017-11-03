@@ -55,7 +55,7 @@
         
         <c:forEach var="upmPermission" items="${sessionScope.appMenuPermissionList}" varStatus="status">
          <li class="treeview">
-          <a href="${ctx }/${upmPermission.url}">
+          <a href="${ctx }/${upmPermission.url}" target="menuFrame">
             <span>${upmPermission.name}</span>
             <span class="pull-right-container">
             </span>
@@ -75,6 +75,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-12">
+        	<iframe id="menuFrame" name="menuFrame"  scrolling="auto" width="100%" height="800px" min-height="800px" frameborder="0"></iframe>
         </div>
         <!-- /.col -->
       </div>

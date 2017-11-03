@@ -53,5 +53,5 @@
 <link href="${ctx}/scripts/adminLTE/css/font-awesome.css" rel="stylesheet">
 
 <script src="${ctx}/scripts/adminLTE/js/adminlte.js"></script>
-<script src="${ctx}/scripts/adminLTE/plugins/slimScroll/jquery.slimscroll.js"></script>
-<script src="${ctx}/scripts/adminLTE/js/app.js"></script>
+<%-- <script src="${ctx}/scripts/adminLTE/plugins/slimScroll/jquery.slimscroll.js"></script> --%>
+<%-- <script src="${ctx}/scripts/adminLTE/js/app.js"></script> --%>
