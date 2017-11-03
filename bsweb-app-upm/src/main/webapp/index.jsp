@@ -14,7 +14,7 @@
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-lg"><b>统一用户权限流程管理系统[${upmVersion}]</b></span>
+      <span class="logo-lg"><b>用户权限流程[${upmVersion}]</b></span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -24,11 +24,13 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
-       <ul class="nav navbar-nav navbar-right hidden-sm">
-        <li><a href='#'>${sessionScope.securityContext.loginName}:您好！欢迎登录!&nbsp;&nbsp;</a></li>
-        <li><a href="${ctx}/jsp/user/changepwd.jsp">修改密码</a></li>
-        <li><a href="${ctx}/loginAction!logout.action">退出</a></li>
-      </ul>
+      <div class="navbar-custom-menu">
+	       <ul class="nav navbar-nav navbar-right hidden-sm">
+	        <li><a href='#'>${sessionScope.securityContext.loginName}:您好！欢迎登录!&nbsp;&nbsp;</a></li>
+	        <li><a href="${ctx}/jsp/user/changepwd.jsp">修改密码</a></li>
+	        <li><a href="${ctx}/loginAction!logout.action">退出</a></li>
+	      </ul>
+      </div>
 
     </nav>
   </header>
@@ -66,14 +68,13 @@
     <!-- /.sidebar -->
   </aside>
 
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-        	<div class="jumbotron">
-                    <h1>基于struts2、spring、ibaits、bootstrap构建</h1>
-                    <p>轻量级工作流组件</p>
-            </div>
         </div>
         <!-- /.col -->
       </div>
