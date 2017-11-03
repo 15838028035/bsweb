@@ -1,9 +1,9 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>UPM统一用户权限流程管理</title>
+  <title>UPM统一用户权限管理系统</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 </head>
@@ -17,7 +17,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>UPM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>用户权限流程管理</b></span>
+      <span class="logo-lg"><b>用户权限管理系统</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -41,8 +41,8 @@
               <!-- User image -->
               <li class="user-header">
                 <p>
-               	  姓名:${sessionScope.mainAcct.userName}
-                  <small>手机号码:${sessionScope.mainAcct.mobile}</small>
+                 ${sessionScope.securityContext.loginName}
+                  <small>${sessionScope.mainAcct.mobile}</small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -74,7 +74,7 @@
         </div>
         <div class="pull-left info">
           <p>${sessionScope.securityContext.loginName}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- search form -->
@@ -136,7 +136,7 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>当前版本:</b> ${upmVersion}
+      <b>Version</b> ${upmVersion}
     </div>
     <strong>Copyright &copy; 2017-2019</strong> 版权所有
     
