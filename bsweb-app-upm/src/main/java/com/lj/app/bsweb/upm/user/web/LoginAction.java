@@ -162,6 +162,9 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			Struts2Utils.getSession().setAttribute(SecurityConstants.SECURITY_CONTEXT, securityContext);
 			Struts2Utils.getSession().setAttribute(SessionCode.MAIN_ACCT,loginUser);
 			Struts2Utils.getSession().setAttribute(SessionCode.APP_MENU_PERMISSION_LIST,upmPermissionList);
+			Struts2Utils.getSession().setAttribute(SessionCode.APP_MENU_PERMISSION_LIST_SIZE,upmPermissionList.size());
+			Struts2Utils.getSession().setAttribute(SessionCode.APP_USER_GROUP_LIST,securityContext.getUserGroupList());
+			Struts2Utils.getSession().setAttribute(SessionCode.APP_ROLE_LIST,securityContext.getRoleList());
 					
 		}
 		//FIXME 修改为从配置文件读取

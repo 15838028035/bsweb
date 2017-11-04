@@ -45,6 +45,25 @@
                   <small>手机号码:${sessionScope.mainAcct.mobile}</small>
                 </p>
               </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-12 ">
+                  	组织机构:
+                  	<c:forEach var="userGroup" items="${sessionScope.appUserGroupList}" varStatus="status">
+          				${userGroup}
+          			</c:forEach>
+                  </div>
+                  <div class="col-xs-12 ">
+                  	角色名称:
+                  	 <c:forEach var="appRole" items="${sessionScope.appRoleList}" varStatus="status">
+          				${appRole}
+          				</c:forEach>
+                  </div>
+                  
+                </div>
+                <!-- /.row -->
+              </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -96,7 +115,7 @@
           <a href="#">
             <span>导航菜单</span>
             <span class="pull-right-container">
-              <span class="label label-primary pull-right"></span>
+              <span class="label label-primary pull-right">${sessionScope.appMenuPermissionListSize}</span>
             </span>
           </a>
           <ul class="treeview-menu">

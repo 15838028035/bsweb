@@ -493,5 +493,45 @@ and ur.groupId=ur.groupId
 			select t.url from UPM_PERMISSION t where t.url is not null and ifnull(t.state,'0')='1' and t.app_id=#appId#
 	    ]]>
 	</select>
+	
+	<!-- 根据用户userId查找用户组织机构 -->
+	<select id="findUserGroupNameByUserId" resultClass="java.lang.String">
+	    <![CDATA[
+	       select
+        	p.user_group_name
+          from  upm_user_group p   ,upm_user_and_user_group_rel r
+		where  r.groupId=p.id 
+
+	    ]]>
+		<dynamic prepend="AND">
+	        <isNotEmpty prepend="AND" property="userId">
+	             r.userId = #userId#
+	       </isNotEmpty>
+	    </dynamic>	
+    </select>
+    
+    <!-- 根据用户userId查找用户角色-->
+	<select id="findRoleNameByUserId" resultClass="java.lang.String">
+	    <![CDATA[
+		      select
+	        	r.role_name
+	          from    upm_role r, upm_user_group_and_role_rel gr ,upm_user_and_user_group_rel ur
+	where
+	
+	 gr.role_id=r.id 
+	and gr.user_group_id= ur.groupId
+	
+	and ur.groupId=ur.groupId
+
+	    ]]>
+		<dynamic prepend="AND">
+	        <isNotEmpty prepend="AND" property="userId">
+	             ur.userId = #userId#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="appId">
+				r.app_id = #appId#
+			</isNotEmpty>
+	    </dynamic>	
+    </select>
 
 </sqlMap>

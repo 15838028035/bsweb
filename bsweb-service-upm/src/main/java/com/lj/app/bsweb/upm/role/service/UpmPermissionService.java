@@ -1,6 +1,8 @@
 package com.lj.app.bsweb.upm.role.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.lj.app.core.common.base.service.BaseService;
@@ -64,4 +66,15 @@ public interface UpmPermissionService<UpmPermission> extends BaseService {
 	 * @return
 	 */
 	public Set<String> findDisabledPermissionUrlByAppId(String appId);
+	
+	/**
+	 * 根据用户userId查找用户组织机构
+	 */
+	public List<String> findUserGroupNameByUserId(int userId);
+	
+	/**
+	 * 根据用户userId查找用户角色
+	 */
+	public List<String> findRoleNameByUserId(int userId, String appId);
+	
 }

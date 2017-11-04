@@ -86,6 +86,13 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 		}
 		securityContext.setUrls(urlSet);
 		securityContext.setCodes(codeSet);
+		
+		List<String> userGroupList= findUserGroupNameByUserId( userId);
+		List<String> roleList =  findRoleNameByUserId( userId,  appId);
+		
+		securityContext.setRoleList(roleList);
+		securityContext.setUserGroupList(userGroupList);
+		
 		return securityContext;
 	}
 	
@@ -198,5 +205,24 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * 根据用户userId查找用户组织机构
+	 */
+	public List<String> findUserGroupNameByUserId(int userId){
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("userId",  userId);
+		return this.queryForList("findUserGroupNameByUserId",condition);
+	}
+	
+	/**
+	 * 根据用户userId查找用户角色
+	 */
+	public List<String> findRoleNameByUserId(int userId, String appId){
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("userId",  userId);
+		condition.put("appId",  appId);
+		return this.queryForList("findRoleNameByUserId",condition);
 	}
 }
