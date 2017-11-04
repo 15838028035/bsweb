@@ -7,13 +7,13 @@
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 </head>
-<body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
+<body class="hold-transition skin-blue  sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="../../index2.html" class="logo">
+    <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>UPM</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -142,7 +142,6 @@
     
   </footer>
      
-       immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
 </body>
