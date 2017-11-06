@@ -92,7 +92,7 @@
 		});
 		
         $("#backToHomeButton").click(function() {
-			window.parent.location.href="${ctx}/index.jsp";
+			window.history.go(-1);
         });
 </script>
 </body>

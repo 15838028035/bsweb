@@ -84,7 +84,7 @@
        
  	<div class="form-group"> 
         		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
-        		   <button type="button" id="backToHomeButton" onclick="window.location='${ctx}/jsp/permission/upmPermissionAction!turnToPermissionList.action?appId=${appId}&parentId=${parentId }'" class="btn btn-default">取消</button> 
+        		   <button type="button" id="backToHomeButton" onclick="window.location='${ctx}/jsp/permission/upmPermissionAction!turnToPermissionList.action?appId=${appId}&parentId=${parentId }'" class="btn btn-default">返回</button> 
         </div>	
     
 </form>

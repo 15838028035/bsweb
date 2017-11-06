@@ -43,7 +43,7 @@
 	       
 	        <div class="form-group col-sm-12"> 
 	       		  <button type="submit" id="submitButton"  class="btn btn-default">提交</button> 
-	       		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+	       		   <button type="button" id="backToHomeButton"  class="btn btn-default">返回</button> 
 	       </div>
 				
 	</form>
@@ -71,7 +71,7 @@
         }); 
 		
         $("#backToHomeButton").click(function() {
-			window.parent.location.href="${ctx}/index.jsp";
+			window.history.go(-1);
         });
 </script>
 </body>

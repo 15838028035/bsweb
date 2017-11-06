@@ -46,7 +46,7 @@
        
  	  <div class="form-group"> 
         		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
-        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">返回</button> 
         </div>
 </form>
 
@@ -102,7 +102,7 @@
 		});
 		
         $("#backToHomeButton").click(function() {
-			window.parent.location.href="${ctx}/index.jsp";
+			window.history.go(-1);
         });
 </script>
 </body>

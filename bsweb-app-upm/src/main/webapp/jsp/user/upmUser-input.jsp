@@ -48,7 +48,7 @@
         
         <div class="form-group"> 
         		  <button type="submit" id="save"  class="btn btn-default">保存</button> 
-        		   <button type="button" id="backToHomeButton"  class="btn btn-default">取消</button> 
+        		   <button type="button" id="backToHomeButton"  class="btn btn-default">返回</button> 
         </div>
 </form>
 </div>
@@ -106,19 +106,7 @@
                             message: '请输入正确的手机号码'
                         }
                     }
-                },
-                
-                "upmUser.email": {
-                    message: '邮箱不能为空',
-                    validators: {
-                        email: {
-                        validators: {
-                        emailAddress: {
-                        message: '邮箱地址不正确'
-                        }
-                    }
-                	}
-                  }
+                }
             },
             
             submitHandler: function(validator, form, submitButton) {  
@@ -127,7 +115,7 @@
         });  
 
         $("#backToHomeButton").click(function() {
-			window.parent.location.href="${ctx}/index.jsp";
+        	window.history.go(-1);
         });
 </script>
 </body>
