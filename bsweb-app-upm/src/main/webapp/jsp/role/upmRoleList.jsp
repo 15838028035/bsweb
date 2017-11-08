@@ -118,12 +118,6 @@
 			var roleCode=$("#roleCode").val();
 			var appId=$("#appId").val();
 			var roleName=$("#roleName").val();
-			var createBy=$("#createBy").val();
-    		var createDateBegin=$("#createDateBegin").val();
-    		var createDateEnd=$("#createDateEnd").val();
-			var updateBy=$("#updateBy").val();
-    		var updateDateBegin=$("#updateDateBegin").val();
-    		var updateDateEnd=$("#updateDateEnd").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
@@ -132,13 +126,7 @@
 	                "sortOrder":this.sortOrder,
 					"upmRole.roleCode":roleCode,
 					"upmRole.appId":appId,
-					"upmRole.roleName":roleName,
-					"upmRole.createBy":createBy,
-					"upmRole.createDateBegin":createDateBegin,
-					"upmRole.createDateEnd":createDateEnd,
-					"upmRole.updateBy":updateBy,
-					"upmRole.updateDateBegin":updateDateBegin,
-					"upmRole.updateDateEnd":updateDateEnd
+					"upmRole.roleName":roleName
             };
             return temp;
         };
@@ -162,26 +150,6 @@
                         
 			 	<label class="control-label col-sm-1" for="appId">应用编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="roleName">角色名称</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="roleName"></div>
-                        
-			 	<label class="control-label col-sm-1" for="createBy">创建人</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="createBy"></div>
-                        
-			 	<label class="control-label col-sm-1" for="createDate">创建日期</label>
-			   <div class="col-sm-2">
-                 <input type="text" name="createDateBegin" id = "createDateBegin" size="16" class="datetimepicker"   readonly="readonly" /> --
-				<input type="text" name="createDateEnd" id = "createDateEnd"  size="16"  class="datetimepicker"   readonly="readonly"/>
-                 </div>
-			 	<label class="control-label col-sm-1" for="updateBy">修改人ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="updateBy"></div>
-                        
-			 	<label class="control-label col-sm-1" for="updateDate">修改日期</label>
-			   <div class="col-sm-2">
-                      <input type="text" name="updateDateBegin" id = "updateDateBegin" size="16" class="datetimepicker"  readonly="readonly"/> --
-	                   <input type="text" name="updateDateEnd" id = "updateDateEnd" size="16" class="datetimepicker"   readonly="readonly"/>
-                 </div>
 
                      <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
