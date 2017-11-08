@@ -16,10 +16,7 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.bsweb.upm.role.entity.UpmRole;
 import com.lj.app.bsweb.upm.role.service.UpmRoleService;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.pagination.PageTool;
-import com.lj.app.core.common.security.CMSecurityContext;
-import com.lj.app.core.common.security.SecurityConstants;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
@@ -31,7 +28,6 @@ import com.lj.app.core.common.web.Struts2Utils;
 @Results({
 		@Result(name = AbstractBaseAction.INPUT, location = "upmRole-input.jsp"),
 		@Result(name = AbstractBaseAction.SAVE, location = "upmRoleAction!edit.action",type=AbstractBaseAction.REDIRECT),
-		@Result(name = "searchpermission", location = "upmRole-searchPermission.jsp"),
 		@Result(name = AbstractBaseAction.RELOAD, location = "upmRoleList.jsp"),
 		@Result(name = AbstractBaseAction.LIST, location = "upmRoleList.jsp", type=AbstractBaseAction.REDIRECT)
 })
@@ -75,27 +71,6 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 		}
 	}
 	
-	@Override
-	public String list() throws Exception {
-		try {
-			Map<String,Object> condition = new HashMap<String,Object>();
-			page.setFilters(upmRole);
-			
-			if (StringUtil.isNotBlank(this.getSidx())) {
-				String orderBy = PageTool.convert(this.getSidx()) + " "+ this.getSord();
-				page.setSortColumns(orderBy);
-			}
-			
-			condition.put("appId", appId);
-			upmRoleService.findUpmRolePageByAssignable(page, condition);
-			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-	
 	/**
 	 * 判断是否是自己创建的角色
 	 */
@@ -135,34 +110,6 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 		return null;
 	}
 	
-	/**
-	 * 判断某个角色是否是登录人员拥有的所有角色
-	 *
-	 */
-	public void isOperatorUapRole(){
-		String roleId = ServletActionContext.getRequest().getParameter("roleId");
-		String appId = ServletActionContext.getRequest().getParameter("appId");
-		CMSecurityContext securityContext = (CMSecurityContext) Struts2Utils.getSessionAttribute(SecurityConstants.SECURITY_CONTEXT);
-		Long mainAcctId = securityContext.getMainAcctId();
-		//List<UpmRole> result = mainAcctPermissionApiService.findAssignedRole(mainAcctId, Integer.parseInt(domainId));
-		List<UpmRole> result = null;//FIXME:实现
-		try{
-			if(null == result || result.size() < 1){
-				Struts2Utils.renderText("false");
-				return;
-			}
-			for(int i=0; i<result.size(); i++){
-				UpmRole upmRole = result.get(i);
-				if(null != upmRole && roleId.equals(upmRole.getId().toString())){
-					Struts2Utils.renderText("true");
-					return;
-				}
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
 	public String getPermissionTree() throws Exception {
 		// 根据当前登录人员获取权限菜单树
 		if(StringUtil.isBlank(strRoleId)){
@@ -175,15 +122,6 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 		}
 		Struts2Utils.renderText(jsonData);
 		return null;
-	}
-	
-	public String searchpermission() throws Exception {
-		/*String appId = ServletActionContext.getRequest().getParameter("appId"); 
-		List<UapRole> assignedRole = mainAcctPermissionApiService.findAssignedRole(Long.parseLong(mainAcctId), Integer.parseInt(domainId)); //获得主帐号已分配的角色
-		String jsonData = upmRoleService.getTreeDataSearchPermissionJsonCheckBox(assignedRole,Integer.parseInt(domainId),Long.parseLong(mainAcctId));
-		jsonData = (jsonData == null)?getText("noPermission"):jsonData;
-		Struts2Utils.getRequest().setAttribute("JsonData", jsonData);*/
-		return "searchpermission";
 	}
 	
 	@Override

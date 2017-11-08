@@ -47,61 +47,12 @@ public class UpmUserAndUserGroupRelAction extends AbstractBaseUpmAction<UpmUserA
 	}
 	
 	public UpmUserAndUserGroupRel getModel() {
-		upmUserAndUserGroupRel = (UpmUserAndUserGroupRel)upmUserAndUserGroupRelService.getInfoByKey(id);
 		return upmUserAndUserGroupRel;
 	}
 	
 	@Override
 	protected void prepareModel() throws Exception {
 		upmUserAndUserGroupRel = (UpmUserAndUserGroupRel)upmUserAndUserGroupRelService.getInfoByKey(id);
-	}
-	
-	@Override
-	public String list() throws Exception {
-		try {
-			Map<String,Object> condition = new HashMap<String,Object>();
-			condition.put("userId",  userId);
-			condition.put("groupId",  groupId);
-			upmUserAndUserGroupRelService.findPageList(page, condition);
-			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-	
-	@Override
-	public String save() throws Exception {
-		
-	try{
-			if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
-				upmUserAndUserGroupRel.setId(id);
-				upmUserAndUserGroupRel.setUserId(userId);
-				upmUserAndUserGroupRel.setGroupId(groupId);
-				upmUserAndUserGroupRel.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				upmUserAndUserGroupRelService.updateObject(upmUserAndUserGroupRel);
-				
-				returnMessage = UPDATE_SUCCESS;
-			}else{
-				upmUserAndUserGroupRel = new UpmUserAndUserGroupRel();
-				upmUserAndUserGroupRel.setId(id);
-				upmUserAndUserGroupRel.setUserId(userId);
-				upmUserAndUserGroupRel.setGroupId(groupId);
-				
-				upmUserAndUserGroupRel.setCreateBy(getLoginUserId());
-				upmUserAndUserGroupRel.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				upmUserAndUserGroupRelService.insertObject(upmUserAndUserGroupRel);
-				returnMessage = CREATE_SUCCESS;
-			}
-			
-			return LIST;
-		}catch(Exception e){
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}
-		
 	}
 
 	public String doBatchSaveRel() throws Exception {

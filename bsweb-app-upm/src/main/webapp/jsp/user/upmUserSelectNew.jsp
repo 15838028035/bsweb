@@ -67,14 +67,12 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [ 
-                          { field: 'checkStatus', title: '全选',checkbox:true ,footerFormatter:function () {
-                        	  return '合计'
-                          }}, 
+                          { field: 'checkStatus', title: '全选',checkbox:true}, 
                            {field : 'Number', title : '行号', formatter : function(value, row, index) {  
                         	   			return index+1;
                            			}  
                            },
-                          { field: 'id', title: 'ID',sortable:true,footerFormatter:sumFormatter}, 
+                          { field: 'id', title: 'ID',sortable:true, visible:false}, 
                           { field: 'loginNo', title: '登陆账号',sortable:true }, 
                           { field: 'userName', title: '用户名',sortable:true }, 
                           { field: 'mobile', title: '手机号码',sortable:true },
@@ -120,16 +118,6 @@
         };
         return oTableInit;
     };
-	
-    function sumFormatter(data) {
-        var field = this.field;
-
-        var total_sum = data.reduce(function(sum, row) {
-                console.log(sum);
-            return (sum) + (parseInt(row[field]) || 0);
-        }, 0);
-        return total_sum;
-    }
     
 </script>
 </head>

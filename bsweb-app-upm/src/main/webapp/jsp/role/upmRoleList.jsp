@@ -115,7 +115,6 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var id=$("#id").val();
 			var roleCode=$("#roleCode").val();
 			var appId=$("#appId").val();
 			var roleName=$("#roleName").val();
@@ -131,7 +130,6 @@
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
-					"upmRole.id":id,
 					"upmRole.roleCode":roleCode,
 					"upmRole.appId":appId,
 					"upmRole.roleName":roleName,
@@ -159,11 +157,6 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-                        
 			 	<label class="control-label col-sm-1" for="roleCode">角色编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="roleCode"></div>
                         

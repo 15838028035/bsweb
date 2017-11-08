@@ -72,11 +72,6 @@ public class UpmUserGroupAndRoleRelAction extends AbstractBaseUpmAction<UpmUserG
 	}
 	
 	@Override
-	public String input() throws Exception {
-		return INPUT;
-	}
-	
-	@Override
 	public String save() throws Exception {
 		
 	try{

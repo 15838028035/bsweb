@@ -20,7 +20,6 @@
 	
 	<dubbo:service interface="com.lj.app.bsweb.upm.app.service.UpmAppService" ref="upmAppService" />
 	 <dubbo:service interface="com.lj.app.bsweb.upm.role.service.UpmPermissionService" ref="upmPermissionService"  />
-	 <dubbo:service interface="com.lj.app.bsweb.upm.role.service.UpmRoleGroupService" ref="upmRoleGroupService"  />
 	 <dubbo:service interface="com.lj.app.bsweb.upm.role.service.UpmRoleService" ref="upmRoleService"/>
 	 <dubbo:service interface="com.lj.app.bsweb.upm.user.service.UpmUserAndUserGroupRelService" ref="upmUserAndUserGroupRelService" />
 	 <dubbo:service interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupAndRoleRelService" ref="upmUserGroupAndRoleRelService" />

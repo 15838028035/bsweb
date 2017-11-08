@@ -34,7 +34,6 @@
  	
  	<dubbo:reference interface="com.lj.app.bsweb.upm.app.service.UpmAppService" id="upmAppService" check="false" timeout="${dubbo.reference.timeout}"/>
  	<dubbo:reference interface="com.lj.app.bsweb.upm.role.service.UpmPermissionService" id="upmPermissionService" check="false" timeout="${dubbo.reference.timeout}"/>
- 	<dubbo:reference interface="com.lj.app.bsweb.upm.role.service.UpmRoleGroupService" id="upmRoleGroupService" check="false" timeout="${dubbo.reference.timeout}" />
  	<dubbo:reference interface="com.lj.app.bsweb.upm.role.service.UpmRoleService" id="UpmRoleService" check="false" timeout="${dubbo.reference.timeout}"/>
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserAndUserGroupRelService" id="upmUserAndUserGroupRelService" check="false" timeout="${dubbo.reference.timeout}" />
  	<dubbo:reference interface="com.lj.app.bsweb.upm.user.service.UpmUserGroupAndRoleRelService" id="upmUserGroupAndRoleRelService" check="false"  timeout="${dubbo.reference.timeout}"/>

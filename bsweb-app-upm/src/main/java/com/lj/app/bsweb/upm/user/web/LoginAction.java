@@ -274,23 +274,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	@Override
-	public String list() throws Exception {
-		return null;
-	}
-
-
-	@Override
-	public String input() throws Exception {
-		return null;
-	}
-
-
-	@Override
-	public String save() throws Exception {
-		return null;
-	}
-
-	@Override
 	protected void prepareModel() throws Exception {
 		
 	}

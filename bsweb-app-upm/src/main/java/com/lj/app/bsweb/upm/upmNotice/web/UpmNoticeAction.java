@@ -11,7 +11,6 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.notify.entity.UpmNotice;
 import com.lj.app.core.common.notify.service.UpmNoticeService;
-import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
@@ -58,46 +57,21 @@ public class UpmNoticeAction extends AbstractBaseUpmAction<UpmNotice> {
 			upmNotice = new UpmNotice();
 		}
 	}
-	
-	@Override
-	public String list() throws Exception {
-		return null;
-	}
-	
-	@Override
-	public String input() throws Exception {
-		return INPUT;
-	}
-	
-	@Override
-	public String save() throws Exception {
-		
-	try{
-			if (operate != null && operate.equals("edit")) {
-				upmNotice.setUpdateBy(getLoginUserId());
-				upmNotice.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				upmNoticeService.updateObject(upmNotice);
-				
-				returnMessage = UPDATE_SUCCESS;
-			}else{
-				upmNotice.setCreateBy(getLoginUserId());
-				upmNotice.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				upmNoticeService.insertObject(upmNotice);
-				returnMessage = CREATE_SUCCESS;
-			}
-			
-			return LIST;
-		}catch(Exception e){
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}
-		
+
+	public UpmNoticeService getUpmNoticeService() {
+		return upmNoticeService;
 	}
 
-	@Override
-	public String delete() throws Exception {
-		return null;
+	public void setUpmNoticeService(UpmNoticeService upmNoticeService) {
+		this.upmNoticeService = upmNoticeService;
+	}
+
+	public UpmNotice getUpmNotice() {
+		return upmNotice;
+	}
+
+	public void setUpmNotice(UpmNotice upmNotice) {
+		this.upmNotice = upmNotice;
 	}
 	
 }

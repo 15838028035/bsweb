@@ -141,25 +141,6 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 			throw e;
 		}
 	}
-	/**
-	 * AJAX方式 导入文件并进行检查
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String importAndCheck() throws Exception {
-		try {
-			 upmUserService.importAndCheck(templateFile, templateFileFileName, templateFileContentType);
-			Struts2Utils.renderText(BATCH_IMPORT_SUCCESS);
-
-		} catch (BusinessException e) {
-			Struts2Utils.renderText(BATCH_IMPORT_FALIRUE+e.getMessage());
-		} catch (Exception e) {
-			Struts2Utils.renderText(BATCH_IMPORT_FALIRUE+e.getMessage());
-		}
-
-		return null;
-	}
 	
 	public String updateAcctPwd() throws Exception {
 		AjaxResult ar = new AjaxResult();
