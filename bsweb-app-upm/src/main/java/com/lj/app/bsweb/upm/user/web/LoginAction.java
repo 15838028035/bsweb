@@ -113,7 +113,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		}
 		
 		Map<String,Object> condition = new HashMap<String,Object>();
-		condition.put("conditionWhere", " and  (login_no='" + loginNo+"' or mobile='" + loginNo + "') and lock_status<>'1' ");
+		condition.put("conditionWhere", " and  (login_no='" + loginNo+"' or mobile='" + loginNo + "')  ");
 		
 		List<UpmUser> userList = upmUserService.findBaseModeList(condition);
 	
