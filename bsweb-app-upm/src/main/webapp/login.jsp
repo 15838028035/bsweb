@@ -91,6 +91,11 @@
                 <c:if test="${springProfilesActive == 'pro'}">[生产环境]</c:if>
                 [${upmVersion}]
                 </h3>UPM用户登录</span>
+                <s:if test="hasActionErrors()">
+		   			<div class="alert alert-warning" style="list-style:none">
+		     			 <s:actionerror/>
+		   			</div>
+				</s:if>
                
                 <div class="form-group">
                     <input type="text" class="form-control fa fa-user" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
@@ -126,11 +131,6 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-default btn-block" >登录</button>
                 </div>
-	            <s:if test="hasActionErrors()">
-		   			<div class="alert alert-danger" style="list-style:none">
-		     			 <s:actionerror/>
-		   			</div>
-				</s:if>
             </form>
            
         </div>
