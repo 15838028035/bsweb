@@ -134,7 +134,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			addActionError("账号被加锁,无法登陆");
 			logger
 					.info("lockstatus is not 0(common status),so login denied!");
-			return SecurityConstants.LOGIN;
+			return goToLogin();
 		}
 		
 		
