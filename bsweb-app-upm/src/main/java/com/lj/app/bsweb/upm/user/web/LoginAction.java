@@ -104,12 +104,12 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		String rand = (String) Struts2Utils.getSession().getAttribute("rand");
 		if (StringUtil.isBlank(loginNo)|| StringUtil.isBlank(pwd)|| StringUtil.isBlank(identifyingCode) ||StringUtil.isBlank(rand)) {
 			addActionError("参数不能为空");
-			return SecurityConstants.LOGIN;
+			return goToLogin();
 		}
 		
 		if(!identifyingCode.equalsIgnoreCase(rand)){//验证码错误
 			addActionError("验证码错误");
-			return SecurityConstants.LOGIN;
+			return goToLogin();
 		}
 		
 		Map<String,Object> condition = new HashMap<String,Object>();
@@ -129,7 +129,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		if (!encryptPwd.equals(dbpwd)) {
 			addActionError("密码错误");
 			logger.info("password wrong!!!");
-			return SecurityConstants.LOGIN;
+			return goToLogin();
 		} else if (StringUtil.isEqual(loginUser.getLockStatus(),"1")) {
 			addActionError("账号被加锁,无法登陆");
 			logger
