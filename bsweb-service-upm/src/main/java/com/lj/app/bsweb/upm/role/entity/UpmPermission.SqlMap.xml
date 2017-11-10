@@ -105,7 +105,7 @@
         	create_By ,
         	create_Date ,
         	updateBy ,
-        	update_Date ,
+        	DATE_FORMAT(update_Date,'%Y-%m-%d %H:%i:%s') as update_Date ,
         	enable_Flag ,
         	lock_Status 
 	    ]]>

@@ -57,9 +57,9 @@
         	userId ,
         	groupId ,
         	create_By ,
-        	create_Date ,
+        	DATE_FORMAT(create_Date,'%Y-%m-%d %H:%i:%s') as create_Date ,
         	update_By ,
-        	update_Date ,
+        	DATE_FORMAT(update_Date,'%Y-%m-%d %H:%i:%s') as update_Date ,
         	enable_Flag ,
         	lock_Status 
 	    ]]>

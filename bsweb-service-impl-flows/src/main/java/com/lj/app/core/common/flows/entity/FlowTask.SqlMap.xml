@@ -348,9 +348,9 @@
         	parent_Task_Id ,
         	variable ,
         	create_by ,
-        	create_date ,
+        	DATE_FORMAT(create_Date,'%Y-%m-%d %H:%i:%s') as create_Date ,
         	update_by ,
-        	update_date ,
+        	DATE_FORMAT(update_Date,'%Y-%m-%d %H:%i:%s') as update_Date ,
         	create_By_UName,
         	update_By_Uname
 	    ]]>
