@@ -17,7 +17,6 @@
 <form action="upmAppAction!commonSaveOrUpdate.action" class="form-horizontal" method="post" name="upmAppForm" id="upmAppForm" role="form">
 <input type="hidden" name="id" id="id" value="${id}"/>
 <input type="hidden" name="upmApp.id" id="appId" value="${upmApp.id}"/>
-<input type="hidden" name="upmApp.appId" id="appId" value="${upmApp.appId}"/>
 <input type="hidden" name="operate" id="operate" value="${operate}" />
 
 			<div class="form-group">
