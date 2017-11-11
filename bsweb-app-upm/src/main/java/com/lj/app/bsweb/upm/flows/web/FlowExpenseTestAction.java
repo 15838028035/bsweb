@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.flows.entity.FlowBorrowTest;
 import com.lj.app.core.common.flows.entity.FlowExpenseTest;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
@@ -266,11 +265,11 @@ public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest
 					querMap.put("operator", this.getUserName());
 					querMap.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
 					
-					List<FlowBorrowTest> list = flowExpenseTestService.queryForList(querMap);
+					List<FlowExpenseTest> list = flowExpenseTestService.queryForList(querMap);
 					
-					for(FlowBorrowTest flowBorrowTest:list){
-						flowBorrowTest.setFlowOrderId(FlowOrder.getId());
-						flowExpenseTestService.updateObject(flowBorrowTest);
+					for(FlowExpenseTest tlowExpenseTest:list){
+						tlowExpenseTest.setFlowOrderId(FlowOrder.getId());
+						flowExpenseTestService.updateObject(tlowExpenseTest);
 					}
 		        	
 		        } else {

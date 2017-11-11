@@ -265,7 +265,7 @@
     	 	bootbox.confirm('您确认要提交吗?提交成功后，网页将再5秒内自动关闭',function (result) {  
 	               if(result) {  
 		           var result = jQuery.ajax({
-				      	  url:"${ctx}/jsp/flowExpenseTest/flowExpenseTestAction!flowBorrowTestAppTableSubmit.action",
+				      	  url:"${ctx}/jsp/flowExpenseTest/flowExpenseTestAction!flowExpenseTestAppTableSubmit.action",
 				          async:false,
 				          cache:false,
 				          type:"post",
