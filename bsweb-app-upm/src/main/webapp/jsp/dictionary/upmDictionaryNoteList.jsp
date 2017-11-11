@@ -66,18 +66,22 @@
                 idField:"id",
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 cardView: false,                    //是否显示详细视图
-                detailView: false,                   //是否显示父子表
+                detailView: true,                   //是否显示父子表
                 columns: [  
 						{ field: 'checkStatus', title: '',checkbox:true }, 
 		                           {field : 'Number', title : '行号', formatter : function(value, row, index) {  
 		                        	   			return index+1;
 		                           			}  
 		                           },
-					 	{field:'id',title:'ID', sortable:true},
+					 	{field:'id',title:'ID', sortable:true,visible:false},
 					 	{field:'typeCode',title:'数据字典编码', sortable:true},
 					 	{field:'typeDesc',title:'数据字典类别', sortable:true},
 					 	{field:'appId',title:'应用ID', sortable:true}
-                        ],               		
+                        ], 
+                        //注册加载子表的事件。注意下这里的三个参数！
+                        onExpandRow: function (index, row, $detail) {
+                      	  oTableInit.InitSubTable(index, row, $detail);
+                        },    
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
              	},
@@ -101,7 +105,6 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var id=$("#id").val();
 			var typeCode=$("#typeCode").val();
 			var typeDesc=$("#typeDesc").val();
 			var appId=$("#appId").val();
@@ -111,14 +114,90 @@
                      "page.pageNumber":params.pageNumber,
 	                "sortName":this.sortName,
 	                "sortOrder":this.sortOrder,
-					"upmDictionaryNote.id":id,
 					"upmDictionaryNote.typeCode":typeCode,
 					"upmDictionaryNote.typeDesc":typeDesc,
 					"upmDictionaryNote.appId":appId
             };
             return temp;
         };
-        return oTableInit;
+        
+        //初始化子表格(无线循环)
+        oTableInit.InitSubTable = function (index, row, $detail) {
+           var id = row.id;
+           var cur_table = $detail.html('<table></table>').find('table');
+           $(cur_table).bootstrapTable({
+        	   url: '${ctx}/jsp/dictionary/upmDictionaryAction!bootStrapList.action',         //请求后台的URL（*）
+               method: 'post',                     //请求方式（*）
+               dataType: "json",
+               contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+               dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+               totalField: 'total',
+               toolbar: '#subTableToolbar',                //工具按钮用哪个容器
+               striped: true,                      //是否显示行间隔色
+               cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+               pagination: true,                   //是否显示分页（*）
+               smartDisplay:false,
+               showRefresh:true,
+               showColumns:true,
+               showToggle:true,
+               searchOnEnterKey:true,
+               showFooter:true,
+               search:false,
+               sortable: true,                     //是否启用排序
+               sortOrder: "asc",                   //排序方式
+               singleSelect:false,
+               clickToSelect: true,
+               smartDisplay:true,
+               queryParams: {"nodeId":id},//传递参数（*）
+               queryParamsType:'',					//  queryParamsType = 'limit' 参数: limit, offset, search, sort, order;
+               									//  queryParamsType = '' 参数: pageSize, pageNumber, searchText, sortName, sortOrder.
+               sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+               pageNumber:1,                       //初始化加载第一页，默认第一页
+               pageSize: 25,                       //每页的记录行数（*）
+               pageList: [5,10, 25, 40, 50, 100,'all'],        //可供选择的每页的行数（*）
+               showPaginationSwitch:true,
+               strictSearch: true,
+               clickToSelect: true,                //是否启用点击选中行
+              // height: 460,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+              idField:"id",
+               uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+               cardView: false,                    //是否显示详细视图
+               detailView: false,                   //是否显示父子表
+               columns: [  
+						{ field: 'checkStatus', title: '',checkbox:true }, 
+                          {field : 'Number', title : '行号', formatter : function(value, row, index) {  
+                       	   			return index+1;
+                          			}  
+                          },
+					 	{field:'id',title:'ID', sortable:true, visible:false},
+					 	{field:'typeCode',title:'数据字典编码', sortable:true},
+					 	{field:'dataCode',title:'数据字典类别', sortable:true},
+					 	{field:'dataDesc',title:'数据字典描述', sortable:true},
+					 	{field:'sortNo',title:'排序编号', sortable:true},
+					 	{field:'nodeId',title:'数据字典父节点编号', sortable:true , visible:false},
+					 	{field:'appId',title:'应用ID', sortable:true}
+                       ],               		
+            	formatLoadingMessage: function () {
+            		return "请稍等，正在加载中...";
+            	},
+            	formatNoMatches: function () { //没有匹配的结果
+            		return '无符合条件的记录';
+            	},
+            	onLoadError: function (data) {
+            		$('#tableList').bootstrapTable('removeAll');
+            		 bootbox.alert("数据加载失败！");
+            	},
+            	responseHandler: function (res) {
+            	    return {
+            	        total: res.total,
+            	        rows: res.rows
+            	    };
+            	}
+           
+           });
+       };
+           
+       return oTableInit;
     };
 		
 </script>
@@ -133,11 +212,6 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-                        
 			 	<label class="control-label col-sm-1" for="typeCode">数据字典编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="typeCode"></div>
                         
@@ -258,7 +332,6 @@
 		   		bootbox.alert('请选择一条编辑的记录');
 		   		return;
 		   	}
-  				
           				
 		   	$("#btn_addDictionaryItemBtn").magnificPopup({   
 		   		items: [  

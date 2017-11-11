@@ -118,7 +118,7 @@
 
 <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
-            <div class="panel-heading">借款申请</div>
+            <div class="panel-heading">报销申请</div>
             <div class="panel-body">
                 <table id="tableList"></table>
             </div>

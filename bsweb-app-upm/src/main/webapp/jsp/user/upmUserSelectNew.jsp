@@ -185,7 +185,30 @@
 	       	
 	        parent.window.returnValue = returnValue;
 	        window.close();
-        })
+	      
+	       /*  $.BootstrapDialog.setData("selectResult",returnValue);
+	        $.BootstrapDialog.close(); */
+        });
+        
+        function btn_select() {
+        	var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.id;
+            });
+       	 
+	       	if(ids == ""){
+	       		bootbox.alert('请选择要选择记录');
+	       		return;
+	       	}
+	       	
+	       	var userName = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                return row.userName;
+            });
+			
+	       	var returnValue = userName+"("+userName+");";
+	        parent.window.returnValue = returnValue;
+        }
+        
+        
           $btn_query.click(function () {
         	 refreshGrid();
         });

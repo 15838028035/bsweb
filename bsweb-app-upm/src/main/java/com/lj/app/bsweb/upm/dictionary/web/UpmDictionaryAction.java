@@ -37,6 +37,13 @@ public class UpmDictionaryAction extends AbstractBaseUpmAction<UpmDictionary> {
 	}
 	
 	public UpmDictionary getModel() {
+		if (id != null) {
+			upmDictionary = (UpmDictionary)upmDictionaryService.getInfoByKey(id);
+		}else {
+			upmDictionary = new UpmDictionary();
+			upmDictionary.setNodeId(nodeId);
+		}
+		
 		return upmDictionary;
 	}
 	

@@ -1,4 +1,24 @@
 function selectOrg(ctx, e1, e2) {
+	
+	/*var url = ctx+ "/jsp/user/upmUserSelectNew.jsp";
+		var dialog = new BootstrapDialog({
+		  	title:"分配角色",
+		  cssClass :"speial-dialog",
+		  size:BootstrapDialog.SIZE_WIDE,
+		    message: $("<iframe  width=\"100%;\" height=\"800px\"; src="+url+"></iframe>"),
+		  buttons: [ {
+          label: '关闭',
+          action: function(dialogRef){
+        	  var selectResult = dialogRef.getData("selectResult");
+        	  alert("selectResult========"+selectResult);
+              dialogRef.close();
+          }
+      }]
+		});
+		dialog.open();
+		
+		return ;*/
+		
 	var element1 = document.getElementById(e1);
 	var element2 = document.getElementById(e2);
 	var l = window.showModalDialog(ctx
