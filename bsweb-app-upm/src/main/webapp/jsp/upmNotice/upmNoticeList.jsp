@@ -75,7 +75,7 @@
               	   			return index+1;
                  			}  
                  },
-			 	{field:'id',title:'ID', sortable:true},
+			 	{field:'id',title:'ID', sortable:true, visible:false},
 			 	{field:'typeId',title:'类别ID', sortable:true},
 			 	{field:'content',title:'内容', sortable:true},
 			 	{field:'paramA',title:'参数A', sortable:true},
@@ -107,7 +107,6 @@
  
         //得到查询的参数
       oTableInit.queryParams = function (params) {
-			var id=$("#id").val();
 			var typeId=$("#typeId").val();
 			var content=$("#content").val();
 			var paramA=$("#paramA").val();
@@ -125,17 +124,9 @@
                 "page.pageNumber":params.pageNumber,
                 "sortName":this.sortName,
                 "sortOrder":this.sortOrder,
-				"upmNotice.id":id,
 				"upmNotice.typeId":typeId,
-				"upmNotice.content":content,
 				"upmNotice.paramA":paramA,
 				"upmNotice.paramB":paramB,
-				"upmNotice.sendBeginDateBegin":sendBeginDateBegin,
-				"upmNotice.sendBeginDateEnd":sendBeginDateEnd,
-				"upmNotice.sendEndDateBegin":sendEndDateBegin,
-				"upmNotice.sendEndDateEnd":sendEndDateEnd,
-				"upmNotice.createDateTimeBegin":createDateTimeBegin,
-				"upmNotice.createDateTimeEnd":createDateTimeEnd
             };
             return temp;
         };
@@ -154,42 +145,19 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                      
-
-			 	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
                         
 			 	<label class="control-label col-sm-1" for="typeId">类别ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="typeId"></div>
-                        
-			 	<label class="control-label col-sm-1" for="content">内容</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="content"></div>
                         
 			 	<label class="control-label col-sm-1" for="paramA">参数A</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="paramA"></div>
                         
 			 	<label class="control-label col-sm-1" for="paramB">参数B</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="paramB"></div>
-                        
-			 	<label class="control-label col-sm-1" for="sendBeginDate">发送开始时间</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="sendBeginDateBegin" id = "sendBeginDateBegin" size="16"  class="datetimepicker"  readonly="readonly"/> --
-				<input type="text" name="sendBeginDateEnd" id = "sendBeginDateEnd"  size="16" class="datetimepicker"  readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="sendEndDate">发送结束日期</label>
-			   <div class="col-sm-2">
-                            	<input type="text" name="sendEndDateBegin" id = "sendEndDateBegin"  size="16" class="datetimepicker"  readonly="readonly"/> --
-				<input type="text" name="sendEndDateEnd" id = "sendEndDateEnd" size="16"   class="datetimepicker"  readonly="readonly"/>
-                         </div>
-			 	<label class="control-label col-sm-1" for="createDateTime">创建日期</label>
-			   <div class="col-sm-2">
-                      <input type="text" name="createDateTimeBegin" id = "createDateTimeBegin" size="16"  class="datetimepicker"  readonly="readonly"/> --
-					<input type="text" name="createDateTimeEnd" id = "createDateTimeEnd"  class="datetimepicker" size="16"  readonly="readonly"/>
+				
+                 <div class="col-sm-12" style="text-align:left;">
+                     <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                  </div>
-
-                      <div class="col-sm-12" style="text-align:left;">
-                          <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                      </div>
                     </div>
                 </form>
             </div>
@@ -221,7 +189,7 @@
 	
 		//新增
         $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/upmNotice/upmNoticeAction!input.action'
+        	window.location.href = '${ctx}/jsp/upmNotice/upmNoticeAction!input.action?upmNotice.id='
         })
 		//编辑
         $("#btn_edit").click(function() {
@@ -237,7 +205,7 @@
         		bootbox.alert('请选择一条编辑的记录');
         		return;
         	}
-        	window.location.href = "${ctx}/jsp/upmNotice/upmNoticeAction!input.action?operate=edit&id=" + ids;
+        	window.location.href = "${ctx}/jsp/upmNotice/upmNoticeAction!input.action?operate=edit&upmNotice.id=" + ids;
         })
 		//删除
       $("#btn_delete").click(function() {

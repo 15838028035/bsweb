@@ -119,7 +119,12 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	
 		if (userList==null || userList.size()==0) {
 			addActionError("用户不存在");
-			return SecurityConstants.LOGIN;
+			return goToLogin();
+		}
+		
+		if (userList.size()>1) {
+			addActionError("存在多个相同的登陆账号或手机号码");
+			return goToLogin();
 		}
 		
 		UpmUser loginUser = userList.get(0);
@@ -130,13 +135,12 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			addActionError("密码错误");
 			logger.info("password wrong!!!");
 			return goToLogin();
-		} else if (StringUtil.isEqual(loginUser.getLockStatus(),"1")) {
+		} 
+		if (StringUtil.isEqual(loginUser.getLockStatus(),"1")) {
 			addActionError("账号被加锁,无法登陆");
-			logger
-					.info("lockstatus is not 0(common status),so login denied!");
+			logger.info("lockstatus is not 0(common status),so login denied!");
 			return goToLogin();
 		}
-		
 		
 		HttpSession session2 = Struts2Utils.getSession();// 清空session
 		if (session2 != null) {

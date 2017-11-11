@@ -103,7 +103,6 @@
 			var appId=$("#appId").val();
 			var appCode=$("#appCode").val();
 			var appName=$("#appName").val();
-			var id=$("#id").val();
 
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             		 "page.pageSize":params.pageSize,
@@ -112,8 +111,7 @@
 	                "sortOrder":this.sortOrder,
 					"upmApp.appId":appId,
 					"upmApp.appCode":appCode,
-					"upmApp.appName":appName,
-					"upmApp.id":id
+					"upmApp.appName":appName
             };
             return temp;
         };
@@ -131,10 +129,6 @@
             <div class="panel-heading">查询条件</div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
-                    <div class="form-group" style="margin-top:15px">
-                      	<label class="control-label col-sm-1" for="id">ID</label>
-				<div class="col-sm-2"> <input type="text" class="form-control" id="id"></div>
-
 			 	<label class="control-label col-sm-1" for="appId">应用ID</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
                         

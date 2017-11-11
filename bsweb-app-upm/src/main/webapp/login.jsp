@@ -106,7 +106,7 @@
 	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码" value="123456">
 	                </div>
 	                 <div class="form-group">
-                    <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码" value="">
+                    <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码" value="" maxLength="4">
                 	</div>
                 	 <div class="form-group">
                     <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
@@ -119,7 +119,7 @@
 	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码">
 	                </div>
 	                 <div class="form-group">
-                    <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码">
+                    <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码" maxLength="4">
                		 </div>
                		  <div class="form-group">
                     <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
