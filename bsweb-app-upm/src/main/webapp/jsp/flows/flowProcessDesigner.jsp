@@ -44,29 +44,34 @@
 			function saveModel(data) {
 			
 				alert("提交信息:" + data);
-						
-				$.ajax({
-					type:'POST',
-					url:"${ctx}/jsp/flows/flowProcessAction!processDeployXml.action",
-					data:"flowContentStr=" + data + "&id=${id}",
-					async: false,
-					globle:false,
-					error: function(){
-						alert('数据处理错误!');
-						return false;
-					},
-					success: function(data){
-						if(data == 'true') {
-							bootbox.confirm('数据保存成功,您确认要返回流程定义页面吗?',function (result) {  
-				                if(result) {  
-				                	window.location.href = "${ctx}/jsp/flows/flowProcessList.jsp";
-				                }
-				        	});
-						} else {
-							bootbox.alert("数据处理错误！出现异常");
-						}
-					}
-				});
+				
+				bootbox.confirm("您确认要提交么？",function (result) {  
+	                if(result) {  
+	                	$.ajax({
+	    					type:'POST',
+	    					url:"${ctx}/jsp/flows/flowProcessAction!processDeployXml.action",
+	    					data:"flowContentStr=" + data + "&id=${id}",
+	    					async: false,
+	    					globle:false,
+	    					error: function(){
+	    						alert('数据处理错误!');
+	    						return false;
+	    					},
+	    					success: function(data){
+	    						if(data == 'true') {
+	    							bootbox.confirm('数据保存成功,您确认要返回流程定义页面吗?',function (result) {  
+	    				                if(result) {  
+	    				                	window.location.href = "${ctx}/jsp/flows/flowProcessList.jsp";
+	    				                }
+	    				        	});
+	    						} else {
+	    							bootbox.alert("数据处理错误！出现异常");
+	    						}
+	    					}
+	    				});
+	                }
+	        	});
+				
 			}
 		</script>					
 </head>
