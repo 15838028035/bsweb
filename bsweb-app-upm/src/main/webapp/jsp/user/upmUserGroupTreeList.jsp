@@ -200,63 +200,6 @@ var TableInit = function () {
     return oTableInit;
 };
 
-$("#btnInsert").on("click", function(){
-    //获取表单对象
-   var bootstrapValidator = form.data('bootstrapValidator');
-      //手动触发验证
-      bootstrapValidator.validate();
-      if(bootstrapValidator.isValid()){
-      }
-      
-      bootstrapValidator.on('success.form.bv', function (e) {
-    	    e.preventDefault();
-    	    //提交逻辑
-    	    var $form = $(e.target);
-
-    	    // Get the BootstrapValidator instance
-    	    var bv = $form.data('bootstrapValidator');
-    	    
-    	    $("#btnInsert").prop("disabled",true);
-    		   $("#btnsaveorg").prop("disabled",true);
-    		   $("#btnDelete").prop("disabled",true);
-    		   $("#btnAssignRole").prop("disabled",true);
-    			var auditactselectedOrgid = $("#auditactselectedOrgid").val();				
-    			if(!auditactselectedOrgid){
-    				bootbox.alert("请一条记录");
-    				return false;
-    			}
-    			
-    			var options = {
-    		        dataType:'json', 		        	
-    		        cache:false,
-    		        type:'post',
-    		        contentType:'application/x-www-form-urlencoded; charset=UTF-8', 	       
-    		        url:"${ctx}/jsp/user/upmUserGroupAction!save.action",
-    		        success:function(respResult, statusText, xhr ) {
-    		        	$("#btnInsert").prop("disabled",false);		        	
-    		        	$("#btnsaveorg").prop("disabled",false); 
-    		        	$("#btnDelete").prop("disabled",false);	
-    		        	$("#btnAssignRole").prop("disabled",false);
-    		        	 bootbox.alert(respResult.opResult);
-    				},
-    				 error:function(){
-    				 		bootbox.alert("提示信息"+respResult.message);
-    				 		$("#btnInsert").prop("disabled",false);
-    				 		$("#btnsaveorg").prop("disabled",false);
-    				 		$("#btnDelete").prop("disabled",false);
-    				 		$("#btnAssignRole").prop("disabled",false);
-    				 }
-    	     };	
-    	         	
-    			$("#saveUserGroupForm").ajaxSubmit(options);
-    	});
-});
-
-
-
-		function edit() {
-			$("#operate").val("edit");
-		}
 		//删除
         function mulDelete(){
         	bootbox.confirm('确认要删除么?',function (result) {  
@@ -299,6 +242,47 @@ $("#btnInsert").on("click", function(){
       		dialog.open();
         }
       	
+      	function addUserGroup() {
+	      	//组织机构管理
+			var parentId =$("#parentId").val();
+			var url = "${ctx}/jsp/user/upmUserGroupAction!input.action?operate=add&parentId=" + parentId;
+      		var dialog = new BootstrapDialog({
+      		  	title:"组织机构管理",
+      		  cssClass :"speial-dialog",
+      		  size:BootstrapDialog.SIZE_WIDE,
+      		    message: $("<iframe  width=\"100%;\" height=\"800px\"; src="+url+"></iframe>"),
+      		  buttons: [ {
+                  label: '关闭',
+                  action: function(dialogRef){
+                      dialogRef.close();
+                  }
+              }]
+      		});
+      		dialog.open();
+        }
+      	
+    	function editUserGroup() {
+	      	//组织机构管理
+			var parentId =$("#parentId").val();
+	      	if(parentId==""){
+	      		bootbox.alert("请选择组织机构");
+	      		return;
+	      	}
+			var url = "${ctx}/jsp/user/upmUserGroupAction!input.action?operate=edit&id=" + parentId;
+      		var dialog = new BootstrapDialog({
+      		  	title:"组织机构管理",
+      		    size:BootstrapDialog.SIZE_SMALL,
+      		    message: $("<iframe  width=\"100%;\" height=\"300px\"; src="+url+"></iframe>"),
+      		  buttons: [ {
+                  label: '关闭',
+                  action: function(dialogRef){
+                      dialogRef.close();
+                  }
+              }]
+      		});
+      		dialog.open();
+        }
+    	
 </script>
 </head>
 <body>
@@ -311,32 +295,19 @@ $("#btnInsert").on("click", function(){
 	<input type="hidden" name="operate" id="operate"/>
 	<input type="hidden" name="parentId" id="parentId"/>
 	<input type="hidden" name="auditactselectedOrgid" id="auditactselectedOrgid"/>
-	
-		<div class="form-group" style="margin-top:15px">
-	     	 <label class="control-label col-sm-2" for="userGroupCode">组织机构编码</label>
-	         <div class="col-sm-2">
-	             <input type="text" class="form-control" id="userGroupCode" name="userGroupCode">
-	         </div>
-	         <label class="control-label col-sm-2" for="bussinessCode">业务编码</label>
-	         <div class="col-sm-2">
-	             <input type="text" class="form-control" id="bussinessCode" name="bussinessCode">
-	         </div>
-	         <label class="control-label col-sm-2" for="userGroupName">组织机构名称</label>
-	         <div class="col-sm-2">
-	             <input type="text" class="form-control" id="userGroupName" name="userGroupName">
-	         </div>
-     	</div>
+		<div class="form-group">
+		 	  <input class="form-control" type="text"  name="searchText" id="searchText"/>
+		 </div>
+		
 	 <div id="toolbar-A" class="btn-group">
-	  		<button id="btn_query" type="button" class="btn btn-default" >查询</button>
-	  		
-	  		<sec:authorize code="upm_upmUserGroupTreeList_btnInsert" >
-            <button id="btnInsert" type="button" class="btn btn-default">
+	  		<sec:authorize code="upm_upmUserGroupTreeList_btnInsert"  >
+            <button id="btnInsert" type="button" class="btn btn-default" onclick="addUserGroup()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
             </sec:authorize>
             <sec:authorize code="upm_upmUserGroupTreeList_btnsaveorg" >
-             <button id="btnsaveorg" type="submit" class="btn btn-default" onclick="edit()">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>修改保存
+             <button id="btnsaveorg" type="button" class="btn btn-default" onclick="editUserGroup()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>修改
             </button>
             </sec:authorize>
             <sec:authorize code="upm_upmUserGroupTreeList_btn_delete" >
@@ -349,6 +320,8 @@ $("#btnInsert").on("click", function(){
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>分配角色
             </button>
             </sec:authorize>
+            <button type="button" id="searchTreeBtn"  class="btn btn-default">搜索</button> 
+            <button id="btn_query" type="button" class="btn btn-default" >查询</button>
         </div>
 	<div class="widget_tree" style="height: 300px;width:100%;overflow: no;font-weight: normal;">
 <div id="upmUserGroupTreeDiv"  ></div>
@@ -410,6 +383,15 @@ $("#btnInsert").on("click", function(){
      $btn_query.click(function () {
     	 refreshGrid();
     });
+     
+     $("#searchTreeBtn").click(function(){
+		  var searchText =$("#searchText").val().trim();
+		  $('#upmUserGroupTreeDiv').treeview('search', [searchText, {
+			    ignoreCase: true,     // case insensitive
+			    exactMatch: false,    // like or equals
+			    revealResults: true,  // reveal matching nodes
+			  }]);
+	  });
      
 		//新增
         $("#addRel").click(function() {

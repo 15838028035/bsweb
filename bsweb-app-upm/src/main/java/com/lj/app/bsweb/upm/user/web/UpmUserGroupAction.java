@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
-import com.lj.app.bsweb.upm.role.entity.UpmRole;
 import com.lj.app.bsweb.upm.user.entity.UpmUserGroup;
 import com.lj.app.bsweb.upm.user.service.UpmUserGroupService;
+import com.lj.app.core.common.base.entity.BaseEntity;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.tree.BootStrapTreeView;
@@ -95,13 +95,17 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 	}
 	
 	public UpmUserGroup getModel() {
-		upmUserGroup = (UpmUserGroup)upmUserGroupService.getInfoByKey(id);
 		return upmUserGroup;
 	}
 	
 	@Override
 	protected void prepareModel() throws Exception {
-		upmUserGroup = (UpmUserGroup)upmUserGroupService.getInfoByKey(id);
+		if(id!=null ){
+			upmUserGroup = (UpmUserGroup)upmUserGroupService.getInfoByKey(id);
+		}else {
+			upmUserGroup = new UpmUserGroup();
+			upmUserGroup.setParentId(parentId);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -138,6 +142,37 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 	@Override
 	public String input() throws Exception {
 		return INPUT;
+	}
+	
+	@Override
+	public String commonSaveOrUpdate() throws Exception {
+		try{
+			if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+				BaseEntity entity = (BaseEntity)getModel();
+				entity.setUpdateBy(this.getLoginUserId());
+				entity.setUpdateByUname(this.getUserName());
+				entity.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+				
+				getBaseService().updateObject(entity);
+				returnMessage = UPDATE_SUCCESS;
+			}else{
+				BaseEntity entity = (BaseEntity)getModel();
+				entity.setCreateBy(this.getLoginUserId());
+				entity.setCreateByUname(this.getUserName());
+				entity.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+				
+				getBaseService().insertObject(entity);
+				returnMessage = CREATE_SUCCESS;
+			}
+			
+		}catch(Exception e){
+			returnMessage = CREATE_FAILURE;
+			e.printStackTrace();
+			throw e;
+		}
+		
+		
+		return input();
 	}
 	
 	@Override
