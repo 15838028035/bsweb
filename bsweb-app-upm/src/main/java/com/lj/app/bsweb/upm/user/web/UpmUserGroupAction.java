@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
+import com.lj.app.bsweb.upm.role.entity.UpmRole;
 import com.lj.app.bsweb.upm.user.entity.UpmUserGroup;
 import com.lj.app.bsweb.upm.user.service.UpmUserGroupService;
 import com.lj.app.core.common.base.service.BaseService;
+import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.tree.BootStrapTreeView;
 import com.lj.app.core.common.tree.BootStrapTreeViewCheck;
 import com.lj.app.core.common.util.AjaxResult;
@@ -186,6 +188,22 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 		
 	}
 
+	/**
+	 * 删除校验
+	 */
+	@Override
+	public void multideleteValidate(Integer deleteId) throws BusinessException {
+		if(deleteId==null || deleteId==0){
+			throw new BusinessException("根节点不能进行删除");
+		}
+		
+		List<UpmUserGroup> list=upmUserGroupService.findUpmUserByParentId(Long.parseLong(String.valueOf(deleteId)));
+		
+		if(list!=null && list.size()>0){
+			throw new BusinessException("删除失败,有[" + list.size() + "]个子节点,要解除所有子节点后，才可以进行删除");
+		}
+	}
+	
 	public void setId(java.lang.Integer value) {
 		this.id = value;
 	}

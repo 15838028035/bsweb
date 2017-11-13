@@ -463,7 +463,14 @@ $("#btnInsert").on("click", function(){
         
       	function refreshGrid(){
       		var parentId =$("#parentId").val();
-			$tableList.bootstrapTable('refresh', "${ctx}/jsp/user/upmUserAction!listUserByCondition.action?treeNodeId="+parentId);
+      		var opt={
+      				"url":"${ctx}/jsp/user/upmUserAction!listUserByCondition.action",
+      			     query:{
+      			    	 "treeNodeId":+parentId
+      			     }		
+      		};
+      		
+			$tableList.bootstrapTable('refresh', opt);
       	}
       	
     </script>
