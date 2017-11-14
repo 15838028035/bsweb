@@ -21,7 +21,7 @@
     </resultMap>
 
 	<sql id="dynamicWhere">
-	    <dynamic prepend="WHERE">
+	    <dynamic prepend=" and ">
 	       <isNotEmpty prepend="AND" property="id">
 	             id = #id#
 	       </isNotEmpty>
@@ -55,6 +55,8 @@
 	       <isNotEmpty prepend="AND" property="lockStatus">
 	             lock_Status = #lockStatus#
 	       </isNotEmpty>
+	       
+	       <isNotEmpty property="conditionWhere">$conditionWhere$</isNotEmpty>
 	    </dynamic>	
 	</sql>
 
@@ -166,7 +168,7 @@
  	<select id="pagenate" resultMap="upmUserGroupResult">
     	<include refid="commonSelectColumnsPrefix"/>
 	    <![CDATA[
-	        from upm_user_group 
+	        from upm_user_group  where 1=1
 	    ]]>
 		<include refid="dynamicWhere"/>
 		<dynamic prepend="ORDER BY">
@@ -178,9 +180,27 @@
     <![CDATA[
         select 
         count(*)
-        from upm_user_group
+        from upm_user_group  where 1=1
     ]]>
 		<include refid="dynamicWhere"/>    
+    </select>
+    
+    <select id="findUpmUserGroupByParentId" resultMap="upmUserGroupResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user_group  where 1=1
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="findUpmUserGroupByGroupName" resultMap="upmUserGroupResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from upm_user_group  where find_in_set(id,findUpmUserGroupByGroupName(#userGroupName#))
+	    ]]>
     </select>
 
 </sqlMap>

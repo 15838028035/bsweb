@@ -9,20 +9,6 @@
 	<%@ include file="/jsp/common/resource/scripts_all.jsp"%>
 	<%@ include file="/jsp/common/resource/styles_all.jsp"%>
 	
-	<style type="text/css" >
-	 .login-dialog .modal-dialog  {
-                width: 98%;
-                height:1000px;
-                min-height:1000px;
-            }
-             .speial-dialog .modal-dialog-body {
-                width: 92%;
-            }
-            .speial-dialog .bootstrap-dialog-message {
-            }
-           
-	</style>
-	
 </head>
 
 <script type="text/javascript">
@@ -34,7 +20,7 @@ var treeNodeId = "" ;
 $(document).ready(function(){
 		//获取权限菜单树
 		var jsonData = $.ajax({
-			          url:"${ctx}/jsp/user/upmUserGroupAction!list.action",
+			          url:"${ctx}/jsp/user/upmUserGroupAction!treeList.action",
 			          async:false,
 			          cache:false,
 			          dataType:"text"
@@ -87,7 +73,7 @@ $(document).ready(function(){
  * 一个节点被展开 惰性加载
  */
 function addNextNode(event, node) {
-    $.getJSON("${ctx}/jsp/user/upmUserGroupAction!list.action?treeNodeId="+node.nodeId, function (data) {
+    $.getJSON("${ctx}/jsp/user/upmUserGroupAction!treeList.action?treeNodeId="+node.nodeId, function (data) {
     	$('#upmUserGroupTreeDiv').treeview("deleteChildrenNode", node.nodeId);
     	$('#upmUserGroupTreeDiv').treeview("remove", node.nodeId);
     	
@@ -296,7 +282,7 @@ var TableInit = function () {
 	<input type="hidden" name="parentId" id="parentId"/>
 	<input type="hidden" name="auditactselectedOrgid" id="auditactselectedOrgid"/>
 		<div class="form-group">
-		 	  <input class="form-control" type="text"  name="searchText" id="searchText"/>
+		 	  <input class="form-control" type="text"  name="searchText" id="searchText" placeholder="输入组织机构名称，点击查询进行查找"/>
 		 </div>
 		
 	 <div id="toolbar-A" class="btn-group">
@@ -380,9 +366,6 @@ var TableInit = function () {
      var $tableList = $('#tableList');
      var $btn_query = $('#btn_query');
      
-     $btn_query.click(function () {
-    	 refreshGrid();
-    });
      
      $("#searchTreeBtn").click(function(){
 		  var searchText =$("#searchText").val().trim();
@@ -391,6 +374,27 @@ var TableInit = function () {
 			    exactMatch: false,    // like or equals
 			    revealResults: true,  // reveal matching nodes
 			  }]);
+	  });
+     
+     $("#btn_query").click(function(){
+		  var searchText =$("#searchText").val().trim();
+		//获取权限菜单树
+			var jsonData = $.ajax({
+				          url:"${ctx}/jsp/user/upmUserGroupAction!treeList.action?userGroupName="+searchText,
+				          async:false,
+				          cache:false,
+				          dataType:"text"
+			}).responseText;
+			
+			if(jsonData==null){
+				bootbox.alert("没有查询到结果");
+				return false;
+			}
+			jsonData = "[" + jsonData + "]";
+			
+			var dataObj=eval("("+jsonData+")");
+	        
+			$('#upmUserGroupTreeDiv').treeview({data:dataObj}); 
 	  });
      
 		//新增

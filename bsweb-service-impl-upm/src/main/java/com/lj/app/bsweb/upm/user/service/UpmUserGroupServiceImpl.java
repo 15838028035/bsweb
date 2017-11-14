@@ -14,14 +14,29 @@ public class UpmUserGroupServiceImpl<UpmUserGroup> extends BaseServiceImpl<UpmUs
 	 *查询用户组数据
 	 * @return
 	 */
-	public List<UpmUserGroup> findUpmUserByParentId(Long treeNodeId){
+	public List<UpmUserGroup> findUpmUserGroupByParentId(Long treeNodeId){
 		Map<String,Object> condition = new HashMap<String,Object>();
-		condition.put("userGroupCode",  null);
-		condition.put("userGroupName",  null);
-		condition.put("parentId",  treeNodeId);
-	    List<UpmUserGroup> upmUserGroupList = queryForList("pagenate",condition);
+		
+		if(treeNodeId==null){
+			condition.put("conditionWhere","  parentId is null");
+		}else {
+			condition.put("parentId",  treeNodeId);
+		}
+		
+	    List<UpmUserGroup> upmUserGroupList = queryForList("findUpmUserGroupByParentId",condition);
 
 		return upmUserGroupList;
 	}
 	
+	/**
+	 *查询用户组数据
+	 * @return
+	 */
+	public List<UpmUserGroup> findUpmUserGroupByGroupName(String userGroupName){
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("userGroupName",  userGroupName);
+	    List<UpmUserGroup> upmUserGroupList = queryForList("findUpmUserGroupByGroupName",condition);
+
+		return upmUserGroupList;
+	}
 }

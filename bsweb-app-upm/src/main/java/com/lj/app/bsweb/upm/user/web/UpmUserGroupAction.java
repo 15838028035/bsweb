@@ -39,16 +39,8 @@ import com.lj.app.core.common.web.Struts2Utils;
 public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 	
 	private java.lang.Integer id;
-	private String userGroupCode;
-	private String bussinessCode;
 	private String userGroupName;
 	private java.lang.Integer parentId;
-	private java.lang.Integer createBy;
-	private java.util.Date createDate;
-	private java.lang.Integer updateBy;
-	private java.util.Date updateDate;
-	private String enableFlag;
-	private String lockStatus;
 	
 	private Long treeNodeId;
 	private Long rootId=0l;
@@ -108,19 +100,26 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public String list() throws Exception {
+	public String treeList() throws Exception {
 		try {
 			Map<String,Object> condition = new HashMap<String,Object>();
-			condition.put("userGroupCode",  userGroupCode);
 			condition.put("userGroupName",  userGroupName);
 			
 			String jsonStr = "";
-			if(treeNodeId==null){
+			
+			List<UpmUserGroup> UpmUserGroupList = new ArrayList<UpmUserGroup>();
+			
+			
+			if(StringUtil.isBlank(userGroupName)){
+			
+			   UpmUserGroupList=upmUserGroupService.findUpmUserGroupByParentId(treeNodeId);
+			}else {
+				 UpmUserGroupList=upmUserGroupService.findUpmUserGroupByGroupName(userGroupName);
+			}
+			
+			if(treeNodeId==null ){
 				treeNodeId = 0L;
 			}
-			List<UpmUserGroup> UpmUserGroupList=upmUserGroupService.findUpmUserByParentId(treeNodeId);
 			
 			List<BootStrapTreeView> treeNodeList = new ArrayList<BootStrapTreeView>();
 			
@@ -131,6 +130,9 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 			
 			jsonStr = BootStrapTreeViewCheck.valueOfString(treeNodeList, treeNodeId.toString());
 			
+			if(StringUtil.isBlank(jsonStr)){
+				jsonStr=BootStrapTreeViewCheck.defaultBootStrapTreeViewCheck(rootId.toString(), "没有匹配节点");
+			}
 			Struts2Utils.renderText(jsonStr);
 			return null;
 		} catch (Exception e) {
@@ -171,56 +173,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 			throw e;
 		}
 		
-		
 		return input();
-	}
-	
-	@Override
-	public String save() throws Exception {
-		
-	try{
-			if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
-				upmUserGroup = new UpmUserGroup();
-				upmUserGroup.setId(parentId);
-				upmUserGroup.setUserGroupCode(userGroupCode);
-				upmUserGroup.setBussinessCode(bussinessCode);
-				upmUserGroup.setUserGroupName(userGroupName);
-				//upmUserGroup.setParentId(parentId);
-				upmUserGroup.setEnableFlag(enableFlag);
-				upmUserGroup.setLockStatus(lockStatus);
-				upmUserGroup.setUpdateBy(getLoginUserId());
-				upmUserGroup.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				upmUserGroupService.updateObject("update2",upmUserGroup);
-				
-				returnMessage = UPDATE_SUCCESS;
-			}else{
-				upmUserGroup = new UpmUserGroup();
-				upmUserGroup.setUserGroupCode(userGroupCode);
-				upmUserGroup.setBussinessCode(bussinessCode);
-				upmUserGroup.setUserGroupName(userGroupName);
-				upmUserGroup.setParentId(parentId);
-				upmUserGroup.setEnableFlag(enableFlag);
-				upmUserGroup.setLockStatus(lockStatus);
-				
-				upmUserGroup.setCreateBy(getLoginUserId());
-				upmUserGroup.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				upmUserGroupService.insertObject(upmUserGroup);
-				returnMessage = CREATE_SUCCESS;
-			}
-			
-			AjaxResult ar = new AjaxResult();
-			ar.setOpResult(returnMessage);
-			
-			Struts2Utils.renderJson(ar);
-			return null;
-			
-		}catch(Exception e){
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}finally{
-		}
-		
 	}
 
 	/**
@@ -232,7 +185,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 			throw new BusinessException("根节点不能进行删除");
 		}
 		
-		List<UpmUserGroup> list=upmUserGroupService.findUpmUserByParentId(Long.parseLong(String.valueOf(deleteId)));
+		List<UpmUserGroup> list=upmUserGroupService.findUpmUserGroupByParentId(Long.parseLong(String.valueOf(deleteId)));
 		
 		if(list!=null && list.size()>0){
 			throw new BusinessException("删除失败,有[" + list.size() + "]个子节点,要解除所有子节点后，才可以进行删除");
@@ -246,76 +199,22 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 	public java.lang.Integer getId() {
 		return this.id;
 	}
-	public void setUserGroupCode(String value) {
-		this.userGroupCode = value;
-	}
-	
-	public String getUserGroupCode() {
-		return this.userGroupCode;
-	}
-	public void setUserGroupName(String value) {
-		this.userGroupName = value;
-	}
-	
+
 	public String getUserGroupName() {
-		return this.userGroupName;
+		return userGroupName;
 	}
-	public void setParentId(java.lang.Integer value) {
-		this.parentId = value;
+
+	public void setUserGroupName(String userGroupName) {
+		this.userGroupName = userGroupName;
 	}
-	
+
 	public java.lang.Integer getParentId() {
-		return this.parentId;
-	}
-	public void setCreateBy(java.lang.Integer value) {
-		this.createBy = value;
-	}
-	
-	public java.lang.Integer getCreateBy() {
-		return this.createBy;
-	}
-	public void setCreateDate(java.util.Date value) {
-		this.createDate = value;
-	}
-	
-	public java.util.Date getCreateDate() {
-		return this.createDate;
-	}
-	public void setUpdateBy(java.lang.Integer value) {
-		this.updateBy = value;
-	}
-	
-	public java.lang.Integer getUpdateBy() {
-		return this.updateBy;
-	}
-	public void setUpdateDate(java.util.Date value) {
-		this.updateDate = value;
-	}
-	
-	public java.util.Date getUpdateDate() {
-		return this.updateDate;
-	}
-	public void setEnableFlag(String value) {
-		this.enableFlag = value;
-	}
-	
-	public String getEnableFlag() {
-		return this.enableFlag;
-	}
-	public void setLockStatus(String value) {
-		this.lockStatus = value;
-	}
-	
-	public String getLockStatus() {
-		return this.lockStatus;
+		return parentId;
 	}
 
-	public String getBussinessCode() {
-		return bussinessCode;
+	public void setParentId(java.lang.Integer parentId) {
+		this.parentId = parentId;
 	}
-
-	public void setBussinessCode(String bussinessCode) {
-		this.bussinessCode = bussinessCode;
-	}
+	
 }
 
