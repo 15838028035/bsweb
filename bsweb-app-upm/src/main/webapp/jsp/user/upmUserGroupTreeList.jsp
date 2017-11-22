@@ -306,6 +306,7 @@ var TableInit = function () {
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>分配角色
             </button>
             </sec:authorize>
+            <button id="btn_expandAll" type="button" class="btn btn-default" >展开全部</button>
             <button type="button" id="searchTreeBtn"  class="btn btn-default">搜索</button> 
             <button id="btn_query" type="button" class="btn btn-default" >查询</button>
         </div>
@@ -366,6 +367,9 @@ var TableInit = function () {
      var $tableList = $('#tableList');
      var $btn_query = $('#btn_query');
      
+     $("#btn_expandAll").click(function(){
+    	 $('#upmUserGroupTreeDiv').treeview('expandAll', {silent: true });
+	  });
      
      $("#searchTreeBtn").click(function(){
 		  var searchText =$("#searchText").val().trim();
