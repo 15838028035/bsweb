@@ -16,12 +16,7 @@ public class UpmUserGroupServiceImpl<UpmUserGroup> extends BaseServiceImpl<UpmUs
 	 */
 	public List<UpmUserGroup> findUpmUserGroupByParentId(Long treeNodeId){
 		Map<String,Object> condition = new HashMap<String,Object>();
-		
-		if(treeNodeId==null){
-			condition.put("conditionWhere","  parentId is null");
-		}else {
-			condition.put("parentId",  treeNodeId);
-		}
+		condition.put("parentId",  treeNodeId);
 		
 	    List<UpmUserGroup> upmUserGroupList = queryForList("findUpmUserGroupByParentId",condition);
 

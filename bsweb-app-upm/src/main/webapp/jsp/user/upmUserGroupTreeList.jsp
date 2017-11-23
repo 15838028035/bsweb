@@ -44,18 +44,7 @@ $(document).ready(function(){
 	            },
 				 onNodeSelected: function(event, data) {
 					  treeNodeId = data.id;
-	                    $("#btnInsert").prop("disabled",false);
-			  			$("#btnsaveorg").prop("disabled",false);//set btn-save
-			  			$("#btn_delete").prop("disabled",false);
-			  			$("#btnAssignRole").prop("disabled",false);
-				  			var childrenSelected = data.isselectchild;//set checkbox childrenSelected
-				  			//alert("current user childrenSelected:"+childrenSelected);
-					  		if(childrenSelected==CHILDREN_NOTSELECTED || childrenSelected==""){
-					  			$("[name='childrenSelected']").prop("checked",false);
-					  			$("[name='childrenSelected']").prop("disabled",true);
-					  		}else{
-					  			$("[name='childrenSelected']").prop("disabled",false);
-					  		}
+				  			var childrenSelected = data.isselectchild;
 				  		$("#auditactselectedOrgid").val(treeNodeId);
 				  		$("#parentId").val(treeNodeId);
 				  		//加载用户信息
@@ -74,8 +63,8 @@ $(document).ready(function(){
  */
 function addNextNode(event, node) {
     $.getJSON("${ctx}/jsp/user/upmUserGroupAction!treeList.action?treeNodeId="+node.nodeId, function (data) {
-    	$('#upmUserGroupTreeDiv').treeview("deleteChildrenNode", node.nodeId);
-    	$('#upmUserGroupTreeDiv').treeview("remove", node.nodeId);
+    	$('#upmUserGroupTreeDiv').treeview("deleteChildrenNode", node.id);
+    	$('#upmUserGroupTreeDiv').treeview("remove", node.id);
     	
     	$.each(data, function (index, nodeItem) {
     				var nodeId = nodeItem.id;

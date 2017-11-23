@@ -110,15 +110,15 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 			List<UpmUserGroup> UpmUserGroupList = new ArrayList<UpmUserGroup>();
 			
 			
+			if(treeNodeId==null ){
+				treeNodeId = 0L;
+			}
+			
 			if(StringUtil.isBlank(userGroupName)){
 			
 			   UpmUserGroupList=upmUserGroupService.findUpmUserGroupByParentId(treeNodeId);
 			}else {
 				 UpmUserGroupList=upmUserGroupService.findUpmUserGroupByGroupName(userGroupName);
-			}
-			
-			if(treeNodeId==null ){
-				treeNodeId = 0L;
 			}
 			
 			List<BootStrapTreeView> treeNodeList = new ArrayList<BootStrapTreeView>();
