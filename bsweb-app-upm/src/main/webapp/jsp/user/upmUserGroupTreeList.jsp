@@ -63,8 +63,8 @@ $(document).ready(function(){
  */
 function addNextNode(event, node) {
     $.getJSON("${ctx}/jsp/user/upmUserGroupAction!treeList.action?treeNodeId="+node.nodeId, function (data) {
-    	$('#upmUserGroupTreeDiv').treeview("deleteChildrenNode", node.id);
-    	$('#upmUserGroupTreeDiv').treeview("remove", node.id);
+    	$('#upmUserGroupTreeDiv').treeview("deleteChildrenNode", node.nodeId);
+    	$('#upmUserGroupTreeDiv').treeview("remove", node.nodeId);
     	
     	$.each(data, function (index, nodeItem) {
     				var nodeId = nodeItem.id;

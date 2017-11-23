@@ -3,6 +3,7 @@ package com.lj.app.bsweb.upm.user.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,6 +27,7 @@ import com.lj.app.core.common.audit.CMCode;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmUserService;
+import com.lj.app.core.common.cache.CacheFactory;
 import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.properties.PropertiesFromTableUtil;
 import com.lj.app.core.common.properties.PropertiesUtil;
@@ -131,11 +133,29 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		
 		String encryptPwd  = DesUtil.encrypt(pwd); 
 		String dbpwd = loginUser.getPwd();
+		AtomicInteger  tryCount = (AtomicInteger)CacheFactory.getCache().get(loginNo);
+		if(tryCount==null){
+			tryCount = new AtomicInteger(0);
+			CacheFactory.getCache().add(loginNo, tryCount, 5*60*60);//5分钟有效
+		}
+		
+		if(tryCount.incrementAndGet()>5){
+			addActionError("密码输入错误超过5次，5分钟后重试");
+			logger.info("password wrong!!!");
+			return goToLogin();
+		}
+		
+		
 		if (!encryptPwd.equals(dbpwd)) {
 			addActionError("密码错误");
 			logger.info("password wrong!!!");
+			tryCount.set(tryCount.incrementAndGet());
+			CacheFactory.getCache().add(loginNo, tryCount, 5*60);//5分钟有效
 			return goToLogin();
 		} 
+		
+		CacheFactory.getCache().delete(loginNo);
+		
 		if (StringUtil.isEqual(loginUser.getLockStatus(),"1")) {
 			addActionError("账号被加锁,无法登陆");
 			logger.info("lockstatus is not 0(common status),so login denied!");

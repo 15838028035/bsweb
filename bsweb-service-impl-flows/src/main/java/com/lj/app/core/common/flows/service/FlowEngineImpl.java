@@ -11,12 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lj.app.core.common.cache.CacheManager;
-import com.lj.app.core.common.cache.CacheManagerAware;
-import com.lj.app.core.common.cache.MemoryCacheManager;
 import com.lj.app.core.common.flows.api.FlowTaskServiceApi;
 import com.lj.app.core.common.flows.core.Execution;
-import com.lj.app.core.common.flows.core.ServiceContext;
 import com.lj.app.core.common.flows.entity.FlowCcorder;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowOrderHist;
@@ -99,17 +95,7 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
 	@Override
 	public FlowEngine configure(ConfigurationService configurationService) {
 		this.configurationService = configurationService;
-			CacheManager cacheManager = ServiceContext.find(CacheManager.class);
-				if(cacheManager == null) {
-					//默认使用内存缓存管理器
-					cacheManager = new MemoryCacheManager();
-				}
-				List<CacheManagerAware> cacheServices = ServiceContext.findList(CacheManagerAware.class);
-				for(CacheManagerAware cacheService : cacheServices) {
-					cacheService.setCacheManager(cacheManager);
-				}
-				
-				return this;
+		return this;
 	}
 
 

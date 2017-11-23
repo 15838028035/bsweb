@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.lj.app.core.common.base.service.BaseServiceImpl;
 import com.lj.app.core.common.cache.Cache;
-import com.lj.app.core.common.cache.CacheManager;
-import com.lj.app.core.common.cache.CacheManagerAware;
-import com.lj.app.core.common.cache.MemoryCacheManager;
+import com.lj.app.core.common.cache.CacheFactory;
 import com.lj.app.core.common.exception.FlowException;
 import com.lj.app.core.common.flows.FlowConstains;
 import com.lj.app.core.common.flows.model.ProcessModel;
@@ -33,7 +31,7 @@ import com.lj.app.core.common.util.StringUtil;
  * @date: 2016-10-17 21:29:05
  */
 @Service("flowProcessService")
-public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowProcess> implements FlowProcessService<FlowProcess>,CacheManagerAware,Serializable{
+public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowProcess> implements FlowProcessService<FlowProcess>,Serializable{
 
 	private static final Log log = LogFactory.getLog(FlowProcessServiceImpl.class);
 	
@@ -47,17 +45,15 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 	 */
 	private static final String CACHE_NAME = "snaker.process.name";
 	/**
-	 * cache manager
-	 */
-	private CacheManager cacheManager = new MemoryCacheManager();
-	/**
 	 * 实体cache(key=name,value=entity对象)
 	 */
-	private Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> entityCache;
+	private Cache  entityCache;
 	/**
 	 * 名称cache(key=id,value=name对象)
 	 */
-	private Cache<String, String> nameCache;
+	private Cache nameCache;
+	
+	public static final Integer FLOW_CACHED_TIME = 60*60*24;//缓存一天
 
 	/**
 	 * 检查流程定义对象
@@ -93,8 +89,8 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 	 * @param entity 流程定义对象
 	 */
 	private void cache(com.lj.app.core.common.flows.entity.FlowProcess entity) {
-		Cache<String, String> nameCache = ensureAvailableNameCache();
-		Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> entityCache = ensureAvailableEntityCache();
+		Cache nameCache = ensureAvailableNameCache();
+		Cache entityCache = ensureAvailableEntityCache();
 		
 		if(entity.getModel() == null && entity.getFlowContent() != null) {
 			entity.setModel(ModelParser.parse(entity.getFlowContent()));
@@ -104,8 +100,8 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 			if(log.isDebugEnabled()) {
 				log.debug("cache process id is[{}],name is[{}]" + entity.getId() +  processName);
 			}
-			entityCache.put(processName, entity);
-			nameCache.put(entity.getId().toString(), processName);
+			entityCache.add(processName, entity,FLOW_CACHED_TIME);
+			nameCache.add(entity.getId().toString(), processName,FLOW_CACHED_TIME);
 		} else {
 			if(log.isDebugEnabled()) {
 				log.debug("no cache implementation class");
@@ -122,12 +118,12 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 		Assert.notNull(id);
 		com.lj.app.core.common.flows.entity.FlowProcess entity = null;
 		String processName;
-		Cache<String, String> nameCache = ensureAvailableNameCache();
-		Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> entityCache = ensureAvailableEntityCache();
+		Cache nameCache = ensureAvailableNameCache();
+		Cache entityCache = ensureAvailableEntityCache();
 		if(nameCache != null && entityCache != null) {
-			processName = nameCache.get(id);
+			processName = (String)nameCache.get(id);
 			if(StringUtil.isNotBlank(processName)) {
-				entity = entityCache.get(processName);
+				entity =(com.lj.app.core.common.flows.entity.FlowProcess) entityCache.get(processName);
 			}
 		}
 		if(entity != null) {
@@ -168,9 +164,9 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 		
 		com.lj.app.core.common.flows.entity.FlowProcess  entity = null;
 		String processName = name + DEFAULT_SEPARATOR + version;
-		Cache<String, com.lj.app.core.common.flows.entity.FlowProcess > entityCache = ensureAvailableEntityCache();
+		Cache entityCache = ensureAvailableEntityCache();
 		if(entityCache != null) {
-			entity = entityCache.get(processName);
+			entity = (com.lj.app.core.common.flows.entity.FlowProcess)entityCache.get(processName);
 		}
 		if(entity != null) {
 			if(log.isDebugEnabled()) {
@@ -317,9 +313,9 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 			this.updateObject(entity);
 			
 			if(!oldProcessName.equalsIgnoreCase(entity.getFlowName())) {
-				Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> entityCache = ensureAvailableEntityCache();
+				Cache entityCache = ensureAvailableEntityCache();
 				if(entityCache != null) {
-					entityCache.remove(oldProcessName + DEFAULT_SEPARATOR + entity.getFlowVersion());
+					entityCache.delete(oldProcessName + DEFAULT_SEPARATOR + entity.getFlowVersion());
 				}
 			}
 			cache(entity);
@@ -379,54 +375,45 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 	 * @param entity 流程定义对象
 	 */
 	private void clear(com.lj.app.core.common.flows.entity.FlowProcess entity) {
-		Cache<String, String> nameCache = ensureAvailableNameCache();
-		Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> entityCache = ensureAvailableEntityCache();
+		Cache nameCache = ensureAvailableNameCache();
+		Cache entityCache = ensureAvailableEntityCache();
 		String processName = entity.getFlowName() + DEFAULT_SEPARATOR + entity.getFlowVersion();
 		if(nameCache != null && entityCache != null) {
-			nameCache.remove(entity.getId().toString());
-			entityCache.remove(processName);
+			nameCache.delete(entity.getId().toString());
+			entityCache.delete(processName);
 		}
 	}
-
 	
-	public void setCacheManager(CacheManager cacheManager) {
-		this.cacheManager = cacheManager;
-	}
-	
-    private Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> ensureAvailableEntityCache() {
-        Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> entityCache = ensureEntityCache();
-		if(entityCache == null && this.cacheManager != null) {
-			entityCache = this.cacheManager.getCache(CACHE_ENTITY);
+    private Cache ensureAvailableEntityCache() {
+        Cache entityCache = ensureEntityCache();
+		if(entityCache == null ) {
+			nameCache =(Cache)CacheFactory.getCache().get(CACHE_ENTITY);
 		}
         return entityCache;
     }
     
-    private Cache<String, String> ensureAvailableNameCache() {
-        Cache<String, String> nameCache = ensureNameCache();
-		if(nameCache == null && this.cacheManager != null) {
-			nameCache = this.cacheManager.getCache(CACHE_NAME);
+    private Cache ensureAvailableNameCache() {
+        Cache nameCache = ensureNameCache();
+		if(nameCache == null ) {
+			nameCache =(Cache)CacheFactory.getCache().get(CACHE_NAME);
 		}
         return nameCache;
     }
 
-	public Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> ensureEntityCache() {
+	public Cache ensureEntityCache() {
 		return entityCache;
 	}
 
-	public void setEntityCache(Cache<String, com.lj.app.core.common.flows.entity.FlowProcess> entityCache) {
+	public void setEntity(Cache entityCache) {
 		this.entityCache = entityCache;
 	}
 
-	public Cache<String, String> ensureNameCache() {
+	public Cache ensureNameCache() {
 		return nameCache;
 	}
 
-	public void setNameCache(Cache<String, String> nameCache) {
+	public void setNameCache(Cache nameCache) {
 		this.nameCache = nameCache;
-	}
-
-	public CacheManager getCacheManager() {
-		return cacheManager;
 	}
 	
 }
