@@ -161,7 +161,7 @@
         </div>
         
         <table id="tableList"></table>
-        <input type="text" id="returnValue" name="returnValue" value="" />
+        <input type="hidden" id="returnValue" name="returnValue" value="" />
     </div>
 
     <script type="text/javascript">
@@ -183,32 +183,9 @@
             });
 			
 	       	var returnValue = userName+"("+userName+");";
-	       	
 	       	$("#returnValue").val(returnValue);
-	       	parent.window.returnValue = returnValue;
 	      //  parent.window.returnValue = returnValue;
-	        window.close();
-	      
         });
-        
-        function btn_select() {
-        	var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                return row.id;
-            });
-       	 
-	       	if(ids == ""){
-	       		bootbox.alert('请选择要选择记录');
-	       		return;
-	       	}
-	       	
-	       	var userName = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                return row.userName;
-            });
-			
-	       	var returnValue = userName+"("+userName+");";
-	        parent.window.returnValue = returnValue;
-        }
-        
         
           $btn_query.click(function () {
         	 refreshGrid();

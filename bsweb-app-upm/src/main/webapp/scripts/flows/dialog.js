@@ -80,42 +80,9 @@ $.iframeDialog = function(title,url, callBackFunction) {
 
 
 function selectOrg(ctx, e1, e2) {
-	
-	/*var url = ctx+ "/jsp/user/upmUserSelectNew.jsp";
-		var dialog = new BootstrapDialog({
-		  	title:"分配角色",
-		  cssClass :"speial-dialog",
-		  size:BootstrapDialog.SIZE_WIDE,
-		    message: $("<iframe  width=\"100%;\" height=\"800px\"; src="+url+"></iframe>"),
-		  buttons: [ {
-          label: '关闭',
-          action: function(dialogRef){
-        	  var selectResult = dialogRef.getData("selectResult");
-        	  alert("selectResult========"+selectResult);
-              dialogRef.close();
-          }
-      }]
-		});
-		dialog.open();
-		
-		return ;*/
-	
 	var url =  ctx+ "/jsp/user/upmUserSelectNew.jsp";
 	$.iframeDialog("选择用户",url,selectOrgCallback);
-		
-	/*var element1 = document.getElementById(e1);
-	var element2 = document.getElementById(e2);
-	var l = window.showModalDialog(ctx
-			+ "/jsp/user/upmUserSelectNew.jsp", " ",
-			"dialogWidth:800px;dialogHeight:540px;center:yes;scrolling:yes");
-	if (l == null)
-		return;
-	var result = splitUsersAndAccounts(l);
-	element1.value = result[0];
-	element1.title = result[0];
-	element2.value = result[1];*/
 }
-
 
 function selectOrgCallback() {
 	var childdoc = document.getElementById("iframeDialog").contentWindow.document;
@@ -129,17 +96,8 @@ function selectOrgCallback() {
 }
 
 function selectOrgUser(ctx, e1, e2) {
-	var element1 = document.getElementById(e1);
-	var element2 = document.getElementById(e2);
-	var l = window.showModalDialog(ctx
-			+ "/jsp/user/upmUserSelectNew.jsp", " ",
-			"dialogWidth:800px;dialogHeight:540px;center:yes;scrolling:yes");
-	if (l == null)
-		return;
-	var result = splitUsersAndAccounts(l);
-	element1.value = result[0];
-	element1.title = result[0];
-	element2.value = result[1];
+	var url =  ctx+ "/jsp/user/upmUserSelectNew.jsp";
+	$.iframeDialog("选择用户",url,selectOrgCallback);
 }
 
 function splitUsersAndAccounts(userNamesAndAccount) {

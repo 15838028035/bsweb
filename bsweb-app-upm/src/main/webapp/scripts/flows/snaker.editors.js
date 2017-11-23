@@ -64,18 +64,31 @@ $.extend(true, snakerflow.editors, {
 			
 			$('<input style="width:88%;" readonly="true" id="dialogEditor"/>').val(props[_k].value).appendTo('#'+_div);
 			$('<input style="width:10%;" type="button" value="选择"/>').click(function(){
-				//alert("选择:" + snakerflow.config.ctxPath + arg);
 				var element = document.getElementById("dialogEditor");
-				var l  = window.showModalDialog(snakerflow.config.ctxPath + arg," ","dialogWidth:800px;dialogHeight:540px;center:yes;scrolling:yes");
 				
-				alert("l=="+l);
-				if (l == null )
-					return;
-				var result = splitUsersAndAccounts(l);
-				element.title = result[1];
-				element.value = result[1];
-				props[_k].value = result[1];
-				props['assignee'].value = result[0];
+				var url = snakerflow.config.ctxPath + arg;
+				  BootstrapDialog.show({
+				        title : "用户选择",
+				        size : BootstrapDialog.SIZE_WIDE,
+				        message: $("<iframe id='iframeDialog' width=\"100%;\" height=\"800px\"; src="+url+"></iframe>"),
+				        buttons : [ {
+				            label : '确定',
+				            action : function(dialogItself) {
+				            	var childdoc = document.getElementById("iframeDialog").contentWindow.document;
+				            	var l = childdoc.getElementById("returnValue").value;
+				            	if (l == null)
+				            		return;
+								var result = splitUsersAndAccounts(l);
+								element.title = result[1];
+								element.value = result[1];
+								props[_k].value = result[1];
+								props['assignee'].value = result[0];
+								
+								dialogItself.close();
+				            }
+				        } ],
+				        onhide : null
+				    });
 			}).appendTo('#'+_div);
 
 			$('#'+_div).data('editor', this);
