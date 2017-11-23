@@ -161,6 +161,7 @@
         </div>
         
         <table id="tableList"></table>
+        <input type="text" id="returnValue" name="returnValue" value="" />
     </div>
 
     <script type="text/javascript">
@@ -183,11 +184,11 @@
 			
 	       	var returnValue = userName+"("+userName+");";
 	       	
-	        parent.window.returnValue = returnValue;
+	       	$("#returnValue").val(returnValue);
+	       	parent.window.returnValue = returnValue;
+	      //  parent.window.returnValue = returnValue;
 	        window.close();
 	      
-	       /*  $.BootstrapDialog.setData("selectResult",returnValue);
-	        $.BootstrapDialog.close(); */
         });
         
         function btn_select() {

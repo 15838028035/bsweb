@@ -68,6 +68,7 @@ $.extend(true, snakerflow.editors, {
 				var element = document.getElementById("dialogEditor");
 				var l  = window.showModalDialog(snakerflow.config.ctxPath + arg," ","dialogWidth:800px;dialogHeight:540px;center:yes;scrolling:yes");
 				
+				alert("l=="+l);
 				if (l == null )
 					return;
 				var result = splitUsersAndAccounts(l);
