@@ -157,6 +157,9 @@
 	        from flow_approve 
 	    ]]>
 		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
     </select>
     
     <select id="getInfoByKey" resultMap="flowApproveResult">

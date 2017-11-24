@@ -329,7 +329,7 @@
             return row.flowOrderId;
         });
        	
-       	var url ="${ctx}" + instanceUrl +"?processId="+flowProcessId +"&orderId="+orderId+"&taskId="+taskId;
+       	var url ="${ctx}" + instanceUrl +"&processId="+flowProcessId +"&orderId="+orderId+"&taskId="+taskId;
        	window.location.href = url;
        })
       	

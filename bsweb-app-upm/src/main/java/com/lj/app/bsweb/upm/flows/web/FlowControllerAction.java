@@ -52,11 +52,7 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/flows")
 @Results({
-		@Result(name = "flowAll", location = "/jsp/flows/flowAll.jsp"),
-		@Result(name = "flowAllStyleA", location = "/jsp/flows/flowAllStyleA.jsp"),
-		@Result(name = "flowAllStyleB", location = "/jsp/flows/flowAllStyleB.jsp"),
-		@Result(name = "flowAllStyleC", location = "/jsp/flows/flowAllStyleC.jsp"),
-		@Result(name = "flowAllStyleD", location = "/jsp/flows/flowAllStyleD.jsp"),
+		@Result(name = "flowAllStyle", location = "/jsp/flows/flowAllStyle%{flowAllStyle}.jsp"),
 	    @Result(name = "flowApproval", location = "/jsp/flows/flowApprove-input.jsp"),
 	    @Result(name = "approvalView", location = "/jsp/flows/flowApproval-view.jsp"),
 	    @Result(name = "flowApproveLogList", location = "/jsp/flows/flowApproveLogList.jsp"),
@@ -121,6 +117,8 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	
 	private String taskName;//任务名称
 	
+	private String flowAllStyle;//流程样式
+	
 	public   BaseService getBaseService(){
 		return flowEngineFacetsService.getEngine().flowProcessService();
 	}
@@ -145,29 +143,13 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         }
 	        
 	}
-	
-	 /**
-     * 通用的流程展现页面入口
-     * 将流程中的各环节表单以tab+iframe方式展现
-     */
-    public String all() throws Exception{
-    	if(StringUtil.isNotBlank(processId)) {
-            flowProcess =flowProcessService.getProcessById(processId);
-        }
-        if(StringUtil.isNotBlank(orderId)) {
-        	 flowOrder = (FlowOrder)flowOrderService.getInfoByKey(orderId);
-        }
-        if(StringUtil.isNotBlank(taskId)) {
-        	flowTask = (FlowTask)flowTaskService.getInfoByKey(taskId);
-        }
-        return "flowAll";
-    }
     
     /**
      * 通用的流程展现页面入口
      * 将流程中的各环节表单以flowAllStyleA方式展现
      */
-    public String flowAllStyleA() throws Exception{
+    public String flowAllStyle() throws Exception{
+    	
     	if(StringUtil.isNotBlank(processId)) {
             flowProcess =flowProcessService.getProcessById(processId);
         }
@@ -177,58 +159,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
         if(StringUtil.isNotBlank(taskId)) {
         	flowTask = (FlowTask)flowTaskService.getInfoByKey(taskId);
         }
-        return "flowAllStyleA";
-    }
-    
-    /**
-     * 通用的流程展现页面入口
-     * 将流程中的各环节表单以flowAllStyleB方式展现
-     */
-    public String flowAllStyleB() throws Exception{
-    	if(StringUtil.isNotBlank(processId)) {
-            flowProcess =flowProcessService.getProcessById(processId);
-        }
-        if(StringUtil.isNotBlank(orderId)) {
-        	 flowOrder = (FlowOrder)flowOrderService.getInfoByKey(orderId);
-        }
-        if(StringUtil.isNotBlank(taskId)) {
-        	flowTask = (FlowTask)flowTaskService.getInfoByKey(taskId);
-        }
-        return "flowAllStyleB";
-    }
-    
-    /**
-     * 通用的流程展现页面入口
-     * 将流程中的各环节表单以flowAllStyleC方式展现
-     */
-    public String flowAllStyleC() throws Exception{
-    	if(StringUtil.isNotBlank(processId)) {
-            flowProcess =flowProcessService.getProcessById(processId);
-        }
-        if(StringUtil.isNotBlank(orderId)) {
-        	 flowOrder = (FlowOrder)flowOrderService.getInfoByKey(orderId);
-        }
-        if(StringUtil.isNotBlank(taskId)) {
-        	flowTask = (FlowTask)flowTaskService.getInfoByKey(taskId);
-        }
-        return "flowAllStyleC";
-    }
-    
-    /**
-     * 通用的流程展现页面入口
-     * 将流程中的各环节表单以flowAllStyleD方式展现
-     */
-    public String flowAllStyleD() throws Exception{
-    	if(StringUtil.isNotBlank(processId)) {
-            flowProcess =flowProcessService.getProcessById(processId);
-        }
-        if(StringUtil.isNotBlank(orderId)) {
-        	 flowOrder = (FlowOrder)flowOrderService.getInfoByKey(orderId);
-        }
-        if(StringUtil.isNotBlank(taskId)) {
-        	flowTask = (FlowTask)flowTaskService.getInfoByKey(taskId);
-        }
-        return "flowAllStyleD";
+        return "flowAllStyle";
     }
 
     public String flowProcess()  throws Exception{
@@ -476,7 +407,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 		
 		if (StringUtil.isNotBlank(this.getSortName())) {
 			String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
-			page.setSortColumns(orderBy);
+			condition.put("sortColumns", orderBy);
 		}
 		
 		flowApproveLogList = flowApproveService.findBaseModeList(condition);
@@ -651,6 +582,14 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
+	}
+
+	public String getFlowAllStyle() {
+		return flowAllStyle;
+	}
+
+	public void setFlowAllStyle(String flowAllStyle) {
+		this.flowAllStyle = flowAllStyle;
 	}
 }
 

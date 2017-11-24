@@ -289,11 +289,9 @@
                 return row.flowName;
             });
         	
-        	var url ="${ctx}" + instanceUrl +"?processId="+ids +"&flowProcess.processName="+flowName;
+        	var	url ="${ctx}" + instanceUrl +"&processId="+ids +"&flowProcess.processName="+flowName;
         	window.location.href = url;
         })
-        
-        
           
         $("#btn_delete").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {

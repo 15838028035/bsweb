@@ -234,28 +234,19 @@
        });
         
         $("#btn_reloadConfigPro").click(function() {
-       	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                return row.configId;
-            });
-       	 
-       	if(ids == ""){
-       		bootbox.alert('请选择要操作的记录');
-       		return;
-       	}
-
-       	bootbox.confirm('确认要操作?',function (result) {  
-               if(result) {  
-            	   var result = jQuery.ajax({
-     		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!reloadConfigPro.action?multidelete=" + ids,
-     		          async:false,
-     		          cache:false,
-     		          dataType:"json"
-     		      }).responseText;
-     			var obj = eval("("+result+")");
-     			bootbox.alert(obj.opResult);
-     			refreshGrid();
-               }
-       	});
+	       	bootbox.confirm('确认要操作?',function (result) {  
+	               if(result) {  
+	            	   var result = jQuery.ajax({
+	     		      	  url:"${ctx}/jsp/dictionary/upmConfigurationAction!reloadConfigPro.action",
+	     		          async:false,
+	     		          cache:false,
+	     		          dataType:"json"
+	     		      }).responseText;
+	     			var obj = eval("("+result+")");
+	     			bootbox.alert(obj.opResult);
+	     			refreshGrid();
+	               }
+	       	});
        })
        
       	function refreshGrid(){

@@ -19,6 +19,8 @@
 <button class="btn btn-primary" id="showSuccessTimeout">showSuccessTimeout</button>
 <button class="btn btn-primary" id="selectUserTest">selectUserTest</button>
 
+<button class="btn btn-primary" id="indeOfTest">indeOfTest</button>
+
 <script type="text/javascript">
 		$("#showErr").click(function (){
 			$.showErr("错题提示",doCallBack);
@@ -43,6 +45,11 @@
 			var childdoc = document.getElementById("iframeDialog").contentWindow.document;
 			var returnValue = childdoc.getElementById("returnValue").value;
 		}
+		
+		$("#indeOfTest").click(function (){
+			var aa ="indeOfTest?B";
+			alert(aa.indexOf("?"));
+		});
 		
 		</script>	
 </body>
