@@ -61,19 +61,19 @@
 						var isAppNode =  node.form.indexOf("isAppNode");
 						
 						if(indexOfIframe!=-1 && indexOfSpecliA!=-1){
-							 iframeUrl =  node.form + '&processId=${processId}&orderId=${orderId}&taskName=' + node.name;
+							 iframeUrl =  node.form + '&processId=${processId}&orderId=${orderId}&taskName=' + encodeURI(encodeURI(node.name));
 						}
 						
 						if(indexOfIframe!=-1 && indexOfSpecliA==-1){
-							 iframeUrl =  node.form + '?processId=${processId}&orderId=${orderId}&taskName=' + node.name;
+							 iframeUrl =  node.form + '?processId=${processId}&orderId=${orderId}&taskName='+ encodeURI(encodeURI(node.name));
 						}
 						
 						if(indexOfIframe==-1 && indexOfSpecliA!=-1){
-							  iframeUrl = '${ctx}' + node.form + '&processId=${processId}&orderId=${orderId}&taskName=' + node.name;
+							  iframeUrl = '${ctx}' + node.form + '&processId=${processId}&orderId=${orderId}&taskName=' + encodeURI(encodeURI(node.name));
 						}
 						
 						if(indexOfIframe==-1 && indexOfSpecliA==-1){
-							  iframeUrl = '${ctx}' + node.form + '?processId=${processId}&orderId=${orderId}&taskName=' + node.name;
+							  iframeUrl = '${ctx}' + node.form + '?processId=${processId}&orderId=${orderId}&taskName=' + encodeURI(encodeURI(node.name));
 						}
 					  
 						if(taskName == node.name || (taskName == '' && i == 0)) {

@@ -1,6 +1,7 @@
 
 package com.lj.app.bsweb.upm.flows.web;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -117,6 +118,8 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	private String nextOperatorName;//下一节点处理人
 	
 	private List<FlowApprove> flowApproveLogList;//审批日志列表
+	
+	private String taskName;//任务名称
 	
 	public   BaseService getBaseService(){
 		return flowEngineFacetsService.getEngine().flowProcessService();
@@ -321,6 +324,9 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
      * @return
      */
     public String flowApproval() throws Exception {
+    	
+    	 taskName =URLDecoder.decode( taskName,"UTF-8");
+    	 
         if(StringUtil.isNotBlank(taskId)) {
             return "flowApproval";
         } else {
@@ -638,6 +644,13 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 	public void setFlowApproveLogList(List<FlowApprove> flowApproveLogList) {
 		this.flowApproveLogList = flowApproveLogList;
 	}
-	
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
 }
 

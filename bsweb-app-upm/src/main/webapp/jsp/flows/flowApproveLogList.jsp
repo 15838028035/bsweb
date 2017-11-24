@@ -1,4 +1,4 @@
-﻿<%@page language="java" isELIgnored="false"%>
+﻿<%@page language="java" isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
 

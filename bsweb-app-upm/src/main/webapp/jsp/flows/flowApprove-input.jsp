@@ -17,7 +17,7 @@
 	<input type="hidden" name="flowApprove.processId" id="processId" value="${param.processId}" />
 	<input type="hidden" name="flowApprove.orderId" id="orderId" value="${param.orderId}" />
 	<input type="hidden" name="flowApprove.taskId" id="taskId" value="${param.taskId}" />
-	<input type="hidden" name="flowApprove.taskName" id="taskName" value="${param.taskName}" />
+	<input type="hidden" name="flowApprove.taskName" id="taskName" value="${taskName}" />
 	
 	<input type="hidden" name="processId" value="${processId }" />
 	<input type="hidden" name="orderId" value="${orderId }" />
