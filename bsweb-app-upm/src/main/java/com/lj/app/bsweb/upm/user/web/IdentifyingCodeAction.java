@@ -16,9 +16,10 @@ public class IdentifyingCodeAction{
 	
 	public String getIdentifyingCodeNew(){
 		IdentifyingCodeUtil ddentifyingCodeUtil = new IdentifyingCodeUtil();
-		String rand = (String) Struts2Utils.getSession().getAttribute("rand");
-		CacheFactory.getCache().add("IdentifyingCode"+rand, rand, 60);//验证码
-		return ddentifyingCodeUtil.getIdentifyingCodeNew();
+		 ddentifyingCodeUtil.getIdentifyingCodeNew();
+		 String rand = (String) Struts2Utils.getSession().getAttribute("rand");
+	      CacheFactory.getCache().add("IdentifyingCode"+rand, rand, 60*60);//验证码
+		 return null;
 	}
 	
 }

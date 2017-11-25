@@ -13,7 +13,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +42,8 @@ import com.lj.app.core.common.web.Struts2Utils;
 
 import net.sf.json.JSONObject;
 
-@ParentPackage("timeout")
 @InterceptorRefs({
-	@InterceptorRef("crudStack"),
-	@InterceptorRef("timeoutInterceptor")
+	@InterceptorRef("crudStack")
 })
 
 @Controller

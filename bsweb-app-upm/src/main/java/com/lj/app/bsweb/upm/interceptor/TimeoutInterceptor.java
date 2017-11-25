@@ -20,7 +20,7 @@ public class TimeoutInterceptor extends MethodFilterInterceptor implements PreRe
 
 	public static final int ONE_SECOND = 1000;
 	private static final int DEFAULT_TIMEOUT_THREAD_SIZE = 50;
-	private static final int DEFAULT_TIMEOUT_SECOND = 3;
+	private static final int DEFAULT_TIMEOUT_SECOND = 10;
 	private static Log logger = LogFactory.getLog(TimeoutInterceptor.class);
 	public static final String CHANGE_RESULT = "timeoutControlChangeResult";
 	/**

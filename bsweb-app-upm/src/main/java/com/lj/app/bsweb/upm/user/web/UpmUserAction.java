@@ -180,6 +180,21 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
 			
 		}
 	
+	/**
+	 * 删除校验
+	 * @param deleteId
+	 * @throws Exception
+	 */
+	public void multideleteValidate(Integer deleteId) throws BusinessException {
+		
+		if(deleteId!=null &&deleteId.intValue()<=1){
+			throw new BusinessException("超级管理员无法删除");
+		}
+		if(deleteId==this.getLoginUserId()){
+			throw new BusinessException("当前操作用户不能删除自己的账号");
+		}
+	}
+	
 	public void setId(java.lang.Integer value) {
 		this.id = value;
 	}
