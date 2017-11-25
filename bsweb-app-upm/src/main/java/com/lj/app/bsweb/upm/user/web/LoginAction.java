@@ -114,6 +114,13 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			return goToLogin();
 		}
 		
+		String identifyingCodeCache = (String) CacheFactory.getCache().get("IdentifyingCode"+rand);
+		
+		if(StringUtil.isBlank(identifyingCodeCache)){
+			addActionError("验证码已过期");
+			return goToLogin();
+		}
+		
 		Map<String,Object> condition = new HashMap<String,Object>();
 		condition.put("conditionWhere", " and  (login_no='" + loginNo+"' or mobile='" + loginNo + "')  ");
 		
