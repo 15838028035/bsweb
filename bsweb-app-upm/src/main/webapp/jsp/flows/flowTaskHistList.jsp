@@ -189,9 +189,11 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
             </sec:authorize>
+            <sec:authorize code="upm_flowTaskHistList_btn_historyTaskUndo" >
             <button id="btn_historyTaskUndo" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>撤回
             </button>
+            </sec:authorize>
 			<sec:authorize code="upm_flowTaskHistList_btn_startHandleFlow" >
              <button id="btn_startHandleFlow" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看
@@ -283,10 +285,6 @@
         		bootbox.alert('请选择一条的记录');
         		return;
         	}
-
-        	var parentTaskId =  $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                return row.parentTaskId;
-            });
         	
         	bootbox.confirm('确认要操作么?',function (result) {  
                 if(result) {  
