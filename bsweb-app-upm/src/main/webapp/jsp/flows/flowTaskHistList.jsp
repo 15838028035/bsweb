@@ -189,9 +189,9 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
             </sec:authorize>
-<!--             <button id="btn_historyTaskUndo" type="button" class="btn btn-default"> -->
-<!--                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>驳回 -->
-<!--             </button> -->
+            <button id="btn_historyTaskUndo" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>撤回
+            </button>
 			<sec:authorize code="upm_flowTaskHistList_btn_startHandleFlow" >
              <button id="btn_startHandleFlow" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看
@@ -273,7 +273,7 @@
 		$tableList.bootstrapTable('refresh');
       	}
       	
-      	//驳回
+      	//撤回
       	 $("#btn_historyTaskUndo").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
@@ -288,11 +288,11 @@
                 return row.parentTaskId;
             });
         	
-        	bootbox.confirm('确认要驳回?',function (result) {  
+        	bootbox.confirm('确认要操作么?',function (result) {  
                 if(result) {  
                    	
                     var result = jQuery.ajax({
-      		      	  url:"${ctx}//jsp/flows/flowTaskAction!historyTaskUndo.action?taskId="+parentTaskId,
+      		      	  url:"${ctx}//jsp/flows/flowTaskAction!historyTaskUndo.action?taskId="+ids,
       		          async:false,
       		          cache:false,
       		          dataType:"json"

@@ -1,8 +1,7 @@
 <%@page language="java" isELIgnored="false"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/jsp/common/taglibs.jsp" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>流程状态</title>
@@ -52,8 +51,6 @@
 					
 					for(var i = 0; i < data.length; i++) {
 						var node = data[i];
-						
-						//TODO:替换特殊字符 node.form = node.form.replaceAll('#7','&');//替换特殊字符
 						
 						var indexOfIframe = node.form.indexOf("iframe:");
 						var indexOfSpecliA = node.form.indexOf("?");

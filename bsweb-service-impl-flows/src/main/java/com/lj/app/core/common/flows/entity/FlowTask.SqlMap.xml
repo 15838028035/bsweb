@@ -164,7 +164,7 @@
 	       <isNotEmpty prepend="AND" property="updateDate">
 	             update_date = #updateDate#
 	       </isNotEmpty>
-	       <isNotEmpty prepend="AND" property="updateDateBegin">
+	       <isNotEmpty prepend="AND" property="updateDatebegin">
 	             <![CDATA[
 	             update_date >= str_to_date('#updateDatebegin#','%Y-%m-%d') 
 	             ]]>
@@ -308,7 +308,7 @@
 	       <isNotEmpty prepend="AND" property="updateDate">
 	             t.update_date = #updateDate#
 	       </isNotEmpty>
-	       <isNotEmpty prepend="AND" property="updateDateBegin">
+	       <isNotEmpty prepend="AND" property="updateDatebegin">
 	             <![CDATA[
 	             t.update_date >= str_to_date('#updateDatebegin#','%Y-%m-%d') 
 	             ]]>
