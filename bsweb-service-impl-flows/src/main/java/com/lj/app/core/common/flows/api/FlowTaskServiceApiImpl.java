@@ -18,6 +18,7 @@ import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowProcess;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskActor;
+import com.lj.app.core.common.flows.entity.FlowTaskActorHist;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
 import com.lj.app.core.common.flows.model.CustomModel;
 import com.lj.app.core.common.flows.model.NodeModel;
@@ -85,6 +86,18 @@ public class FlowTaskServiceApiImpl implements FlowTaskServiceApi{
 			}
 			flowTaskHist.setActorIds(actorIds);
 		}
+		
+		if(flowTaskHist.getActorIds() != null) {
+            for(String actorId : flowTaskHist.getActorIds()) {
+                if(StringUtil.isBlank(actorId)) continue;
+                FlowTaskActorHist hist = new FlowTaskActorHist();
+                hist.setActorId(actorId);
+                hist.setTaskId(task.getId());
+                
+                flowEngineFacets.getEngine().flowTaskActorHistService().insertObject(hist);//历史参与者
+            }
+		}
+		
 		flowEngineFacets.getEngine().FlowTaskHistService().insertObject(flowTaskHist);
 		flowEngineFacets.getEngine().flowTaskService().delete(task.getId());
 		flowEngineFacets.getEngine().flowCompletionService().complete(flowTaskHist);

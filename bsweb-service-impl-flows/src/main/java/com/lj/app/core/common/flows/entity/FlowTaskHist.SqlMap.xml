@@ -373,10 +373,11 @@
 		p.instance_url,
                o.flow_process_id
       
-	        from flow_task_hist  h,flow_order_hist o , flow_process p 
+	        from flow_task_hist  h,flow_order_hist o , flow_process p ,flow_task_actor_hist ta
 where      h.flow_order_id= o.id
 
 and o.flow_process_id=p.id
+and ta.task_id=h.id
 
 	    ]]>
 	     <dynamic prepend=" ">
@@ -506,8 +507,8 @@ and o.flow_process_id=p.id
 	       <isNotEmpty prepend="AND" property="updateByUname">
 	             h.update_By_Uname = #updateByUname#
 	       </isNotEmpty>
+	       <isNotEmpty property="conditionWhere">$conditionWhere$</isNotEmpty>
 	    </dynamic>	
-	    
 		<dynamic prepend="ORDER BY">
 			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
 		</dynamic>
@@ -517,10 +518,11 @@ and o.flow_process_id=p.id
     <![CDATA[
         select
         	 count(1) 
-	        from flow_task_hist  h,flow_order_hist o , flow_process p 
+	       from flow_task_hist  h,flow_order_hist o , flow_process p ,flow_task_actor_hist ta
 where      h.flow_order_id= o.id
 
 and o.flow_process_id=p.id
+and ta.task_id=h.id
 
     ]]>
      <dynamic prepend=" ">
@@ -650,6 +652,7 @@ and o.flow_process_id=p.id
 	       <isNotEmpty prepend="AND" property="updateByUname">
 	             h.update_By_Uname = #updateByUname#
 	       </isNotEmpty>
+	       <isNotEmpty property="conditionWhere">$conditionWhere$</isNotEmpty>
 	    </dynamic>	
     </select>
 

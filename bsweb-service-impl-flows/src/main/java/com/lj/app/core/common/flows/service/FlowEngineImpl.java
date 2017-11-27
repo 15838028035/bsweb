@@ -18,6 +18,7 @@ import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowOrderHist;
 import com.lj.app.core.common.flows.entity.FlowProcess;
 import com.lj.app.core.common.flows.entity.FlowTask;
+import com.lj.app.core.common.flows.entity.FlowTaskActorHist;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
 import com.lj.app.core.common.flows.model.NodeModel;
 import com.lj.app.core.common.flows.model.ProcessModel;
@@ -79,6 +80,12 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
 	 */
 	@Autowired
 	protected FlowTaskActorService flowTaskActorService;
+	/**
+	 * 历史任务参与
+	 * @return
+	 */
+	@Autowired
+	public FlowTaskActorHistService<FlowTaskActorHist> flowTaskActorHistService;
 	
 	/**
 	 * 流程完成接口
@@ -496,47 +503,43 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
 		return flowCcorderService;
 	}
 
-
 	@Override
 	public FlowTaskService flowTaskService() {
 		return flowTaskService;
 	}
-
 
 	@Override
 	public com.lj.app.core.common.flows.api.FlowTaskServiceApi FlowTaskServiceApi() {
 		return flowTaskServiceApi;
 	}
 
-
 	@Override
 	public com.lj.app.core.common.flows.service.FlowTaskHistService FlowTaskHistService() {
 		return flowTaskHistService;
 	}
-
 
 	@Override
 	public FlowTaskActorService flowTaskActorService() {
 		return flowTaskActorService;
 	}
 
-
 	@Override
 	public FlowCompletionService flowCompletionService() {
 		return flowCompletionService;
 	}
-
 
 	@Override
 	public FlowTaskAccessStrategyService flowTaskAccessStrategyService() {
 		return flowTaskAccessStrategyService;
 	}
 
-
 	@Override
 	public FlowApproveService flowApproveService() {
 		return flowApproveService;
 	}
 
-
+	@Override
+	public FlowTaskActorHistService<FlowTaskActorHist> flowTaskActorHistService() {
+		return flowTaskActorHistService;
+	}
 }

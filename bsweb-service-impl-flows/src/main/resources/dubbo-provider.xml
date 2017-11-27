@@ -31,6 +31,7 @@
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowQueryService" ref="flowQueryService"  />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowTaskAccessStrategyService" ref="flowTaskAccessStrategyService"  />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowTaskActorService" ref="flowTaskActorService" />
+	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowTaskActorHistService" ref="flowTaskActorHistService" />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowTaskHistService" ref="flowTaskHistService" />
 	 <dubbo:service interface="com.lj.app.core.common.flows.service.FlowTaskService" ref="flowTaskService"  />
 	 

@@ -17,6 +17,7 @@
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowTask.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowTaskHist.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowTaskActor.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/core/common/flows/entity/FlowTaskActorHist.SqlMap.xml"/>
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowApprove.SqlMap.xml"/>
       
       <sqlMap resource="com/lj/app/core/common/flows/entity/FlowUpmUser.SqlMap.xml"/>

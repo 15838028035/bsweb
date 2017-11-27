@@ -26,6 +26,8 @@
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowQueryService" id="flowQueryService" check="false"  timeout="${dubbo.reference.timeout}"/>
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskAccessStrategyService" id="flowTaskAccessStrategyService" check="false" timeout="${dubbo.reference.timeout}"/>
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskActorService" id="flowTaskActorService" check="false" timeout="${dubbo.reference.timeout}"/>
+	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskActorHistService" id="flowTaskActorHistService" check="false" timeout="${dubbo.reference.timeout}"/>
+	 
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskHistService" id="flowTaskHistService" check="false" timeout="${dubbo.reference.timeout}"/>
 	 <dubbo:reference interface="com.lj.app.core.common.flows.service.FlowTaskService" id="flowTaskService" check="false" timeout="${dubbo.reference.timeout}"/>
 	

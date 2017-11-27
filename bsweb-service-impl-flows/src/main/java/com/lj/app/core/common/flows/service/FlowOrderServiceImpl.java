@@ -17,6 +17,7 @@ import com.lj.app.core.common.flows.entity.FlowOrderHist;
 import com.lj.app.core.common.flows.entity.FlowProcess;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskActor;
+import com.lj.app.core.common.flows.entity.FlowTaskActorHist;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
 import com.lj.app.core.common.flows.model.ProcessModel;
 import com.lj.app.core.common.util.Assert;
@@ -57,6 +58,9 @@ public class FlowOrderServiceImpl<FlowOrder> extends BaseServiceImpl<FlowOrder> 
 	
 	@Autowired
 	private FlowCcorderService<FlowCcorder> flowCcorderService;
+	
+	@Autowired	
+	private FlowTaskActorHistService<FlowTaskActorHist> flowTaskActorHistService;
 	
 	/**
 	 *
@@ -200,6 +204,7 @@ public class FlowOrderServiceImpl<FlowOrder> extends BaseServiceImpl<FlowOrder> 
 		}
 		for(FlowTaskHist historyTask : historyTasks) {
 			//TODO:删除历史任务参者
+			flowTaskActorHistService.delete("deleteTaskActorByTaskId",historyTask.getId());
 			flowTaskHistService.delete(historyTask.getId());
 		}
 		

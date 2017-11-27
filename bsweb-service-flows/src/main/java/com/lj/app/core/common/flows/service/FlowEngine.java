@@ -7,6 +7,7 @@ import com.lj.app.core.common.flows.api.FlowTaskServiceApi;
 import com.lj.app.core.common.flows.core.Execution;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowTask;
+import com.lj.app.core.common.flows.entity.FlowTaskActorHist;
 import com.lj.app.core.common.flows.model.TaskModel;
 
 /**
@@ -74,6 +75,12 @@ public interface FlowEngine {
 	 * @return
 	 */
 	public FlowTaskActorService flowTaskActorService();
+	
+	/**
+	 * 历史任务参与
+	 * @return
+	 */
+	public FlowTaskActorHistService<FlowTaskActorHist> flowTaskActorHistService();
 	
 	/**
 	 * 流程完成接口
