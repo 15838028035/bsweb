@@ -40,4 +40,13 @@ public class FlowTaskActorServiceImpl<FlowTaskActor> extends BaseServiceImpl<Flo
 			 this.delete("deleteFlowTaskActorByTaskIdAndActorId", flowTaskActor);
 		}
 	}
+	
+	/**
+	 *移除任务参与者 
+	 * @param taskId
+	 * @param actors
+	 */
+	public void deleteFlowTaskActorByTaskId(String taskId){
+		 this.delete("deleteFlowTaskActorByTaskId", taskId);
+	}
 }

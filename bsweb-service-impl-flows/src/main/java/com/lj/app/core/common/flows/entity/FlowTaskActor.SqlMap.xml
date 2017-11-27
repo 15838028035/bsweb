@@ -86,6 +86,11 @@
         delete from flow_task_actor where TASK_ID = #taskId# and ACTOR_ID = #actorId#
     ]]>
     </delete>
+     <delete id="deleteFlowTaskActorByTaskId" >
+    <![CDATA[
+        delete from flow_task_actor where TASK_ID = #taskId# 
+    ]]>
+    </delete>
     
     <select id="select" resultMap="flowTaskActorResult">
     	<include refid="commonSelectColumnsPrefix"/>

@@ -179,6 +179,11 @@
 	                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 	            </button>
             </sec:authorize>
+             <sec:authorize code="upm_flowOrderList_btn_terminate" >
+	            <button id="btn_terminate" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>终止
+	            </button>
+            </sec:authorize>
             <sec:authorize code="upm_flowOrderList_btn_flowDiagram" >
 	             <button id="btn_flowDiagram" type="button" class="btn btn-default">
 	                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>查看流程图
@@ -203,6 +208,7 @@
 	    var $btn_edit = $('#btn_edit');
 	    var $btn_delete = $('#btn_delete');
 	    var $btn_query = $('#btn_query');
+	    var $btn_terminate = $("#btn_terminate");
 	  
 		//新增
         $("#btn_add").click(function() {
@@ -295,15 +301,15 @@
       		 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                  return row.id;
              });
-        	if(ids == ''|| ids==null){
-        		bootbox.alert('请选择要编辑的记录');
-        		return;
-        	}
-        	
-        	if(ids.length>1){
-        		bootbox.alert('请选择一条编辑的记录');
-        		return;
-        	}
+      	 	if(ids == ''|| ids==null){
+           		bootbox.alert('请选择要操作的记录');
+           		return;
+           	}
+           	
+           	if(ids.length>1){
+           		bootbox.alert('请选择一条操作记录');
+           		return;
+           	}
         	
          	var instanceUrl = $.map($tableList.bootstrapTable('getSelections'), function (row) {
                 return row.instanceUrl;
@@ -315,9 +321,37 @@
                 return row.id;
             });
          	
-         	var url ="${ctx}/jsp/flows/flowControllerAction!flowAllStyleA.action?processId=" + flowProcessId+"&orderId="+orderId;
+         	var url ="${ctx}/jsp/flows/flowControllerAction!flowAllStyle.action?flowAllStyle=B&processId=" + flowProcessId+"&orderId="+orderId;
          	window.location.href = url;
          })
+         
+         //查看流程图
+      	 $("#btn_terminate").click(function() {
+      		 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             });
+        	if(ids == ''|| ids==null){
+        		bootbox.alert('请选择要操作的记录');
+        		return;
+        	}
+        	
+        	if(ids.length>1){
+        		bootbox.alert('请选择一条操作记录');
+        		return;
+        	}
+        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
+                 return row.id;
+             }); 
+            var result = jQuery.ajax({
+		      	  url:"${ctx}/jsp/flows/flowOrderAction!terminate.action?id=" + ids,
+		          async:false,
+		          cache:false,
+		          dataType:"json"
+		      }).responseText;
+            
+			bootbox.alert(result);
+			refreshGrid();
+         });
       	
     </script>
 

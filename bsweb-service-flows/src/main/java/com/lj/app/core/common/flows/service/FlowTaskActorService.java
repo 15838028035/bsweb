@@ -25,4 +25,11 @@ public interface FlowTaskActorService<FlowTaskActor> extends BaseService {
 	 * @param actors
 	 */
 	public void removeTaskActor(String taskId, String... actors);
+
+	/**
+	 *移除任务参与者 
+	 * @param taskId
+	 * @param actors
+	 */
+	public void deleteFlowTaskActorByTaskId(String taskId);
 }

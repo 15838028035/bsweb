@@ -12,7 +12,9 @@ import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
 import com.lj.app.core.common.flows.service.FlowOrderService;
+import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.web.AbstractBaseAction;
+import com.lj.app.core.common.web.Struts2Utils;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
@@ -62,6 +64,46 @@ public class FlowOrderAction extends AbstractBaseUpmAction<FlowOrder> {
 		} else {
 			flowOrder = new FlowOrder();
 		}
+	}
+	
+	/**
+	 * Action函数,删除Entity.
+	 * 建议return RELOAD.
+	 */
+	public  String delete() throws Exception{
+		String returnMessage = "";
+		try {
+			flowOrderService.cascadeRemove(String.valueOf(id));
+			returnMessage = "操作成功";
+		} catch(Exception e) {
+			returnMessage = e.getMessage();
+		}
+		AjaxResult ar = new AjaxResult();
+		if (returnMessage.equals("")) {
+			ar.setOpResult("删除成功");//删除成功！
+		}else{
+			ar.setOpResult(returnMessage);
+		}
+		
+		Struts2Utils.renderJson(ar);
+		return null;
+	}
+	
+	/**
+	 * 强制中止流程实例
+	 * @param taskId
+	 * @return
+	 */
+	public String terminate() {
+		String returnMessage = "";
+		try {
+			flowOrderService.terminate(String.valueOf(id), this.getUserName());
+			returnMessage = "操作成功";
+		} catch(Exception e) {
+			returnMessage = e.getMessage();
+		}
+		Struts2Utils.renderText(returnMessage);
+		return null;
 	}
 	
 	public void setFlowOrder(FlowOrder flowOrder){
