@@ -52,6 +52,7 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 		condition.put("appId",  appId);
 		condition.put("type",  type);
 		condition.put("state",  "0");
+		condition.put("sortColumns",  " p.sortNo asc");
 		return this.queryForList("findPermissionByUserId",condition);
 	}
 	

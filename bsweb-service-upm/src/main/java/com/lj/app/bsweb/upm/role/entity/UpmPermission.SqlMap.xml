@@ -358,6 +358,9 @@ and ur.groupId=ur.groupId
 	             ur.userId = #userId#
 	       </isNotEmpty>
 	    </dynamic>	
+	    <dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
     </select>
     
     <select id="findPermissionByUserId_count" resultClass="long">
