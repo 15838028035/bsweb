@@ -84,6 +84,12 @@
                           	 }
                            
                            },
+                           { field: 'flowXML', title: '流程XML',sortable:true, formatter : function(value, row, index) {
+                              	var url ="${ctx}//jsp/flows/flowProcessAction!testDownload.action?id=" + row.id+"&fileName="+row.flowName+".xml";
+                             	 return "<a href="+url +">" + row.flowName+".xml</a>";
+                             	 }
+                              
+                              },
                          { field: 'flowType', title: '流程类型',sortable:true },
                          { field: 'instanceUrl', title: '流程URL',sortable:true, visible:false },
                          { field: 'createByUname', title: '创建人姓名',sortable:true },
@@ -93,8 +99,10 @@
                          { field: 'enableFlag', title: '是否有效',sortable:true , visible:false},
                          { field: 'lockStatus', title: '是否加锁',sortable:true , visible:false},
                          {field : 'opt', title : '操作',    formatter : function(value, row, index) {
+                        	 <sec:authorize code="upm_flowProcessList_btn_startflow" >
                          	var	url ="${ctx}" + row.instanceUrl +"&processId="+row.id +"&flowProcess.processName="+row.flowName;
                         	 return "<a href="+url +">发起流程</a>	";
+                        	 </sec:authorize>
                         	 }
                          
                          }

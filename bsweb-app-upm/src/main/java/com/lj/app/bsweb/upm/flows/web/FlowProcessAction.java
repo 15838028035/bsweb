@@ -52,7 +52,20 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 		@Result(name = AbstractBaseAction.LIST, location = "/jsp/flows/flowProcessList.jsp", type = AbstractBaseAction.REDIRECT),
 		@Result(name = "flowDiagram", location = "/jsp/flows/flowDiagram.jsp"),
 		@Result(name = "flowProcessDesigner", location = "/jsp/flows/flowProcessDesigner.jsp"),
-		@Result(name = "flowProcessView", location = "/jsp/flows/flowProcessView.jsp")
+		@Result(name = "flowProcessView", location = "/jsp/flows/flowProcessView.jsp"),
+	    @Result(params = {
+	                 // 下载的文件格式
+	                 "contentType", "application/octet-stream",   
+	                 // 调用action对应的方法
+	                "inputName", "inputStream",   
+	                // HTTP协议，使浏览器弹出下载窗口
+	                 "contentDisposition", "attachment;filename=\"${fileName}\"",   
+	                 // 文件大小
+	                 "bufferSize", "10240"},   
+	                 // result 名
+	                 name = "download", 
+	                 // result 类型
+	                 type = "stream")   
 
 })
 @Action("flowProcessAction")
@@ -88,6 +101,11 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 	 * 流程内容  FLOW_CONTENT
 	 */
 	private String  flowContentStr;
+	/**  
+     * 下载文件名
+     * 对应annotation注解里面的${fileName}，struts 会自动获取该fileName
+     */  
+    private String fileName;   
 
 	public BaseService<FlowProcess> getBaseService() {
 		return flowProcessService;
@@ -306,7 +324,57 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 		Struts2Utils.renderJson(jsonMap);
 		return null;
 	}
+   
+    /**  
+     * 下载文件应访问该地址
+     * 对应annotation注解里面的 name = "download"
+     */  
+    public String testDownload() {   
+        return "download";   
+    }   
+     
+    
+    public String getFileName() {
+		return fileName;
+	}
 
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	/**  
+     * 获取下载流
+     * 对应 annotation 注解里面的 "inputName", "inputStream"
+     * 假如 annotation 注解改为 "inputName", "myStream"，则下面的方法则应改为：getMyStream
+     * @return InputStream  
+     */  
+    public InputStream getInputStream() throws Exception {   
+        // 下载路径
+        InputStream input = null;
+		try {
+			if (id != null) {
+				flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
+				flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess
+						.getFlowContent()));
+				String flowContent = flowProcess.getFlowContentStr();
+				input = FileUtil.getStreamFromString(flowContent);
+				 return input; 
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+        return null;   
+    }   
+    
 	public void setFlowProcess(FlowProcess flowProcess) {
 		this.flowProcess = flowProcess;
 	}
