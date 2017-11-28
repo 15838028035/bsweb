@@ -119,6 +119,30 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 			throw e;
 		}
 	}
+	
+	/**
+	 * 所有运行中的流程
+	 * @return
+	 * @throws Exception
+	 */
+	public String flowTaskRuntimeList() throws Exception {
+		try {
+			Map<String,Object> condition = new HashMap<String,Object>();
+			page.setFilters(getModel());
+			
+			if (StringUtil.isNotBlank(this.getSortName())) {
+				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
+				page.setSortColumns(orderBy);
+			}
+			
+			page = getBaseService().findPageList(page, condition,"homePage");
+			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
     /**
      * 添加任务执行者

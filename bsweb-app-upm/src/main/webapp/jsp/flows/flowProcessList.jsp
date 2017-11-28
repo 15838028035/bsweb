@@ -68,7 +68,7 @@
                          { field: 'checkStatus', title: '',checkbox:true }, 
                          {field : 'Number', title : '行号',    formatter : function(value, row, index) {return index+1;}  },
                          { field: 'id', title: '编号',sortable:true, visible:false }, 
-                         { field: 'flowNo', title: '流程编号',sortable:true}, 
+                         { field: 'flowNo', title: '流程编号',sortable:true, visible:false}, 
                          { field: 'flowName', title: '流程名称',sortable:true, formatter : function(value, row, index) {
                           	var	url ="${ctx}" + row.instanceUrl +"&processId="+row.id +"&flowProcess.processName="+row.flowName;
                          	 return "<a href="+url +">"+row.flowName+"</a>	";
@@ -98,10 +98,17 @@
                          { field: 'enableFlag', title: '是否有效',sortable:true , visible:false},
                          { field: 'lockStatus', title: '是否加锁',sortable:true , visible:false},
                          {field : 'opt', title : '操作',    formatter : function(value, row, index) {
-                        	 <sec:authorize code="upm_flowProcessList_btn_startflow" >
-                         	var	url ="${ctx}" + row.instanceUrl +"&processId="+row.id +"&flowProcess.processName="+row.flowName;
-                        	 return "<a href="+url +">发起流程</a>	";
+                        	 var retValue="";
+                        	 <sec:authorize code="upm_flowProcessList_btn_design" >
+                         	var	url ="${ctx}/jsp/flows/flowProcessAction!processDesigner.action?id=" + row.id;
+                         	retValue= "<a href="+url +">设计</a> &nbsp;&nbsp";
                         	 </sec:authorize>
+                        	 <sec:authorize code="upm_flowProcessList_btn_startflow" >
+                          	var	url ="${ctx}" + row.instanceUrl +"&processId="+row.id +"&flowProcess.processName="+row.flowName;
+                          	retValue=retValue+ "<a href="+url +">发起流程</a></a> &nbsp;&nbsp";
+                         	 </sec:authorize>
+                        	 
+                        	 return retValue;
                         	 }
                          
                          }

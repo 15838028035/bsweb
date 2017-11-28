@@ -119,7 +119,26 @@
 			 	{field:'updateDate',title:'修改日期', sortable:true, visible:false},
 			 	{field:'flowVersion',title:'流程版本', sortable:true, visible:false},
 			 	{field:'instanceUrl',title:'实例化URL', sortable:true, visible:false},
-			 	{field:'flowProcessId',title:'流程定义ID', sortable:true , visible:false}
+			 	{field:'flowProcessId',title:'流程定义ID', sortable:true , visible:false},
+			 	{field : 'opt', title : '操作',    formatter : function(value, row, index) {
+               	 var retValue="";
+               	 <sec:authorize code="upm_flowTaskList_btn_startHandleFlow" >
+               	var instanceUrl = row.instanceUrl;
+               	var flowProcessId =row.flowProcessId
+               	var taskId =row.id;
+               	var orderId =row.flowOrderId;
+               	
+             	var url ="${ctx}" + instanceUrl +"&processId="+flowProcessId +"&orderId="+orderId+"&taskId="+taskId;
+                	retValue= "<a href="+url +">代办审批</a> &nbsp;&nbsp";
+               	 </sec:authorize>
+               	 
+               	var url2 ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + row.flowProcessId+"&orderId="+row.flowOrderId;
+                 	retValue=retValue+ "<a href="+url2 +">流程图</a></a> &nbsp;&nbsp";
+               	 
+               	 return retValue;
+               	 }
+                
+                }
                         ],               		
              	formatLoadingMessage: function () {
              		return "请稍等，正在加载中...";
@@ -177,7 +196,7 @@
 				<div class="col-sm-2"> <input type="text" class="form-control" id="taskName"></div>
 			 	<label class="control-label col-sm-1" for="operator">操作者</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
-			 	<label class="control-label col-sm-1" for="flowName">程流名称</label>
+			 	<label class="control-label col-sm-1" for="flowName">流程名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowName"></div>
                      <div class="col-sm-12" style="text-align:left;">
                          <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>历史任务管理</title>
+<title>已结束的流程</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 
@@ -29,7 +29,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tableList').bootstrapTable({
-                url: '${ctx}/jsp/flows/flowTaskHistAction!bootStrapList.action',         //请求后台的URL（*）
+                url: '${ctx}/jsp/flows/flowTaskHistAction!flowTaskListEndList.action',         //请求后台的URL（*）
                 method: 'post',                     //请求方式（*）
                 dataType: "json",
                 contentType : "application/x-www-form-urlencoded;charset=UTF-8",

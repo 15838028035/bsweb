@@ -96,6 +96,30 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 		}
 	}
 	
+	/**
+	 * 历史任务所有
+	 * @return
+	 * @throws Exception
+	 */
+	public String flowTaskListEndList() throws Exception {
+		try {
+			Map<String,Object> condition = new HashMap<String,Object>();
+			page.setFilters(getModel());
+			
+			if (StringUtil.isNotBlank(this.getSortName())) {
+				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
+				page.setSortColumns(orderBy);
+			}
+			
+			page = getBaseService().findPageList(page, condition);
+			Struts2Utils.renderText(PageTool.mapPageToJsonBootStrap(this.page),new String[0]);
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 	public void setFlowTaskHist(FlowTaskHist flowTaskHist){
 		this.flowTaskHist = flowTaskHist;
 	}
