@@ -77,13 +77,13 @@
                           },
                          { field: 'displayName', title: '显示名称',sortable:true },
                          { field: 'flowVersion', title: '流程版本' ,sortable:true},
-                         { field: 'flowGraph', title: '流程图片',sortable:true, formatter : function(value, row, index) {
+                         { field: 'flowGraph', title: '流程图片', formatter : function(value, row, index) {
                            	var url ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + row.id;
                           	 return "<a href="+url +">流程图片</a>	";
                           	 }
                            
                            },
-                           { field: 'flowXML', title: '流程XML',sortable:true, formatter : function(value, row, index) {
+                           { field: 'flowXML', title: '流程XML', formatter : function(value, row, index) {
                               	var url ="${ctx}/jsp/flows/flowProcessAction!downloadFlowXml.action?id=" + row.id+"&fileName="+row.flowName+".xml";
                              	 return "<a href="+url +">" + row.flowName+".xml</a>";
                              	 }
@@ -97,7 +97,7 @@
                          { field: 'updateDate', title: '修改时间',sortable:true, visible:false },
                          { field: 'enableFlag', title: '是否有效',sortable:true , visible:false},
                          { field: 'lockStatus', title: '是否加锁',sortable:true , visible:false},
-                         {field : 'opt', title : '操作',    formatter : function(value, row, index) {
+                         {field : 'opt', title : '操作', formatter : function(value, row, index) {
                         	 var retValue="";
                         	 <sec:authorize code="upm_flowProcessList_btn_design" >
                          	var	url ="${ctx}/jsp/flows/flowProcessAction!processDesigner.action?id=" + row.id;
