@@ -24,6 +24,7 @@
 
 <link href="${ctx}/scripts/bootstrap3-dialog/css/bootstrap-dialog.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap3-dialog/js/bootstrap-dialog.js"></script>
+<script src="${ctx}/scripts/bootstrap3-dialog/bootstrap3-dialog-ext.js"></script>
 
 <script src="${ctx}/scripts/bootstrap-datetimepicker/js/moment.js"></script>
 <script src="${ctx}/scripts/bootstrap-datetimepicker/js/moment_zh-CN.js"></script>

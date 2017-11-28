@@ -1,5 +1,6 @@
 package com.lj.app.bsweb.upm.flows.web;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -65,7 +66,8 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 	                 // result 名
 	                 name = "download", 
 	                 // result 类型
-	                 type = "stream")   
+	                 type = "stream"),  
+		@Result(name = "flowProcessView", location = "/jsp/flows/flowProcessUploadFile.jsp")
 
 })
 @Action("flowProcessAction")
@@ -161,6 +163,29 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 		}
 	}
 
+	public String processDeployUploadFile() throws Exception {
+		InputStream input = null;
+		returnMessage="上传成功";
+		try {
+			input = new FileInputStream(templateFile);
+			String flowContent =  FileUtil.readStreamToString(input);
+			flowProcessService.deploy(flowContent, this.getUserName());
+		} catch (Exception e) {
+			e.printStackTrace();
+			returnMessage = e.getMessage();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return "flowProcessUploadFile";
+	}
+	
 	public String processDeploy() throws Exception {
 		InputStream input = null;
 		String msg = this.OPT_SUCCESS;
@@ -329,7 +354,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
      * 下载文件应访问该地址
      * 对应annotation注解里面的 name = "download"
      */  
-    public String testDownload() {   
+    public String downloadFlowXml() {   
         return "download";   
     }   
      

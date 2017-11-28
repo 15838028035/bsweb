@@ -8,7 +8,6 @@
 	<title>流程定义</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-<script src="${ctx}/scripts/bootbox/bootbox.min.js"></script>
 
 <script language="javascript">
 
@@ -78,14 +77,14 @@
                           },
                          { field: 'displayName', title: '显示名称',sortable:true },
                          { field: 'flowVersion', title: '流程版本' ,sortable:true},
-                         { field: 'flowGraph', title: '流程图',sortable:true, formatter : function(value, row, index) {
+                         { field: 'flowGraph', title: '流程图片',sortable:true, formatter : function(value, row, index) {
                            	var url ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + row.id;
-                          	 return "<a href="+url +">流程图</a>	";
+                          	 return "<a href="+url +">流程图片</a>	";
                           	 }
                            
                            },
                            { field: 'flowXML', title: '流程XML',sortable:true, formatter : function(value, row, index) {
-                              	var url ="${ctx}//jsp/flows/flowProcessAction!testDownload.action?id=" + row.id+"&fileName="+row.flowName+".xml";
+                              	var url ="${ctx}/jsp/flows/flowProcessAction!downloadFlowXml.action?id=" + row.id+"&fileName="+row.flowName+".xml";
                              	 return "<a href="+url +">" + row.flowName+".xml</a>";
                              	 }
                               
@@ -181,6 +180,12 @@
         </div>       
 
         <div id="toolbar" class="btn-group">
+        	<sec:authorize code="upm_flowProcessList_btn_uploadFlowFile" >
+	             <button id="btn_uploadFlowFile" type="button" class="btn btn-default">
+	                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>上传流程文件
+	            </button>
+            </sec:authorize>
+            
         	<sec:authorize code="upm_flowProcessList_btn_design" >
 	             <button id="btn_design" type="button" class="btn btn-default">
 	                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设计
@@ -221,7 +226,12 @@
 	    var $btn_delete = $('#btn_delete');
 	    
 	    var $btn_query = $('#btn_query');
+	    var $btn_uploadFlowFile=$("#btn_uploadFlowFile");
 	    
+	    $("#btn_uploadFlowFile").click(function() {
+	    	var url =  "${ctx}/jsp/flows/flowProcessUploadFile.jsp";
+			$.iframeDialogHeight("上传流程文件",url,refreshGrid,400);
+       })
         
         $("#btn_design").click(function() {
         	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
