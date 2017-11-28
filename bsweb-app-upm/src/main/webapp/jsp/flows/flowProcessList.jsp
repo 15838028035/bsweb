@@ -70,18 +70,29 @@
                          {field : 'Number', title : '行号',    formatter : function(value, row, index) {return index+1;}  },
                          { field: 'id', title: '编号',sortable:true, visible:false }, 
                          { field: 'flowNo', title: '流程编号',sortable:true}, 
-                         { field: 'flowName', title: '流程名称',sortable:true }, 
+                         { field: 'flowName', title: '流程名称',sortable:true, formatter : function(value, row, index) {
+                          	var	url ="${ctx}" + row.instanceUrl +"&processId="+row.id +"&flowProcess.processName="+row.flowName;
+                         	 return "<a href="+url +">"+row.flowName+"</a>	";
+                         	 }
+                          
+                          },
                          { field: 'displayName', title: '显示名称',sortable:true },
                          { field: 'flowVersion', title: '流程版本' ,sortable:true},
                          { field: 'flowType', title: '流程类型',sortable:true },
-                         { field: 'instanceUrl', title: '流程URL',sortable:true },
+                         { field: 'instanceUrl', title: '流程URL',sortable:true, visible:false },
                          { field: 'createByUname', title: '创建人姓名',sortable:true },
                          
                          { field: 'createDate', title: '创建时间',sortable:true },
-                         { field: 'updateByUname', title: '修改人',sortable:true },
-                         { field: 'updateDate', title: '修改时间',sortable:true },
-                         { field: 'enableFlag', title: '是否有效',sortable:true },
-                         { field: 'lockStatus', title: '是否加锁',sortable:true }
+                         { field: 'updateByUname', title: '修改人',sortable:true, visible:false },
+                         { field: 'updateDate', title: '修改时间',sortable:true, visible:false },
+                         { field: 'enableFlag', title: '是否有效',sortable:true , visible:false},
+                         { field: 'lockStatus', title: '是否加锁',sortable:true , visible:false},
+                         {field : 'opt', title : '操作',    formatter : function(value, row, index) {
+                         	var	url ="${ctx}" + row.instanceUrl +"&processId="+row.id +"&flowProcess.processName="+row.flowName;
+                        	 return "<a href="+url +">发起流程</a>	";
+                        	 }
+                         
+                         }
               		 ],
             	formatLoadingMessage: function () {
             		return "请稍等，正在加载中...";
