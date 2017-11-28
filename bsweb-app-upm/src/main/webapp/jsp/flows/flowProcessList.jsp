@@ -78,10 +78,15 @@
                           },
                          { field: 'displayName', title: '显示名称',sortable:true },
                          { field: 'flowVersion', title: '流程版本' ,sortable:true},
+                         { field: 'flowGraph', title: '流程图',sortable:true, formatter : function(value, row, index) {
+                           	var url ="${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=" + row.id;
+                          	 return "<a href="+url +">流程图</a>	";
+                          	 }
+                           
+                           },
                          { field: 'flowType', title: '流程类型',sortable:true },
                          { field: 'instanceUrl', title: '流程URL',sortable:true, visible:false },
                          { field: 'createByUname', title: '创建人姓名',sortable:true },
-                         
                          { field: 'createDate', title: '创建时间',sortable:true },
                          { field: 'updateByUname', title: '修改人',sortable:true, visible:false },
                          { field: 'updateDate', title: '修改时间',sortable:true, visible:false },

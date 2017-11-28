@@ -42,15 +42,27 @@
 	<div class="container">
 		<div class="row">
 	      <div class="col-sm-12">
-	      	<div id="properties_all" >
-				<div id="snakerflow" style="border: 1px solid #d2dde2; margin-top:10px; margin-left:10px; margin-bottom:10px; width:98%;">
-				</div>
-			</div>
+	      	 <div class="panel-body" style="padding-bottom:0px;">
+		        <div class="panel panel-default">
+		            <div class="panel-heading">
+		            	<button type="button" id="backToHomeButton"  class="btn btn-primary btn-block">返回</button> 
+		            </div>
+		            <div class="panel-body">
+		            	<div id="properties_all" >
+						<div id="snakerflow" style="border: 1px solid #d2dde2; margin-top:10px; margin-left:10px; margin-bottom:10px; width:98%;">
+						</div>
+					</div>
+		            </div>
+		        </div>
 	      </div>
    		</div>
    
 	</div>
 		<script type="text/javascript">
+		  $("#backToHomeButton").click(function() {
+	        	window.history.go(-1);
+	        });
+		  
 		$.ajax({
 				type:'GET',
 				url:"${ctx}/jsp/flows/flowProcessAction!diagramJson.action",
