@@ -14,11 +14,14 @@
 	<body>
 	<div class="container">
 		<div class="row">
-	      <div class="col-sm-12">流程名称:${flowProcess.displayName}</div>
+	      <div class="col-sm-12">
+	      	<button type="button" id="backToHomeButton"  class="btn btn-primary btn-block">返回</button> 
+	      	流程名称:${flowProcess.displayName}
 	      <c:if test="${flowOrder != null }">
 	      <div class="col-sm-12">流程编号:${flowOrder.orderNo}</div>
 	      <div class="col-sm-12">派单时间:${flowOrder.createDate}</div>
 	      </c:if>
+	      </div>
 	   </div>
 		<div class="row">	
 		    <div class="col-sm-12" id="tabsDiv" style="margin: 0px;">
@@ -30,6 +33,10 @@
 	  </div>
 	    
 	    <script type="text/javascript">
+	    $("#backToHomeButton").click(function() {
+        	window.history.go(-1);
+        });
+	    
         var tabs;
         var taskName = "${flowTask.taskName}";
         $(function () {
