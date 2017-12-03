@@ -410,7 +410,9 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
 			condition.put("sortColumns", orderBy);
 		}
 		
-		flowApproveLogList = flowApproveService.findBaseModeList(condition);
+		if(StringUtil.isNotBlank(orderId)){
+			flowApproveLogList = flowApproveService.findBaseModeList(condition);
+		}
 		
 		return "flowApproveLogList";
 	}

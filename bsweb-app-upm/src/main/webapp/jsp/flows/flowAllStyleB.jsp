@@ -121,7 +121,7 @@
 					}
 					
 					if(currentTabNo>0){
-						$.addtabs.add({"id":"8888","title":"审批流水","url": "${ctx}//jsp/flows/flowControllerAction!goToFlowApproveLogList.action?processId=${processId}&orderId=${orderId}&sortName=id&sortOrder=desc","target": "#tabs"});
+						$.addtabs.add({"id":"8888","title":"审批流水","url": "${ctx}/jsp/flows/flowControllerAction!goToFlowApproveLogList.action?processId=${processId}&orderId=${orderId}&sortName=id&sortOrder=desc","target": "#tabs"});
 					}
 					$.addtabs.add({"id":"9999","title":"流程图","url": "${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}","target": "#tabs"});
 					
