@@ -37,7 +37,9 @@
 		 
       		<div class="form-group">
 			 <label for="content">内容</label>
-		 	  <input class="form-control" type="text"  name="upmNotice.content" id="content"  value="${upmNotice.content}" />
+		 	  <textarea class="textarea" placeholder="${upmNotice.content}"  name="upmNotice.content" id="content"
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" value="${upmNotice.content}"></textarea>
+                          
 		 </div>
 		 
       		<div class="form-group">
@@ -63,6 +65,8 @@
 </form>
 </div>
 <script>
+
+  $('#content').wysihtml5();
 
 		$("#upmNoticeForm").bootstrapValidator({
 			fields: {

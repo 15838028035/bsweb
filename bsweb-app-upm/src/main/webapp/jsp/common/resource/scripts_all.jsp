@@ -48,6 +48,10 @@
 <link href="${ctx}/scripts/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-fileinput/js/fileinput.js"></script>
 
+
+<link href="${ctx}/scripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.css" rel="stylesheet">
+<script src="${ctx}/scripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js"></script>
+
 <link href="${ctx}/scripts/adminLTE/css/AdminLTE.css" rel="stylesheet">
 <link href="${ctx}/scripts/adminLTE/css/skins/_all-skins.css" rel="stylesheet">
 <link href="${ctx}/scripts/adminLTE/css/ionicons.css" rel="stylesheet">
