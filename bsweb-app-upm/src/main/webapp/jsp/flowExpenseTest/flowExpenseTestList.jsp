@@ -41,6 +41,7 @@
                 smartDisplay:false,
                 showRefresh:true,
                 showColumns:true,
+                showExport: true,
                 searchOnEnterKey:true,
                 showFooter:true,
                 search:false,
@@ -94,7 +95,9 @@
              	}
               
             });
-            
+            if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){//如果是移动端
+        		  $("#tableList").bootstrapTable("toggleView");
+        	}
         };
  
         //得到查询的参数
