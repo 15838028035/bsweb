@@ -116,7 +116,7 @@
             });
             
             if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){//如果是移动端
-      		  $('#tableList').bootstrapTable("toggleView");
+      		  $("#tableList").bootstrapTable("toggleView");
       		}
         };
  
