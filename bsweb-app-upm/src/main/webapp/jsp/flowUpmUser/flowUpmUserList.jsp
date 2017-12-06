@@ -42,6 +42,7 @@
                 smartDisplay:false,
                 showRefresh:true,
                 showColumns:true,
+                showExport: true,
                 searchOnEnterKey:true,
                 showFooter:true,
                 search:false,

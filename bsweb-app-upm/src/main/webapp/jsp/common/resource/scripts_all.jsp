@@ -13,6 +13,8 @@
 <script src="${ctx}/scripts/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
 <script src="${ctx}/scripts/x-editable/bootstrap3-editable/js/bootstrap-editable.js"></script>
 
+<script src="${ctx}/scripts/bootstrap-table/extensions/export/tableExport.js"></script>
+<script src="${ctx}/scripts/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
 
 <link href="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.css" rel="stylesheet">
 <script src="${ctx}/scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
