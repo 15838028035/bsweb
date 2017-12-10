@@ -10,8 +10,10 @@
 			增加store interceptor保证actionMessage在redirect后不会丢失 -->
 		<interceptors>
 			<interceptor name="trimInterceptor" class="com.lj.app.core.common.interceptor.TrimInterceptor" />
+			<interceptor name="sysLogInterceptor" class="com.lj.app.bsweb.upm.interceptor.SysLogInterceptor" />
 			<interceptor-stack name="crudStack">
 				<interceptor-ref name="trimInterceptor" />
+				<interceptor-ref name="sysLogInterceptor" />
 				<interceptor-ref name="store">
 					<param name="operationMode">AUTOMATIC</param>
 				</interceptor-ref>

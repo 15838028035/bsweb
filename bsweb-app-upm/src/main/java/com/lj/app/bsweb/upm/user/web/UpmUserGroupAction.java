@@ -21,7 +21,6 @@ import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.tree.BootStrapTreeView;
 import com.lj.app.core.common.tree.BootStrapTreeViewCheck;
-import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
