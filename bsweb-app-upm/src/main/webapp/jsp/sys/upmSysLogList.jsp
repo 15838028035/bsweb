@@ -114,7 +114,8 @@
                 offset:params.offset,
                 "sortName":this.sortName,
                 "sortOrder":this.sortOrder,
-				"upmSysLog.userName":userName
+				"upmSysLog.userName":userName,
+				"conditionWhere":$("#conditionWhere").val()
             };
             return temp;
         };
@@ -135,7 +136,9 @@
                     <div class="form-group" style="margin-top:15px">
 				 	<label class="control-label col-sm-1" for="userName">用户名</label>
 					<div class="col-sm-2"> <input type="text" class="form-control" id="userName"></div>
-
+					 <div class="col-sm-12" style="text-align:left;">
+                             <input type="text" class="form-control" id="conditionWhere" placeholder="自定义查询条件">
+                        </div>
                      <div class="col-sm-12" style="text-align:left;">
                          <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                      </div>
