@@ -152,7 +152,8 @@
 	 			"flowProcess.flowNo":flowNo,
 	 			"flowProcess.flowName":flowName,
 	 			"flowProcess.createByUname":createByUname,
-	 			"flowProcess.updateByUname":updateByUname
+	 			"flowProcess.updateByUname":updateByUname,
+	 			"conditionWhere":$("#conditionWhere").val()
              };
              return temp;
          };
@@ -180,7 +181,9 @@
                         
 			 	<label class="control-label col-sm-1" for="updateByUname">修改人姓名</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="updateByUname"></div>
-
+				 <div class="col-sm-12" style="text-align:left;">
+                           <input type="text" class="form-control" id="conditionWhere" placeholder="自定义查询条件">
+                   </div>
                     <div class="col-sm-12" style="text-align:left;">
                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                     </div>

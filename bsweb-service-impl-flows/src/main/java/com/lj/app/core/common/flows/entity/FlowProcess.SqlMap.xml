@@ -26,7 +26,7 @@
     </resultMap>
 
 	<sql id="dynamicWhere">
-	    <dynamic prepend="WHERE">
+	    <dynamic prepend=" AND ">
 	       <isNotEmpty prepend="AND" property="id">
 	             id = #id#
 	       </isNotEmpty>
@@ -92,6 +92,7 @@
 	       <isNotEmpty prepend="AND" property="updateByUname">
 	             update_By_Uname = #updateByUname#
 	       </isNotEmpty>
+	        <isNotEmpty property="conditionWhere"> $conditionWhere$ </isNotEmpty>
 	    </dynamic>	
 	</sql>
 
@@ -228,7 +229,7 @@
     <select id="select" resultMap="flowProcessResult">
     	<include refid="commonSelectColumnsPrefix"/>
 	    <![CDATA[
-	        from flow_process 
+	        from flow_process where 1=1
 	    ]]>
 		<include refid="dynamicWhere"/>
 		<dynamic prepend="ORDER BY">
@@ -248,7 +249,7 @@
  	<select id="pagenate" resultMap="flowProcessResult">
     	<include refid="commonSelectColumnsPrefix"/>
 	    <![CDATA[
-	        from flow_process 
+	        from flow_process where 1=1
 	    ]]>
 		<include refid="dynamicWhere"/>
 		<dynamic prepend="ORDER BY">
@@ -260,7 +261,7 @@
     <![CDATA[
         select 
         count(*)
-        from flow_process
+        from flow_process where 1=1
     ]]>
 		<include refid="dynamicWhere"/>    
     </select>
