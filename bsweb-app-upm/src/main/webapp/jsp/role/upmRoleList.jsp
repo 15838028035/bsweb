@@ -130,7 +130,8 @@
 	                "sortOrder":this.sortOrder,
 					"upmRole.roleCode":roleCode,
 					"upmRole.appId":appId,
-					"upmRole.roleName":roleName
+					"upmRole.roleName":roleName,
+					"conditionWhere":$("#conditionWhere").val()
             };
             return temp;
         };
@@ -154,7 +155,9 @@
                         
 			 	<label class="control-label col-sm-1" for="appId">应用编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
-
+				 <div class="col-sm-12" style="text-align:left;">
+                             <input type="text" class="form-control" id="conditionWhere" placeholder="自定义查询条件">
+                        </div>
                      <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                        </div>
