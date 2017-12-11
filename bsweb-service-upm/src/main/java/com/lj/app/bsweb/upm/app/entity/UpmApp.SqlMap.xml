@@ -15,7 +15,7 @@
     </resultMap>
 
 	<sql id="dynamicWhere">
-	    <dynamic prepend="WHERE">
+	     <dynamic prepend=" AND ">
 	       <isNotEmpty prepend="AND" property="appId">
 	             app_id = #appId#
 	       </isNotEmpty>
@@ -31,6 +31,7 @@
 	       <isNotEmpty prepend="AND" property="id">
 	             id = #id#
 	       </isNotEmpty>
+	        <isNotEmpty property="conditionWhere"> $conditionWhere$ </isNotEmpty>
 	    </dynamic>	
 	</sql>
 
@@ -114,7 +115,7 @@
     <select id="select" resultMap="upmAppResult">
     <include refid="commonSelectColumnsPrefix"/>
 	    <![CDATA[
-	        from upm_app 
+	        from upm_app where 1=1
 	    ]]>
 		<include refid="dynamicWhere"/>
 		<dynamic prepend="ORDER BY">
@@ -125,7 +126,7 @@
  	<select id="pagenate" resultMap="upmAppResult">
     	<include refid="commonSelectColumnsPrefix"/>
 	    <![CDATA[
-	        from upm_app 
+	        from upm_app where 1=1
 	    ]]>
 		<include refid="dynamicWhere"/>
 		<dynamic prepend="ORDER BY">
@@ -137,7 +138,7 @@
     <![CDATA[
         select 
         count(*)
-        from upm_app
+        from upm_app where 1=1
     ]]>
 		<include refid="dynamicWhere"/>    
     </select>
