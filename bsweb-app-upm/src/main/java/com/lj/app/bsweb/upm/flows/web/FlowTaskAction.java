@@ -110,7 +110,7 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 				page.setSortColumns(orderBy);
 			}
 			
-			condition.put("conditionWhere", " and a. actor_id in ('" + this.getUserName() + "')");
+			condition.put("conditionWhere", " and a. actor_id in ('" + this.getUserName() + "')" + conditionWhere);
 			page = getBaseService().findPageList(page, condition,"homePage");
 			Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page),new String[0]);
 			return null;

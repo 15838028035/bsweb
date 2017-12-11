@@ -176,7 +176,8 @@
 	                "sortOrder":this.sortOrder,
 					"flowTask.taskName":taskName,
 					"flowTask.displayName":displayName,
-					"flowTask.operator":operator
+					"flowTask.operator":operator,
+					"conditionWhere":$("#conditionWhere").val()
             };
             return temp;
         };
@@ -201,6 +202,9 @@
 				<div class="col-sm-2"> <input type="text" class="form-control" id="operator"></div>
 			 	<label class="control-label col-sm-1" for="flowName">流程名称</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="flowName"></div>
+				 <div class="col-sm-12" style="text-align:left;">
+                          <input type="text" class="form-control" id="conditionWhere" placeholder="自定义查询条件">
+                   </div>
                      <div class="col-sm-12" style="text-align:left;">
                          <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                      </div>
