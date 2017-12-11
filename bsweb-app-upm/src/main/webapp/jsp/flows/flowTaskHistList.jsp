@@ -156,7 +156,8 @@
 					"flowTaskHist.displayName":displayName,
 					"flowTaskHist.operator":operator,
 					"flowTaskHist.createTimeBegin":createTimeBegin,
-					"flowTaskHist.createTimeEnd":createTimeEnd
+					"flowTaskHist.createTimeEnd":createTimeEnd,
+					"conditionWhere":$("#conditionWhere").val()
             };
             return temp;
         };
@@ -186,7 +187,9 @@
                     <input type="text" name="createTimeBegin" id = "createTimeBegin" size="16"  class="datetimepicker" readonly="readonly"/> --
 					<input type="text" name="createTimeEnd" id = "createTimeEnd" size="16" class="datetimepicker" readonly="readonly"/>
                 </div>
-			  
+			   <div class="col-sm-12" style="text-align:left;">
+                             <input type="text" class="form-control" id="conditionWhere" placeholder="自定义查询条件">
+                        </div>
                     <div class="col-sm-12" style="text-align:left;">
                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                     </div>

@@ -86,7 +86,7 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 				page.setSortColumns(orderBy);
 			}
 			
-			condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')");
+			condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')" + conditionWhere);
 			page = getBaseService().findPageList(page, condition);
 			Struts2Utils.renderText(PageTool.mapPageToJsonBootStrap(this.page),new String[0]);
 			return null;
