@@ -122,7 +122,8 @@
 	                "sortOrder":this.sortOrder,
 	                "upmUser.loginNo":$("#loginNo").val(),
 	                "upmUser.userName":$("#userName").val(),
-	 			 	"upmUser.mobile": $("#mobile").val()
+	 			 	"upmUser.mobile": $("#mobile").val(),
+	 			 	"conditionWhere":$("#conditionWhere").val()
             };
             return temp;
         };
@@ -151,6 +152,9 @@
                         <label class="control-label col-sm-1" for="mobile">手机号码</label>
                         <div class="col-sm-2">
                             <input type="text" class="form-control" id="mobile">
+                        </div>
+                         <div class="col-sm-12" style="text-align:left;">
+                             <input type="text" class="form-control" id="conditionWhere" placeholder="自定义查询条件">
                         </div>
                         <div class="col-sm-12" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
