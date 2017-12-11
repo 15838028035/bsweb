@@ -130,6 +130,7 @@
 				"upmNotice.typeId":typeId,
 				"upmNotice.paramA":paramA,
 				"upmNotice.paramB":paramB,
+				"conditionWhere":$("#conditionWhere").val()
             };
             return temp;
         };
@@ -157,7 +158,9 @@
                         
 			 	<label class="control-label col-sm-1" for="paramB">参数B</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="paramB"></div>
-				
+				 <div class="col-sm-12" style="text-align:left;">
+                         <input type="text" class="form-control" id="conditionWhere" placeholder="自定义查询条件">
+                  </div>
                  <div class="col-sm-12" style="text-align:left;">
                      <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                  </div>
