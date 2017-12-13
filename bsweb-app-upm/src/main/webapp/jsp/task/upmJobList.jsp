@@ -39,12 +39,14 @@
                 striped: true,                      //是否显示行间隔色
                 cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pagination: true,                   //是否显示分页（*）
-                smartDisplay:false,
                 showRefresh:true,
                 showColumns:true,
+                showExport: true,
+                showToggle:true,
                 searchOnEnterKey:true,
                 showFooter:true,
-                search:false,
+                trimOnSearch:true,
+                search:true,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -118,7 +120,8 @@
                 "sortName":this.sortName,
                 "sortOrder":this.sortOrder,
 				"upmJob.jobName":jobName,
-				"upmJob.jobClass":jobClass
+				"upmJob.jobClass":jobClass,
+				"searchText": params.searchText
             };
             return temp;
         };

@@ -86,7 +86,12 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 				page.setSortColumns(orderBy);
 			}
 			
-			condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')" + conditionWhere);
+			if (StringUtil.isNotBlank(this.searchText)) {
+				condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')" + searchText);
+			}else {
+				condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')" );
+			}
+			
 			page = getBaseService().findPageList(page, condition);
 			Struts2Utils.renderText(PageTool.mapPageToJsonBootStrap(this.page),new String[0]);
 			return null;
@@ -102,22 +107,7 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 	 * @throws Exception
 	 */
 	public String flowTaskListEndList() throws Exception {
-		try {
-			Map<String,Object> condition = new HashMap<String,Object>();
-			page.setFilters(getModel());
-			
-			if (StringUtil.isNotBlank(this.getSortName())) {
-				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
-				page.setSortColumns(orderBy);
-			}
-			
-			page = getBaseService().findPageList(page, condition);
-			Struts2Utils.renderText(PageTool.mapPageToJsonBootStrap(this.page),new String[0]);
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+		return super.bootStrapList();
 	}
 	
 	public void setFlowTaskHist(FlowTaskHist flowTaskHist){

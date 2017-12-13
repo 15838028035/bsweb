@@ -47,7 +47,7 @@
                 searchOnEnterKey:true,
                 trimOnSearch:true,
                 showFooter:true,
-                search:false,
+                search:true,
                 sortable: true,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 singleSelect:false,
@@ -157,7 +157,8 @@
 					"flowTaskHist.displayName":displayName,
 					"flowTaskHist.operator":operator,
 					"flowTaskHist.createTimeBegin":createTimeBegin,
-					"flowTaskHist.createTimeEnd":createTimeEnd
+					"flowTaskHist.createTimeEnd":createTimeEnd,
+					"searchText": params.searchText
             };
             return temp;
         };
