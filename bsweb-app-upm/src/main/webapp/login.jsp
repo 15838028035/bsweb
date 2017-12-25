@@ -7,7 +7,7 @@
 <head>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
-	<title>UPM用户权限管理系统--用户登录</title>
+	<title>${fns:getProperty('upmProductName')}</title>
 
 <style type="text/css">
 .form-bg{
@@ -86,10 +86,10 @@
         <div class="col-md-offset-3 col-md-6">
             <form class="form-horizontal" action="${ctx}/loginAction!login.action" method="post" name="loginForm" id="loginForm">
                 <span class="heading"><h3> 
-                <c:if test="${springProfilesActive == 'dev'}">[开发环境]</c:if>
-                <c:if test="${springProfilesActive == 'test'}">[测试环境]</c:if>
-                <c:if test="${springProfilesActive == 'pro'}">[生产环境]</c:if>
-                [${upmVersion}]
+                <c:if test="${fns:getProperty('spring.profiles.active') eq 'dev'}">[开发环境]</c:if>
+                <c:if test="${fns:getProperty('spring.profiles.active') eq 'test'}">[测试环境]</c:if>
+                <c:if test="${fns:getProperty('spring.profiles.active') eq 'pro'}">[生产环境]</c:if>
+                [${fns:getProperty('upmVersion')}]
                 </h3>UPM用户登录</span>
                 <s:if test="hasActionErrors()">
 		   			<div class="alert alert-warning" style="list-style:none">
@@ -138,9 +138,9 @@
     <div class="row">
     	<div class="footer">
     		<div class="alert alert-info">Copyright ©版权所有2017-2019 <br/>
-    		 技术支持:${upmTeachMobile} <br/>
-    		 微信号码:${upmWeiXinCode} <br/>
-    		  邮箱号码:${upmEmailCode} <br/>
+    		 技术支持:${fns:getProperty('upmTeachMobile')} <br/>
+    		 微信号码:${fns:getProperty('upmWeiXinCode')}<br/>
+    		  邮箱号码:${fns:getProperty('upmEmailCode')} <br/>
     		</div>
     	</div>
     </div>

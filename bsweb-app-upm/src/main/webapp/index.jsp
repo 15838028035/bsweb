@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>UPM统一用户权限流程管理</title>
+  <title>${fns:getProperty('upmProductName')}</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 </head>
@@ -155,7 +155,7 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>当前版本:</b> ${upmVersion}
+      <b>当前版本:</b>${fns:getProperty('upmVersion')}
     </div>
     <strong>Copyright &copy; 2017-2019</strong> 版权所有
     

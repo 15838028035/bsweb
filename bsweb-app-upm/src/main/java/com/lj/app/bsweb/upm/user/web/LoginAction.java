@@ -83,13 +83,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	public String goToLogin() throws Exception {
-		String upmTeachMobile = PropertiesFromTableUtil.getProperty("upmTeachMobile");
-		String upmWeiXinCode = PropertiesFromTableUtil.getProperty("upmWeiXinCode");
-		String upmEmailCode = PropertiesFromTableUtil.getProperty("upmEmailCode");
-		
-		Struts2Utils.getRequest().setAttribute("upmTeachMobile", upmTeachMobile);
-		Struts2Utils.getRequest().setAttribute("upmWeiXinCode", upmWeiXinCode);
-		Struts2Utils.getRequest().setAttribute("upmEmailCode", upmEmailCode);
 		return SecurityConstants.LOGIN;
 	}
 	
