@@ -101,7 +101,7 @@
                     <input type="text" class="form-control fa fa-user" id="loginNo" name="loginNo" placeholder="登陆账号或手机号码">
                 </div>
                 
-                 <c:if test="${springProfilesActive == 'dev' || springProfilesActive == 'test'}">
+                 <c:if test="${fns:getProperty('spring.profiles.active') eq 'dev'}">
 	                <div class="form-group">
 	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码" value="123456">
 	                </div>
@@ -114,7 +114,20 @@
                		 </div>
                 </c:if>
                 
-                <c:if test="${springProfilesActive == 'pro'}">
+                <c:if test="${fns:getProperty('spring.profiles.active') eq 'test'}">
+	                <div class="form-group">
+	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码" value="123456">
+	                </div>
+	                 <div class="form-group">
+                    <input type="text" class="form-control" id="identifyingCode" name="identifyingCode" placeholder="验证码" value="" maxLength="4">
+                	</div>
+                	 <div class="form-group">
+                    <img id="identifyingCodeImg"   src="${ctx}/identifyingcode!getIdentifyingCodeNew.action"/>
+                    <a id="identifyingCodeChange" href="javascript:" class="aBlue">看不清</a>
+               		 </div>
+                </c:if>
+                
+                <c:if test="${fns:getProperty('spring.profiles.active') eq 'pro'}">
 	                <div class="form-group">
 	                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码">
 	                </div>
