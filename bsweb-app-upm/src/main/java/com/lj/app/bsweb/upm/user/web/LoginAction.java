@@ -28,7 +28,6 @@ import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmUserService;
 import com.lj.app.core.common.cache.CacheFactory;
 import com.lj.app.core.common.pagination.PageTool;
-import com.lj.app.core.common.properties.PropertiesFromTableUtil;
 import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.security.CMSecurityContext;
 import com.lj.app.core.common.security.DesUtil;
@@ -83,6 +82,10 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 	}
 	
 	public String goToLogin() throws Exception {
+		UpmUser  upmUser = (UpmUser)Struts2Utils.getSession().getAttribute(SessionCode.MAIN_ACCT);
+		if(upmUser!=null){
+			goToIndex();
+		}
 		return SecurityConstants.LOGIN;
 	}
 	
