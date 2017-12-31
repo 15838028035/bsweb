@@ -51,7 +51,7 @@ body {
 #toolbox {
     border:1px solid #9AC3E1;
 	position: absolute;
-	top: 10;
+	top: 50px;
 	left: 10;
 	background-color: #fff;
 	width: 120px;
@@ -60,7 +60,7 @@ body {
 }
 #toolbox_handle {
 	border:1px solid #9AC3E1;
-	margin-top:1px;
+	margin-top:20px;
 	margin-bottom:10px;
 	width:98%;
 	align:center;
