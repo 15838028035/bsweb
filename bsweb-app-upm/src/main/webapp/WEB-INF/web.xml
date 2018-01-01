@@ -136,6 +136,19 @@
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
   
+  <!-- DruidStatView -->
+	<servlet>
+		<servlet-name>DruidStatView</servlet-name>
+		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+		<init-param>
+			<param-name>allow</param-name>
+			<param-value>127.0.0.1</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DruidStatView</servlet-name>
+		<url-pattern>/druid/*</url-pattern>
+</servlet-mapping>
  
   <context-param>
     <param-name>webAppRootKey</param-name>
@@ -167,9 +180,6 @@
     <error-code>404</error-code>
     <location>/jsp/common/404.jsp</location>
   </error-page>
-  <welcome-file-list>
-    <welcome-file>/login.jsp</welcome-file>
-  </welcome-file-list>
   <login-config>
     <auth-method>BASIC</auth-method>
   </login-config>
