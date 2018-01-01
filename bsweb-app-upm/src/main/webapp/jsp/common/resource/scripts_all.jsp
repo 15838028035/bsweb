@@ -41,9 +41,6 @@
 <%-- <link href="${ctx}/scripts/BootSideMenu/css/BootSideMenu.css" rel="stylesheet"> --%>
 <%-- <script src="${ctx}/scripts/BootSideMenu/js/BootSideMenu.js"></script> --%>
 
-<link href="${ctx}/scripts/Magnific-Popup/magnific-popup.css" rel="stylesheet">
-<script src="${ctx}/scripts/Magnific-Popup/jquery.magnific-popup.js"></script>
-
 	<!-- ui -->
 	<script src="${ctx}/scripts/jquery/jqueryui/jquery-ui-1.8.1.custom.min.js" type="text/javascript"></script>
 	
@@ -62,3 +59,5 @@
 <script src="${ctx}/scripts/adminLTE/js/adminlte.js"></script>
 <%-- <script src="${ctx}/scripts/adminLTE/plugins/slimScroll/jquery.slimscroll.js"></script> --%>
 <%-- <script src="${ctx}/scripts/adminLTE/js/app.js"></script> --%>
+
+<script src="${ctx}/scripts/mustache.js"></script>

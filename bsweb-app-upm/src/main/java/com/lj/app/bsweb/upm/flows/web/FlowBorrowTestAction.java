@@ -320,6 +320,71 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 		return null;
 	}
 
+	/**
+	 * 申请测试
+	 * @return
+	 */
+	public String goToFlowBorrowTestApplyAudit() {
+		if((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId))|| (readonly!=null&& "1".equals(readonly))) {
+			if(StringUtil.isNotBlank(orderId)){//查询流程申请数据
+				Map<String,String> querMap = new HashMap<String,String>();
+				querMap.put("flowOrderId", orderId);
+				List list = flowBorrowTestService.queryForList(querMap);
+				if(list!=null && list.size()>0){
+				flowBorrowTest =(FlowBorrowTest) list.get(0);
+				}
+				operate="edit";
+			}
+			
+			return "flowBorrowTestApplyAudit";
+		} else {
+			Map<String,String> querMap = new HashMap<String,String>();
+			querMap.put("flowOrderId", orderId);
+			querMap.put("flowTaskId", taskId);
+			
+			List list = flowBorrowTestService.queryForList(querMap);
+			if(list!=null && list.size()>0){
+			flowBorrowTest =(FlowBorrowTest) list.get(0);
+			}
+			
+			return "flowBorrowTestApplyAudit";
+		}
+	}
+	
+	/**
+	 * 申请测试
+	 * @return
+	 */
+	public String viewFlowBorrowTestApplyInfo() {
+		if((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId))|| (readonly!=null&& "1".equals(readonly))) {
+			if(StringUtil.isNotBlank(orderId)){//查询流程申请数据
+				Map<String,String> querMap = new HashMap<String,String>();
+				querMap.put("flowOrderId", orderId);
+				List list = flowBorrowTestService.queryForList(querMap);
+				if(list!=null && list.size()>0){
+				flowBorrowTest =(FlowBorrowTest) list.get(0);
+				}
+				
+				Struts2Utils.renderJson(list);
+			}
+			
+			return null;
+		} else {
+			Map<String,String> querMap = new HashMap<String,String>();
+			querMap.put("flowOrderId", orderId);
+			querMap.put("flowTaskId", taskId);
+			
+			List list = flowBorrowTestService.queryForList(querMap);
+			if(list!=null && list.size()>0){
+			flowBorrowTest =(FlowBorrowTest) list.get(0);
+			}
+			
+			Struts2Utils.renderJson(flowBorrowTest);
+			return null;
+			
+		}
+	}
+	
 	@Override
 	public String delete() throws Exception {
 		return null;
