@@ -78,7 +78,7 @@
 <body>
 <div class="container">
 <button type="button" id="backToHomeButton"  class="btn btn-primary btn-block">返回</button> 
-<div id="toolbox">
+<div id="toolbox" style="margin-top:50px">
 <div id="toolbox_handle">工具集</div>
 <div class="node" id="save"><img src="${ctx}/scripts/flows/images/save.gif" />&nbsp;&nbsp;保存</div>
 <div>
