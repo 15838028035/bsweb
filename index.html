@@ -2,32 +2,189 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>UPM用户权限管理系统--用户登录</title>
+<!--css样式-->
+<link href="./scripts/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="./scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+<!--js-->
 
-<style type="text/css">
+<script src="./scripts/jquery/jquery-3.2.0.min.js"></script>
+<script src="./scripts/bootstrap/js/bootstrap.js"></script>
+<script src="./scripts/bootstrap-table/bootstrap-table.js"></script>
+<script src="./scripts/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script src="./scripts/bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 
-	</style>
-	
-	
+<link href="./scripts/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet">
+<script src="./scripts/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+<script src="./scripts/bootbox/bootbox.min.js"></script>
+
+<script src="./scripts/bootstrap-datetimepicker/js/moment.js"></script>
+<script src="./scripts/bootstrap-datetimepicker/js/moment_zh-CN.js"></script>
+<link href="./scripts/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+<script src="./scripts/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="./scripts/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<link href="./scripts/bootstrapvalidator/css/bootstrapValidator.css" rel="stylesheet">
+<script src="./scripts/bootstrapvalidator/js/bootstrapValidator.js"></script>
+<script src="./scripts/bootstrapvalidator/js/language/zh_CN.js"></script>
+
+<link href="./scripts/BootSideMenu/css/BootSideMenu.css" rel="stylesheet">
+<script src="./scripts/BootSideMenu/js/BootSideMenu.js"></script>
+
+<link href="./scripts/Magnific-Popup/magnific-popup.css" rel="stylesheet">
+<script src="./scripts/Magnific-Popup/jquery.magnific-popup.js"></script>
+
 </head>
-<body>
-	<h1>统一用户权限流程管理系统</h1>
-	<h2>系统版本v2.0.2</h2>
-	<h3>编写人:15838028035,日期:2018-01-09</h3>
-	<h3>目录</h3>
-	<h3>系统介绍</h3>
-	<h3>功能介绍</h3>
-	<h3>用户管理</h3>
-	<h3>角色管理</h3>
-	<h3>权限管理</h3>
-	<h3>应用管理</h3>
-	<h3>配置管理</h3>
-	<h3>流程定义</h3>
-	<h3>流程实例</h3>
-	<h3>代办任务</h3>
-	<h3>历史任务</h3>
+<body class="hold-transition skin-blue  sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
 
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>UPM</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>用户权限流程管理</b></span>
+    </a>
+    </header>
+
+  <!-- =============================================== -->
+
+  <!-- Left side column. contains the sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      
+      <!-- search form -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+               
+	<li class="treeview active">
+          <a href="#">
+            <span>导航菜单</span>
+            <span class="pull-right-container">
+              <span class="label label-primary pull-right"></span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+             
+         <li>
+          <a href=""  target="menuFrame">
+            <span>用户管理</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>角色管理</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>权限管理</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>应用管理</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>配置管理</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>通知管理</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>流程定义</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>流程实例</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>代办任务</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>历史任务</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+	<li>
+          <a href=""  target="menuFrame">
+            <span>业务流程数据查询</span>
+            <span class="pull-right-container"></span>
+          </a>
+        </li>
+		
+            </li>
+          </ul>
+        </li>
+        
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- =============================================== -->
+
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+        	<iframe id="menuFrame" name="menuFrame"  scrolling="auto" width="100%" height="800px" min-height="800px" frameborder="0"></iframe>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>当前版本:</b>v2.0.2
+    </div>
+    <strong>Copyright &copy; 2017-2019</strong> 版权所有
+    
+  </footer>
+     
+  <div class="control-sidebar-bg"></div>
+</div
 </body>
 </html>
