@@ -1,7 +1,7 @@
 .sidebar {
     z-index: 999999;
     position: fixed;
-    top: -1px;
+    top: 50px;
     bottom: -1px;
     padding: 0;
     width: auto;

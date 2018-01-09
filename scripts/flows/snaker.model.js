@@ -55,7 +55,7 @@ $.extend(true,snakerflow.config.tools.states,{
 					displayName: {name:'displayName',label: '显示名称', value:'', editor: function(){return new snakerflow.editors.textEditor();}},
 					form: {name:'form', label : '表单', value:'', editor: function(){return new snakerflow.editors.inputEditor();}},
 					assignee: {name:'assignee', value:''},
-					assigneeDisplay: {name:'assigneeDisplay', label: '参与者', value:'', editor: function(){return new snakerflow.editors.assigneeEditor('/dialogs/selectDialog.jsp?type=orgUserTree');}},
+					assigneeDisplay: {name:'assigneeDisplay', label: '参与者', value:'', editor: function(){return new snakerflow.editors.assigneeEditor('/jsp/user/upmUserSelectNew.jsp');}},
 					assignmentHandler: {name:'assignmentHandler', label: '参与者处理类', value:'', editor: function(){return new snakerflow.editors.inputEditor();}},
 					taskType: {name:'taskType', label : '任务类型', value:'', editor: function(){return new snakerflow.editors.selectEditor([{name:'主办任务',value:'Major'},{name:'协办任务',value:'Aidant'}]);}},
 					performType: {name:'performType', label : '参与类型', value:'', editor: function(){return new snakerflow.editors.selectEditor([{name:'普通参与',value:'ANY'},{name:'会签参与',value:'ALL'}]);}},

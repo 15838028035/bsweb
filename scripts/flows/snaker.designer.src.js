@@ -263,28 +263,28 @@
                 _rect.drag(function(dx, dy) {
                                         dragMove(dx, dy);
                                 }, function() {
-                                        dragStart()
+                                        dragStart();
                                 }, function() {
                                         dragUp();
                                 });
                 _img.drag(function(dx, dy) {
                                         dragMove(dx, dy);
                                 }, function() {
-                                        dragStart()
+                                        dragStart();
                                 }, function() {
                                         dragUp();
                                 });
                 _name.drag(function(dx, dy) {
                                         dragMove(dx, dy);
                                 }, function() {
-                                        dragStart()
+                                        dragStart();
                                 }, function() {
                                         dragUp();
                                 });
                 _text.drag(function(dx, dy) {
                                         dragMove(dx, dy);
                                 }, function() {
-                                        dragStart()
+                                        dragStart();
                                 }, function() {
                                         dragUp();
                                 });
@@ -747,7 +747,7 @@
                                 _n.drag(function(dx, dy) {
                                                         dragMove(dx, dy);
                                                 }, function() {
-                                                        dragStart()
+                                                        dragStart();
                                                 }, function() {
                                                         dragUp();
                                                 });// 初始化拖动
