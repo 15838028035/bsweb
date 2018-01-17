@@ -19,31 +19,28 @@
  ===============================================
  
  
-06. Working with issues
-Labels
+### 标签含义
 
-    Bug - Defect of some sort
-    Duplicate - There is another issue reporting the same
-    Enhancement - Enhances the project deliveries somehow
-    Help wanted - Looking for help from contributors
-    Good first issue - The issue is easy to resolve
-    Needs splitting - The issue is too big and should be split into smaller ones
-    New pattern - The issue is a new design pattern
-    Question - The issue is a question or needs discussion
-    Technical - The issue is a technical improvement
-    Under construction - Someone is actively working on the issue
-    Under review - The issue is being reviewed by someone
-    Web site - The issue concerns the web site
-    Wont fix - The issue will not be resolved
-    Needs discussion - The issue needs to be clarified with discussion prior to implementation
+    #### Bug -问题
+    #### Duplicate - 重复
+    #### Enhancement - 增强
+    #### Help wanted - 获得帮助
+    #### Good first issue - 容易解决
+    #### Needs splitting - 待拆分
+    #### Question - 问题
+    #### Technical - 技术问题
+    #### Under construction - 工作中
+    #### Under review - 待评审
+    #### Wont fix - 不解决
+    #### Needs discussion - 待讨论
 
-Milestone
+### Milestone
 
-    Milestone - The target milestone when the issue will be resolved
+    Milestone - 里程碑
 
-Assignee
+#### Assignee
 
-    Assignee - Who is working on the issue
+    Assignee -分配人员
 
 
  
