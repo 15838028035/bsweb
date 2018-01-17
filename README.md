@@ -17,22 +17,21 @@
  1. bsweb-app-redis redis管理项目
  2. bsweb-app-upm upm统一用户角色权限管理系统
  ===============================================
- 
- 
+  
 ### 标签含义
 
-    #### Bug -问题
-    #### Duplicate - 重复
-    #### Enhancement - 增强
-    #### Help wanted - 获得帮助
-    #### Good first issue - 容易解决
-    #### Needs splitting - 待拆分
-    #### Question - 问题
-    #### Technical - 技术问题
-    #### Under construction - 工作中
-    #### Under review - 待评审
-    #### Wont fix - 不解决
-    #### Needs discussion - 待讨论
+#### Bug -问题
+#### Duplicate - 重复
+#### Enhancement - 增强
+#### Help wanted - 获得帮助
+#### Good first issue - 容易解决
+#### Needs splitting - 待拆分
+#### Question - 问题
+#### Technical - 技术问题
+#### Under construction - 工作中
+#### Under review - 待评审
+#### Wont fix - 不解决
+#### Needs discussion - 待讨论
 
 ### Milestone
 
