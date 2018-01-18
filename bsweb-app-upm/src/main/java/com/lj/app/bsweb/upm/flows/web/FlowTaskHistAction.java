@@ -86,8 +86,8 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
 				page.setSortColumns(orderBy);
 			}
 			
-			if (StringUtil.isNotBlank(this.searchText)) {
-				condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')" + searchText);
+			if (StringUtil.isNotBlank(this.conditionWhere)) {
+				condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')" + conditionWhere);
 			}else {
 				condition.put("conditionWhere", " and ta. actor_id in ('" + this.getUserName() + "')" );
 			}

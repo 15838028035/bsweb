@@ -1,12 +1,10 @@
 package com.lj.app.bsweb.upm.role.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.security.CMSecurityContext;
+import com.lj.app.core.common.security.CmSecurityContext;
 
 public interface UpmPermissionService<UpmPermission> extends BaseService {
 
@@ -26,7 +24,7 @@ public interface UpmPermissionService<UpmPermission> extends BaseService {
 	 */
 	public List<UpmPermission> findPermissionByUserId(int userId, String appId,String type);
 	
-	public CMSecurityContext getSecurityContext(int userId, String contextPath, String appId) ;
+	public CmSecurityContext getSecurityContext(int userId, String contextPath, String appId) ;
 	
 	/**
 	 * 根据appId查询permissionId

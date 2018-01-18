@@ -109,8 +109,8 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
 				page.setSortColumns(orderBy);
 			}
-			if (StringUtil.isNotBlank(this.searchText)) {
-				condition.put("conditionWhere", " and a. actor_id in ('" + this.getUserName() + "')" +  this.searchText);
+			if (StringUtil.isNotBlank(this.conditionWhere)) {
+				condition.put("conditionWhere", " and a. actor_id in ('" + this.getUserName() + "')" +  this.conditionWhere);
 			}else {
 				condition.put("conditionWhere", " and a. actor_id in ('" + this.getUserName() + "')" );
 			}

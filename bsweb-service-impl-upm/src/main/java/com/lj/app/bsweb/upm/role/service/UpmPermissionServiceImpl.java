@@ -10,7 +10,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.lj.app.core.common.base.service.BaseServiceImpl;
-import com.lj.app.core.common.security.CMSecurityContext;
+import com.lj.app.core.common.security.CmSecurityContext;
 import com.lj.app.core.common.util.StringUtil;
 
 @Service("upmPermissionService")
@@ -56,13 +56,13 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 		return this.queryForList("findPermissionByUserId",condition);
 	}
 	
-	public CMSecurityContext getSecurityContext(int userId, String contextPath, String appId) {
-		CMSecurityContext securityContext = new CMSecurityContext();
+	public CmSecurityContext getSecurityContext(int userId, String contextPath, String appId) {
+		CmSecurityContext securityContext = new CmSecurityContext();
 		
 		//设置主帐号信息
 		securityContext.setMainAcctId(Long.parseLong(String.valueOf(userId)));
 		
-		CMSecurityContext mainAcct;
+		CmSecurityContext mainAcct;
 		List<com.lj.app.bsweb.upm.role.entity.UpmPermission> permissionList = findPermissionByUserId(userId, appId);
 
 		//设置权限相关的code和url

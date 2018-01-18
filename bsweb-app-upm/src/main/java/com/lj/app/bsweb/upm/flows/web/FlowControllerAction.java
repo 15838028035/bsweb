@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -35,7 +36,6 @@ import com.lj.app.core.common.flows.service.FlowProcessService;
 import com.lj.app.core.common.flows.service.FlowQueryService;
 import com.lj.app.core.common.flows.service.FlowTaskService;
 import com.lj.app.core.common.pagination.PageTool;
-import com.lj.app.core.common.util.ConvertUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
@@ -182,19 +182,19 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
                         value = paraValue;
                         break;
                     case 'I':
-                        value = ConvertUtil.convertStringToObject(paraValue, Integer.class);
+                        value = ConvertUtils.convert(paraValue, Integer.class);
                         break;
                     case 'L':
-                        value = ConvertUtil.convertStringToObject(paraValue, Long.class);
+                        value = ConvertUtils.convert(paraValue, Long.class);
                         break;
                     case 'B':
-                        value = ConvertUtil.convertStringToObject(paraValue, Boolean.class);
+                        value = ConvertUtils.convert(paraValue, Boolean.class);
                         break;
                     case 'D':
-                        value = ConvertUtil.convertStringToObject(paraValue, Date.class);
+                        value = ConvertUtils.convert(paraValue, Date.class);
                         break;
                     case 'N':
-                        value = ConvertUtil.convertStringToObject(paraValue, Double.class);
+                        value = ConvertUtils.convert(paraValue, Double.class);
                         break;
                     default:
                         value = paraValue;
@@ -307,19 +307,19 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
                         value = paraValue;
                         break;
                     case 'I':
-                        value = ConvertUtil.convertStringToObject(paraValue, Integer.class);
+                        value = ConvertUtils.convert(paraValue, Integer.class);
                         break;
                     case 'L':
-                        value = ConvertUtil.convertStringToObject(paraValue, Long.class);
+                        value = ConvertUtils.convert(paraValue, Long.class);
                         break;
                     case 'B':
-                        value = ConvertUtil.convertStringToObject(paraValue, Boolean.class);
+                        value = ConvertUtils.convert(paraValue, Boolean.class);
                         break;
                     case 'D':
-                        value = ConvertUtil.convertStringToObject(paraValue, Date.class);
+                        value = ConvertUtils.convert(paraValue, Date.class);
                         break;
                     case 'N':
-                        value = ConvertUtil.convertStringToObject(paraValue, Double.class);
+                        value = ConvertUtils.convert(paraValue, Double.class);
                         break;
                     default:
                         value = paraValue;

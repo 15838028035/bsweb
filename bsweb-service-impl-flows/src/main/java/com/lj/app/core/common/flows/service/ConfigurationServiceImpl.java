@@ -129,7 +129,7 @@ public class ConfigurationServiceImpl  implements ConfigurationService,Serializa
 		DocumentBuilder documentBuilder = XmlHelper.createDocumentBuilder();
 		try {
 			if (documentBuilder != null) {
-				InputStream input = FileUtil.openStream(resource);
+				InputStream input = FileUtil.getResourceAsStream(resource);
 				if(input == null) return;
 				Document doc = documentBuilder.parse(input);
 				Element configElement = doc.getDocumentElement();

@@ -241,7 +241,7 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
 			
 			Integer version = getLatestProcessVersion(model.getName());
 			com.lj.app.core.common.flows.entity.FlowProcess entity = new com.lj.app.core.common.flows.entity.FlowProcess();
-			entity.setFlowNo(StringUtil.getUUIDKey());
+			entity.setFlowNo(StringUtil.getUuidKey());
 			if(version == null || version < 0) {
 				entity.setFlowVersion(0);
 			} else {

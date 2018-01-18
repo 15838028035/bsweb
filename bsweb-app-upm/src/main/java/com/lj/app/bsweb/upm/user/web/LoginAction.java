@@ -22,14 +22,12 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.bsweb.upm.role.entity.UpmPermission;
 import com.lj.app.bsweb.upm.role.service.UpmPermissionService;
 import com.lj.app.core.common.api.SecurityApiService;
-import com.lj.app.core.common.audit.CMCode;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmUserService;
 import com.lj.app.core.common.cache.CacheFactory;
-import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.properties.PropertiesUtil;
-import com.lj.app.core.common.security.CMSecurityContext;
+import com.lj.app.core.common.security.CmSecurityContext;
 import com.lj.app.core.common.security.DesUtil;
 import com.lj.app.core.common.security.SecurityConstants;
 import com.lj.app.core.common.util.AjaxResult;
@@ -172,7 +170,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 			
 			logger.info("needValidateUrlSet load......");
 			
-			CMSecurityContext securityContext = new CMSecurityContext();
+			CmSecurityContext securityContext = new CmSecurityContext();
 			
 			securityContext.setMainAcctId(Long.getLong(String.valueOf(loginUser.getId())));
 			
@@ -249,7 +247,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		
 		logger.info("needValidateUrlSet load......");
 		
-		CMSecurityContext securityContext = new CMSecurityContext();
+		CmSecurityContext securityContext = new CmSecurityContext();
 		
 		securityContext.setMainAcctId(Long.getLong(String.valueOf(loginUser.getId())));
 		
@@ -279,7 +277,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		UpmUser user = new UpmUser();
 		user.setLoginNo(loginNo);
 		user.setPwd(pwd);
-		user.setLockStatus(CMCode.LOCK_SATE_0);
+		user.setLockStatus("0");
 		
 		List<UpmUser> userList = upmUserService.findBaseModeList(user);
 		
@@ -289,7 +287,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 		}
 		JSONObject jsonObj = new JSONObject();
 		
-		Struts2Utils.renderText(PageTool.jsonObjectToJsonJQGrid(jsonObj.fromObject(upmUser)));
+	   Struts2Utils.renderText(JSONObject.fromObject(upmUser).toString());
 		return null;
 	}
 	

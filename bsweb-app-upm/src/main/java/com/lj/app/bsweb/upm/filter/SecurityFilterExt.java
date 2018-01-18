@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.lj.app.bsweb.upm.role.service.UpmPermissionService;
 import com.lj.app.core.common.base.entity.UpmUser;
-import com.lj.app.core.common.security.CMSecurityContext;
+import com.lj.app.core.common.security.CmSecurityContext;
 import com.lj.app.core.common.security.SecurityConstants;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.SessionCode;
@@ -97,7 +97,7 @@ public class SecurityFilterExt implements Filter {
 			
 			String requestUri = request.getRequestURI().toString();
 			String contextPath = request.getContextPath();
-			CMSecurityContext securityContext = (CMSecurityContext) session.getAttribute(SecurityConstants.SECURITY_CONTEXT);
+			CmSecurityContext securityContext = (CmSecurityContext) session.getAttribute(SecurityConstants.SECURITY_CONTEXT);
 			
 			//如果用户已经登录，那么就直接到首页，防止重复登录
 			if(requestUri.equals(contextPath + "/login.jsp")) {
@@ -176,7 +176,7 @@ public class SecurityFilterExt implements Filter {
 	 * @param securityContext
 	 * @return
 	 */
-	private boolean validatePermission(CMSecurityContext securityContext, String requestUri, String contextPath) {
+	private boolean validatePermission(CmSecurityContext securityContext, String requestUri, String contextPath) {
 		if(!isSkipValidate(requestUri, contextPath)){
 			if(!securityContext.hasUrlPermission(requestUri)) {
 				return false;
@@ -192,7 +192,7 @@ public class SecurityFilterExt implements Filter {
 	 * @param requestUri 
 	 * @return
 	 */
-	private boolean validateSession(CMSecurityContext securityContext, String requestUri, String contextPath) {
+	private boolean validateSession(CmSecurityContext securityContext, String requestUri, String contextPath) {
 		if(!isSkipSessionValidate(requestUri, contextPath)) {
 			if(securityContext == null) {
 				return false;
