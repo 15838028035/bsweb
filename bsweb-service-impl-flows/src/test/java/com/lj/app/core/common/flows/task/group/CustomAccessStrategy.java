@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.lj.app.core.common.flows.service.GeneralAccessStrategyServiceImpl;
 
+/**
+ * 基于用户或组（角色、部门等）的访问策略类 该策略类适合组作为参与者的情况
+ */
 public class CustomAccessStrategy extends GeneralAccessStrategyServiceImpl {
 
   @Override

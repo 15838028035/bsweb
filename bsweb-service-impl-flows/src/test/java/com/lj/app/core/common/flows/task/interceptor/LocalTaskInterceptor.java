@@ -7,6 +7,10 @@ import com.lj.app.core.common.flows.FlowInterceptor;
 import com.lj.app.core.common.flows.core.Execution;
 import com.lj.app.core.common.flows.entity.FlowTask;
 
+/**
+ * 测试局部拦截器
+ *
+ */
 public class LocalTaskInterceptor implements FlowInterceptor {
   private  final Log log = LogFactory.getLog(LocalTaskInterceptor.class);
 
