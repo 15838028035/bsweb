@@ -71,7 +71,7 @@ public class FlowQueryServiceImpl implements FlowQueryService, Serializable {
   public List<FlowTaskHist> getHistoryTasks(String orderId) {
     FlowTaskHist flowTaskHist = new FlowTaskHist();
     flowTaskHist.setFlowOrderId(Integer.valueOf(orderId));
-    return flowEngineFacets.getEngine().FlowTaskHistService().queryForList(flowTaskHist);
+    return flowEngineFacets.getEngine().flowTaskHistService().queryForList(flowTaskHist);
   }
 
   /**
@@ -81,7 +81,7 @@ public class FlowQueryServiceImpl implements FlowQueryService, Serializable {
     FlowTaskHist flowTaskHist = new FlowTaskHist();
     flowTaskHist.setFlowOrderId(Integer.valueOf(orderId));
     flowTaskHist.setTaskName(taskName);
-    return flowEngineFacets.getEngine().FlowTaskHistService().queryForList(flowTaskHist);
+    return flowEngineFacets.getEngine().flowTaskHistService().queryForList(flowTaskHist);
   }
 
 }

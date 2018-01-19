@@ -100,7 +100,7 @@ public class FlowTaskServiceApiImpl implements FlowTaskServiceApi {
       }
     }
 
-    flowEngineFacets.getEngine().FlowTaskHistService().insertObject(flowTaskHist);
+    flowEngineFacets.getEngine().flowTaskHistService().insertObject(flowTaskHist);
     flowEngineFacets.getEngine().flowTaskService().delete(task.getId());
     flowEngineFacets.getEngine().flowCompletionService().complete(flowTaskHist);
     return task;
@@ -161,7 +161,7 @@ public class FlowTaskServiceApiImpl implements FlowTaskServiceApi {
    * 唤醒指定的历史任务
    */
   public FlowTask resume(String taskId, String operator) throws Exception {
-    FlowTaskHist flowTaskHist = (FlowTaskHist) flowEngineFacets.getEngine().FlowTaskHistService().getInfoByKey(taskId);
+    FlowTaskHist flowTaskHist = (FlowTaskHist) flowEngineFacets.getEngine().flowTaskHistService().getInfoByKey(taskId);
     Assert.notNull(flowTaskHist, "指定的历史任务[id=" + taskId + "]不存在");
     boolean isAllowed = true;
     if (StringUtil.isNotBlank(flowTaskHist.getOperator())) {
@@ -276,7 +276,7 @@ public class FlowTaskServiceApiImpl implements FlowTaskServiceApi {
    * 撤回指定的任务
    */
   public FlowTask withdrawTask(String taskId, String operator) throws Exception {
-    FlowTaskHist hist = (FlowTaskHist) flowEngineFacets.getEngine().FlowTaskHistService().getInfoByKey(taskId);
+    FlowTaskHist hist = (FlowTaskHist) flowEngineFacets.getEngine().flowTaskHistService().getInfoByKey(taskId);
     Assert.notNull(hist, "指定的历史任务[id=" + taskId + "]不存在");
     List<FlowTask> tasks;
     if (hist.isPerformAny()) {
@@ -307,7 +307,7 @@ public class FlowTaskServiceApiImpl implements FlowTaskServiceApi {
       throw new FlowException("上一步任务ID为空，无法驳回至上一步处理");
     }
     NodeModel current = model.getNode(currentTask.getTaskName());
-    FlowTaskHist history = (FlowTaskHist) flowEngineFacets.getEngine().FlowTaskHistService().getInfoByKey(parentTaskId);
+    FlowTaskHist history = (FlowTaskHist) flowEngineFacets.getEngine().flowTaskHistService().getInfoByKey(parentTaskId);
 
     NodeModel parent = model.getNode(history.getTaskName());
     if (!NodeModel.canRejected(current, parent)) {
