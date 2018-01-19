@@ -225,7 +225,7 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
   /**
    * 根據input輸入流，部署流程定义
    * 
-   * @param input
+   * @param inputStr
    *          流程定义输入流
    * @param creator
    *          创建人
@@ -296,7 +296,7 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
    * 
    * @param id
    *          流程定义id
-   * @param input
+   * @param inputStr
    *          流程定义xml内容
    */
   public void redeploy(String id, String inputStr) {

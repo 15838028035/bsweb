@@ -34,15 +34,24 @@ public class FlowEngineFacetsServiceImpl implements FlowEngineFacetsService, Ser
     return flowEngine;
   }
 
+  /**
+   * 根据流程定义ID，操作人ID，参数列表启动流程实例
+   */
   public FlowOrder startInstanceById(String processId, String operator, Map<String, Object> args) throws Exception {
     return getEngine().startInstanceById(processId, operator, args);
   }
 
+  /**
+   * 根据流程名称、版本号、操作人、参数列表启动流程实例
+   */
   public FlowOrder startInstanceByName(String name, Integer version, String operator, Map<String, Object> args)
       throws Exception {
     return getEngine().startInstanceByName(name, version, operator, args);
   }
 
+  /**
+   * 根据流程名称、版本号、操作人、参数列表启动流程实例
+   */
   public FlowOrder startAndExecute(String name, Integer version, String operator, Map<String, Object> args)
       throws Exception {
     FlowOrder order = getEngine().startInstanceByName(name, version, operator, args);
@@ -55,6 +64,9 @@ public class FlowEngineFacetsServiceImpl implements FlowEngineFacetsService, Ser
     return order;
   }
 
+  /**
+   * 根据流程名称、版本号、操作人、参数列表启动流程实例
+   */
   public FlowOrder startAndExecute(String processId, String operator, Map<String, Object> args) throws Exception {
     FlowOrder order = getEngine().startInstanceById(processId, operator, args);
     List<FlowTask> tasks = getEngine().flowQueryService().getActiveTasks(order.getId());
@@ -75,18 +87,27 @@ public class FlowEngineFacetsServiceImpl implements FlowEngineFacetsService, Ser
     return getEngine().executeAndJumpTask(taskId, operator, args, nodeName);
   }
 
+  /**
+   * 转办
+   */
   public List<FlowTask> transferMajor(String taskId, String operator, String... actors) throws Exception {
     List<FlowTask> tasks = getEngine().FlowTaskServiceApi().createNewTask(taskId, TaskType.Major.ordinal(), actors);
     getEngine().FlowTaskServiceApi().complete(taskId, operator);
     return tasks;
   }
 
+  /**
+   * 转办
+   */
   public List<FlowTask> transferAidant(String taskId, String operator, String... actors) throws Exception {
     List<FlowTask> tasks = getEngine().FlowTaskServiceApi().createNewTask(taskId, TaskType.Aidant.ordinal(), actors);
     getEngine().FlowTaskServiceApi().complete(taskId, operator);
     return tasks;
   }
 
+  /**
+   * 流程数据
+   */
   public Map<String, Object> flowData(String orderId, String taskName) {
     Map<String, Object> data = new HashMap<String, Object>();
     if (StringUtil.isNotBlank(orderId) && StringUtil.isNotBlank(taskName)) {

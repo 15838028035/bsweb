@@ -10,9 +10,11 @@ import com.lj.app.core.common.base.service.BaseServiceImpl;
  * 
  * 流程审批服务
  *
- * @param <FlowApprove> 流程审批
+ * @param <FlowApprove>
+ *          流程审批
  */
 @Service("flowApproveService")
-public class FlowApproveServiceImpl<FlowApprove> extends BaseServiceImpl<FlowApprove> implements FlowApproveService<FlowApprove>, Serializable{
+public class FlowApproveServiceImpl<FlowApprove> extends BaseServiceImpl<FlowApprove>
+    implements FlowApproveService<FlowApprove>, Serializable {
 
 }

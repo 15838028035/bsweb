@@ -13,6 +13,7 @@ import com.lj.app.core.common.flows.entity.FlowLeaveTest;
  *
  */
 @Service("flowLeaveTestService")
-public class FlowLeaveTestServiceImpl extends BaseServiceImpl<FlowLeaveTest> implements FlowLeaveTestService,Serializable{
+public class FlowLeaveTestServiceImpl extends BaseServiceImpl<FlowLeaveTest>
+    implements FlowLeaveTestService, Serializable {
 
 }

@@ -216,6 +216,51 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
     current.setOperator(operator);
     return current;
   }
+  
+  /**
+   * 根据任务主键ID，操作人ID，参数列表完成任务，并且构造执行对象
+   * 
+   * @param taskId
+   *          任务id
+   * @param operator
+   *          操作人
+   * @param args
+   *          参数列表
+   * @return Execution
+   */
+  private Execution execute(String taskId, String operator, Map<String, Object> args) throws Exception {
+    if (args == null) {
+      args = new HashMap<String, Object>();
+    }
+    FlowTask task = flowTaskServiceApi.complete(taskId, operator, args);
+    if (LOG.isDebugEnabled()) {
+      LOG.debug("任务[taskId=" + taskId + "]已完成");
+    }
+    FlowOrder order = flowQueryService().getFlowOrder(task.getFlowOrderId().toString());
+    Assert.notNull(order, "指定的流程实例[id=" + task.getFlowOrderId() + "]已完成或不存在");
+    order.setUpdateByUname(operator);
+    order.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+
+    flowOrderService().updateObject(order);
+    // 协办任务完成不产生执行对象
+    if (!task.isMajor()) {
+      return null;
+    }
+    Map<String, Object> orderMaps = order.getVariableMap();
+    if (orderMaps != null) {
+      for (Map.Entry<String, Object> entry : orderMaps.entrySet()) {
+        if (args.containsKey(entry.getKey())) {
+          continue;
+        }
+        args.put(entry.getKey(), entry.getValue());
+      }
+    }
+    FlowProcess process = (FlowProcess) flowProcessService().getProcessById(order.getFlowProcessId());
+    Execution execution = new Execution(this, process, order, args);
+    execution.setOperator(operator);
+    execution.setTask(task);
+    return execution;
+  }
 
   /**
    * 根据任务主键ID执行任务
@@ -237,8 +282,9 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
   public List<FlowTask> executeTask(String taskId, String operator, Map<String, Object> args) throws Exception {
     // 完成任务，并且构造执行对象
     Execution execution = execute(taskId, operator, args);
-    if (execution == null)
+    if (execution == null)  {
       return Collections.emptyList();
+    }
     ProcessModel model = execution.getProcess().getModel();
     if (model != null) {
       NodeModel nodeModel = model.getNode(execution.getTask().getTaskName());
@@ -247,15 +293,16 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
     }
     return execution.getTasks();
   }
-
+  
   /**
    * 根据任务主键ID，操作人ID，参数列表执行任务，并且根据nodeName跳转到任意节点 1、nodeName为null时，则驳回至上一步处理 2、nodeName不为null时，则任意跳转，即动态创建转移
    */
   public List<FlowTask> executeAndJumpTask(String taskId, String operator, Map<String, Object> args, String nodeName)
       throws Exception {
     Execution execution = execute(taskId, operator, args);
-    if (execution == null)
+    if (execution == null)  {
       return Collections.emptyList();
+    }
     ProcessModel model = execution.getProcess().getModel();
     Assert.notNull(model, "当前任务未找到流程定义模型");
     if (StringUtil.isBlank(nodeName)) {
@@ -288,50 +335,6 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
     Execution execution = new Execution(this, process, order, args);
     execution.setOperator(operator);
     return flowTaskServiceApi.createTask(model, execution);
-  }
-
-  /**
-   * 根据任务主键ID，操作人ID，参数列表完成任务，并且构造执行对象
-   * 
-   * @param taskId
-   *          任务id
-   * @param operator
-   *          操作人
-   * @param args
-   *          参数列表
-   * @return Execution
-   */
-  private Execution execute(String taskId, String operator, Map<String, Object> args) throws Exception {
-    if (args == null)
-      args = new HashMap<String, Object>();
-    FlowTask task = flowTaskServiceApi.complete(taskId, operator, args);
-    if (LOG.isDebugEnabled()) {
-      LOG.debug("任务[taskId=" + taskId + "]已完成");
-    }
-    FlowOrder order = flowQueryService().getFlowOrder(task.getFlowOrderId().toString());
-    Assert.notNull(order, "指定的流程实例[id=" + task.getFlowOrderId() + "]已完成或不存在");
-    order.setUpdateByUname(operator);
-    order.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-
-    flowOrderService().updateObject(order);
-    // 协办任务完成不产生执行对象
-    if (!task.isMajor()) {
-      return null;
-    }
-    Map<String, Object> orderMaps = order.getVariableMap();
-    if (orderMaps != null) {
-      for (Map.Entry<String, Object> entry : orderMaps.entrySet()) {
-        if (args.containsKey(entry.getKey())) {
-          continue;
-        }
-        args.put(entry.getKey(), entry.getValue());
-      }
-    }
-    FlowProcess process = (FlowProcess) flowProcessService().getProcessById(order.getFlowProcessId());
-    Execution execution = new Execution(this, process, order, args);
-    execution.setOperator(operator);
-    execution.setTask(task);
-    return execution;
   }
 
   public ConfigurationService getConfigurationService() {

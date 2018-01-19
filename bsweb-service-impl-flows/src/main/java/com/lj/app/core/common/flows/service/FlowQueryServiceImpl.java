@@ -38,6 +38,9 @@ public class FlowQueryServiceImpl implements FlowQueryService, Serializable {
     return flowEngineFacets.getEngine().flowTaskService().queryForList(map);
   }
 
+  /**
+   * 活动任务
+   */
   public List<FlowTask> getActiveTasks(int flowOrderId) {
     Map<String, Object> map = new HashMap<String, Object>();
     map.put("flowOrderId", flowOrderId);
@@ -48,6 +51,9 @@ public class FlowQueryServiceImpl implements FlowQueryService, Serializable {
     return (FlowTask) flowEngineFacets.getEngine().flowTaskService().getInfoByKey(taskId);
   }
 
+  /**
+   * 查询审批
+   */
   public List<FlowApprove> queryApprove(String orderId, String taskId) throws Exception {
     FlowApprove flowApprove = new FlowApprove();
     flowApprove.setOrderId(Integer.valueOf(orderId));
@@ -59,12 +65,18 @@ public class FlowQueryServiceImpl implements FlowQueryService, Serializable {
     return (FlowOrderHist) flowEngineFacets.getEngine().flowOrderHistService().getInfoByKey(orderId);
   }
 
+  /**
+   * 历史任务
+   */
   public List<FlowTaskHist> getHistoryTasks(String orderId) {
     FlowTaskHist flowTaskHist = new FlowTaskHist();
     flowTaskHist.setFlowOrderId(Integer.valueOf(orderId));
     return flowEngineFacets.getEngine().FlowTaskHistService().queryForList(flowTaskHist);
   }
 
+  /**
+   * 历史任务
+   */
   public List<FlowTaskHist> getHistoryTasks(String orderId, String taskName) {
     FlowTaskHist flowTaskHist = new FlowTaskHist();
     flowTaskHist.setFlowOrderId(Integer.valueOf(orderId));
