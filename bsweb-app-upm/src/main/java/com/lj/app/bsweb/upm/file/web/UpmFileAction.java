@@ -197,8 +197,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       returnMessage = CREATE_FAILURE;
       e.printStackTrace();
       throw e;
-    } finally {
-    }
+    } 
 
   }
 

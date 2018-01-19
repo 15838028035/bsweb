@@ -48,6 +48,9 @@ public class SecurityFilterExt implements Filter {
 
   private Set<String> disabledAccessUrlSet;// uap_permission中不可访问的url集合
 
+  /**
+   * 初始化
+   */
   public void init(FilterConfig filterConfig) {
     isNeedAuthen = filterConfig.getInitParameter("isNeedAuthen");
     String contextPath = filterConfig.getInitParameter("contextPath");
@@ -87,6 +90,9 @@ public class SecurityFilterExt implements Filter {
     logger.info("disabledAccessUrlSet load success");
   }
 
+  /**
+   * 过滤 
+   */
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
     try {
       HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -174,8 +180,8 @@ public class SecurityFilterExt implements Filter {
   /**
    * 功能权限验证
    * 
-   * @param securityContext
-   * @return
+   * @param securityContext 权限上下文
+   * @return 是否
    */
   private boolean validatePermission(CmSecurityContext securityContext, String requestUri, String contextPath) {
     if (!isSkipValidate(requestUri, contextPath)) {
@@ -190,10 +196,10 @@ public class SecurityFilterExt implements Filter {
   /**
    * 验证session
    * 
-   * @param securityContext
-   * @param contextPath
-   * @param requestUri
-   * @return
+   * @param securityContext 权限上下文
+   * @param contextPath  上下文
+   * @param requestUri url
+   * @return 是否
    */
   private boolean validateSession(CmSecurityContext securityContext, String requestUri, String contextPath) {
     if (!isSkipSessionValidate(requestUri, contextPath)) {
@@ -238,8 +244,8 @@ public class SecurityFilterExt implements Filter {
   /**
    * 校验是否是ajax请求
    * 
-   * @param request
-   * @return
+   * @param request 请求对象
+   * @return 是否
    */
   private boolean isAjax(HttpServletRequest request) {
     if (request != null && request.getHeader("x-requested-with") != null

@@ -83,6 +83,11 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
     return upmUserService;
   }
 
+  /**
+   * 去登陆
+   * @return 页面
+   * @throws Exception 异常
+   */
   public String goToLogin() throws Exception {
     UpmUser upmUser = (UpmUser) Struts2Utils.getSession().getAttribute(SessionCode.MAIN_ACCT);
     if (upmUser != null) {
@@ -91,6 +96,11 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
     return SecurityConstants.LOGIN;
   }
 
+  /**
+   * 登陆
+   * @return 页面
+   * @throws Exception 异常
+   */
   public String login() throws Exception {
     String method = Struts2Utils.getRequest().getMethod();
     if ("GET".equalsIgnoreCase(method)) {
@@ -105,7 +115,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
       return goToLogin();
     }
 
-    if (!identifyingCode.equalsIgnoreCase(rand)) {// 验证码错误
+    if (!identifyingCode.equalsIgnoreCase(rand)) {  // 验证码错误
       addActionError("验证码错误");
       return goToLogin();
     }
@@ -217,8 +227,8 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
   /**
    * 单点登录系统
    * 
-   * @return
-   * @throws Exception
+   * @return 页面
+   * @throws Exception 异常
    */
   public String ssoLogin() throws Exception {
     logger.warn("==token==" + token);
@@ -274,8 +284,8 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
   /***
    * 根据用户名、密码查找用户信息
    * 
-   * @return
-   * @throws Exception
+   * @return json
+   * @throws Exception 异常
    */
   public String findUserInfoApi() throws Exception {
     if (StringUtil.isBlank(loginNo) || StringUtil.isBlank(pwd)) {
@@ -307,6 +317,11 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
 
   }
 
+  /**
+   * 退出
+   * @return 页面
+   * @throws Exception 异常
+   */
   public String logout() throws Exception {
     if (Struts2Utils.getSessionAttribute(SecurityConstants.SECURITY_CONTEXT) != null) {
       Struts2Utils.getSession().invalidate();
@@ -318,7 +333,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
   /**
    * 获得测试验证码
    * 
-   * @return
+   * @return json
    */
   public String getRand() {
     String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");

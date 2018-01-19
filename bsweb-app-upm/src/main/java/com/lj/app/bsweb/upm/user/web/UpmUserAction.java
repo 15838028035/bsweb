@@ -27,11 +27,21 @@ import com.lj.app.core.common.web.Struts2Utils;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
+/**
+ * 
+ * 用户管理
+ *
+ */
 @Controller
 @Namespace("/jsp/user")
-@Results({ @Result(name = AbstractBaseAction.INPUT, location = "upmUser-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, location = "upmUserAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "upmUserList.jsp", type = AbstractBaseAction.REDIRECT) })
+@Results({ 
+    @Result(name = AbstractBaseAction.INPUT, 
+        location = "upmUser-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, 
+        location = "upmUserAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+        location = "upmUserList.jsp", type = AbstractBaseAction.REDIRECT) 
+        })
 
 @Action("upmUserAction")
 public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
@@ -82,6 +92,11 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
     }
   }
 
+  /**
+   * 查询用户
+   * @return json
+   * @throws Exception 异常
+   */
   public String listUserByCondition() throws Exception {
     try {
       Map<String, Object> condition = new HashMap<String, Object>();
@@ -104,7 +119,7 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
   /**
    * 公共保存或者更新方法
    * 
-   * @return
+   * @return 列表
    */
   @Override
   public String commonSaveOrUpdate() throws Exception {
@@ -141,6 +156,11 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
     }
   }
 
+  /**
+   * 修改密码
+   * @return json
+   * @throws Exception 异常
+   */
   public String updateAcctPwd() throws Exception {
     AjaxResult ar = new AjaxResult();
 
@@ -182,8 +202,8 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
   /**
    * 删除校验
    * 
-   * @param deleteId
-   * @throws Exception
+   * @param deleteId 用户Id
+   * @throws Exception 异常
    */
   public void multideleteValidate(Integer deleteId) throws BusinessException {
 
