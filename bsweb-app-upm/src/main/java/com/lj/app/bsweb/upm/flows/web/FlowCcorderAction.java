@@ -13,68 +13,78 @@ import com.lj.app.core.common.flows.service.FlowCcorderService;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
+/**
+ * 
+ * 流程实例
+ *
+ */
 @Controller
 @Namespace("/jsp/flows")
 @Results({
-		@org.apache.struts2.convention.annotation.Result(name = "reload", location = "flowCcorderAction", type = "redirect"),
-		@org.apache.struts2.convention.annotation.Result(name = "input", location = "/jsp/flows/flowCcorder-input.jsp"),
-		@org.apache.struts2.convention.annotation.Result(name = "save", location = "flowCcorderAction!edit.action", type = "redirect"),
-		@org.apache.struts2.convention.annotation.Result(name = "list", location = "/jsp/flows/flowCcorderList.jsp", type = "redirect") })
+    @org.apache.struts2.convention.annotation.Result(name = "reload", 
+        location = "flowCcorderAction", type = "redirect"),
+    @org.apache.struts2.convention.annotation.Result(name = "input",
+        location = "/jsp/flows/flowCcorder-input.jsp"),
+    @org.apache.struts2.convention.annotation.Result(name = "save",
+        location = "flowCcorderAction!edit.action", type = "redirect"),
+    @org.apache.struts2.convention.annotation.Result(name = "list", 
+        location = "/jsp/flows/flowCcorderList.jsp", type = "redirect") })
 @Action("flowCcorderAction")
 public class FlowCcorderAction extends AbstractBaseUpmAction<FlowCcorder> {
-	protected Logger logger = LoggerFactory.getLogger(FlowCcorderAction.class);
+  protected Logger logger = LoggerFactory.getLogger(FlowCcorderAction.class);
 
-	@Autowired
-	private FlowCcorderService<FlowCcorder> flowCcorderService;
-	private FlowCcorder flowCcorder;
-	private Integer id;
+  @Autowired
+  private FlowCcorderService<FlowCcorder> flowCcorderService;
+  private FlowCcorder flowCcorder;
+  private Integer id;
 
-	public BaseService getBaseService() {
-		return this.flowCcorderService;
-	}
+  public BaseService getBaseService() {
+    return this.flowCcorderService;
+  }
 
-	public FlowCcorder getModel() {
-		return this.flowCcorder;
-	}
+  public FlowCcorder getModel() {
+    return this.flowCcorder;
+  }
 
-	protected void prepareModel() throws Exception {
-		if (this.id != null)
-			this.flowCcorder = ((FlowCcorder) this.flowCcorderService.getInfoByKey(this.id));
-		else
-			this.flowCcorder = new FlowCcorder();
-	}
+  protected void prepareModel() throws Exception {
+    if (this.id != null) {
+      this.flowCcorder = ((FlowCcorder) this.flowCcorderService.getInfoByKey(this.id));
+    } else {
+      this.flowCcorder = new FlowCcorder();
+    }
+  }
 
-	public String list() throws Exception {
-		return null;
-	}
+  public String list() throws Exception {
+    return null;
+  }
 
-	public String ccread() throws Exception {
-		this.flowCcorderService.updateObject(this.flowCcorder);
-		return "list";
-	}
+  public String ccread() throws Exception {
+    this.flowCcorderService.updateObject(this.flowCcorder);
+    return "list";
+  }
 
-	public FlowCcorderService getFlowCcorderService() {
-		return this.flowCcorderService;
-	}
+  public FlowCcorderService getFlowCcorderService() {
+    return this.flowCcorderService;
+  }
 
-	public void setFlowCcorderService(FlowCcorderService flowCcorderService) {
-		this.flowCcorderService = flowCcorderService;
-	}
+  public void setFlowCcorderService(FlowCcorderService flowCcorderService) {
+    this.flowCcorderService = flowCcorderService;
+  }
 
-	public FlowCcorder getFlowCcorder() {
-		return this.flowCcorder;
-	}
+  public FlowCcorder getFlowCcorder() {
+    return this.flowCcorder;
+  }
 
-	public void setFlowCcorder(FlowCcorder flowCcorder) {
-		this.flowCcorder = flowCcorder;
-	}
+  public void setFlowCcorder(FlowCcorder flowCcorder) {
+    this.flowCcorder = flowCcorder;
+  }
 
-	public Integer getId() {
-		return id;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
 }

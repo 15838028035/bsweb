@@ -13,12 +13,21 @@ import com.lj.app.bsweb.upm.app.service.UpmAppService;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.web.AbstractBaseAction;
 
+/**
+ * 
+ * 应用管理
+ *
+ */
 @Controller
 @Namespace("/jsp/upmApp")
-@Results({ @Result(name = AbstractBaseAction.INPUT, location = "/jsp/upmApp/upmApp-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, location = "upmAppAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "/jsp/upmApp/upmAppList.jsp", type = AbstractBaseAction.REDIRECT) })
-
+@Results({ 
+    @Result(name = AbstractBaseAction.INPUT,
+        location = "/jsp/upmApp/upmApp-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE,
+        location = "upmAppAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+      location = "/jsp/upmApp/upmAppList.jsp", type = AbstractBaseAction.REDIRECT) 
+    })
 @Action("upmAppAction")
 public class UpmAppAction extends AbstractBaseUpmAction<UpmApp> {
 

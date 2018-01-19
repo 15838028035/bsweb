@@ -24,8 +24,12 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @SuppressWarnings("serial")
 @Controller
 @Namespace("/jsp/sys")
-@Results({ @Result(name = AbstractBaseAction.RELOAD, location = "upmSysLogAction", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "/jsp/sys/upmSysLogList.jsp", type = AbstractBaseAction.REDIRECT) })
+@Results({ 
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "upmSysLogAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+        location = "/jsp/sys/upmSysLogList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("upmSysLogAction")
 public class UpmSysLogAction extends AbstractBaseUpmAction<UpmSysLog> {

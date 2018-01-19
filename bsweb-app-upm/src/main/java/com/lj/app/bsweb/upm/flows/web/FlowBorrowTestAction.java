@@ -37,454 +37,468 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/flowBorrowTest")
 @Results({
-	    @Result(name = AbstractBaseAction.RELOAD, location = "flowBorrowTestAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/flowBorrowTest/flowBorrowTest-input.jsp"),
-		@Result(name ="flowBorrowTestApply", location = "/jsp/flowBorrowTest/flowBorrowTestApply.jsp"),
-		@Result(name ="flowBorrowTestView", location = "/jsp/flowBorrowTest/flowBorrowTestView.jsp"),
-		@Result(name ="flowBorrowTestAppTable", location = "/jsp/flowBorrowTest/flowBorrowTestAppTable.jsp"),
-		@Result(name = AbstractBaseAction.SAVE, location = "flowBorrowTestAction!edit.action",type=AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/flowBorrowTest/flowBorrowTestList.jsp", type=AbstractBaseAction.REDIRECT)
-})
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "flowBorrowTestAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, 
+        location = "/jsp/flowBorrowTest/flowBorrowTest-input.jsp"),
+    @Result(name = "flowBorrowTestApply",
+        location = "/jsp/flowBorrowTest/flowBorrowTestApply.jsp"),
+    @Result(name = "flowBorrowTestView", 
+        location = "/jsp/flowBorrowTest/flowBorrowTestView.jsp"),
+    @Result(name = "flowBorrowTestAppTable",
+        location = "/jsp/flowBorrowTest/flowBorrowTestAppTable.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, 
+        location = "flowBorrowTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST,
+        location = "/jsp/flowBorrowTest/flowBorrowTestList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("flowBorrowTestAction")
 public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> {
-	
-	 protected Logger logger = LoggerFactory.getLogger(FlowBorrowTestAction.class);
 
-	@Autowired
-	private FlowBorrowTestService<FlowBorrowTest> flowBorrowTestService;
-	
-	private FlowBorrowTest flowBorrowTest;
-	private java.lang.Integer id;
-	
-	private  String processId;
-	private String orderId;
-	private String taskId;
-	private String taskName;
-	
-	private String operator;
-	private String readonly = "0";//当前节点1,非当前节点0
-	
-	private String isApplyWhere = "";//条件查询
-	
-	@Autowired
-    private FlowEngineFacetsService flowEngineFacetsService;
-	
-	public   BaseService getBaseService(){
-		return flowBorrowTestService;
-	}
-	
-	public FlowBorrowTest getModel() {
-		return flowBorrowTest;
-	}
-	
-	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			flowBorrowTest = (FlowBorrowTest)flowBorrowTestService.getInfoByKey(id);
-		} else {
-			flowBorrowTest = new FlowBorrowTest();
-		}
-	}
-	
-	/**
-	 * 公共bootStrapList查询方法
-	 * @return
-	 * @throws Exception
-	 */
-	public String bootStrapList() throws Exception {
-		try {
-			Map<String,Object> condition = new HashMap<String,Object>();
-			page.setFilters(getModel());
-			condition.put("operatorTimeBegin",  Struts2Utils.getParameter("operatorTimeBegin"));
-			condition.put("operatorTimeEnd",  Struts2Utils.getParameter("operatorTimeEnd"));
-			condition.put("repayTimeBegin",  Struts2Utils.getParameter("repayTimeBegin"));
-			condition.put("repayTimeEnd",  Struts2Utils.getParameter("repayTimeEnd"));
-			
-			if (StringUtil.isNotBlank(this.getSortName())) {
-				String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
-				page.setSortColumns(orderBy);
-			}
-			if(StringUtil.isNotBlank(isApplyWhere)){
-				condition.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
-			}
-			page = getBaseService().findPageList(page, condition);
-			Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page),new String[0]);
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-	
-	@Override
-	public String input() throws Exception {
-		return INPUT;
-	}
-	
-	@Override
-	public String save() throws Exception {
-		
-	try{
-			if (operate != null && operate.equals("edit")) {
-				flowBorrowTest.setUpdateBy(getLoginUserId());
-				flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				flowBorrowTestService.updateObject(flowBorrowTest);
-				
-				returnMessage = UPDATE_SUCCESS;
-			}else{
-				flowBorrowTest.setCreateBy(getLoginUserId());
-				flowBorrowTest.setOperator(this.getUserName());
-				flowBorrowTest.setCreateByUname(this.getUserName());
-				flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				flowBorrowTestService.insertObject(flowBorrowTest);
-				returnMessage = CREATE_SUCCESS;
-			}
-			
-			return LIST;
-		}catch(Exception e){
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
-	
-	/**
-	 *保存数据
-	 * @return
-	 * @throws Exception
-	 */
-	public String ajaxSave() throws Exception {
-		
-	try{
-			if(flowBorrowTest.getId()!=null &&flowBorrowTest.getId()>0){
-				flowBorrowTest.setUpdateBy(getLoginUserId());
-				flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				flowBorrowTestService.updateObject(flowBorrowTest);
-				returnMessage = UPDATE_SUCCESS;
-			}else{
-				flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				flowBorrowTest.setCreateBy(getLoginUserId());
-				flowBorrowTest.setOperator(this.getUserName());
-				flowBorrowTest.setOperatorTime(new Date());
-				flowBorrowTest.setCreateByUname(this.getUserName());
-				
-				flowBorrowTestService.insertObject(flowBorrowTest);
-				returnMessage = CREATE_SUCCESS;
-			}
-			
-		}catch(Exception e){
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}
-	
-		AjaxResult ar = new AjaxResult();
-		ar.setOpResult(returnMessage);
-		Struts2Utils.renderJson(ar);
-		return null;
-	}
-	
-	/**
-	 * 申请测试
-	 * @return
-	 */
-	public String apply() {
-		if((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId))|| (readonly!=null&& "1".equals(readonly))) {
-			if(StringUtil.isNotBlank(orderId)){//查询流程申请数据
-				Map<String,String> querMap = new HashMap<String,String>();
-				querMap.put("flowOrderId", orderId);
-				List list = flowBorrowTestService.queryForList(querMap);
-				if(list!=null && list.size()>0){
-				flowBorrowTest =(FlowBorrowTest) list.get(0);
-				}
-				operate="edit";
-			}
-			
-			return "flowBorrowTestApply";
-		} else {
-			Map<String,String> querMap = new HashMap<String,String>();
-			querMap.put("flowOrderId", orderId);
-			querMap.put("flowTaskId", taskId);
-			
-			List list = flowBorrowTestService.queryForList(querMap);
-			if(list!=null && list.size()>0){
-			flowBorrowTest =(FlowBorrowTest) list.get(0);
-			}
-			
-			return "flowBorrowTestView";
-		}
-	}
-	
-	/**
-	 * 申请保存
-	 * @return
-	 * @throws Exception
-	 */
-	public String applySave() throws  Exception {
-		 /** 流程数据构造开始 */
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("apply.operator", this.getUserName());
-        /** 流程数据构造结束 */
+  protected Logger logger = LoggerFactory.getLogger(FlowBorrowTestAction.class);
 
-        /**
-         * 启动流程并且执行申请任务
-         */
-        if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-        	FlowOrder FlowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
-            /** 业务数据处理开始*/
-        	flowBorrowTest.setFlowOrderId(FlowOrder.getId());
-        	flowBorrowTest.setOperatorTime(new Date());
-        	flowBorrowTest.setOperator(this.getUserName());
-            
-            flowBorrowTestService.insertObject(flowBorrowTest);
-        } else {
-        	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-            /** 业务数据处理开始*/
-        	flowBorrowTest.setOperator(this.getUserName());
-        	
-        	 if (operate != null && operate.equals("edit")) {
-     			flowBorrowTest.setUpdateBy(getLoginUserId());
-     			flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-     			flowBorrowTestService.updateObject(flowBorrowTest);
-     			
-     			returnMessage = UPDATE_SUCCESS;
-     		}else{
-     			flowBorrowTest.setCreateBy(getLoginUserId());
-     			flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-     			flowBorrowTestService.insertObject(flowBorrowTest);
-     			returnMessage = CREATE_SUCCESS;
-     		}
+  @Autowired
+  private FlowBorrowTestService<FlowBorrowTest> flowBorrowTestService;
+
+  private FlowBorrowTest flowBorrowTest;
+  private java.lang.Integer id;
+
+  private String processId;
+  private String orderId;
+  private String taskId;
+  private String taskName;
+
+  private String operator;
+  private String readonly = "0";// 当前节点1,非当前节点0
+
+  private String isApplyWhere = "";// 条件查询
+
+  @Autowired
+  private FlowEngineFacetsService flowEngineFacetsService;
+
+  public BaseService getBaseService() {
+    return flowBorrowTestService;
+  }
+
+  public FlowBorrowTest getModel() {
+    return flowBorrowTest;
+  }
+
+  @Override
+  protected void prepareModel() throws Exception {
+    if (id != null) {
+      flowBorrowTest = (FlowBorrowTest) flowBorrowTestService.getInfoByKey(id);
+    } else {
+      flowBorrowTest = new FlowBorrowTest();
+    }
+  }
+
+  /**
+   * 公共bootStrapList查询方法
+   * 
+   * @return json
+   * @throws Exception json
+   */
+  public String bootStrapList() throws Exception {
+    try {
+      Map<String, Object> condition = new HashMap<String, Object>();
+      page.setFilters(getModel());
+      condition.put("operatorTimeBegin", Struts2Utils.getParameter("operatorTimeBegin"));
+      condition.put("operatorTimeEnd", Struts2Utils.getParameter("operatorTimeEnd"));
+      condition.put("repayTimeBegin", Struts2Utils.getParameter("repayTimeBegin"));
+      condition.put("repayTimeEnd", Struts2Utils.getParameter("repayTimeEnd"));
+
+      if (StringUtil.isNotBlank(this.getSortName())) {
+        String orderBy = PageTool.convert(this.getSortName()) + " " + this.getSortOrder();
+        page.setSortColumns(orderBy);
+      }
+      if (StringUtil.isNotBlank(isApplyWhere)) {
+        condition.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
+      }
+      page = getBaseService().findPageList(page, condition);
+      Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
+      return null;
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw e;
+    }
+  }
+
+  @Override
+  public String input() throws Exception {
+    return INPUT;
+  }
+
+  @Override
+  public String save() throws Exception {
+
+    try {
+      if (operate != null && operate.equals("edit")) {
+        flowBorrowTest.setUpdateBy(getLoginUserId());
+        flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowBorrowTestService.updateObject(flowBorrowTest);
+
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowBorrowTest.setCreateBy(getLoginUserId());
+        flowBorrowTest.setOperator(this.getUserName());
+        flowBorrowTest.setCreateByUname(this.getUserName());
+        flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowBorrowTestService.insertObject(flowBorrowTest);
+        returnMessage = CREATE_SUCCESS;
+      }
+
+      return LIST;
+    } catch (Exception e) {
+      returnMessage = CREATE_FAILURE;
+      e.printStackTrace();
+      throw e;
+    }
+
+  }
+
+  /**
+   * 保存数据
+   * 
+   * @return json
+   * @throws Exception 异常
+   */
+  public String ajaxSave() throws Exception {
+
+    try {
+      if (flowBorrowTest.getId() != null && flowBorrowTest.getId() > 0) {
+        flowBorrowTest.setUpdateBy(getLoginUserId());
+        flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowBorrowTestService.updateObject(flowBorrowTest);
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowBorrowTest.setCreateBy(getLoginUserId());
+        flowBorrowTest.setOperator(this.getUserName());
+        flowBorrowTest.setOperatorTime(new Date());
+        flowBorrowTest.setCreateByUname(this.getUserName());
+
+        flowBorrowTestService.insertObject(flowBorrowTest);
+        returnMessage = CREATE_SUCCESS;
+      }
+
+    } catch (Exception e) {
+      returnMessage = CREATE_FAILURE;
+      e.printStackTrace();
+      throw e;
+    }
+
+    AjaxResult ar = new AjaxResult();
+    ar.setOpResult(returnMessage);
+    Struts2Utils.renderJson(ar);
+    return null;
+  }
+
+  /**
+   * 申请测试
+   * 
+   * @return 页面
+   */
+  public String apply() {
+    if ((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) || (readonly != null && "1".equals(readonly))) {
+      if (StringUtil.isNotBlank(orderId)) { // 查询流程申请数据
+        Map<String, String> querMap = new HashMap<String, String>();
+        querMap.put("flowOrderId", orderId);
+        List list = flowBorrowTestService.queryForList(querMap);
+        if (list != null && list.size() > 0) {
+          flowBorrowTest = (FlowBorrowTest) list.get(0);
         }
-       
-		return LIST;
-	}
-	
-	/**
-	 * 批量借款申请测试
-	 * @return
-	 */
-	public String flowBorrowTestAppTable() {
-		if( readonly!=null && "1".equals(readonly)) {
-			return "flowBorrowTestAppTable";
-		}else{
-			return "flowBorrowTestAppTableView";
-		}
-	}
-	
-	/**
-	 * 申请保存
-	 * @return
-	 * @throws Exception
-	 */
-	public String flowBorrowTestAppTableSubmit() throws  Exception {
-		 /** 流程数据构造开始 */
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("apply.operator", this.getUserName());
-        /** 流程数据构造结束 */
+        operate = "edit";
+      }
 
-        try{
-	        /**
-	         * 启动流程并且执行申请任务
-	         */
-	        if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-	        	FlowOrder FlowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
-	            /** 业务数据处理开始*/
-	        	
-	        	Map<String,String> querMap = new HashMap<String,String>();
-				querMap.put("processId", processId);
-				querMap.put("operator", this.getUserName());
-				querMap.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
-				
-				List<FlowBorrowTest> list = flowBorrowTestService.queryForList(querMap);
-				
-				for(FlowBorrowTest flowBorrowTest:list){
-					flowBorrowTest.setFlowOrderId(FlowOrder.getId());
-					flowBorrowTestService.updateObject(flowBorrowTest);
-				}
-	        	
-	        } else {
-	        	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-	        	/** 业务数据处理开始*/
-	        }
-	        returnMessage="提交成功";
-        }catch(Exception e) {
-        	e.printStackTrace();
-        	returnMessage="提交失败,失败原因:" + e.getMessage();
+      return "flowBorrowTestApply";
+    } else {
+      Map<String, String> querMap = new HashMap<String, String>();
+      querMap.put("flowOrderId", orderId);
+      querMap.put("flowTaskId", taskId);
+
+      List list = flowBorrowTestService.queryForList(querMap);
+      if (list != null && list.size() > 0) {
+        flowBorrowTest = (FlowBorrowTest) list.get(0);
+      }
+
+      return "flowBorrowTestView";
+    }
+  }
+
+  /**
+   * 申请保存
+   * 
+   * @return  页面
+   * @throws Exception 异常
+   */
+  public String applySave() throws Exception {
+    /** 流程数据构造开始 */
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put("apply.operator", this.getUserName());
+    /** 流程数据构造结束 */
+
+    /**
+     * 启动流程并且执行申请任务
+     */
+    if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+      FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
+      /** 业务数据处理开始 */
+      flowBorrowTest.setFlowOrderId(flowOrder.getId());
+      flowBorrowTest.setOperatorTime(new Date());
+      flowBorrowTest.setOperator(this.getUserName());
+
+      flowBorrowTestService.insertObject(flowBorrowTest);
+    } else {
+      flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+      /** 业务数据处理开始 */
+      flowBorrowTest.setOperator(this.getUserName());
+
+      if (operate != null && operate.equals("edit")) {
+        flowBorrowTest.setUpdateBy(getLoginUserId());
+        flowBorrowTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowBorrowTestService.updateObject(flowBorrowTest);
+
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowBorrowTest.setCreateBy(getLoginUserId());
+        flowBorrowTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowBorrowTestService.insertObject(flowBorrowTest);
+        returnMessage = CREATE_SUCCESS;
+      }
+    }
+
+    return LIST;
+  }
+
+  /**
+   * 批量借款申请测试
+   * 
+   * @return 页面地址
+   */
+  public String flowBorrowTestAppTable() {
+    if (readonly != null && "1".equals(readonly)) {
+      return "flowBorrowTestAppTable";
+    } else {
+      return "flowBorrowTestAppTableView";
+    }
+  }
+
+  /**
+   * 申请保存
+   * 
+   * @return 页面地址
+   * @throws Exception 异常
+   */
+  public String flowBorrowTestAppTableSubmit() throws Exception {
+    /** 流程数据构造开始 */
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put("apply.operator", this.getUserName());
+    /** 流程数据构造结束 */
+
+    try {
+      /**
+       * 启动流程并且执行申请任务
+       */
+      if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+        FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
+        /** 业务数据处理开始 */
+
+        Map<String, String> querMap = new HashMap<String, String>();
+        querMap.put("processId", processId);
+        querMap.put("operator", this.getUserName());
+        querMap.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
+
+        List<FlowBorrowTest> list = flowBorrowTestService.queryForList(querMap);
+
+        for (FlowBorrowTest flowBorrowTest : list) {
+          flowBorrowTest.setFlowOrderId(flowOrder.getId());
+          flowBorrowTestService.updateObject(flowBorrowTest);
         }
-       
-    	AjaxResult ar = new AjaxResult();
-		ar.setOpResult(returnMessage);
-		Struts2Utils.renderJson(ar);
-		return null;
-	}
 
-	/**
-	 * 申请测试
-	 * @return
-	 */
-	public String goToFlowBorrowTestApplyAudit() {
-		if((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId))|| (readonly!=null&& "1".equals(readonly))) {
-			if(StringUtil.isNotBlank(orderId)){//查询流程申请数据
-				Map<String,String> querMap = new HashMap<String,String>();
-				querMap.put("flowOrderId", orderId);
-				List list = flowBorrowTestService.queryForList(querMap);
-				if(list!=null && list.size()>0){
-				flowBorrowTest =(FlowBorrowTest) list.get(0);
-				}
-				operate="edit";
-			}
-			
-			return "flowBorrowTestApplyAudit";
-		} else {
-			Map<String,String> querMap = new HashMap<String,String>();
-			querMap.put("flowOrderId", orderId);
-			querMap.put("flowTaskId", taskId);
-			
-			List list = flowBorrowTestService.queryForList(querMap);
-			if(list!=null && list.size()>0){
-			flowBorrowTest =(FlowBorrowTest) list.get(0);
-			}
-			
-			return "flowBorrowTestApplyAudit";
-		}
-	}
-	
-	/**
-	 * 申请测试
-	 * @return
-	 */
-	public String viewFlowBorrowTestApplyInfo() {
-		if((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId))|| (readonly!=null&& "1".equals(readonly))) {
-			if(StringUtil.isNotBlank(orderId)){//查询流程申请数据
-				Map<String,String> querMap = new HashMap<String,String>();
-				querMap.put("flowOrderId", orderId);
-				List list = flowBorrowTestService.queryForList(querMap);
-				if(list!=null && list.size()>0){
-				flowBorrowTest =(FlowBorrowTest) list.get(0);
-				}
-				
-				Struts2Utils.renderJson(list);
-			}
-			
-			return null;
-		} else {
-			Map<String,String> querMap = new HashMap<String,String>();
-			querMap.put("flowOrderId", orderId);
-			querMap.put("flowTaskId", taskId);
-			
-			List list = flowBorrowTestService.queryForList(querMap);
-			if(list!=null && list.size()>0){
-			flowBorrowTest =(FlowBorrowTest) list.get(0);
-			}
-			
-			Struts2Utils.renderJson(flowBorrowTest);
-			return null;
-			
-		}
-	}
-	
-	@Override
-	public String delete() throws Exception {
-		return null;
-	}
+      } else {
+        flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+        /** 业务数据处理开始 */
+      }
+      returnMessage = "提交成功";
+    } catch (Exception e) {
+      e.printStackTrace();
+      returnMessage = "提交失败,失败原因:" + e.getMessage();
+    }
 
-	public Logger getLogger() {
-		return logger;
-	}
+    AjaxResult ar = new AjaxResult();
+    ar.setOpResult(returnMessage);
+    Struts2Utils.renderJson(ar);
+    return null;
+  }
 
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
+  /**
+   * 申请测试
+   * 
+   * @return 页面
+   */
+  public String goToFlowBorrowTestApplyAudit() {
+    if ((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) || (readonly != null && "1".equals(readonly))) {
+      if (StringUtil.isNotBlank(orderId)) { // 查询流程申请数据
+        Map<String, String> querMap = new HashMap<String, String>();
+        querMap.put("flowOrderId", orderId);
+        List list = flowBorrowTestService.queryForList(querMap);
+        if (list != null && list.size() > 0) {
+          flowBorrowTest = (FlowBorrowTest) list.get(0);
+        }
+        operate = "edit";
+      }
 
-	public FlowBorrowTestService<FlowBorrowTest> getFlowBorrowTestService() {
-		return flowBorrowTestService;
-	}
+      return "flowBorrowTestApplyAudit";
+    } else {
+      Map<String, String> querMap = new HashMap<String, String>();
+      querMap.put("flowOrderId", orderId);
+      querMap.put("flowTaskId", taskId);
 
-	public void setFlowBorrowTestService(FlowBorrowTestService<FlowBorrowTest> flowBorrowTestService) {
-		this.flowBorrowTestService = flowBorrowTestService;
-	}
+      List list = flowBorrowTestService.queryForList(querMap);
+      if (list != null && list.size() > 0) {
+        flowBorrowTest = (FlowBorrowTest) list.get(0);
+      }
 
-	public FlowBorrowTest getFlowBorrowTest() {
-		return flowBorrowTest;
-	}
+      return "flowBorrowTestApplyAudit";
+    }
+  }
 
-	public void setFlowBorrowTest(FlowBorrowTest flowBorrowTest) {
-		this.flowBorrowTest = flowBorrowTest;
-	}
+  /**
+   * 申请测试
+   * 
+   * @return  申请测试
+   */
+  public String viewFlowBorrowTestApplyInfo() {
+    if ((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) || (readonly != null && "1".equals(readonly))) {
+      if (StringUtil.isNotBlank(orderId)) { // 查询流程申请数据
+        Map<String, String> querMap = new HashMap<String, String>();
+        querMap.put("flowOrderId", orderId);
+        List list = flowBorrowTestService.queryForList(querMap);
+        if (list != null && list.size() > 0) {
+          flowBorrowTest = (FlowBorrowTest) list.get(0);
+        }
 
-	public java.lang.Integer getId() {
-		return id;
-	}
+        Struts2Utils.renderJson(list);
+      }
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
+      return null;
+    } else {
+      Map<String, String> querMap = new HashMap<String, String>();
+      querMap.put("flowOrderId", orderId);
+      querMap.put("flowTaskId", taskId);
 
-	public String getProcessId() {
-		return processId;
-	}
+      List list = flowBorrowTestService.queryForList(querMap);
+      if (list != null && list.size() > 0) {
+        flowBorrowTest = (FlowBorrowTest) list.get(0);
+      }
 
-	public void setProcessId(String processId) {
-		this.processId = processId;
-	}
+      Struts2Utils.renderJson(flowBorrowTest);
+      return null;
 
-	public String getOrderId() {
-		return orderId;
-	}
+    }
+  }
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
+  @Override
+  public String delete() throws Exception {
+    return null;
+  }
 
-	public String getTaskId() {
-		return taskId;
-	}
+  public Logger getLogger() {
+    return logger;
+  }
 
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
-	}
+  public void setLogger(Logger logger) {
+    this.logger = logger;
+  }
 
-	public String getTaskName() {
-		return taskName;
-	}
+  public FlowBorrowTestService<FlowBorrowTest> getFlowBorrowTestService() {
+    return flowBorrowTestService;
+  }
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+  public void setFlowBorrowTestService(FlowBorrowTestService<FlowBorrowTest> flowBorrowTestService) {
+    this.flowBorrowTestService = flowBorrowTestService;
+  }
 
-	public String getOperator() {
-		return operator;
-	}
+  public FlowBorrowTest getFlowBorrowTest() {
+    return flowBorrowTest;
+  }
 
-	public void setOperator(String operator) {
-		this.operator = operator;
-	}
+  public void setFlowBorrowTest(FlowBorrowTest flowBorrowTest) {
+    this.flowBorrowTest = flowBorrowTest;
+  }
 
-	public String getReadonly() {
-		return readonly;
-	}
+  public java.lang.Integer getId() {
+    return id;
+  }
 
-	public void setReadonly(String readonly) {
-		this.readonly = readonly;
-	}
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
 
-	public FlowEngineFacetsService getFlowEngineFacetsService() {
-		return flowEngineFacetsService;
-	}
+  public String getProcessId() {
+    return processId;
+  }
 
-	public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
-		this.flowEngineFacetsService = flowEngineFacetsService;
-	}
+  public void setProcessId(String processId) {
+    this.processId = processId;
+  }
 
-	public String getIsApplyWhere() {
-		return isApplyWhere;
-	}
+  public String getOrderId() {
+    return orderId;
+  }
 
-	public void setIsApplyWhere(String isApplyWhere) {
-		this.isApplyWhere = isApplyWhere;
-	}
-	
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public String getTaskId() {
+    return taskId;
+  }
+
+  public void setTaskId(String taskId) {
+    this.taskId = taskId;
+  }
+
+  public String getTaskName() {
+    return taskName;
+  }
+
+  public void setTaskName(String taskName) {
+    this.taskName = taskName;
+  }
+
+  public String getOperator() {
+    return operator;
+  }
+
+  public void setOperator(String operator) {
+    this.operator = operator;
+  }
+
+  public String getReadonly() {
+    return readonly;
+  }
+
+  public void setReadonly(String readonly) {
+    this.readonly = readonly;
+  }
+
+  public FlowEngineFacetsService getFlowEngineFacetsService() {
+    return flowEngineFacetsService;
+  }
+
+  public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
+    this.flowEngineFacetsService = flowEngineFacetsService;
+  }
+
+  public String getIsApplyWhere() {
+    return isApplyWhere;
+  }
+
+  public void setIsApplyWhere(String isApplyWhere) {
+    this.isApplyWhere = isApplyWhere;
+  }
+
 }
-

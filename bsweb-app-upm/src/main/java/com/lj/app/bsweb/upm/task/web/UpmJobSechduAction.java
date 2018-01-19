@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.task.entity.UpmJob;
 import com.lj.app.core.common.task.entity.UpmJobSechdu;
 import com.lj.app.core.common.task.service.UpmJobSechduService;
 import com.lj.app.core.common.web.AbstractBaseAction;
@@ -29,10 +28,15 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/upmJobSechdu")
 @Results({
-    @Result(name = AbstractBaseAction.RELOAD, location = "upmJobSechduAction", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.INPUT, location = "/jsp/task/upmJobSechdu-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, location = "upmJobSechduAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "/jsp/task/upmJobSechduList.jsp", type = AbstractBaseAction.REDIRECT) })
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "upmJobSechduAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, 
+        location = "/jsp/task/upmJobSechdu-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE,
+        location = "upmJobSechduAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+        location = "/jsp/task/upmJobSechduList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("upmJobSechduAction")
 public class UpmJobSechduAction extends AbstractBaseUpmAction<UpmJobSechdu> {
@@ -66,8 +70,8 @@ public class UpmJobSechduAction extends AbstractBaseUpmAction<UpmJobSechdu> {
   /**
    * 公共bootStrapList查询方法
    * 
-   * @return
-   * @throws Exception
+   * @return json
+   * @throws Exception 异常
    */
   public String bootStrapList() throws Exception {
     Map<String, Object> condition = new HashMap<String, Object>();

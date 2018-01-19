@@ -11,7 +11,6 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.entity.UpmConfiguration;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.base.service.UpmConfigurationService;
-import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
@@ -28,10 +27,15 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/dictionary")
 @Results({
-    @Result(name = AbstractBaseAction.RELOAD, location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.INPUT, location = "/jsp/dictionary/upmConfiguration-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, location = "upmConfigurationAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT) })
+    @Result(name = AbstractBaseAction.RELOAD,
+        location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT,
+        location = "/jsp/dictionary/upmConfiguration-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE,
+        location = "upmConfigurationAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+        location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("upmConfigurationAction")
 public class UpmConfigurationAction extends AbstractBaseUpmAction<UpmConfiguration> {
@@ -75,6 +79,11 @@ public class UpmConfigurationAction extends AbstractBaseUpmAction<UpmConfigurati
     return commonSaveOrUpdate();
   }
 
+  /**
+   * 重新加载配置
+   * @return null
+   * @throws Exception 异常信息
+   */
   public String reloadConfigPro() throws Exception {
     returnMessage = "加载成功";
     try {

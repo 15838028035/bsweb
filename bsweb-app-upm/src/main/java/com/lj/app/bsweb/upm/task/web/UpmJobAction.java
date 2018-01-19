@@ -27,10 +27,16 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @SuppressWarnings("serial")
 @Controller
 @Namespace("/jsp/task")
-@Results({ @Result(name = AbstractBaseAction.RELOAD, location = "upmJobAction", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.INPUT, location = "/jsp/task/upmJob-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, location = "upmJobAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "/jsp/task/upmJobList.jsp", type = AbstractBaseAction.REDIRECT) })
+@Results({ 
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "upmJobAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, 
+      location = "/jsp/task/upmJob-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, 
+      location = "upmJobAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+      location = "/jsp/task/upmJobList.jsp", type = AbstractBaseAction.REDIRECT) 
+    })
 
 @Action("upmJobAction")
 public class UpmJobAction extends AbstractBaseUpmAction<UpmJob> {
@@ -62,12 +68,22 @@ public class UpmJobAction extends AbstractBaseUpmAction<UpmJob> {
     }
   }
 
+  /**
+   * job状态
+   * @return json
+   * @throws Exception 异常
+   */
   public String isProcessJobStatus() throws Exception {
     boolean result = upmJobSechduService.isProcessJobStatus(this.getId());
     Struts2Utils.renderText(String.valueOf(result));
     return null;
   }
 
+  /**
+   * 手动执行
+   * @return 文本
+   * @throws Exception 异常
+   */
   public String handScheduler() throws Exception {
     try {
       upmJobSechduService.runJob(this.getId());

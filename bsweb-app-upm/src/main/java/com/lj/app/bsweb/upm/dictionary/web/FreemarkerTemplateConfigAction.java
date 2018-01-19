@@ -25,10 +25,15 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/freemarkerTemplateConfig")
 @Results({
-    @Result(name = AbstractBaseAction.RELOAD, location = "freemarkerTemplateConfigAction", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.INPUT, location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfig-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, location = "freemarkerTemplateConfigAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigList.jsp", type = AbstractBaseAction.REDIRECT) })
+    @Result(name = AbstractBaseAction.RELOAD,
+        location = "freemarkerTemplateConfigAction",  type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT,
+    location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfig-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE,
+    location = "freemarkerTemplateConfigAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+    location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("freemarkerTemplateConfigAction")
 public class FreemarkerTemplateConfigAction extends AbstractBaseUpmAction<FreemarkerTemplateConfig> {

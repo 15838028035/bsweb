@@ -20,9 +20,16 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 
+/**
+ * 
+ * 系统信息
+ *
+ */
 @Controller
 @Namespace("/sys")
-@Results({ @Result(name = "systemInfo", location = "/systemInfo.jsp"), })
+@Results({
+      @Result(name = "systemInfo", location = "/systemInfo.jsp")
+      })
 
 @Action("systemInfoAction")
 public class SystemInfoAction extends AbstractBaseUpmAction<UpmUser> {
@@ -46,6 +53,10 @@ public class SystemInfoAction extends AbstractBaseUpmAction<UpmUser> {
     return null;
   }
 
+  /**
+   * 系统信息属性
+   * @return map
+   */
   public static Map<String, String> getSystemProperties() {
     Properties sysProps = System.getProperties();
     Map<String, String> props = new ListOrderedMap();
@@ -78,7 +89,11 @@ public class SystemInfoAction extends AbstractBaseUpmAction<UpmUser> {
     }
   }
 
-  public Map<String, String> getJVMStatistics() {
+  /**
+   * 获取jvm信息
+   * @return map
+   */
+  public Map<String, String> getJvmStatistics() {
     Map<String, String> stats = new ListOrderedMap();
     stats.put("Total Memory", "" + getTotalMemory() + "MB");
     stats.put("Free Memory", "" + getFreeMemory() + "MB");
@@ -101,7 +116,7 @@ public class SystemInfoAction extends AbstractBaseUpmAction<UpmUser> {
   /**
    * 打印服务器信息
    * 
-   * @return
+   * @return 页面
    */
   public String printSysInfo() {
     StringBuffer buf = new StringBuffer();

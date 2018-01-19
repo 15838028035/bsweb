@@ -29,10 +29,16 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @SuppressWarnings("serial")
 @Controller
 @Namespace("/jsp/upmNotice")
-@Results({ @Result(name = AbstractBaseAction.RELOAD, location = "upmNoticeAction", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.INPUT, location = "/jsp/upmNotice/upmNotice-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, location = "upmNoticeAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, location = "/jsp/upmNotice/upmNoticeList.jsp", type = AbstractBaseAction.REDIRECT) })
+@Results({ 
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "upmNoticeAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, 
+        location = "/jsp/upmNotice/upmNotice-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, 
+        location = "upmNoticeAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+        location = "/jsp/upmNotice/upmNoticeList.jsp", type = AbstractBaseAction.REDIRECT)
+      })
 
 @Action("upmNoticeAction")
 public class UpmNoticeAction extends AbstractBaseUpmAction<UpmNotice> {
@@ -64,8 +70,8 @@ public class UpmNoticeAction extends AbstractBaseUpmAction<UpmNotice> {
   /**
    * 公共保存或者更新方法
    * 
-   * @return
-   * @throws Exception
+   * @return 页面
+   * @throws Exception 异常
    */
   public String commonSaveOrUpdate() throws Exception {
 

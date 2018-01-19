@@ -36,271 +36,280 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/flowUpmUser")
 @Results({
-	    @Result(name = AbstractBaseAction.RELOAD, location = "flowUpmUserAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/flowUpmUser/flowUpmUser-input.jsp"),
-		@Result(name ="flowUpmUserApply", location = "/jsp/flowUpmUser/flowUpmUserApply.jsp"),
-		@Result(name ="flowUpmUserApplyView", location = "/jsp/flowUpmUser/flowUpmUserApplyView.jsp"),
-		@Result(name = AbstractBaseAction.SAVE, location = "flowUpmUserAction!edit.action",type=AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/flowUpmUser/flowUpmUserList.jsp", type=AbstractBaseAction.REDIRECT)
-})
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "flowUpmUserAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, 
+        location = "/jsp/flowUpmUser/flowUpmUser-input.jsp"),
+    @Result(name = "flowUpmUserApply", 
+        location = "/jsp/flowUpmUser/flowUpmUserApply.jsp"),
+    @Result(name = "flowUpmUserApplyView",
+        location = "/jsp/flowUpmUser/flowUpmUserApplyView.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, 
+        location = "flowUpmUserAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST,
+        location = "/jsp/flowUpmUser/flowUpmUserList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("flowUpmUserAction")
 public class FlowUpmUserAction extends AbstractBaseUpmAction<FlowUpmUser> {
-	
-	 protected Logger logger = LoggerFactory.getLogger(FlowUpmUserAction.class);
 
-	@Autowired
-	private FlowUpmUserService flowUpmUserService;
-	
-	private FlowUpmUser flowUpmUser;
-	
-	private java.lang.Integer id;
-	
-	private  String processId;
-	private String orderId;
-	private String taskId;
-	private String taskName;
-	
-	private String operator;
-	private String readonly = "0";//当前节点1,非当前节点0
-	
-	private String isApplyWhere = "";//条件查询
-	
-	@Autowired
-   private FlowEngineFacetsService flowEngineFacetsService;
-	public   BaseService getBaseService(){
-		return flowUpmUserService;
-	}
-	
-	public FlowUpmUser getModel() {
-		return flowUpmUser;
-	}
-	
-	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			flowUpmUser = (FlowUpmUser)flowUpmUserService.getInfoByKey(id);
-		} else {
-			flowUpmUser = new FlowUpmUser();
-		}
-	}
-	
-	@Override
-	public String input() throws Exception {
-		return INPUT;
-	}
+  protected Logger logger = LoggerFactory.getLogger(FlowUpmUserAction.class);
 
-	/**
-	 *保存数据
-	 * @return
-	 * @throws Exception
-	 */
-	public String ajaxSave() throws Exception {
-		
-	try{
-			if(flowUpmUser.getId()!=null &&flowUpmUser.getId()>0){
-				flowUpmUser.setUpdateBy(getLoginUserId());
-				flowUpmUser.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				flowUpmUserService.updateObject(flowUpmUser);
-				returnMessage = UPDATE_SUCCESS;
-			}else{
-				flowUpmUser.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				flowUpmUser.setCreateBy(getLoginUserId());
-				flowUpmUser.setOperator(this.getUserName());
-				flowUpmUser.setOperatorTime(new Date());
-				flowUpmUser.setCreateByUname(this.getUserName());
-				
-				flowUpmUserService.insertObject(flowUpmUser);
-				returnMessage = CREATE_SUCCESS;
-			}
-			
-		}catch(Exception e){
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}
-	
-		AjaxResult ar = new AjaxResult();
-		ar.setOpResult(returnMessage);
-		Struts2Utils.renderJson(ar);
-		return null;
-	}
-	
-	/**
-	 * 申请测试
-	 * @return
-	 */
-	public String apply() {
-		if((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId))|| (readonly!=null&& "1".equals(readonly))) {
-			if(StringUtil.isNotBlank(orderId)){//查询流程申请数据
-				Map<String,String> querMap = new HashMap<String,String>();
-				querMap.put("flowOrderId", orderId);
-				List list = flowUpmUserService.queryForList(querMap);
-				if(list!=null && list.size()>0){
-					flowUpmUser =(FlowUpmUser) list.get(0);
-				}
-				operate="edit";
-			}
-			
-			return "flowUpmUserApply";
-		} else {
-			Map<String,String> querMap = new HashMap<String,String>();
-			querMap.put("flowOrderId", orderId);
-			querMap.put("flowTaskId", taskId);
-			
-			List list = flowUpmUserService.queryForList(querMap);
-			if(list!=null && list.size()>0){
-				flowUpmUser =(FlowUpmUser) list.get(0);
-			}
-			
-			return "flowUpmUserApplyView";
-		}
-	}
-	
-	/**
-	 * 申请保存
-	 * @return
-	 * @throws Exception
-	 */
-	public String applySave() throws  Exception {
-		 /** 流程数据构造开始 */
-       Map<String, Object> params = new HashMap<String, Object>();
-       params.put("apply.operator", this.getUserName());
-       /** 流程数据构造结束 */
+  @Autowired
+  private FlowUpmUserService flowUpmUserService;
 
-       /**
-        * 启动流程并且执行申请任务
-        */
-       if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-       	FlowOrder FlowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
-           /** 业务数据处理开始*/
-       	flowUpmUser.setFlowOrderId(FlowOrder.getId());
-       	flowUpmUser.setOperatorTime(new Date());
-       	flowUpmUser.setOperator(this.getUserName());
-           
-       	flowUpmUserService.insertObject(flowUpmUser);
-       } else {
-       	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-           /** 业务数据处理开始*/
-       	flowUpmUser.setOperator(this.getUserName());
-       	
-       	 if (operate != null && operate.equals("edit")) {
-       		flowUpmUser.setUpdateBy(getLoginUserId());
-       		flowUpmUser.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-       		flowUpmUserService.updateObject(flowUpmUser);
-    			
-    			returnMessage = UPDATE_SUCCESS;
-    		}else{
-    			flowUpmUser.setCreateBy(getLoginUserId());
-    			flowUpmUser.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-    			flowUpmUserService.insertObject(flowUpmUser);
-    			returnMessage = CREATE_SUCCESS;
-    		}
-       }
-      
-		return LIST;
-	}
+  private FlowUpmUser flowUpmUser;
 
-	@Override
-	public String delete() throws Exception {
-		return null;
-	}
+  private java.lang.Integer id;
 
-	public Logger getLogger() {
-		return logger;
-	}
+  private String processId;
+  private String orderId;
+  private String taskId;
+  private String taskName;
 
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
+  private String operator;
+  private String readonly = "0";// 当前节点1,非当前节点0
 
-	public java.lang.Integer getId() {
-		return id;
-	}
+  private String isApplyWhere = "";// 条件查询
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
+  @Autowired
+  private FlowEngineFacetsService flowEngineFacetsService;
 
-	public String getProcessId() {
-		return processId;
-	}
+  public BaseService getBaseService() {
+    return flowUpmUserService;
+  }
 
-	public void setProcessId(String processId) {
-		this.processId = processId;
-	}
+  public FlowUpmUser getModel() {
+    return flowUpmUser;
+  }
 
-	public String getOrderId() {
-		return orderId;
-	}
+  @Override
+  protected void prepareModel() throws Exception {
+    if (id != null) {
+      flowUpmUser = (FlowUpmUser) flowUpmUserService.getInfoByKey(id);
+    } else {
+      flowUpmUser = new FlowUpmUser();
+    }
+  }
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
+  @Override
+  public String input() throws Exception {
+    return INPUT;
+  }
 
-	public String getTaskId() {
-		return taskId;
-	}
+  /**
+   * 保存数据
+   * 
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String ajaxSave() throws Exception {
 
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
-	}
+    try {
+      if (flowUpmUser.getId() != null && flowUpmUser.getId() > 0) {
+        flowUpmUser.setUpdateBy(getLoginUserId());
+        flowUpmUser.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowUpmUserService.updateObject(flowUpmUser);
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowUpmUser.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowUpmUser.setCreateBy(getLoginUserId());
+        flowUpmUser.setOperator(this.getUserName());
+        flowUpmUser.setOperatorTime(new Date());
+        flowUpmUser.setCreateByUname(this.getUserName());
 
-	public String getTaskName() {
-		return taskName;
-	}
+        flowUpmUserService.insertObject(flowUpmUser);
+        returnMessage = CREATE_SUCCESS;
+      }
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+    } catch (Exception e) {
+      returnMessage = CREATE_FAILURE;
+      e.printStackTrace();
+      throw e;
+    }
 
-	public String getOperator() {
-		return operator;
-	}
+    AjaxResult ar = new AjaxResult();
+    ar.setOpResult(returnMessage);
+    Struts2Utils.renderJson(ar);
+    return null;
+  }
 
-	public void setOperator(String operator) {
-		this.operator = operator;
-	}
+  /**
+   * 申请测试
+   * 
+   * @return 页面
+   */
+  public String apply() {
+    if ((StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) || (readonly != null && "1".equals(readonly))) {
+      if (StringUtil.isNotBlank(orderId)) { // 查询流程申请数据
+        Map<String, String> querMap = new HashMap<String, String>();
+        querMap.put("flowOrderId", orderId);
+        List list = flowUpmUserService.queryForList(querMap);
+        if (list != null && list.size() > 0) {
+          flowUpmUser = (FlowUpmUser) list.get(0);
+        }
+        operate = "edit";
+      }
 
-	public String getReadonly() {
-		return readonly;
-	}
+      return "flowUpmUserApply";
+    } else {
+      Map<String, String> querMap = new HashMap<String, String>();
+      querMap.put("flowOrderId", orderId);
+      querMap.put("flowTaskId", taskId);
 
-	public void setReadonly(String readonly) {
-		this.readonly = readonly;
-	}
+      List list = flowUpmUserService.queryForList(querMap);
+      if (list != null && list.size() > 0) {
+        flowUpmUser = (FlowUpmUser) list.get(0);
+      }
 
-	public FlowEngineFacetsService getFlowEngineFacetsService() {
-		return flowEngineFacetsService;
-	}
+      return "flowUpmUserApplyView";
+    }
+  }
 
-	public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
-		this.flowEngineFacetsService = flowEngineFacetsService;
-	}
+  /**
+   * 申请保存
+   * 
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String applySave() throws Exception {
+    /** 流程数据构造开始 */
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put("apply.operator", this.getUserName());
+    /** 流程数据构造结束 */
 
-	public String getIsApplyWhere() {
-		return isApplyWhere;
-	}
+    /**
+     * 启动流程并且执行申请任务
+     */
+    if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+      FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
+      /** 业务数据处理开始 */
+      flowUpmUser.setFlowOrderId(flowOrder.getId());
+      flowUpmUser.setOperatorTime(new Date());
+      flowUpmUser.setOperator(this.getUserName());
 
-	public void setIsApplyWhere(String isApplyWhere) {
-		this.isApplyWhere = isApplyWhere;
-	}
+      flowUpmUserService.insertObject(flowUpmUser);
+    } else {
+      flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+      /** 业务数据处理开始 */
+      flowUpmUser.setOperator(this.getUserName());
 
-	public FlowUpmUserService getFlowUpmUserService() {
-		return flowUpmUserService;
-	}
+      if (operate != null && operate.equals("edit")) {
+        flowUpmUser.setUpdateBy(getLoginUserId());
+        flowUpmUser.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowUpmUserService.updateObject(flowUpmUser);
 
-	public void setFlowUpmUserService(FlowUpmUserService flowUpmUserService) {
-		this.flowUpmUserService = flowUpmUserService;
-	}
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowUpmUser.setCreateBy(getLoginUserId());
+        flowUpmUser.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowUpmUserService.insertObject(flowUpmUser);
+        returnMessage = CREATE_SUCCESS;
+      }
+    }
 
-	public FlowUpmUser getFlowUpmUser() {
-		return flowUpmUser;
-	}
+    return LIST;
+  }
 
-	public void setFlowUpmUser(FlowUpmUser flowUpmUser) {
-		this.flowUpmUser = flowUpmUser;
-	}
-	
+  @Override
+  public String delete() throws Exception {
+    return null;
+  }
+
+  public Logger getLogger() {
+    return logger;
+  }
+
+  public void setLogger(Logger logger) {
+    this.logger = logger;
+  }
+
+  public java.lang.Integer getId() {
+    return id;
+  }
+
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
+
+  public String getProcessId() {
+    return processId;
+  }
+
+  public void setProcessId(String processId) {
+    this.processId = processId;
+  }
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public String getTaskId() {
+    return taskId;
+  }
+
+  public void setTaskId(String taskId) {
+    this.taskId = taskId;
+  }
+
+  public String getTaskName() {
+    return taskName;
+  }
+
+  public void setTaskName(String taskName) {
+    this.taskName = taskName;
+  }
+
+  public String getOperator() {
+    return operator;
+  }
+
+  public void setOperator(String operator) {
+    this.operator = operator;
+  }
+
+  public String getReadonly() {
+    return readonly;
+  }
+
+  public void setReadonly(String readonly) {
+    this.readonly = readonly;
+  }
+
+  public FlowEngineFacetsService getFlowEngineFacetsService() {
+    return flowEngineFacetsService;
+  }
+
+  public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
+    this.flowEngineFacetsService = flowEngineFacetsService;
+  }
+
+  public String getIsApplyWhere() {
+    return isApplyWhere;
+  }
+
+  public void setIsApplyWhere(String isApplyWhere) {
+    this.isApplyWhere = isApplyWhere;
+  }
+
+  public FlowUpmUserService getFlowUpmUserService() {
+    return flowUpmUserService;
+  }
+
+  public void setFlowUpmUserService(FlowUpmUserService flowUpmUserService) {
+    this.flowUpmUserService = flowUpmUserService;
+  }
+
+  public FlowUpmUser getFlowUpmUser() {
+    return flowUpmUser;
+  }
+
+  public void setFlowUpmUser(FlowUpmUser flowUpmUser) {
+    this.flowUpmUser = flowUpmUser;
+  }
+
 }
-

@@ -17,6 +17,11 @@ import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.Struts2Utils;
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * 
+ * 功能web
+ *
+ */
 @Controller
 @Namespace("/")
 @Action("commonWebAction")
@@ -31,6 +36,9 @@ public class CommonWebAction extends ActionSupport {
    */
   private String templatekey;
 
+  /**
+   * 获得模板
+   */
   public void getBatchTemplate() {
 
     InputStream in = null;
