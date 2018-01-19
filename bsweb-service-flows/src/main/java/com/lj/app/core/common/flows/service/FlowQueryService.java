@@ -5,29 +5,31 @@ import java.util.List;
 import com.lj.app.core.common.flows.entity.FlowApprove;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.flows.entity.FlowOrderHist;
-import com.lj.app.core.common.flows.entity.FlowQueryFilter;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
 
-
+/**
+ * 
+ * 流程查询对象
+ *
+ */
 public interface FlowQueryService {
 
-	public FlowOrder getFlowOrder(String orderId);
+  public FlowOrder getFlowOrder(String orderId);
 
-	public List<FlowTask> getActiveTasks(String flowOrderId);
-	public List<FlowTask> getActiveTasks(int flowOrderId);
-	
-	public List<FlowTask> getActiveTasks(FlowQueryFilter filter);
+  public List<FlowTask> getActiveTasks(String flowOrderId);
 
-	public FlowTask getFlowTask(String taskId);
+  public List<FlowTask> getActiveTasks(int flowOrderId);
 
-	public List<FlowApprove> queryApprove(String orderId, String taskId)throws Exception;
-	
-	public List<FlowOrder> getActiveOrders(FlowQueryFilter filter);
 
-	public FlowOrderHist getHistOrder(String orderId);
+  public FlowTask getFlowTask(String taskId);
 
-	public List<FlowTaskHist> getHistoryTasks(String orderId);
-	
-	public List<FlowTaskHist> getHistoryTasks(String orderId, String taskName);
+  public List<FlowApprove> queryApprove(String orderId, String taskId) throws Exception;
+
+
+  public FlowOrderHist getHistOrder(String orderId);
+
+  public List<FlowTaskHist> getHistoryTasks(String orderId);
+
+  public List<FlowTaskHist> getHistoryTasks(String orderId, String taskName);
 }

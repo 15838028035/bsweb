@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 import com.lj.app.core.common.base.service.BaseServiceImpl;
 
 /**
- * @title :
- * @description :FlowApproveService
- * @author: liujie
- * @date: 2016-10-25 09:09:12
+ * 
+ * 流程审批服务
+ *
+ * @param <FlowApprove>
+ *          流程审批
  */
 @Service("flowApproveService")
-public class FlowApproveServiceImpl<FlowApprove> extends BaseServiceImpl<FlowApprove> implements FlowApproveService<FlowApprove>, Serializable{
+public class FlowApproveServiceImpl<FlowApprove> extends BaseServiceImpl<FlowApprove>
+    implements FlowApproveService<FlowApprove>, Serializable {
 
 }

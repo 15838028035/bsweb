@@ -20,126 +20,140 @@ import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
 
+/**
+ * 
+ * 系统信息
+ *
+ */
 @Controller
 @Namespace("/sys")
 @Results({
-	@Result(name = "systemInfo", location = "/systemInfo.jsp"),
-})
+      @Result(name = "systemInfo", location = "/systemInfo.jsp")
+      })
 
 @Action("systemInfoAction")
-public class SystemInfoAction  extends AbstractBaseUpmAction<UpmUser>{
-	
-	 static final long MEGABYTE = 1048576L;
-	 
-	private String systemInfo;
+public class SystemInfoAction extends AbstractBaseUpmAction<UpmUser> {
 
-	   @Override
-	public UpmUser getModel() {
-		return null;
-	}
+  static final long MEGABYTE = 1048576L;
 
-	@Override
-	protected void prepareModel() throws Exception {
-		
-	}
+  private String systemInfo;
 
-	@Override
-	public BaseService<UpmUser> getBaseService() {
-		return null;
-	}
+  @Override
+  public UpmUser getModel() {
+    return null;
+  }
 
-	public static Map<String,String> getSystemProperties() {
-	      Properties sysProps = System.getProperties();
-	      Map<String,String> props = new ListOrderedMap();
-	      props.put("系统日期", DateFormat.getDateInstance().format(new Date()));
-	      props.put("系统时间", DateFormat.getTimeInstance().format(new Date()));
-	      props.put("当前目录", getCurrentDirectory());
+  @Override
+  protected void prepareModel() throws Exception {
 
-	      props.put("Java版本", sysProps.getProperty("java.version"));
-	      props.put("Java提供商", sysProps.getProperty("java.vendor"));
-	      props.put("虚拟机版本", sysProps.getProperty("java.vm.specification.version"));
-	      props.put("JVM提供商", sysProps.getProperty("java.vm.specification.vendor"));
-	      props.put("JVM实现版本", sysProps.getProperty("java.vm.version"));
-	      props.put("Java运行名称", sysProps.getProperty("java.runtime.name"));
-	      props.put("Java VM", sysProps.getProperty("java.vm.name"));
+  }
 
-	      props.put("用户名", sysProps.getProperty("user.name"));
-	      props.put("用户所在时区", sysProps.getProperty("user.timezone"));
+  @Override
+  public BaseService<UpmUser> getBaseService() {
+    return null;
+  }
 
-	      props.put("操作系统", sysProps.getProperty("os.name") + " " + sysProps.getProperty("os.version"));
-	      props.put("操作系统架构", sysProps.getProperty("os.arch"));
+  /**
+   * 系统信息属性
+   * @return map
+   */
+  public static Map<String, String> getSystemProperties() {
+    Properties sysProps = System.getProperties();
+    Map<String, String> props = new ListOrderedMap();
+    props.put("系统日期", DateFormat.getDateInstance().format(new Date()));
+    props.put("系统时间", DateFormat.getTimeInstance().format(new Date()));
+    props.put("当前目录", getCurrentDirectory());
 
-	      return props;
-	   }
+    props.put("Java版本", sysProps.getProperty("java.version"));
+    props.put("Java提供商", sysProps.getProperty("java.vendor"));
+    props.put("虚拟机版本", sysProps.getProperty("java.vm.specification.version"));
+    props.put("JVM提供商", sysProps.getProperty("java.vm.specification.vendor"));
+    props.put("JVM实现版本", sysProps.getProperty("java.vm.version"));
+    props.put("Java运行名称", sysProps.getProperty("java.runtime.name"));
+    props.put("Java VM", sysProps.getProperty("java.vm.name"));
 
-	   private static String getCurrentDirectory() {
-	      try {
-	         return new File(".").getCanonicalPath();
-	      } catch (IOException e) {
-	         return "<undefined>";   
-	        }
-	   }
+    props.put("用户名", sysProps.getProperty("user.name"));
+    props.put("用户所在时区", sysProps.getProperty("user.timezone"));
 
-	   public Map<String,String> getJVMStatistics() {
-	      Map<String,String> stats = new ListOrderedMap();
-	      stats.put("Total Memory", "" + getTotalMemory() + "MB");
-	      stats.put("Free Memory", "" + getFreeMemory() + "MB");
-	      stats.put("Used Memory", "" + getUsedMemory() + "MB");
-	      return stats;
-	   }
+    props.put("操作系统", sysProps.getProperty("os.name") + " " + sysProps.getProperty("os.version"));
+    props.put("操作系统架构", sysProps.getProperty("os.arch"));
 
-	   public long getTotalMemory() {
-	      return Runtime.getRuntime().totalMemory() / MEGABYTE;
-	   }
+    return props;
+  }
 
-	   public long getFreeMemory() {
-	      return Runtime.getRuntime().freeMemory() / MEGABYTE;
-	   }
+  private static String getCurrentDirectory() {
+    try {
+      return new File(".").getCanonicalPath();
+    } catch (IOException e) {
+      return "<undefined>";
+    }
+  }
 
-	   public long getUsedMemory() {
-	      return getTotalMemory() - getFreeMemory();
-	   }
+  /**
+   * 获取jvm信息
+   * @return map
+   */
+  public Map<String, String> getJvmStatistics() {
+    Map<String, String> stats = new ListOrderedMap();
+    stats.put("Total Memory", "" + getTotalMemory() + "MB");
+    stats.put("Free Memory", "" + getFreeMemory() + "MB");
+    stats.put("Used Memory", "" + getUsedMemory() + "MB");
+    return stats;
+  }
 
-	   /**
-	    * 打印服务器信息
-	    * @return
-	    */
-	   public String printSysInfo() {
-		   StringBuffer buf = new StringBuffer();
-		      buf.append(propertiesMapToString("服务器信息", getSystemProperties()));
-		      systemInfo =  buf.toString();
-		   return "systemInfo";
-	   }
-	   
-	   @Override
-	   public String toString() {
-	      StringBuffer buf = new StringBuffer();
-	      buf.append(propertiesMapToString("系统信息", getSystemProperties()));
-	      return buf.toString();
-	   }
+  public long getTotalMemory() {
+    return Runtime.getRuntime().totalMemory() / MEGABYTE;
+  }
 
-	   private static String propertiesMapToString(String mapName, Map<String,String> properties) {
-	      StringBuffer buf = new StringBuffer();
-	      buf.append("<h3>"+mapName+"</h3>");
-	      buf.append("<hr/>");
+  public long getFreeMemory() {
+    return Runtime.getRuntime().freeMemory() / MEGABYTE;
+  }
 
-	      Iterator<String> iterator = properties.keySet().iterator();
-	      while (iterator.hasNext()) {
-	         String name = (String) iterator.next();
-	         String value = (String) properties.get(name);
-	         buf.append("<div>   ");
-	         buf.append(StringUtils.rightPad(name+":", 30));
-	         buf.append(value).append("</div>");
-	      }
-	      return buf.toString();
-	   }
+  public long getUsedMemory() {
+    return getTotalMemory() - getFreeMemory();
+  }
 
-	public String getSystemInfo() {
-		return systemInfo;
-	}
+  /**
+   * 打印服务器信息
+   * 
+   * @return 页面
+   */
+  public String printSysInfo() {
+    StringBuffer buf = new StringBuffer();
+    buf.append(propertiesMapToString("服务器信息", getSystemProperties()));
+    systemInfo = buf.toString();
+    return "systemInfo";
+  }
 
-	public void setSystemInfo(String systemInfo) {
-		this.systemInfo = systemInfo;
-	}
+  @Override
+  public String toString() {
+    StringBuffer buf = new StringBuffer();
+    buf.append(propertiesMapToString("系统信息", getSystemProperties()));
+    return buf.toString();
+  }
+
+  private static String propertiesMapToString(String mapName, Map<String, String> properties) {
+    StringBuffer buf = new StringBuffer();
+    buf.append("<h3>" + mapName + "</h3>");
+    buf.append("<hr/>");
+
+    Iterator<String> iterator = properties.keySet().iterator();
+    while (iterator.hasNext()) {
+      String name = (String) iterator.next();
+      String value = (String) properties.get(name);
+      buf.append("<div>   ");
+      buf.append(StringUtils.rightPad(name + ":", 30));
+      buf.append(value).append("</div>");
+    }
+    return buf.toString();
+  }
+
+  public String getSystemInfo() {
+    return systemInfo;
+  }
+
+  public void setSystemInfo(String systemInfo) {
+    this.systemInfo = systemInfo;
+  }
 
 }

@@ -37,357 +37,365 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/flowExpenseTest")
 @Results({
-		@Result(name ="flowExpenseTestView", location = "/jsp/flowExpenseTest/flowExpenseTestView.jsp"),
-		@Result(name ="flowExpenseTestTable", location = "/jsp/flowExpenseTest/flowExpenseTestAppTable.jsp"),
-	    @Result(name = AbstractBaseAction.RELOAD, location = "flowExpenseTestAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/flowExpenseTest/flowExpenseTest-input.jsp"),
-		@Result(name = AbstractBaseAction.SAVE, location = "flowExpenseTestAction!edit.action",type=AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/flowExpenseTest/flowExpenseTestList.jsp", type=AbstractBaseAction.REDIRECT)
-})
-
+    @Result(name = "flowExpenseTestView",
+        location = "/jsp/flowExpenseTest/flowExpenseTestView.jsp"),
+    @Result(name = "flowExpenseTestTable", 
+        location = "/jsp/flowExpenseTest/flowExpenseTestAppTable.jsp"),
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "flowExpenseTestAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT,
+        location = "/jsp/flowExpenseTest/flowExpenseTest-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE,
+        location = "flowExpenseTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+        location = "/jsp/flowExpenseTest/flowExpenseTestList.jsp", type = AbstractBaseAction.REDIRECT) 
+    })
 @Action("flowExpenseTestAction")
 public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest> {
-	
-	 protected Logger logger = LoggerFactory.getLogger(FlowExpenseTestAction.class);
 
-	@Autowired
-	private FlowExpenseTestService flowExpenseTestService;
-	
-	private FlowExpenseTest flowExpenseTest;
-	private java.lang.Integer id;
-	
-	private  String processId;
-	private String orderId;
-	private String taskId;
-	private String taskName;
-	
-	private String operator;
-	private String readonly = "0";//当前节点1,非当前节点0
-	
-	private String isApplyWhere = "";//条件查询
-		
-	@Autowired
-	private FlowEngineFacetsService flowEngineFacetsService;
-		
-	public   BaseService getBaseService(){
-		return flowExpenseTestService;
-	}
-	
-	public FlowExpenseTest getModel() {
-		return flowExpenseTest;
-	}
-		
-		@Override
-		protected void prepareModel() throws Exception {
-			if (id != null) {
-				flowExpenseTest = (FlowExpenseTest)flowExpenseTestService.getInfoByKey(id);
-			} else {
-				flowExpenseTest = new FlowExpenseTest();
-			}
-		}
-		
-		/**
-		 * 公共bootStrapList查询方法
-		 * @return
-		 * @throws Exception
-		 */
-		public String bootStrapList() throws Exception {
-			try {
-				Map<String,Object> condition = new HashMap<String,Object>();
-				page.setFilters(getModel());
-				condition.put("operatorTimeBegin",  Struts2Utils.getParameter("operatorTimeBegin"));
-				condition.put("operatorTimeEnd",  Struts2Utils.getParameter("operatorTimeEnd"));
-				condition.put("repayTimeBegin",  Struts2Utils.getParameter("repayTimeBegin"));
-				condition.put("repayTimeEnd",  Struts2Utils.getParameter("repayTimeEnd"));
-				
-				if (StringUtil.isNotBlank(this.getSortName())) {
-					String orderBy = PageTool.convert(this.getSortName()) + " "+ this.getSortOrder();
-					page.setSortColumns(orderBy);
-				}
-				if(StringUtil.isNotBlank(isApplyWhere)){
-					condition.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
-				}
-				page = getBaseService().findPageList(page, condition);
-				Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page),new String[0]);
-				return null;
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw e;
-			}
-		}
-		
-		@Override
-		public String input() throws Exception {
-			return INPUT;
-		}
-		
-		@Override
-		public String save() throws Exception {
-			
-		try{
-				if (operate != null && operate.equals("edit")) {
-					flowExpenseTest.setUpdateBy(getLoginUserId());
-					flowExpenseTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-					flowExpenseTestService.updateObject(flowExpenseTest);
-					
-					returnMessage = UPDATE_SUCCESS;
-				}else{
-					flowExpenseTest.setCreateBy(getLoginUserId());
-					flowExpenseTest.setOperator(this.getUserName());
-					flowExpenseTest.setCreateByUname(this.getUserName());
-					flowExpenseTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-					flowExpenseTestService.insertObject(flowExpenseTest);
-					returnMessage = CREATE_SUCCESS;
-				}
-				
-				return LIST;
-			}catch(Exception e){
-				returnMessage = CREATE_FAILURE;
-				e.printStackTrace();
-				throw e;
-			}
-			
-		}
-		
-		/**
-		 *保存数据
-		 * @return
-		 * @throws Exception
-		 */
-		public String ajaxSave() throws Exception {
-			
-		try{
-				if(flowExpenseTest.getId()!=null &&flowExpenseTest.getId()>0){
-					flowExpenseTest.setUpdateBy(getLoginUserId());
-					flowExpenseTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-					flowExpenseTestService.updateObject(flowExpenseTest);
-					returnMessage = UPDATE_SUCCESS;
-				}else{
-					flowExpenseTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-					flowExpenseTest.setCreateBy(getLoginUserId());
-					flowExpenseTest.setOperator(this.getUserName());
-					flowExpenseTest.setOperatorTime(new Date());
-					flowExpenseTest.setCreateByUname(this.getUserName());
-					
-					flowExpenseTestService.insertObject(flowExpenseTest);
-					returnMessage = CREATE_SUCCESS;
-				}
-				
-			}catch(Exception e){
-				returnMessage = CREATE_FAILURE;
-				e.printStackTrace();
-				throw e;
-			}
-		
-			AjaxResult ar = new AjaxResult();
-			ar.setOpResult(returnMessage);
-			Struts2Utils.renderJson(ar);
-			return null;
-		}
-		
-		/**
-		 * 申请保存
-		 * @return
-		 * @throws Exception
-		 */
-		public String applySave() throws  Exception {
-			 /** 流程数据构造开始 */
-	        Map<String, Object> params = new HashMap<String, Object>();
-	        params.put("apply.operator", this.getUserName());
-	        /** 流程数据构造结束 */
+  protected Logger logger = LoggerFactory.getLogger(FlowExpenseTestAction.class);
 
-	        /**
-	         * 启动流程并且执行申请任务
-	         */
-	        if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-	        	FlowOrder FlowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
-	            /** 业务数据处理开始*/
-	        	flowExpenseTest.setFlowOrderId(FlowOrder.getId());
-	        	flowExpenseTest.setOperatorTime(new Date());
-	        	flowExpenseTest.setOperator(this.getUserName());
-	            
-	        	flowExpenseTestService.insertObject(flowExpenseTest);
-	        } else {
-	        	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-	            /** 业务数据处理开始*/
-	        	flowExpenseTest.setOperator(this.getUserName());
-	        	
-	        	 if (operate != null && operate.equals("edit")) {
-	        		 flowExpenseTest.setUpdateBy(getLoginUserId());
-	        		 flowExpenseTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-	        		 flowExpenseTestService.updateObject(flowExpenseTest);
-	     			
-	     			returnMessage = UPDATE_SUCCESS;
-	     		}else{
-	     			flowExpenseTest.setCreateBy(getLoginUserId());
-	     			flowExpenseTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-	     			flowExpenseTestService.insertObject(flowExpenseTest);
-	     			returnMessage = CREATE_SUCCESS;
-	     		}
-	        }
-	       
-			return LIST;
-		}
-		
-		/**
-		 * 批量借款申请测试
-		 * @return
-		 */
-		public String flowExpenseTestAppTable() {
-			if( readonly!=null && "1".equals(readonly)) {
-				return "flowExpenseTestTable";
-			}else{
-				return "flowExpenseTestView";
-			}
-		}
-		
-		/**
-		 * 申请保存
-		 * @return
-		 * @throws Exception
-		 */
-		public String flowExpenseTestAppTableSubmit() throws  Exception {
-			 /** 流程数据构造开始 */
-	        Map<String, Object> params = new HashMap<String, Object>();
-	        params.put("apply.operator", this.getUserName());
-	        /** 流程数据构造结束 */
+  @Autowired
+  private FlowExpenseTestService flowExpenseTestService;
 
-	        try{
-		        /**
-		         * 启动流程并且执行申请任务
-		         */
-		        if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-		        	FlowOrder FlowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
-		            /** 业务数据处理开始*/
-		        	
-		        	Map<String,String> querMap = new HashMap<String,String>();
-					querMap.put("processId", processId);
-					querMap.put("operator", this.getUserName());
-					querMap.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
-					
-					List<FlowExpenseTest> list = flowExpenseTestService.queryForList(querMap);
-					
-					for(FlowExpenseTest tlowExpenseTest:list){
-						tlowExpenseTest.setFlowOrderId(FlowOrder.getId());
-						flowExpenseTestService.updateObject(tlowExpenseTest);
-					}
-		        	
-		        } else {
-		        	flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-		        	/** 业务数据处理开始*/
-		        }
-		        returnMessage="提交成功";
-	        }catch(Exception e) {
-	        	e.printStackTrace();
-	        	returnMessage="提交失败,失败原因:" + e.getMessage();
-	        }
-	       
-	    	AjaxResult ar = new AjaxResult();
-			ar.setOpResult(returnMessage);
-			Struts2Utils.renderJson(ar);
-			return null;
-		}
+  private FlowExpenseTest flowExpenseTest;
+  private java.lang.Integer id;
 
-		@Override
-		public String delete() throws Exception {
-			return null;
-		}
+  private String processId;
+  private String orderId;
+  private String taskId;
+  private String taskName;
 
-		public Logger getLogger() {
-			return logger;
-		}
+  private String operator;
+  private String readonly = "0";// 当前节点1,非当前节点0
 
-		public void setLogger(Logger logger) {
-			this.logger = logger;
-		}
+  private String isApplyWhere = "";// 条件查询
 
-		public java.lang.Integer getId() {
-			return id;
-		}
+  @Autowired
+  private FlowEngineFacetsService flowEngineFacetsService;
 
-		public void setId(java.lang.Integer id) {
-			this.id = id;
-		}
+  public BaseService getBaseService() {
+    return flowExpenseTestService;
+  }
 
-		public String getProcessId() {
-			return processId;
-		}
+  public FlowExpenseTest getModel() {
+    return flowExpenseTest;
+  }
 
-		public void setProcessId(String processId) {
-			this.processId = processId;
-		}
+  @Override
+  protected void prepareModel() throws Exception {
+    if (id != null) {
+      flowExpenseTest = (FlowExpenseTest) flowExpenseTestService.getInfoByKey(id);
+    } else {
+      flowExpenseTest = new FlowExpenseTest();
+    }
+  }
 
-		public String getOrderId() {
-			return orderId;
-		}
+  /**
+   * 公共bootStrapList查询方法
+   * 
+   * @return json
+   * @throws Exception 异常
+   */
+  public String bootStrapList() throws Exception {
+    try {
+      Map<String, Object> condition = new HashMap<String, Object>();
+      page.setFilters(getModel());
+      condition.put("operatorTimeBegin", Struts2Utils.getParameter("operatorTimeBegin"));
+      condition.put("operatorTimeEnd", Struts2Utils.getParameter("operatorTimeEnd"));
+      condition.put("repayTimeBegin", Struts2Utils.getParameter("repayTimeBegin"));
+      condition.put("repayTimeEnd", Struts2Utils.getParameter("repayTimeEnd"));
 
-		public void setOrderId(String orderId) {
-			this.orderId = orderId;
-		}
+      if (StringUtil.isNotBlank(this.getSortName())) {
+        String orderBy = PageTool.convert(this.getSortName()) + " " + this.getSortOrder();
+        page.setSortColumns(orderBy);
+      }
+      if (StringUtil.isNotBlank(isApplyWhere)) {
+        condition.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
+      }
+      page = getBaseService().findPageList(page, condition);
+      Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
+      return null;
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw e;
+    }
+  }
 
-		public String getTaskId() {
-			return taskId;
-		}
+  @Override
+  public String input() throws Exception {
+    return INPUT;
+  }
 
-		public void setTaskId(String taskId) {
-			this.taskId = taskId;
-		}
+  @Override
+  public String save() throws Exception {
 
-		public String getTaskName() {
-			return taskName;
-		}
+    try {
+      if (operate != null && operate.equals("edit")) {
+        flowExpenseTest.setUpdateBy(getLoginUserId());
+        flowExpenseTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowExpenseTestService.updateObject(flowExpenseTest);
 
-		public void setTaskName(String taskName) {
-			this.taskName = taskName;
-		}
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowExpenseTest.setCreateBy(getLoginUserId());
+        flowExpenseTest.setOperator(this.getUserName());
+        flowExpenseTest.setCreateByUname(this.getUserName());
+        flowExpenseTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowExpenseTestService.insertObject(flowExpenseTest);
+        returnMessage = CREATE_SUCCESS;
+      }
 
-		public String getOperator() {
-			return operator;
-		}
+      return LIST;
+    } catch (Exception e) {
+      returnMessage = CREATE_FAILURE;
+      e.printStackTrace();
+      throw e;
+    }
 
-		public void setOperator(String operator) {
-			this.operator = operator;
-		}
+  }
 
-		public String getReadonly() {
-			return readonly;
-		}
+  /**
+   * 保存数据
+   * 
+   * @return json
+   * @throws Exception 异常
+   */
+  public String ajaxSave() throws Exception {
 
-		public void setReadonly(String readonly) {
-			this.readonly = readonly;
-		}
+    try {
+      if (flowExpenseTest.getId() != null && flowExpenseTest.getId() > 0) {
+        flowExpenseTest.setUpdateBy(getLoginUserId());
+        flowExpenseTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowExpenseTestService.updateObject(flowExpenseTest);
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowExpenseTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowExpenseTest.setCreateBy(getLoginUserId());
+        flowExpenseTest.setOperator(this.getUserName());
+        flowExpenseTest.setOperatorTime(new Date());
+        flowExpenseTest.setCreateByUname(this.getUserName());
 
-		public FlowEngineFacetsService getFlowEngineFacetsService() {
-			return flowEngineFacetsService;
-		}
+        flowExpenseTestService.insertObject(flowExpenseTest);
+        returnMessage = CREATE_SUCCESS;
+      }
 
-		public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
-			this.flowEngineFacetsService = flowEngineFacetsService;
-		}
+    } catch (Exception e) {
+      returnMessage = CREATE_FAILURE;
+      e.printStackTrace();
+      throw e;
+    }
 
-		public String getIsApplyWhere() {
-			return isApplyWhere;
-		}
+    AjaxResult ar = new AjaxResult();
+    ar.setOpResult(returnMessage);
+    Struts2Utils.renderJson(ar);
+    return null;
+  }
 
-		public void setIsApplyWhere(String isApplyWhere) {
-			this.isApplyWhere = isApplyWhere;
-		}
+  /**
+   * 申请保存
+   * 
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String applySave() throws Exception {
+    /** 流程数据构造开始 */
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put("apply.operator", this.getUserName());
+    /** 流程数据构造结束 */
 
-		public FlowExpenseTestService getFlowExpenseTestService() {
-			return flowExpenseTestService;
-		}
+    /**
+     * 启动流程并且执行申请任务
+     */
+    if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+      FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, getUserName(), params);
+      /** 业务数据处理开始 */
+      flowExpenseTest.setFlowOrderId(flowOrder.getId());
+      flowExpenseTest.setOperatorTime(new Date());
+      flowExpenseTest.setOperator(this.getUserName());
 
-		public void setFlowExpenseTestService(FlowExpenseTestService flowExpenseTestService) {
-			this.flowExpenseTestService = flowExpenseTestService;
-		}
+      flowExpenseTestService.insertObject(flowExpenseTest);
+    } else {
+      flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+      /** 业务数据处理开始 */
+      flowExpenseTest.setOperator(this.getUserName());
 
-		public FlowExpenseTest getFlowExpenseTest() {
-			return flowExpenseTest;
-		}
+      if (operate != null && operate.equals("edit")) {
+        flowExpenseTest.setUpdateBy(getLoginUserId());
+        flowExpenseTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowExpenseTestService.updateObject(flowExpenseTest);
 
-		public void setFlowExpenseTest(FlowExpenseTest flowExpenseTest) {
-			this.flowExpenseTest = flowExpenseTest;
-		}
-		
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowExpenseTest.setCreateBy(getLoginUserId());
+        flowExpenseTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+        flowExpenseTestService.insertObject(flowExpenseTest);
+        returnMessage = CREATE_SUCCESS;
+      }
+    }
+
+    return LIST;
+  }
+
+  /**
+   * 批量借款申请测试
+   * 
+   */
+  public String flowExpenseTestAppTable() {
+    if (readonly != null && "1".equals(readonly)) {
+      return "flowExpenseTestTable";
+    } else {
+      return "flowExpenseTestView";
+    }
+  }
+
+  /**
+   * 申请保存
+   * 
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String flowExpenseTestAppTableSubmit() throws Exception {
+    /** 流程数据构造开始 */
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put("apply.operator", this.getUserName());
+    /** 流程数据构造结束 */
+
+    try {
+      /**
+       * 启动流程并且执行申请任务
+       */
+      if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
+        FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, getUserName(), params);
+        /** 业务数据处理开始 */
+
+        Map<String, String> querMap = new HashMap<String, String>();
+        querMap.put("processId", processId);
+        querMap.put("operator", this.getUserName());
+        querMap.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
+
+        List<FlowExpenseTest> list = flowExpenseTestService.queryForList(querMap);
+
+        for (FlowExpenseTest tlowExpenseTest : list) {
+          tlowExpenseTest.setFlowOrderId(flowOrder.getId());
+          flowExpenseTestService.updateObject(tlowExpenseTest);
+        }
+
+      } else {
+        flowEngineFacetsService.execute(taskId, this.getUserName(), params);
+        /** 业务数据处理开始 */
+      }
+      returnMessage = "提交成功";
+    } catch (Exception e) {
+      e.printStackTrace();
+      returnMessage = "提交失败,失败原因:" + e.getMessage();
+    }
+
+    AjaxResult ar = new AjaxResult();
+    ar.setOpResult(returnMessage);
+    Struts2Utils.renderJson(ar);
+    return null;
+  }
+
+  @Override
+  public String delete() throws Exception {
+    return null;
+  }
+
+  public Logger getLogger() {
+    return logger;
+  }
+
+  public void setLogger(Logger logger) {
+    this.logger = logger;
+  }
+
+  public java.lang.Integer getId() {
+    return id;
+  }
+
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
+
+  public String getProcessId() {
+    return processId;
+  }
+
+  public void setProcessId(String processId) {
+    this.processId = processId;
+  }
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public String getTaskId() {
+    return taskId;
+  }
+
+  public void setTaskId(String taskId) {
+    this.taskId = taskId;
+  }
+
+  public String getTaskName() {
+    return taskName;
+  }
+
+  public void setTaskName(String taskName) {
+    this.taskName = taskName;
+  }
+
+  public String getOperator() {
+    return operator;
+  }
+
+  public void setOperator(String operator) {
+    this.operator = operator;
+  }
+
+  public String getReadonly() {
+    return readonly;
+  }
+
+  public void setReadonly(String readonly) {
+    this.readonly = readonly;
+  }
+
+  public FlowEngineFacetsService getFlowEngineFacetsService() {
+    return flowEngineFacetsService;
+  }
+
+  public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
+    this.flowEngineFacetsService = flowEngineFacetsService;
+  }
+
+  public String getIsApplyWhere() {
+    return isApplyWhere;
+  }
+
+  public void setIsApplyWhere(String isApplyWhere) {
+    this.isApplyWhere = isApplyWhere;
+  }
+
+  public FlowExpenseTestService getFlowExpenseTestService() {
+    return flowExpenseTestService;
+  }
+
+  public void setFlowExpenseTestService(FlowExpenseTestService flowExpenseTestService) {
+    this.flowExpenseTestService = flowExpenseTestService;
+  }
+
+  public FlowExpenseTest getFlowExpenseTest() {
+    return flowExpenseTest;
+  }
+
+  public void setFlowExpenseTest(FlowExpenseTest flowExpenseTest) {
+    this.flowExpenseTest = flowExpenseTest;
+  }
+
 }
-

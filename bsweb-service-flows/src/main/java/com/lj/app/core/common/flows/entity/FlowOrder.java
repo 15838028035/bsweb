@@ -7,164 +7,173 @@ import com.lj.app.core.common.base.entity.BaseEntity;
 import com.lj.app.core.common.util.JsonUtil;
 
 /**
-*流程实例
-*/
-public class FlowOrder extends BaseEntity{
-	
-	/**
-	 *   ID
-	 */
-	private java.lang.Integer id;
-	
-	/**
-	 * 流程编号  ORDER_NO
-	 */
-	private String orderNo;
-	
-	/**
-	 * 流程版本  ORDER_VERSION
-	 */
-	private java.lang.Integer orderVersion;
-	
-	/**
-	 * 流程定义ID  FLOW_PROCESS_ID
-	 */
-	private String flowProcessId;
-	
-	/**
-	 * 父流程实例ID  PARENT_ID
-	 */
-	private String parentId;
-	
-	/**
-	 * 父流程名称  parent_Node_Name
-	 */
-	private String parentNodeName;
-	
-	/**
-	 * 流程实例期望完成时间  expire_time
-	 */
-	private java.util.Date expireTime;
-	
-	 /**
-	 * 流程实例期望完成时间Begin
-	 */
-	private String  expireTimeBegin;
-	/**
-	 * 流程实例期望完成时间End
-	 */
-	private String expireTimeEnd;
-	/**
-	 * 流程实例优先级  priority
-	 */
-	private java.lang.Integer priority;
-	
-	/**
-	 * 流程实例附属变量  variable
-	 */
-	private String variable;
+ * 流程实例
+ */
+public class FlowOrder extends BaseEntity {
 
-	public java.lang.Integer getId() {
-		return id;
-	}
+  /**
+   * ID
+   */
+  private java.lang.Integer id;
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
+  /**
+   * 流程编号 ORDER_NO
+   */
+  private String orderNo;
 
-	public String getOrderNo() {
-		return orderNo;
-	}
+  /**
+   * 流程版本 ORDER_VERSION
+   */
+  private java.lang.Integer orderVersion;
 
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
-	}
+  /**
+   * 流程定义ID FLOW_PROCESS_ID
+   */
+  private String flowProcessId;
 
-	public java.lang.Integer getOrderVersion() {
-		return orderVersion;
-	}
+  /**
+   * 父流程实例ID PARENT_ID
+   */
+  private String parentId;
 
-	public void setOrderVersion(java.lang.Integer orderVersion) {
-		this.orderVersion = orderVersion;
-	}
+  /**
+   * 父流程名称 parent_Node_Name
+   */
+  private String parentNodeName;
 
-	public String getFlowProcessId() {
-		return flowProcessId;
-	}
+  /**
+   * 流程实例期望完成时间 expire_time
+   */
+  private java.util.Date expireTime;
 
-	public void setFlowProcessId(String flowProcessId) {
-		this.flowProcessId = flowProcessId;
-	}
+  /**
+   * 流程实例期望完成时间Begin
+   */
+  private String expireTimeBegin;
+  /**
+   * 流程实例期望完成时间End
+   */
+  private String expireTimeEnd;
+  /**
+   * 流程实例优先级 priority
+   */
+  private java.lang.Integer priority;
 
-	public String getParentId() {
-		return parentId;
-	}
+  /**
+   * 流程实例附属变量 variable
+   */
+  private String variable;
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+  public java.lang.Integer getId() {
+    return id;
+  }
 
-	public String getParentNodeName() {
-		return parentNodeName;
-	}
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
 
-	public void setParentNodeName(String parentNodeName) {
-		this.parentNodeName = parentNodeName;
-	}
+  public String getOrderNo() {
+    return orderNo;
+  }
 
-	public java.util.Date getExpireTime() {
-		return expireTime;
-	}
+  public void setOrderNo(String orderNo) {
+    this.orderNo = orderNo;
+  }
 
-	public void setExpireTime(java.util.Date expireTime) {
-		this.expireTime = expireTime;
-	}
+  public java.lang.Integer getOrderVersion() {
+    return orderVersion;
+  }
 
-	public String getExpireTimeBegin() {
-		return expireTimeBegin;
-	}
+  public void setOrderVersion(java.lang.Integer orderVersion) {
+    this.orderVersion = orderVersion;
+  }
 
-	public void setExpireTimeBegin(String expireTimeBegin) {
-		this.expireTimeBegin = expireTimeBegin;
-	}
+  public String getFlowProcessId() {
+    return flowProcessId;
+  }
 
-	public String getExpireTimeEnd() {
-		return expireTimeEnd;
-	}
+  public void setFlowProcessId(String flowProcessId) {
+    this.flowProcessId = flowProcessId;
+  }
 
-	public void setExpireTimeEnd(String expireTimeEnd) {
-		this.expireTimeEnd = expireTimeEnd;
-	}
+  public String getParentId() {
+    return parentId;
+  }
 
-	public java.lang.Integer getPriority() {
-		return priority;
-	}
+  public void setParentId(String parentId) {
+    this.parentId = parentId;
+  }
 
-	public void setPriority(java.lang.Integer priority) {
-		this.priority = priority;
-	}
+  public String getParentNodeName() {
+    return parentNodeName;
+  }
 
-	public String getVariable() {
-		return variable;
-	}
+  public void setParentNodeName(String parentNodeName) {
+    this.parentNodeName = parentNodeName;
+  }
 
-	public void setVariable(String variable) {
-		this.variable = variable;
-	}
-	
-	 public Map<String, Object> getVariableMap() {
-	        Map<String, Object> map = JsonUtil.fromJson(this.variable, Map.class);
-	        if(map == null) return Collections.emptyMap();
-	        return map;
-	}
-	 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Order(id=").append(this.id);
-		sb.append(",processId=").append(this.flowProcessId);
-		sb.append(",creator=").append(this.getCreateByUname());
-		sb.append(",createTime").append(this.getCreateDate());
-		sb.append(",orderNo=").append(this.orderNo).append(")");
-		return sb.toString();
-	}
+  public java.util.Date getExpireTime() {
+    return expireTime;
+  }
+
+  public void setExpireTime(java.util.Date expireTime) {
+    this.expireTime = expireTime;
+  }
+
+  public String getExpireTimeBegin() {
+    return expireTimeBegin;
+  }
+
+  public void setExpireTimeBegin(String expireTimeBegin) {
+    this.expireTimeBegin = expireTimeBegin;
+  }
+
+  public String getExpireTimeEnd() {
+    return expireTimeEnd;
+  }
+
+  public void setExpireTimeEnd(String expireTimeEnd) {
+    this.expireTimeEnd = expireTimeEnd;
+  }
+
+  public java.lang.Integer getPriority() {
+    return priority;
+  }
+
+  public void setPriority(java.lang.Integer priority) {
+    this.priority = priority;
+  }
+
+  public String getVariable() {
+    return variable;
+  }
+
+  public void setVariable(String variable) {
+    this.variable = variable;
+  }
+
+  /**
+   * 变量map
+   * @return 变量map
+   */
+  public Map<String, Object> getVariableMap() {
+    Map<String, Object> map = JsonUtil.fromJson(this.variable, Map.class);
+    if (map == null)  {
+      return Collections.emptyMap();
+    }
+    return map;
+  }
+
+  /**
+   * 重写
+   */
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Order(id=").append(this.id);
+    sb.append(",processId=").append(this.flowProcessId);
+    sb.append(",creator=").append(this.getCreateByUname());
+    sb.append(",createTime").append(this.getCreateDate());
+    sb.append(",orderNo=").append(this.orderNo).append(")");
+    return sb.toString();
+  }
 }

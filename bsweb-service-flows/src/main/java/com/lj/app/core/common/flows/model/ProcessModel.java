@@ -9,173 +9,187 @@ import com.lj.app.core.common.util.ClassUtil;
 import com.lj.app.core.common.util.StringUtil;
 
 /**
-* 流程定义process元素
-*/
+ * 流程定义process元素
+ */
 public class ProcessModel extends BaseModel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9000210138346445915L;
-	/**
-	 * 节点元素集合
-	 */
-	private List<NodeModel> nodes = new ArrayList<NodeModel>();
-   private List<TaskModel> taskModels = new ArrayList<TaskModel>();
-	/**
-	 * 流程实例启动url
-	 */
-	private String instanceUrl;
-	/**
-	 * 期望完成时间
-	 */
-	private String expireTime;
-	/**
-	 * 实例编号生成的class
-	 */
-	private String instanceNoClass;
-	/**
-	 * 实例编号生成器对象
-	 */
-	private INoGenerator generator;
-   /**
-    * lock
-    */
-   private final ObjectLock lock = new ObjectLock();
-	
-	/**
-	 * 返回当前流程定义的所有工作任务节点模型
-	 * @return
-    * @deprecated
-	 */
-	public List<WorkModel> getWorkModels() {
-		List<WorkModel> models = new ArrayList<WorkModel>();
-		for(NodeModel node : nodes) {
-			if(node instanceof WorkModel) {
-				models.add((WorkModel)node);
-			}
-		}
-		return models;
-	}
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -9000210138346445915L;
+  /**
+   * 节点元素集合
+   */
+  private List<NodeModel> nodes = new ArrayList<NodeModel>();
+  private List<TaskModel> taskModels = new ArrayList<TaskModel>();
+  /**
+   * 流程实例启动url
+   */
+  private String instanceUrl;
+  /**
+   * 期望完成时间
+   */
+  private String expireTime;
+  /**
+   * 实例编号生成的class
+   */
+  private String instanceNoClass;
+  /**
+   * 实例编号生成器对象
+   */
+  private INoGenerator generator;
+  /**
+   * lock
+   */
+  private final ObjectLock lock = new ObjectLock();
 
-   /**
-    * 获取所有的有序任务模型集合
-    * @return List<TaskModel> 任务模型集合
-    */
-   public List<TaskModel> getTaskModels() {
-       if(taskModels.isEmpty()) {
-           synchronized (lock) {
-               if(taskModels.isEmpty())
-                   buildModels(taskModels, getStart().getNextModels(TaskModel.class), TaskModel.class);
-           }
-       }
-       return taskModels;
-   }
+  /**
+   * 返回当前流程定义的所有工作任务节点模型
+   * 
+   * @return 模型
+   * @deprecated 过期不用
+   */
+  public List<WorkModel> getWorkModels() {
+    List<WorkModel> models = new ArrayList<WorkModel>();
+    for (NodeModel node : nodes) {
+      if (node instanceof WorkModel) {
+        models.add((WorkModel) node);
+      }
+    }
+    return models;
+  }
 
-   /**
-    * 根据指定的节点类型返回流程定义中所有模型对象
-    * @param clazz 节点类型
-    * @param <T> 泛型
-    * @return 节点列表
-    */
-   public <T> List<T> getModels(Class<T> clazz) {
-       List<T> models = new ArrayList<T>();
-       buildModels(models, getStart().getNextModels(clazz), clazz);
-       return models;
-   }
+  /**
+   * 获取所有的有序任务模型集合
+   * 
+   */
+  public List<TaskModel> getTaskModels() {
+    if (taskModels.isEmpty()) {
+      synchronized (lock) {
+        if (taskModels.isEmpty()) {
+          buildModels(taskModels, getStart().getNextModels(TaskModel.class), TaskModel.class);
+        }
+      }
+    }
+    return taskModels;
+  }
 
-   private <T> void buildModels(List<T> models, List<T> nextModels, Class<T> clazz) {
-       for(T nextModel : nextModels) {
-           if(!models.contains(nextModel)) {
-               models.add(nextModel);
-               buildModels(models, ((NodeModel)nextModel).getNextModels(clazz), clazz);
-           }
-       }
-   }
+  /**
+   * 根据指定的节点类型返回流程定义中所有模型对象
+   * 
+   * @param clazz
+   *          节点类型
+   * @param <T>
+   *          泛型
+   * @return 节点列表
+   */
+  public <T> List<T> getModels(Class<T> clazz) {
+    List<T> models = new ArrayList<T>();
+    buildModels(models, getStart().getNextModels(clazz), clazz);
+    return models;
+  }
 
-	/**
-	 * 获取process定义的start节点模型
-	 * @return
-	 */
-	public StartModel getStart() {
-		for(NodeModel node : nodes) {
-			if(node instanceof StartModel) {
-				return (StartModel)node;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * 获取process定义的指定节点名称的节点模型
-	 * @param nodeName 节点名称
-	 * @return
-	 */
-	public NodeModel getNode(String nodeName) {
-		for(NodeModel node : nodes) {
-			if(node.getName().equals(nodeName)) {
-				return node;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * 判断当前模型的节点是否包含给定的节点名称参数
-	 * @param nodeNames 节点名称数组
-	 * @return
-	 */
-	public <T> boolean containsNodeNames(Class<T> T, String... nodeNames) {
-		for(NodeModel node : nodes) {
-			if(!T.isInstance(node)) {
-				continue;
-			}
-			for(String nodeName : nodeNames) {
-				if(node.getName().equals(nodeName)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public List<NodeModel> getNodes() {
-		return nodes;
-	}
-	public void setNodes(List<NodeModel> nodes) {
-		this.nodes = nodes;
-	}
+  private <T> void buildModels(List<T> models, List<T> nextModels, Class<T> clazz) {
+    for (T nextModel : nextModels) {
+      if (!models.contains(nextModel)) {
+        models.add(nextModel);
+        buildModels(models, ((NodeModel) nextModel).getNextModels(clazz), clazz);
+      }
+    }
+  }
 
-	public String getExpireTime() {
-		return expireTime;
-	}
+  /**
+   * 获取process定义的start节点模型
+   * 
+   */
+  public StartModel getStart() {
+    for (NodeModel node : nodes) {
+      if (node instanceof StartModel) {
+        return (StartModel) node;
+      }
+    }
+    return null;
+  }
 
-	public void setExpireTime(String expireTime) {
-		this.expireTime = expireTime;
-	}
+  /**
+   * 获取process定义的指定节点名称的节点模型
+   * 
+   * @param nodeName
+   *          节点名称
+   */
+  public NodeModel getNode(String nodeName) {
+    for (NodeModel node : nodes) {
+      if (node.getName().equals(nodeName)) {
+        return node;
+      }
+    }
+    return null;
+  }
 
-	public String getInstanceUrl() {
-		return instanceUrl;
-	}
+  /**
+   * 判断当前模型的节点是否包含给定的节点名称参数
+   * 
+   * @param nodeNames
+   *          节点名称数组
+   * @return 是否
+   */
+  public <T> boolean containsNodeNames(Class<T> t, String... nodeNames) {
+    for (NodeModel node : nodes) {
+      if (!t.isInstance(node)) {
+        continue;
+      }
+      for (String nodeName : nodeNames) {
+        if (node.getName().equals(nodeName)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
-	public void setInstanceUrl(String instanceUrl) {
-		this.instanceUrl = instanceUrl;
-	}
-	public String getInstanceNoClass() {
-		return instanceNoClass;
-	}
+  public List<NodeModel> getNodes() {
+    return nodes;
+  }
 
-	public void setInstanceNoClass(String instanceNoClass) {
-		this.instanceNoClass = instanceNoClass;
-		if(StringUtil.isNotBlank(instanceNoClass)) {
-			generator = (INoGenerator)ClassUtil.newInstance(instanceNoClass);
-		}
-	}
-	
-	public INoGenerator getGenerator() {
-		return generator == null ? new DefaultNoGenerator() : generator;
-	}
+  public void setNodes(List<NodeModel> nodes) {
+    this.nodes = nodes;
+  }
 
-	public void setGenerator(INoGenerator generator) {
-		this.generator = generator;
-	}
+  public String getExpireTime() {
+    return expireTime;
+  }
+
+  public void setExpireTime(String expireTime) {
+    this.expireTime = expireTime;
+  }
+
+  public String getInstanceUrl() {
+    return instanceUrl;
+  }
+
+  public void setInstanceUrl(String instanceUrl) {
+    this.instanceUrl = instanceUrl;
+  }
+
+  public String getInstanceNoClass() {
+    return instanceNoClass;
+  }
+
+  /**
+   * 设置实例化类
+   * @param instanceNoClass 实例化类
+   */
+  public void setInstanceNoClass(String instanceNoClass) {
+    this.instanceNoClass = instanceNoClass;
+    if (StringUtil.isNotBlank(instanceNoClass)) {
+      generator = (INoGenerator) ClassUtil.newInstance(instanceNoClass);
+    }
+  }
+
+  public INoGenerator getGenerator() {
+    return generator == null ? new DefaultNoGenerator() : generator;
+  }
+
+  public void setGenerator(INoGenerator generator) {
+    this.generator = generator;
+  }
 }

@@ -47,431 +47,457 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/flows")
 @Results({
-		@Result(name = AbstractBaseAction.RELOAD, location = "flowProcessAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/flows/flowProcess-input.jsp"),
-		@Result(name = AbstractBaseAction.SAVE, location = "flowProcessAction!edit.action", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/flows/flowProcessList.jsp", type = AbstractBaseAction.REDIRECT),
-		@Result(name = "flowDiagram", location = "/jsp/flows/flowDiagram.jsp"),
-		@Result(name = "flowProcessDesigner", location = "/jsp/flows/flowProcessDesigner.jsp"),
-		@Result(name = "flowProcessView", location = "/jsp/flows/flowProcessView.jsp"),
-	    @Result(params = {
-	                 // 下载的文件格式
-	                 "contentType", "application/octet-stream",   
-	                 // 调用action对应的方法
-	                "inputName", "inputStream",   
-	                // HTTP协议，使浏览器弹出下载窗口
-	                 "contentDisposition", "attachment;filename=\"${fileName}\"",   
-	                 // 文件大小
-	                 "bufferSize", "10240"},   
-	                 // result 名
-	                 name = "download", 
-	                 // result 类型
-	                 type = "stream"),  
-		@Result(name = "flowProcessView", location = "/jsp/flows/flowProcessUploadFile.jsp")
-
-})
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "flowProcessAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, 
+        location = "/jsp/flows/flowProcess-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, 
+        location = "flowProcessAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+        location = "/jsp/flows/flowProcessList.jsp", type = AbstractBaseAction.REDIRECT),
+    @Result(name = "flowDiagram", 
+        location = "/jsp/flows/flowDiagram.jsp"),
+    @Result(name = "flowProcessDesigner", 
+        location = "/jsp/flows/flowProcessDesigner.jsp"),
+    @Result(name = "flowProcessView",
+        location = "/jsp/flows/flowProcessView.jsp"),
+    @Result(params = {
+        // 下载的文件格式
+        "contentType", "application/octet-stream",
+        // 调用action对应的方法
+        "inputName", "inputStream",
+        // HTTP协议，使浏览器弹出下载窗口
+        "contentDisposition", "attachment;filename=\"${fileName}\"",
+        // 文件大小
+        "bufferSize", "10240" },
+        // result 名
+        name = "download",
+        // result 类型
+        type = "stream"),
+    @Result(name = "flowProcessView", location = "/jsp/flows/flowProcessUploadFile.jsp")
+    })
 @Action("flowProcessAction")
 public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 
-	protected Logger logger = LoggerFactory.getLogger(FlowProcessAction.class);
+  protected Logger logger = LoggerFactory.getLogger(FlowProcessAction.class);
 
-	private FlowProcess flowProcess;
+  private FlowProcess flowProcess;
 
-	private java.lang.Integer id;
+  private java.lang.Integer id;
 
-	@Autowired
-	private FlowEngineFacetsService flowEngineFacetsService;
-	
-	private FlowEngine flowEngine;
-	
-	@Autowired
-	private FlowProcessService<FlowProcess> flowProcessService;
-	
-	@Autowired
-	private FlowTaskService<FlowTask> flowTaskService;
-	
-	@Autowired
-	private FlowTaskHistService<FlowTaskHist> flowTaskHistService;
+  @Autowired
+  private FlowEngineFacetsService flowEngineFacetsService;
 
-	private String orderId;
+  private FlowEngine flowEngine;
 
-	private String flowProcessJson;
+  @Autowired
+  private FlowProcessService<FlowProcess> flowProcessService;
 
-	private String processId;
-	
-	/**
-	 * 流程内容  FLOW_CONTENT
-	 */
-	private String  flowContentStr;
-	/**  
-     * 下载文件名
-     * 对应annotation注解里面的${fileName}，struts 会自动获取该fileName
-     */  
-    private String fileName;   
+  @Autowired
+  private FlowTaskService<FlowTask> flowTaskService;
 
-	public BaseService<FlowProcess> getBaseService() {
-		return flowProcessService;
-	}
+  @Autowired
+  private FlowTaskHistService<FlowTaskHist> flowTaskHistService;
 
-	public FlowProcess getModel() {
-		return flowProcess;
-	}
+  private String orderId;
 
-	@Override
-	protected void prepareModel() throws Exception {
-		flowEngine = flowEngineFacetsService.getEngine();
-		if (id != null) {
-			flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
-			flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess
-					.getFlowContent()));
-		} else {
-			flowProcess = new FlowProcess();
-			flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess
-					.getFlowContent()));
-		}
-	}
+  private String flowProcessJson;
 
-	@Override
-	public String commonSaveOrUpdate() throws Exception {
-		try {
-			if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
-				flowProcess.setFlowContent(flowProcess.getFlowContentStr()
-						.getBytes("UTF-8"));
-				flowProcess.setUpdateBy(this.getLoginUserId());
-				flowProcess.setUpdateByUname(this.getUserName());
-				flowProcess.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+  private String processId;
 
-				getBaseService().updateObject(flowProcess);
-				returnMessage = UPDATE_SUCCESS;
-			} else {
-				flowProcess.setFlowContent(flowProcess.getFlowContentStr()
-						.getBytes("UTF-8"));
+  /**
+   * 流程内容 FLOW_CONTENT
+   */
+  private String flowContentStr;
+  /**
+   * 下载文件名 对应annotation注解里面的${fileName}，struts 会自动获取该fileName
+   */
+  private String fileName;
 
-				flowProcess.setCreateBy(this.getLoginUserId());
-				flowProcess.setCreateByUname(this.getUserName());
-				flowProcess.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+  public BaseService<FlowProcess> getBaseService() {
+    return flowProcessService;
+  }
 
-				getBaseService().insertObject(flowProcess);
-				returnMessage = CREATE_SUCCESS;
-			}
+  public FlowProcess getModel() {
+    return flowProcess;
+  }
 
-			return LIST;
-		} catch (Exception e) {
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}
-	}
+  @Override
+  protected void prepareModel() throws Exception {
+    flowEngine = flowEngineFacetsService.getEngine();
+    if (id != null) {
+      flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
+      flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess.getFlowContent()));
+    } else {
+      flowProcess = new FlowProcess();
+      flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess.getFlowContent()));
+    }
+  }
 
-	public String processDeployUploadFile() throws Exception {
-		InputStream input = null;
-		returnMessage="上传成功";
-		try {
-			input = new FileInputStream(templateFile);
-			String flowContent =  FileUtil.readStreamToString(input);
-			flowProcessService.deploy(flowContent, this.getUserName());
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnMessage = e.getMessage();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+  @Override
+  public String commonSaveOrUpdate() throws Exception {
+    try {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+        flowProcess.setFlowContent(flowProcess.getFlowContentStr().getBytes("UTF-8"));
+        flowProcess.setUpdateBy(this.getLoginUserId());
+        flowProcess.setUpdateByUname(this.getUserName());
+        flowProcess.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
 
-		return "flowProcessUploadFile";
-	}
-	
-	public String processDeploy() throws Exception {
-		InputStream input = null;
-		String msg = this.OPT_SUCCESS;
-		String expMsg = "";
-		try {
-			if (id != null) {
-				flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
-				flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess
-						.getFlowContent()));
-				
-				String flowContent = flowProcess.getFlowContentStr();
-				input = FileUtil.getStreamFromString(flowContent);
-				flowProcessService.deploy(flowContent, this.getUserName());
-			} else {
-				msg = "";
-			}
+        getBaseService().updateObject(flowProcess);
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        flowProcess.setFlowContent(flowProcess.getFlowContentStr().getBytes("UTF-8"));
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			msg = this.OPT_FAILURE;
-			expMsg = e.getMessage();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					expMsg = e.getMessage();
-				}
-			}
-		}
+        flowProcess.setCreateBy(this.getLoginUserId());
+        flowProcess.setCreateByUname(this.getUserName());
+        flowProcess.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
 
-		AjaxResult ajaxResult = new AjaxResult();
-		ajaxResult.setOpResult(msg);
-		ajaxResult.setOptFailureMsg(expMsg);
-		Struts2Utils.renderJson(ajaxResult);
-		return null;
-	}
+        getBaseService().insertObject(flowProcess);
+        returnMessage = CREATE_SUCCESS;
+      }
 
-	public String processReDeploy() throws Exception {
-		InputStream input = null;
-		String msg = this.OPT_SUCCESS;
-		String expMsg = "";
-		try {
-			if (id != null) {
-				flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
-				flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess
-						.getFlowContent()));
-				String flowContent = flowProcess.getFlowContentStr();
-				input = FileUtil.getStreamFromString(flowContent);
-				flowProcessService.redeploy(id.toString(), flowContent);
-			} else {
-				msg = "";
-			}
+      return LIST;
+    } catch (Exception e) {
+      returnMessage = CREATE_FAILURE;
+      e.printStackTrace();
+      throw e;
+    }
+  }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			msg = this.OPT_FAILURE;
-			expMsg = e.getMessage();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					expMsg = e.getMessage();
-				}
-			}
-		}
+  /**
+   * 部署文件
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String processDeployUploadFile() throws Exception {
+    InputStream input = null;
+    returnMessage = "上传成功";
+    try {
+      input = new FileInputStream(templateFile);
+      String flowContent = FileUtil.readStreamToString(input);
+      flowProcessService.deploy(flowContent, this.getUserName());
+    } catch (Exception e) {
+      e.printStackTrace();
+      returnMessage = e.getMessage();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
 
-		AjaxResult ajaxResult = new AjaxResult();
-		ajaxResult.setOpResult(msg);
-		ajaxResult.setOptFailureMsg(expMsg);
-		Struts2Utils.renderJson(ajaxResult);
-		return null;
-	}
+    return "flowProcessUploadFile";
+  }
 
-	public String processDesigner() throws Exception {
-		if (id != null) {
-			flowProcess = flowProcessService.getProcessById(id.toString());
-			ProcessModel processModel = flowProcess.getModel();
-			if (processModel != null) {
-				flowProcessJson = FlowUtil.getModelJson(processModel);
-			}
+  /**
+   * 部署
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String processDeploy() throws Exception {
+    InputStream input = null;
+    String msg = this.OPT_SUCCESS;
+    String expMsg = "";
+    try {
+      if (id != null) {
+        flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
+        flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess.getFlowContent()));
 
-		}
-		return "flowProcessDesigner";
-	}
+        String flowContent = flowProcess.getFlowContentStr();
+        input = FileUtil.getStreamFromString(flowContent);
+        flowProcessService.deploy(flowContent, this.getUserName());
+      } else {
+        msg = "";
+      }
 
-	public String processDeployXml() {
-		InputStream input = null;
-		String msg = "true";
-		try {
-			String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
-			String flowContent = xml + FlowUtil.convertXml(flowContentStr);
-			input = FileUtil.getStreamFromString(flowContent);
-			if (id != null) {
-				flowProcessService.redeploy(id.toString(), flowContent);
-			} else {
-				flowProcessService.deploy(flowContent, this.getUserName());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			msg = "false";
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					msg = "false";
-				}
-			}
-		}
-		Struts2Utils.renderText(msg);
-		return null;
-	}
+    } catch (Exception e) {
+      e.printStackTrace();
+      msg = this.OPT_FAILURE;
+      expMsg = e.getMessage();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+          expMsg = e.getMessage();
+        }
+      }
+    }
 
-	public String processStart() throws Exception {
-		flowEngineFacetsService.startInstanceByName(flowProcess.getFlowName(), null,
-				this.getUserName(), null);
-		return LIST;
-	}
+    AjaxResult ajaxResult = new AjaxResult();
+    ajaxResult.setOpResult(msg);
+    ajaxResult.setOptFailureMsg(expMsg);
+    Struts2Utils.renderJson(ajaxResult);
+    return null;
+  }
 
-	public String flowProcessView() {
-		FlowOrderHist order = flowEngine.flowQueryService()
-				.getHistOrder(orderId);
-		List<FlowTaskHist> tasks = flowEngine.flowQueryService().getHistoryTasks(orderId);
-				
-		return "flowProcessView";
-	}
+  /**
+   * 部署
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String processReDeploy() throws Exception {
+    InputStream input = null;
+    String msg = this.OPT_SUCCESS;
+    String expMsg = "";
+    try {
+      if (id != null) {
+        flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
+        flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess.getFlowContent()));
+        String flowContent = flowProcess.getFlowContentStr();
+        input = FileUtil.getStreamFromString(flowContent);
+        flowProcessService.redeploy(id.toString(), flowContent);
+      } else {
+        msg = "";
+      }
 
-	/**
-	 * 显示独立的流程图
-	 */
-	public String flowDiagram() {
-		return "flowDiagram";
-	}
+    } catch (Exception e) {
+      e.printStackTrace();
+      msg = this.OPT_FAILURE;
+      expMsg = e.getMessage();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+          expMsg = e.getMessage();
+        }
+      }
+    }
 
-	public Object diagramJson() throws Exception {
-		FlowProcess process = flowProcessService.getProcessById(processId);
-				
-		Assert.notNull(process);
-		ProcessModel model = process.getModel();
-		Map<String, String> jsonMap = new HashMap<String, String>();
-		if (model != null) {
-			jsonMap.put("process", FlowUtil.getModelJson(model));
-		}
+    AjaxResult ajaxResult = new AjaxResult();
+    ajaxResult.setOpResult(msg);
+    ajaxResult.setOptFailureMsg(expMsg);
+    Struts2Utils.renderJson(ajaxResult);
+    return null;
+  }
 
-		if (StringUtil.isNotBlank(orderId)) {
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("flowOrderId", orderId);
-			List<FlowTask> tasks = flowTaskService.queryForList(map);
-			
-			List<FlowTaskHist> historyTasks = flowTaskHistService.queryForList(map);
-			jsonMap.put("state",FlowUtil.getStateJson(model, tasks, historyTasks));
-		}
-		logger.debug(jsonMap.get("state"));
-		// {"historyRects":{"rects":[{"paths":["TO 任务1"],"name":"开始"},{"paths":["TO 分支"],"name":"任务1"},{"paths":["TO 任务3","TO 任务4","TO 任务2"],"name":"分支"}]}}
-		// return jsonMap;
-		Struts2Utils.renderJson(jsonMap);
-		return null;
-	}
-   
-    /**  
-     * 下载文件应访问该地址
-     * 对应annotation注解里面的 name = "download"
-     */  
-    public String downloadFlowXml() {   
-        return "download";   
-    }   
-     
-    
-    public String getFileName() {
-		return fileName;
-	}
+  /**
+   * 流程设计
+   * @return 页面
+   * @throws Exception 异常
+   */
+  public String processDesigner() throws Exception {
+    if (id != null) {
+      flowProcess = flowProcessService.getProcessById(id.toString());
+      ProcessModel processModel = flowProcess.getModel();
+      if (processModel != null) {
+        flowProcessJson = FlowUtil.getModelJson(processModel);
+      }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    }
+    return "flowProcessDesigner";
+  }
 
-	/**  
-     * 获取下载流
-     * 对应 annotation 注解里面的 "inputName", "inputStream"
-     * 假如 annotation 注解改为 "inputName", "myStream"，则下面的方法则应改为：getMyStream
-     * @return InputStream  
-     */  
-    public InputStream getInputStream() throws Exception {   
-        // 下载路径
-        InputStream input = null;
-		try {
-			if (id != null) {
-				flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
-				flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess
-						.getFlowContent()));
-				String flowContent = flowProcess.getFlowContentStr();
-				input = FileUtil.getStreamFromString(flowContent);
-				 return input; 
-			} 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-        return null;   
-    }   
-    
-	public void setFlowProcess(FlowProcess flowProcess) {
-		this.flowProcess = flowProcess;
-	}
+  /**
+   * 部署xml
+   * @return null
+   */
+  public String processDeployXml() {
+    InputStream input = null;
+    String msg = "true";
+    try {
+      String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
+      String flowContent = xml + FlowUtil.convertXml(flowContentStr);
+      input = FileUtil.getStreamFromString(flowContent);
+      if (id != null) {
+        flowProcessService.redeploy(id.toString(), flowContent);
+      } else {
+        flowProcessService.deploy(flowContent, this.getUserName());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      msg = "false";
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+          msg = "false";
+        }
+      }
+    }
+    Struts2Utils.renderText(msg);
+    return null;
+  }
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
+  public String processStart() throws Exception {
+    flowEngineFacetsService.startInstanceByName(flowProcess.getFlowName(), null, this.getUserName(), null);
+    return LIST;
+  }
 
-	public FlowProcess getFlowProcess() {
-		return flowProcess;
-	}
+  /**
+   * 流程查看
+   * @return 页面
+   */
+  public String flowProcessView() {
+    FlowOrderHist order = flowEngine.flowQueryService().getHistOrder(orderId);
+    List<FlowTaskHist> tasks = flowEngine.flowQueryService().getHistoryTasks(orderId);
 
-	public java.lang.Integer getId() {
-		return id;
-	}
+    return "flowProcessView";
+  }
 
-	
-	public FlowEngineFacetsService getFlowEngineFacetsService() {
-		return flowEngineFacetsService;
-	}
+  /**
+   * 显示独立的流程图
+   */
+  public String flowDiagram() {
+    return "flowDiagram";
+  }
 
-	public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
-		this.flowEngineFacetsService = flowEngineFacetsService;
-	}
+  /**
+   * 流程图json
+   * @return json
+   * @throws Exception 异常
+   */
+  public Object diagramJson() throws Exception {
+    FlowProcess process = flowProcessService.getProcessById(processId);
 
-	public String getOrderId() {
-		return orderId;
-	}
+    Assert.notNull(process);
+    ProcessModel model = process.getModel();
+    Map<String, String> jsonMap = new HashMap<String, String>();
+    if (model != null) {
+      jsonMap.put("process", FlowUtil.getModelJson(model));
+    }
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
+    if (StringUtil.isNotBlank(orderId)) {
+      Map<String, Object> map = new HashMap<String, Object>();
+      map.put("flowOrderId", orderId);
+      List<FlowTask> tasks = flowTaskService.queryForList(map);
 
-	public String getFlowProcessJson() {
-		return flowProcessJson;
-	}
+      List<FlowTaskHist> historyTasks = flowTaskHistService.queryForList(map);
+      jsonMap.put("state", FlowUtil.getStateJson(model, tasks, historyTasks));
+    }
+    logger.debug(jsonMap.get("state"));
+    // {"historyRects":{"rects":[{"paths":["TO 任务1"],"name":"开始"},{"paths":["TO 分支"],"name":"任务1"},{"paths":["TO
+    // 任务3","TO 任务4","TO 任务2"],"name":"分支"}]}}
+    // return jsonMap;
+    Struts2Utils.renderJson(jsonMap);
+    return null;
+  }
 
-	public void setFlowProcessJson(String flowProcessJson) {
-		this.flowProcessJson = flowProcessJson;
-	}
+  /**
+   * 下载文件应访问该地址 对应annotation注解里面的 name = "download"
+   */
+  public String downloadFlowXml() {
+    return "download";
+  }
 
-	public String getProcessId() {
-		return processId;
-	}
+  public String getFileName() {
+    return fileName;
+  }
 
-	public void setProcessId(String processId) {
-		this.processId = processId;
-	}
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
+  }
 
-	public String getFlowContentStr() {
-		return flowContentStr;
-	}
+  /**
+   * 获取下载流 对应 annotation 注解里面的 "inputName", "inputStream" 假如 annotation 注解改为 "inputName",
+   * "myStream"，则下面的方法则应改为：getMyStream
+   * 
+   * @return InputStream
+   */
+  public InputStream getInputStream() throws Exception {
+    // 下载路径
+    InputStream input = null;
+    try {
+      if (id != null) {
+        flowProcess = (FlowProcess) flowProcessService.getProcessById(id.toString());
+        flowProcess.setFlowContentStr(StringUtil.byteToString(flowProcess.getFlowContent()));
+        String flowContent = flowProcess.getFlowContentStr();
+        input = FileUtil.getStreamFromString(flowContent);
+        return input;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
 
-	public void setFlowContentStr(String flowContentStr) {
-		this.flowContentStr = flowContentStr;
-	}
+    return null;
+  }
 
-	public FlowEngine getFlowEngine() {
-		return flowEngine;
-	}
+  public void setFlowProcess(FlowProcess flowProcess) {
+    this.flowProcess = flowProcess;
+  }
 
-	public void setFlowEngine(FlowEngine flowEngine) {
-		this.flowEngine = flowEngine;
-	}
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
 
-	public FlowProcessService getFlowProcessService() {
-		return flowProcessService;
-	}
+  public FlowProcess getFlowProcess() {
+    return flowProcess;
+  }
 
-	public void setFlowProcessService(FlowProcessService flowProcessService) {
-		this.flowProcessService = flowProcessService;
-	}
+  public java.lang.Integer getId() {
+    return id;
+  }
 
+  public FlowEngineFacetsService getFlowEngineFacetsService() {
+    return flowEngineFacetsService;
+  }
+
+  public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
+    this.flowEngineFacetsService = flowEngineFacetsService;
+  }
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public String getFlowProcessJson() {
+    return flowProcessJson;
+  }
+
+  public void setFlowProcessJson(String flowProcessJson) {
+    this.flowProcessJson = flowProcessJson;
+  }
+
+  public String getProcessId() {
+    return processId;
+  }
+
+  public void setProcessId(String processId) {
+    this.processId = processId;
+  }
+
+  public String getFlowContentStr() {
+    return flowContentStr;
+  }
+
+  public void setFlowContentStr(String flowContentStr) {
+    this.flowContentStr = flowContentStr;
+  }
+
+  public FlowEngine getFlowEngine() {
+    return flowEngine;
+  }
+
+  public void setFlowEngine(FlowEngine flowEngine) {
+    this.flowEngine = flowEngine;
+  }
+
+  public FlowProcessService getFlowProcessService() {
+    return flowProcessService;
+  }
+
+  public void setFlowProcessService(FlowProcessService flowProcessService) {
+    this.flowProcessService = flowProcessService;
+  }
 
 }

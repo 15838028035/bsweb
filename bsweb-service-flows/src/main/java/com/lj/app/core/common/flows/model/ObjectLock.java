@@ -6,6 +6,6 @@ import java.io.Serializable;
  * 对象锁
  *
  */
-public class ObjectLock implements Serializable{
+public class ObjectLock implements Serializable {
 
 }

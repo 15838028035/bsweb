@@ -18,32 +18,34 @@ import com.lj.app.core.common.util.FileUtil;
 
 public class ModelTest extends FlowBaseTest {
 
-	    @Before
-	    public void before() {
-	        processId = flowEngine.flowProcessService().deploy(FileUtil.getStreamFromClasspath("com/lj/app/core/common/flows/task/simple/flow1.xml"));
-	    }
+  @Before
+  public void before() {
+    processId = flowEngine.flowProcessService()
+        .deploy(FileUtil.getStreamFromClasspath("com/lj/app/core/common/flows/task/simple/flow1.xml"));
+  }
 
-	    @Test
-	    public void taskTest() throws Exception{
-	        Map<String, Object> args = new HashMap<String, Object>();
-	        args.put("task1.operator", new String[]{"1"});
-	        FlowOrder order = flowEngine.startInstanceByName("simple", null, "2", args);
-	        System.out.println("order=" + order);
-	        List<FlowTask> tasks =  flowEngine.flowQueryService().getActiveTasks(order.getId().toString());
-	        for(FlowTask task : tasks) {
-	            TaskModel model = (TaskModel)flowEngine.FlowTaskServiceApi().getTaskModel(task.getId().toString());
-	            System.out.println(model.getName());
-	            List<TaskModel> models = model.getNextModels(TaskModel.class);
-	            for(TaskModel tm : models) {
-	                System.out.println(tm.getName());
-	            }
-	        }
-	        
-	        List<TaskModel> models =((FlowProcess)flowEngine.flowProcessService().getProcessById(processId)).getModel().getModels(TaskModel.class);
-	            for(TaskModel tm : models) {
-	                System.out.println(tm.getName());
-	                assertNotNull(tm.getName());
-	            }
-	    }
+  @Test
+  public void taskTest() throws Exception {
+    Map<String, Object> args = new HashMap<String, Object>();
+    args.put("task1.operator", new String[] { "1" });
+    FlowOrder order = flowEngine.startInstanceByName("simple", null, "2", args);
+    System.out.println("order=" + order);
+    List<FlowTask> tasks = flowEngine.flowQueryService().getActiveTasks(order.getId().toString());
+    for (FlowTask task : tasks) {
+      TaskModel model = (TaskModel) flowEngine.flowTaskServiceApi().getTaskModel(task.getId().toString());
+      System.out.println(model.getName());
+      List<TaskModel> models = model.getNextModels(TaskModel.class);
+      for (TaskModel tm : models) {
+        System.out.println(tm.getName());
+      }
+    }
 
-	}
+    List<TaskModel> models = ((FlowProcess) flowEngine.flowProcessService().getProcessById(processId)).getModel()
+        .getModels(TaskModel.class);
+    for (TaskModel tm : models) {
+      System.out.println(tm.getName());
+      assertNotNull(tm.getName());
+    }
+  }
+
+}

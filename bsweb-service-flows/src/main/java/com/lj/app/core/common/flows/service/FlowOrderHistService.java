@@ -3,14 +3,13 @@ package com.lj.app.core.common.flows.service;
 import com.lj.app.core.common.base.service.BaseService;
 
 /**
- * @title :
- * @description :FlowOrderHistService
- * @author: zhangsan
- * @date: 2016-10-25 14:00:36
+ * 
+ * 历史流程实例
+ *
+ * @param <FlowOrderHist> 历史流程实例
  */
 public interface FlowOrderHistService<FlowOrderHist> extends BaseService {
 
-
-	 public com.lj.app.core.common.flows.entity.FlowOrderHist getHistOrder(String orderId);
+  public com.lj.app.core.common.flows.entity.FlowOrderHist getHistOrder(String orderId);
 
 }

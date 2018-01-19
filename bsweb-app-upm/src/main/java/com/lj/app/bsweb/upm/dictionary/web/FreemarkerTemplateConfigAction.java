@@ -25,64 +25,67 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Controller
 @Namespace("/jsp/freemarkerTemplateConfig")
 @Results({
-	    @Result(name = AbstractBaseAction.RELOAD, location = "freemarkerTemplateConfigAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfig-input.jsp"),
-		@Result(name = AbstractBaseAction.SAVE, location = "freemarkerTemplateConfigAction!edit.action",type=AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigList.jsp", type=AbstractBaseAction.REDIRECT)
-})
+    @Result(name = AbstractBaseAction.RELOAD,
+        location = "freemarkerTemplateConfigAction",  type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT,
+    location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfig-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE,
+    location = "freemarkerTemplateConfigAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+    location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("freemarkerTemplateConfigAction")
 public class FreemarkerTemplateConfigAction extends AbstractBaseUpmAction<FreemarkerTemplateConfig> {
-	
-	 protected Logger logger = LoggerFactory.getLogger(FreemarkerTemplateConfigAction.class);
 
-	@Autowired
-	private FreemarkerTemplateConfigService<FreemarkerTemplateConfig> freemarkerTemplateConfigService;
-	
-	private FreemarkerTemplateConfig freemarkerTemplateConfig;
-	
-	private java.lang.Integer id;
-	
-	public   BaseService<FreemarkerTemplateConfig> getBaseService(){
-		return freemarkerTemplateConfigService;
-	}
-	
-	public FreemarkerTemplateConfig getModel() {
-		return freemarkerTemplateConfig;
-	}
-	
-	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			freemarkerTemplateConfig = (FreemarkerTemplateConfig)freemarkerTemplateConfigService.getInfoByKey(id);
-		} else {
-			freemarkerTemplateConfig = new FreemarkerTemplateConfig();
-		}
-	}
+  protected Logger logger = LoggerFactory.getLogger(FreemarkerTemplateConfigAction.class);
 
-	public void setFreemarkerTemplateConfig(FreemarkerTemplateConfig freemarkerTemplateConfig){
-		this.freemarkerTemplateConfig = freemarkerTemplateConfig;
-	}
-	
-	public void setId(java.lang.Integer id){
-		this.id =  id;
-	}
-	
-	public FreemarkerTemplateConfigService<FreemarkerTemplateConfig> getFreemarkerTemplateConfigService() {
-		return freemarkerTemplateConfigService;
-	}
+  @Autowired
+  private FreemarkerTemplateConfigService<FreemarkerTemplateConfig> freemarkerTemplateConfigService;
 
-	public void setFreemarkerTemplateConfigService(
-			FreemarkerTemplateConfigService<FreemarkerTemplateConfig> freemarkerTemplateConfigService) {
-		this.freemarkerTemplateConfigService = freemarkerTemplateConfigService;
-	}
+  private FreemarkerTemplateConfig freemarkerTemplateConfig;
 
-	public FreemarkerTemplateConfig getFreemarkerTemplateConfig() {
-		return freemarkerTemplateConfig;
-	}
+  private java.lang.Integer id;
 
-	public java.lang.Integer  getId(){
-		return id;
-	}
+  public BaseService<FreemarkerTemplateConfig> getBaseService() {
+    return freemarkerTemplateConfigService;
+  }
+
+  public FreemarkerTemplateConfig getModel() {
+    return freemarkerTemplateConfig;
+  }
+
+  @Override
+  protected void prepareModel() throws Exception {
+    if (id != null) {
+      freemarkerTemplateConfig = (FreemarkerTemplateConfig) freemarkerTemplateConfigService.getInfoByKey(id);
+    } else {
+      freemarkerTemplateConfig = new FreemarkerTemplateConfig();
+    }
+  }
+
+  public void setFreemarkerTemplateConfig(FreemarkerTemplateConfig freemarkerTemplateConfig) {
+    this.freemarkerTemplateConfig = freemarkerTemplateConfig;
+  }
+
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
+
+  public FreemarkerTemplateConfigService<FreemarkerTemplateConfig> getFreemarkerTemplateConfigService() {
+    return freemarkerTemplateConfigService;
+  }
+
+  public void setFreemarkerTemplateConfigService(
+      FreemarkerTemplateConfigService<FreemarkerTemplateConfig> freemarkerTemplateConfigService) {
+    this.freemarkerTemplateConfigService = freemarkerTemplateConfigService;
+  }
+
+  public FreemarkerTemplateConfig getFreemarkerTemplateConfig() {
+    return freemarkerTemplateConfig;
+  }
+
+  public java.lang.Integer getId() {
+    return id;
+  }
 }
-

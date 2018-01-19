@@ -15,51 +15,55 @@ import org.w3c.dom.Node;
  * xml解析的帮助类
  */
 public class XmlHelper {
-	/**
-	 * DocumentBuilderFactory实例
-	 */
-	private static DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
-	
-	/**
-	 * 获取DocumentBuilderFactory
-	 * @return
-	 */
-	private static DocumentBuilderFactory createDocumentBuilderFactory() {
-		return DocumentBuilderFactory.newInstance();
-	}
+  /**
+   * DocumentBuilderFactory实例
+   */
+  private static DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
 
-	/**
-	 * 由DocumentBuilderFactory产生DocumentBuilder实例
-	 * @return
-	 */
-	public static DocumentBuilder createDocumentBuilder() {
-		try {
-			return documentBuilderFactory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * 从element元素查找所有tagName指定的子节点元素集合
-	 * @param element
-	 * @param tagName
-	 * @return
-	 */
-	public static List<Element> elements(Element element, String tagName) {
-		if (element == null || !element.hasChildNodes()) {
-			return Collections.emptyList();
-		}
+  /**
+   * 获取DocumentBuilderFactory
+   * 
+   * @return DocumentBuilderFactory
+   */
+  private static DocumentBuilderFactory createDocumentBuilderFactory() {
+    return DocumentBuilderFactory.newInstance();
+  }
 
-		List<Element> elements = new ArrayList<Element>();
-		for (Node child = element.getFirstChild(); child != null; child = child.getNextSibling()) {
-			if (child.getNodeType() == Node.ELEMENT_NODE) {
-				Element childElement = (Element) child;
-				String childTagName = childElement.getNodeName();
-				if (tagName.equals(childTagName))
-					elements.add(childElement);
-			}
-		}
-		return elements;
-	}
+  /**
+   * 由DocumentBuilderFactory产生DocumentBuilder实例
+   * 
+   * @return DocumentBuilder
+   */
+  public static DocumentBuilder createDocumentBuilder() {
+    try {
+      return documentBuilderFactory.newDocumentBuilder();
+    } catch (ParserConfigurationException e) {
+      return null;
+    }
+  }
+
+  /**
+   * 从element元素查找所有tagName指定的子节点元素集合
+   * 
+   * @param element element元素
+   * @param tagName 标签名称
+   * @return 子节点元素集合
+   */
+  public static List<Element> elements(Element element, String tagName) {
+    if (element == null || !element.hasChildNodes()) {
+      return Collections.emptyList();
+    }
+
+    List<Element> elements = new ArrayList<Element>();
+    for (Node child = element.getFirstChild(); child != null; child = child.getNextSibling()) {
+      if (child.getNodeType() == Node.ELEMENT_NODE) {
+        Element childElement = (Element) child;
+        String childTagName = childElement.getNodeName();
+        if (tagName.equals(childTagName)) {
+          elements.add(childElement);
+        }
+      }
+    }
+    return elements;
+  }
 }

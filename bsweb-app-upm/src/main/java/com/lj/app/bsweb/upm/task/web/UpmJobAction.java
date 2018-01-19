@@ -27,74 +27,87 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @SuppressWarnings("serial")
 @Controller
 @Namespace("/jsp/task")
-@Results({
-	    @Result(name = AbstractBaseAction.RELOAD, location = "upmJobAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/task/upmJob-input.jsp"),
-		@Result(name = AbstractBaseAction.SAVE, location = "upmJobAction!edit.action",type=AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/task/upmJobList.jsp", type=AbstractBaseAction.REDIRECT)
-})
+@Results({ 
+    @Result(name = AbstractBaseAction.RELOAD, 
+        location = "upmJobAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, 
+      location = "/jsp/task/upmJob-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, 
+      location = "upmJobAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, 
+      location = "/jsp/task/upmJobList.jsp", type = AbstractBaseAction.REDIRECT) 
+    })
 
 @Action("upmJobAction")
 public class UpmJobAction extends AbstractBaseUpmAction<UpmJob> {
-	
-	 protected Logger logger = LoggerFactory.getLogger(UpmJobAction.class);
 
-	@Autowired
-	private UpmJobService upmJobService;
-	@Autowired
-	private UpmJobSechduService<UpmJobSechdu> upmJobSechduService;
-	
-	private UpmJob upmJob;
-	private java.lang.Integer id;
-	
-	public   BaseService getBaseService(){
-		return upmJobService;
-	}
-	
-	public UpmJob getModel() {
-		return upmJob;
-	}
-	
-	@Override
-	protected void prepareModel() throws Exception {
-		if (id != null) {
-			upmJob = (UpmJob)upmJobService.getInfoByKey(id);
-		} else {
-			upmJob = new UpmJob();
-		}
-	}
+  protected Logger logger = LoggerFactory.getLogger(UpmJobAction.class);
 
-	public String isProcessJobStatus() throws Exception {
-		boolean result = upmJobSechduService.isProcessJobStatus(this.getId());
-		Struts2Utils.renderText(String.valueOf(result));
-		return null;
-	}
-	
-	public String handScheduler() throws Exception {
-		try {
-			upmJobSechduService.runJob(this.getId());
-			Struts2Utils.renderText("执行成功");
-		} catch (Exception e) {
-			Struts2Utils.renderText("执行失败");
-		}
-		return null;
-	}
-	
-	public java.lang.Integer getId() {
-		return id;
-	}
+  @Autowired
+  private UpmJobService upmJobService;
+  @Autowired
+  private UpmJobSechduService<UpmJobSechdu> upmJobSechduService;
 
-	public void setId(java.lang.Integer id) {
-		this.id = id;
-	}
+  private UpmJob upmJob;
+  private java.lang.Integer id;
 
-	public UpmJob getUpmJob() {
-		return upmJob;
-	}
+  public BaseService getBaseService() {
+    return upmJobService;
+  }
 
-	public void setUpmJob(UpmJob upmJob) {
-		this.upmJob = upmJob;
-	}
-	
+  public UpmJob getModel() {
+    return upmJob;
+  }
+
+  @Override
+  protected void prepareModel() throws Exception {
+    if (id != null) {
+      upmJob = (UpmJob) upmJobService.getInfoByKey(id);
+    } else {
+      upmJob = new UpmJob();
+    }
+  }
+
+  /**
+   * job状态
+   * @return json
+   * @throws Exception 异常
+   */
+  public String isProcessJobStatus() throws Exception {
+    boolean result = upmJobSechduService.isProcessJobStatus(this.getId());
+    Struts2Utils.renderText(String.valueOf(result));
+    return null;
+  }
+
+  /**
+   * 手动执行
+   * @return 文本
+   * @throws Exception 异常
+   */
+  public String handScheduler() throws Exception {
+    try {
+      upmJobSechduService.runJob(this.getId());
+      Struts2Utils.renderText("执行成功");
+    } catch (Exception e) {
+      Struts2Utils.renderText("执行失败");
+    }
+    return null;
+  }
+
+  public java.lang.Integer getId() {
+    return id;
+  }
+
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
+
+  public UpmJob getUpmJob() {
+    return upmJob;
+  }
+
+  public void setUpmJob(UpmJob upmJob) {
+    this.upmJob = upmJob;
+  }
+
 }
-

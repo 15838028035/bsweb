@@ -22,8 +22,8 @@ public class TransferTaskTest extends FlowBaseTest {
 		System.out.println("order=" + order);
 		List<FlowTask> tasks =  flowEngine.flowQueryService().getActiveTasks(order.getId());
 		for(FlowTask task : tasks) {
-			flowEngine.FlowTaskServiceApi().createNewTask(task.getId().toString(), 0, "test");
-			flowEngine.FlowTaskServiceApi().complete(task.getId().toString());
+			flowEngine.flowTaskServiceApi().createNewTask(task.getId().toString(), 0, "test");
+			flowEngine.flowTaskServiceApi().complete(task.getId().toString());
 		}
 	}
 
