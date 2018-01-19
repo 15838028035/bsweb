@@ -23,113 +23,114 @@ import redis.clients.jedis.JedisPool;
  */
 public class RedisClientTemplate {
 
-    private static final Log log = LogFactory.getLog(RedisClientTemplate.class);
+  private static final Log log = LogFactory.getLog(RedisClientTemplate.class);
 
-    @Autowired
-    private JedisPool           jedisPool;
+  @Autowired
+  private JedisPool jedisPool;
 
-    private Jedis               jedis;
+  private Jedis jedis;
 
-    public void init() {
-        genJedis();
+  public void init() {
+    genJedis();
+  }
+
+  /**
+   * 获取redis客户端
+   * 
+   * @return
+   */
+  public Jedis getRedisClient() {
+    return jedis;
+  }
+
+  public JedisPool getJedisPool() {
+    return jedisPool;
+  }
+
+  public void genJedis() {
+    if (jedis == null) {
+      jedis = jedisPool.getResource();
+    }
+  }
+
+  public Boolean set(String key, Object value) {
+    if (!(value instanceof Serializable)) {
+      log.error(value.getClass().getName() + "：对象没有实现Serializable接口！");
+      return Boolean.FALSE;
     }
 
-    /**
-     * 获取redis客户端
-     * 
-     * @return
-     */
-    public Jedis getRedisClient() {
-        return jedis;
+    try {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ObjectOutputStream oos = new ObjectOutputStream(baos);
+      oos.writeObject(value);
+      jedis.set(key.getBytes("UTF-8"), baos.toByteArray());
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      return Boolean.FALSE;
     }
 
-    public JedisPool getJedisPool() {
-        return jedisPool;
+    return Boolean.TRUE;
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> T get(String key) {
+    try {
+      if (jedis.exists(key)) {
+        byte[] byteValue = jedis.get(key.getBytes("UTF-8"));
+        ByteArrayInputStream bais = new ByteArrayInputStream(byteValue);
+        ObjectInputStream ios = new ObjectInputStream(bais);
+        return (T) ios.readObject();
+      }
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
     }
 
-    public void genJedis() {
-        if (jedis == null) {
-            jedis = jedisPool.getResource();
-        }
+    return null;
+  }
+
+  public Boolean hset(String key, Object value) {
+    try {
+      Class<?> clazz = value.getClass();
+      PropertyDescriptor pd = null;
+      Method method = null;
+      Object obj = null;
+      for (Field field : clazz.getDeclaredFields()) {
+        pd = new PropertyDescriptor(field.getName(), clazz);
+        method = pd.getReadMethod();
+        obj = method.invoke(value);
+        jedis.hset(key, field.getName(), obj == null ? null : String.valueOf(obj));
+      }
+    } catch (Exception e) {
+      log.error(e.getMessage());
+      return Boolean.FALSE;
     }
 
-    public Boolean set(String key, Object value) {
-        if (!(value instanceof Serializable)) {
-            log.error(value.getClass().getName() + "：对象没有实现Serializable接口！");
-            return Boolean.FALSE;
-        }
+    return Boolean.TRUE;
+  }
 
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(value);
-            jedis.set(key.getBytes("UTF-8"), baos.toByteArray());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return Boolean.FALSE;
-        }
-
-        return Boolean.TRUE;
+  public String hget(String key, String field, String defaultValue) {
+    String value = null;
+    if (jedis.exists(key)) {
+      value = jedis.hget(key, field);
     }
-
-    @SuppressWarnings("unchecked")
-    public <T> T get(String key) {
-        try {
-            if (jedis.exists(key)) {
-                byte[] byteValue = jedis.get(key.getBytes("UTF-8"));
-                ByteArrayInputStream bais = new ByteArrayInputStream(byteValue);
-                ObjectInputStream ios = new ObjectInputStream(bais);
-                return (T) ios.readObject();
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-
-        return null;
+    if (value == null && defaultValue != null) {
+      return defaultValue;
+    } else {
+      return value;
     }
+  }
 
-    public Boolean hset(String key, Object value) {
-        try {
-            Class<?> clazz = value.getClass();
-            PropertyDescriptor pd = null;
-            Method method = null;
-            Object obj = null;
-            for (Field field : clazz.getDeclaredFields()) {
-                pd = new PropertyDescriptor(field.getName(), clazz);
-                method = pd.getReadMethod();
-                obj = method.invoke(value);
-                jedis.hset(key, field.getName(), obj == null ? null : String.valueOf(obj));
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return Boolean.FALSE;
-        }
-
-        return Boolean.TRUE;
+  /**
+   * 释放资源
+   */
+  private void returnResource(Jedis jedis) {
+    if (jedis == null)
+      return;
+    try {
+      jedis.quit();
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
     }
-
-    public String hget(String key, String field, String defaultValue) {
-        String value = null;
-        if (jedis.exists(key)) {
-            value = jedis.hget(key, field);
-        }
-        if (value == null && defaultValue != null) {
-            return defaultValue;
-        } else {
-            return value;
-        }
-    }
-
-    /**
-     * 释放资源
-     */
-    private void returnResource(Jedis jedis) {
-        if (jedis == null) return;
-        try {
-            jedis.quit();
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-    }
+  }
 
 }

@@ -477,7 +477,7 @@ public class FlowEngineImpl implements FlowEngine, Serializable {
   }
 
   @Override
-  public com.lj.app.core.common.flows.service.FlowTaskHistService FlowTaskHistService() {
+  public com.lj.app.core.common.flows.service.FlowTaskHistService flowTaskHistService() {
     return flowTaskHistService;
   }
 

@@ -79,7 +79,7 @@ public interface FlowEngine {
    * 
    * @return 获取任务服务
    */
-  public FlowTaskHistService FlowTaskHistService();
+  public FlowTaskHistService flowTaskHistService();
 
   /**
    * 任务参与
