@@ -91,8 +91,8 @@ public class FlowEngineFacetsServiceImpl implements FlowEngineFacetsService, Ser
    * 转办
    */
   public List<FlowTask> transferMajor(String taskId, String operator, String... actors) throws Exception {
-    List<FlowTask> tasks = getEngine().FlowTaskServiceApi().createNewTask(taskId, TaskType.Major.ordinal(), actors);
-    getEngine().FlowTaskServiceApi().complete(taskId, operator);
+    List<FlowTask> tasks = getEngine().flowTaskServiceApi().createNewTask(taskId, TaskType.Major.ordinal(), actors);
+    getEngine().flowTaskServiceApi().complete(taskId, operator);
     return tasks;
   }
 
@@ -100,8 +100,8 @@ public class FlowEngineFacetsServiceImpl implements FlowEngineFacetsService, Ser
    * 转办
    */
   public List<FlowTask> transferAidant(String taskId, String operator, String... actors) throws Exception {
-    List<FlowTask> tasks = getEngine().FlowTaskServiceApi().createNewTask(taskId, TaskType.Aidant.ordinal(), actors);
-    getEngine().FlowTaskServiceApi().complete(taskId, operator);
+    List<FlowTask> tasks = getEngine().flowTaskServiceApi().createNewTask(taskId, TaskType.Aidant.ordinal(), actors);
+    getEngine().flowTaskServiceApi().complete(taskId, operator);
     return tasks;
   }
 

@@ -150,6 +150,10 @@ public class FlowTaskHist extends BaseEntity {
   public FlowTaskHist() {
   }
 
+  /**
+   * 构造
+   * @param task 任务
+   */
   public FlowTaskHist(FlowTask task) {
     this.id = task.getId();
     this.flowOrderId = task.getFlowOrderId();

@@ -39,7 +39,7 @@ public class CreateTaskHandler implements IHandler {
    */
   public void handle(Execution execution) {
     try {
-      List<FlowTask> tasks = execution.getEngine().FlowTaskServiceApi().createTask(model, execution);
+      List<FlowTask> tasks = execution.getEngine().flowTaskServiceApi().createTask(model, execution);
       execution.addTasks(tasks);
       List<FlowInterceptor> interceptors = ServiceContext.getContext().findList(FlowInterceptor.class);
       try {

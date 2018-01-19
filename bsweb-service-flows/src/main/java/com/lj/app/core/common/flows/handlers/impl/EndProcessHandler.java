@@ -28,7 +28,7 @@ public class EndProcessHandler implements IHandler {
         if (task.isMajor()) {
           throw new FlowException("存在未完成的主办任务,请确认.");
         }
-        engine.FlowTaskServiceApi().complete(task.getId().toString(), FlowEngine.AUTO);
+        engine.flowTaskServiceApi().complete(task.getId().toString(), FlowEngine.AUTO);
       }
       engine.flowOrderService().complete(order.getId().toString());
       if (StringUtil.isNotBlank(order.getParentId())) {

@@ -22,6 +22,6 @@ public class TestCC extends FlowBaseTest {
     Map<String, Object> args = new HashMap<String, Object>();
     args.put("task1.operator", new String[] { "1" });
     FlowOrder order = flowEngineFacets.startInstanceByName("simple", 0, "2", args);
-    flowEngine.flowCcorderService().createCCOrder(order.getId().toString(), "test");
+    flowEngine.flowCcorderService().createCcOrder(order.getId().toString(), "test");
   }
 }
