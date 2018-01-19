@@ -16,6 +16,11 @@ import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.model.TaskModel;
 import com.lj.app.core.common.util.FileUtil;
 
+/**
+ * 
+ * 模型测试
+ *
+ */
 public class ModelTest extends FlowBaseTest {
 
   @Before

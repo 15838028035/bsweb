@@ -10,7 +10,12 @@ import com.lj.app.core.common.flows.FlowBaseTest;
 import com.lj.app.core.common.flows.entity.FlowOrder;
 import com.lj.app.core.common.util.FileUtil;
 
-public class TestCC extends FlowBaseTest {
+/**
+ * 
+ * 抄送测试
+ *
+ */
+public class TestCc extends FlowBaseTest {
   @Before
   public void before() {
     processId = flowEngine.flowProcessService()
