@@ -24,45 +24,42 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @SuppressWarnings("serial")
 @Controller
 @Namespace("/jsp/sys")
-@Results({
-	    @Result(name = AbstractBaseAction.RELOAD, location = "upmSysLogAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/sys/upmSysLogList.jsp", type=AbstractBaseAction.REDIRECT)
-})
+@Results({ @Result(name = AbstractBaseAction.RELOAD, location = "upmSysLogAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, location = "/jsp/sys/upmSysLogList.jsp", type = AbstractBaseAction.REDIRECT) })
 
 @Action("upmSysLogAction")
 public class UpmSysLogAction extends AbstractBaseUpmAction<UpmSysLog> {
-	
-	 protected Logger logger = LoggerFactory.getLogger(UpmSysLogAction.class);
 
-	@Autowired
-	private UpmSysLogService upmSysLogService;
-	
-	private UpmSysLog upmSysLog;
-	
-	public   BaseService getBaseService(){
-		return upmSysLogService;
-	}
-	
-	public UpmSysLog getModel() {
-		return upmSysLog;
-	}
-	
-	@Override
-	protected void prepareModel() throws Exception {
-		if (upmSysLog.getId() != null) {
-			upmSysLog = (UpmSysLog)upmSysLogService.getInfoByKey(upmSysLog.getId());
-		} else {
-			upmSysLog = new UpmSysLog();
-		}
-	}
-	
-	public void setUpmSysLog(UpmSysLog upmSysLog) {
-		this.upmSysLog=upmSysLog;
-	}
+  protected Logger logger = LoggerFactory.getLogger(UpmSysLogAction.class);
 
-	public UpmSysLog getUpmSysLog() {
-		return upmSysLog;
-	}
-			
+  @Autowired
+  private UpmSysLogService upmSysLogService;
+
+  private UpmSysLog upmSysLog;
+
+  public BaseService getBaseService() {
+    return upmSysLogService;
+  }
+
+  public UpmSysLog getModel() {
+    return upmSysLog;
+  }
+
+  @Override
+  protected void prepareModel() throws Exception {
+    if (upmSysLog.getId() != null) {
+      upmSysLog = (UpmSysLog) upmSysLogService.getInfoByKey(upmSysLog.getId());
+    } else {
+      upmSysLog = new UpmSysLog();
+    }
+  }
+
+  public void setUpmSysLog(UpmSysLog upmSysLog) {
+    this.upmSysLog = upmSysLog;
+  }
+
+  public UpmSysLog getUpmSysLog() {
+    return upmSysLog;
+  }
+
 }
-

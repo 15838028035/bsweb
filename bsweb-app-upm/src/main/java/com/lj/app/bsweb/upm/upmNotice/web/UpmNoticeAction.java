@@ -29,90 +29,88 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @SuppressWarnings("serial")
 @Controller
 @Namespace("/jsp/upmNotice")
-@Results({
-	    @Result(name = AbstractBaseAction.RELOAD, location = "upmNoticeAction", type = AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.INPUT, location = "/jsp/upmNotice/upmNotice-input.jsp"),
-		@Result(name = AbstractBaseAction.SAVE, location = "upmNoticeAction!edit.action",type=AbstractBaseAction.REDIRECT),
-		@Result(name = AbstractBaseAction.LIST, location = "/jsp/upmNotice/upmNoticeList.jsp", type=AbstractBaseAction.REDIRECT)
-})
+@Results({ @Result(name = AbstractBaseAction.RELOAD, location = "upmNoticeAction", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.INPUT, location = "/jsp/upmNotice/upmNotice-input.jsp"),
+    @Result(name = AbstractBaseAction.SAVE, location = "upmNoticeAction!edit.action", type = AbstractBaseAction.REDIRECT),
+    @Result(name = AbstractBaseAction.LIST, location = "/jsp/upmNotice/upmNoticeList.jsp", type = AbstractBaseAction.REDIRECT) })
 
 @Action("upmNoticeAction")
 public class UpmNoticeAction extends AbstractBaseUpmAction<UpmNotice> {
-	
-	 protected Logger logger = LoggerFactory.getLogger(UpmNoticeAction.class);
 
-	@Autowired
-	private UpmNoticeService upmNoticeService;
-	
-	private UpmNotice upmNotice;
-	
-	public   BaseService getBaseService(){
-		return upmNoticeService;
-	}
-	
-	public UpmNotice getModel() {
-		return upmNotice;
-	}
-	
-	@Override
-	protected void prepareModel() throws Exception {
-		if (upmNotice.getId() != null) {
-			upmNotice = (UpmNotice)upmNoticeService.getInfoByKey(upmNotice.getId());
-		} else {
-			upmNotice = new UpmNotice();
-		}
-	}
-	
-	/**
-	 * 公共保存或者更新方法
-	 * @return
-	 * @throws Exception
-	 */
-	public String commonSaveOrUpdate() throws Exception {
-		
-	try{
-			if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
-				BaseEntity entity = (BaseEntity)getModel();
-				entity.setUpdateBy(this.getLoginUserId());
-				entity.setUpdateByUname(this.getUserName());
-				entity.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				
-				getBaseService().updateObject(entity);
-				returnMessage = UPDATE_SUCCESS;
-			}else{
-				BaseEntity entity = (BaseEntity)getModel();
-				entity.setCreateBy(this.getLoginUserId());
-				entity.setCreateByUname(this.getUserName());
-				entity.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-				
-				upmNotice.setCreateDateTime(new Date());
-				getBaseService().insertObject(entity);
-				returnMessage = CREATE_SUCCESS;
-			}
-			
-			return LIST;
-		}catch(Exception e){
-			returnMessage = CREATE_FAILURE;
-			e.printStackTrace();
-			throw e;
-		}
-	}
+  protected Logger logger = LoggerFactory.getLogger(UpmNoticeAction.class);
 
-	public UpmNoticeService getUpmNoticeService() {
-		return upmNoticeService;
-	}
+  @Autowired
+  private UpmNoticeService upmNoticeService;
 
-	public void setUpmNoticeService(UpmNoticeService upmNoticeService) {
-		this.upmNoticeService = upmNoticeService;
-	}
+  private UpmNotice upmNotice;
 
-	public UpmNotice getUpmNotice() {
-		return upmNotice;
-	}
+  public BaseService getBaseService() {
+    return upmNoticeService;
+  }
 
-	public void setUpmNotice(UpmNotice upmNotice) {
-		this.upmNotice = upmNotice;
-	}
-	
+  public UpmNotice getModel() {
+    return upmNotice;
+  }
+
+  @Override
+  protected void prepareModel() throws Exception {
+    if (upmNotice.getId() != null) {
+      upmNotice = (UpmNotice) upmNoticeService.getInfoByKey(upmNotice.getId());
+    } else {
+      upmNotice = new UpmNotice();
+    }
+  }
+
+  /**
+   * 公共保存或者更新方法
+   * 
+   * @return
+   * @throws Exception
+   */
+  public String commonSaveOrUpdate() throws Exception {
+
+    try {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+        BaseEntity entity = (BaseEntity) getModel();
+        entity.setUpdateBy(this.getLoginUserId());
+        entity.setUpdateByUname(this.getUserName());
+        entity.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+
+        getBaseService().updateObject(entity);
+        returnMessage = UPDATE_SUCCESS;
+      } else {
+        BaseEntity entity = (BaseEntity) getModel();
+        entity.setCreateBy(this.getLoginUserId());
+        entity.setCreateByUname(this.getUserName());
+        entity.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
+
+        upmNotice.setCreateDateTime(new Date());
+        getBaseService().insertObject(entity);
+        returnMessage = CREATE_SUCCESS;
+      }
+
+      return LIST;
+    } catch (Exception e) {
+      returnMessage = CREATE_FAILURE;
+      e.printStackTrace();
+      throw e;
+    }
+  }
+
+  public UpmNoticeService getUpmNoticeService() {
+    return upmNoticeService;
+  }
+
+  public void setUpmNoticeService(UpmNoticeService upmNoticeService) {
+    this.upmNoticeService = upmNoticeService;
+  }
+
+  public UpmNotice getUpmNotice() {
+    return upmNotice;
+  }
+
+  public void setUpmNotice(UpmNotice upmNotice) {
+    this.upmNotice = upmNotice;
+  }
+
 }
-

@@ -9,13 +9,13 @@ import com.lj.app.core.common.flows.entity.FlowTask;
  * 
  */
 public interface JobCallback {
-	/**
-	 * 回调函数
-	 * 
-	 * @param taskId
-	 *            当前任务id
-	 * @param newTasks
-	 *            新产生的任务集合
-	 */
-	public void callback(String taskId, List<FlowTask> newTasks);
+  /**
+   * 回调函数
+   * 
+   * @param taskId
+   *          当前任务id
+   * @param newTasks
+   *          新产生的任务集合
+   */
+  public void callback(String taskId, List<FlowTask> newTasks);
 }

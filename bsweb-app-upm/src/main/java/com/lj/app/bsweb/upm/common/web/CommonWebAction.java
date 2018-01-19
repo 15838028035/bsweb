@@ -21,89 +21,89 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("/")
 @Action("commonWebAction")
 public class CommonWebAction extends ActionSupport {
-	
-	private static Log logger = LogFactory.getLog(CommonWebAction.class);
-	
-	public static final String TEMPLATE_DIR = "template";
-	
-	/**
-	 * 模板文件名称
-	 */
-	private String templatekey;
 
-	public void getBatchTemplate() {
+  private static Log logger = LogFactory.getLog(CommonWebAction.class);
 
-		InputStream in = null;
-		OutputStream os = null;
-		String filePath = null;
+  public static final String TEMPLATE_DIR = "template";
 
-		try {
-			
-			String path = Struts2Utils.getRequest().getContextPath();
-			
-			filePath = path + File.separator + TEMPLATE_DIR + File.separator +  templatekey;
+  /**
+   * 模板文件名称
+   */
+  private String templatekey;
 
-			if (StringUtil.isBlank(filePath)) {
-				return;
-			}
-			
-			String fileName = filePath.substring(0, filePath.lastIndexOf("."));
-			fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length());
+  public void getBatchTemplate() {
 
-			HttpServletResponse response = Struts2Utils.getResponse();
-			response.setContentType("application/octet-stream; charset=utf-8");
-			response.setHeader("Content-disposition", "attachment; fileName=\"" + fileName + "\"");
-			os = response.getOutputStream();
+    InputStream in = null;
+    OutputStream os = null;
+    String filePath = null;
 
-			in = this.getClass().getResourceAsStream(filePath);
+    try {
 
-			if (in == null) {
-				if (os != null) {
-					os.close();
-				}
-			}
+      String path = Struts2Utils.getRequest().getContextPath();
 
-			byte[] b = new byte[2048];
+      filePath = path + File.separator + TEMPLATE_DIR + File.separator + templatekey;
 
-			while (in.read(b) != -1) {
-				os.write(b);
-				os.flush();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			logger.error("file[" + filePath + "] read error= " + e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
-		} finally {
-			try {
-				if (os != null) {
-					in.close();
-				}
-				if (os != null) {
-					os.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				logger.error(e.getMessage());
-			}
-		}
-	}
+      if (StringUtil.isBlank(filePath)) {
+        return;
+      }
 
-	public String getTemplatekey() {
-		return templatekey;
-	}
+      String fileName = filePath.substring(0, filePath.lastIndexOf("."));
+      fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length());
 
-	public void setTemplatekey(String templatekey) {
-		this.templatekey = templatekey;
-	}
-	
-	public void logintimeout() {
-		Struts2Utils.renderText("登陆超时");
-	}
+      HttpServletResponse response = Struts2Utils.getResponse();
+      response.setContentType("application/octet-stream; charset=utf-8");
+      response.setHeader("Content-disposition", "attachment; fileName=\"" + fileName + "\"");
+      os = response.getOutputStream();
 
-	public void ajaxtimeout() {
-		Struts2Utils.renderText("超时");
-	}
+      in = this.getClass().getResourceAsStream(filePath);
+
+      if (in == null) {
+        if (os != null) {
+          os.close();
+        }
+      }
+
+      byte[] b = new byte[2048];
+
+      while (in.read(b) != -1) {
+        os.write(b);
+        os.flush();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+      logger.error("file[" + filePath + "] read error= " + e.getMessage());
+    } catch (Exception e) {
+      e.printStackTrace();
+      logger.error(e.getMessage());
+    } finally {
+      try {
+        if (os != null) {
+          in.close();
+        }
+        if (os != null) {
+          os.close();
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+        logger.error(e.getMessage());
+      }
+    }
+  }
+
+  public String getTemplatekey() {
+    return templatekey;
+  }
+
+  public void setTemplatekey(String templatekey) {
+    this.templatekey = templatekey;
+  }
+
+  public void logintimeout() {
+    Struts2Utils.renderText("登陆超时");
+  }
+
+  public void ajaxtimeout() {
+    Struts2Utils.renderText("超时");
+  }
 
 }
