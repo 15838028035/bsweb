@@ -51,11 +51,18 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @SuppressWarnings("serial")
 @Controller
 @Namespace("/jsp/flows")
-@Results({ @Result(name = "flowAllStyle", location = "/jsp/flows/flowAllStyle%{flowAllStyle}.jsp"),
-    @Result(name = "flowApproval", location = "/jsp/flows/flowApprove-input.jsp"),
-    @Result(name = "approvalView", location = "/jsp/flows/flowApproval-view.jsp"),
-    @Result(name = "flowApproveLogList", location = "/jsp/flows/flowApproveLogList.jsp"),
-    @Result(name = "taskList", location = "/jsp/flows/flowTaskList.jsp", type = AbstractBaseAction.REDIRECT) })
+@Results({ 
+    @Result(name = "flowAllStyle", 
+        location = "/jsp/flows/flowAllStyle%{flowAllStyle}.jsp"),
+    @Result(name = "flowApproval",
+        location = "/jsp/flows/flowApprove-input.jsp"),
+    @Result(name = "approvalView",
+        location = "/jsp/flows/flowApproval-view.jsp"),
+    @Result(name = "flowApproveLogList",
+        location = "/jsp/flows/flowApproveLogList.jsp"),
+    @Result(name = "taskList", 
+        location = "/jsp/flows/flowTaskList.jsp", type = AbstractBaseAction.REDIRECT)
+    })
 
 @Action("flowControllerAction")
 public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {

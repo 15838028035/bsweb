@@ -81,7 +81,7 @@ public class UpmConfigurationAction extends AbstractBaseUpmAction<UpmConfigurati
 
   /**
    * 重新加载配置
-   * @return null
+   * @return json
    * @throws Exception 异常信息
    */
   public String reloadConfigPro() throws Exception {
