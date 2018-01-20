@@ -26,7 +26,7 @@ import com.lj.app.core.common.web.AbstractBaseAction;
     @Result(name = AbstractBaseAction.SAVE, 
         location = "upmDictionaryAction!edit.action", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.LIST, 
-      location = "/jsp/dictionary/upmDictionaryList.jsp?nodeId=${nodeId}", type = AbstractBaseAction.REDIRECT) 
+        location = "/jsp/dictionary/upmDictionaryList.jsp?nodeId=${nodeId}", type = AbstractBaseAction.REDIRECT) 
     })
 
 @Action("upmDictionaryAction")

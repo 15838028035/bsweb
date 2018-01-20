@@ -2,10 +2,6 @@ package com.lj.app.core.common.flows.entity;
 
 import com.lj.app.core.common.base.entity.BaseEntity;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 /**
  * FlowUpmUser111
  */

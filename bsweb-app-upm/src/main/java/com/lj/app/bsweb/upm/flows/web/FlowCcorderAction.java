@@ -28,7 +28,8 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
     @org.apache.struts2.convention.annotation.Result(name = "save",
         location = "flowCcorderAction!edit.action", type = "redirect"),
     @org.apache.struts2.convention.annotation.Result(name = "list", 
-        location = "/jsp/flows/flowCcorderList.jsp", type = "redirect") })
+        location = "/jsp/flows/flowCcorderList.jsp", type = "redirect") 
+    })
 @Action("flowCcorderAction")
 public class FlowCcorderAction extends AbstractBaseUpmAction<FlowCcorder> {
   protected Logger logger = LoggerFactory.getLogger(FlowCcorderAction.class);
