@@ -1,0 +1,9 @@
+language:
+jdk:
+- oraclejdk7
+install: 
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -e
+
+notifications:
+  email:
+    - 15838028035@163.com
