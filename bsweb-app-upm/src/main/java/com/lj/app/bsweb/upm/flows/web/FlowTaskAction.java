@@ -20,7 +20,6 @@ import com.lj.app.core.common.flows.entity.FlowOrderHist;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskActor;
 import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
-import com.lj.app.core.common.flows.service.FlowQueryService;
 import com.lj.app.core.common.flows.service.FlowTaskActorService;
 import com.lj.app.core.common.flows.service.FlowTaskService;
 import com.lj.app.core.common.pagination.Page;
@@ -73,9 +72,6 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
 
   @Autowired
   private FlowTaskActorService<FlowTaskActor> flowTaskActorService;
-
-  @Autowired
-  private FlowQueryService flowQueryService;
 
   private String orderId;
   private String taskId;

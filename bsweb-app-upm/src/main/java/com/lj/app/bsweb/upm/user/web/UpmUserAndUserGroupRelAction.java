@@ -66,7 +66,6 @@ public class UpmUserAndUserGroupRelAction extends AbstractBaseUpmAction<UpmUserA
    * @throws Exception 异常
    */
   public String doBatchSaveRel() throws Exception {
-    String operateResult = null;// 操作结果：1失败，0成功
 
     String returnMessage = "";
     String[] multiSelectedTmp;

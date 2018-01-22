@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.upm.AbstractBaseUpmAction;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.flows.entity.FlowOrderHist;
 import com.lj.app.core.common.flows.entity.FlowProcess;
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
@@ -337,8 +336,8 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
    * @return 页面
    */
   public String flowProcessView() {
-    FlowOrderHist order = flowEngine.flowQueryService().getHistOrder(orderId);
-    List<FlowTaskHist> tasks = flowEngine.flowQueryService().getHistoryTasks(orderId);
+   // FlowOrderHist order = flowEngine.flowQueryService().getHistOrder(orderId);
+   // List<FlowTaskHist> tasks = flowEngine.flowQueryService().getHistoryTasks(orderId);
 
     return "flowProcessView";
   }

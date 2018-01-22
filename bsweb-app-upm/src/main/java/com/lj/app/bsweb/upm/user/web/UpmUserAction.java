@@ -24,8 +24,6 @@ import com.lj.app.core.common.util.SessionCode;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * 
@@ -45,8 +43,6 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 @Action("upmUserAction")
 public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
-
-  private Logger log = LoggerFactory.getLogger(UpmUserAction.class);
 
   private java.lang.Integer id;
   private String loginNo;

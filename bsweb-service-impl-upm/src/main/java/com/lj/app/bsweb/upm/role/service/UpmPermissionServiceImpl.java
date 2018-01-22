@@ -26,7 +26,7 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 
   /**
    * 查看权限树
-   * 
+   * @param parentId 父节点Id
    * @return 权限列表
    */
   public List<UpmPermission> findUpmPermissionByParentId(Long parentId) {
@@ -40,9 +40,11 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
     }
     return upmPermissionList;
   }
-
   /**
-   * 根据用户id、appcode查找用户权限
+   * 根据用户id、appId查找用户权限
+   * @param userId 用户Id
+   * @param appId appId
+   * @return 根据用户id、appId查找用户权限
    */
   public List<com.lj.app.bsweb.upm.role.entity.UpmPermission> findPermissionByUserId(int userId, String appId) {
     Map<String, Object> condition = new HashMap<String, Object>();
@@ -54,6 +56,10 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 
   /**
    * 根据用户id、appcode、type查找用户权限
+   * @param userId 用户ID
+   * @param appId appId
+   * @param type 权限类型
+   * @return 权限列表
    */
   public List<UpmPermission> findPermissionByUserId(int userId, String appId, String type) {
     Map<String, Object> condition = new HashMap<String, Object>();
@@ -74,7 +80,6 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
     // 设置主帐号信息
     securityContext.setMainAcctId(Long.parseLong(String.valueOf(userId)));
 
-    CmSecurityContext mainAcct;
     List<com.lj.app.bsweb.upm.role.entity.UpmPermission> permissionList = findPermissionByUserId(userId, appId);
 
     // 设置权限相关的code和url
@@ -225,6 +230,8 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
 
   /**
    * 根据用户userId查找用户组织机构
+   * @param userId 用户ID
+   * @return 组织机构列表
    */
   public List<String> findUserGroupNameByUserId(int userId) {
     Map<String, Object> condition = new HashMap<String, Object>();
@@ -233,7 +240,10 @@ public class UpmPermissionServiceImpl<UpmPermission> extends BaseServiceImpl<Upm
   }
 
   /**
-   * 根据用户userId查找用户角色
+   * 根据用户userId查找用户组织机构
+   * @param userId 用户ID
+   * @param appId appId
+   * @return 列表
    */
   public List<String> findRoleNameByUserId(int userId, String appId) {
     Map<String, Object> condition = new HashMap<String, Object>();

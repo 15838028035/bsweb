@@ -367,4 +367,44 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
     this.permissionId = permissionId;
   }
 
+  public List<UpmPermission> getPermissionList() {
+    return permissionList;
+  }
+
+  public void setPermissionList(List<UpmPermission> permissionList) {
+    this.permissionList = permissionList;
+  }
+
+  public List<UpmDictionary> getPermissionStateList() {
+    return permissionStateList;
+  }
+
+  public void setPermissionStateList(List<UpmDictionary> permissionStateList) {
+    this.permissionStateList = permissionStateList;
+  }
+
+  public List<UpmDictionary> getPermissionTypeList() {
+    return permissionTypeList;
+  }
+
+  public void setPermissionTypeList(List<UpmDictionary> permissionTypeList) {
+    this.permissionTypeList = permissionTypeList;
+  }
+
+  public UpmRoleService<UpmRole> getUpmRoleService() {
+    return upmRoleService;
+  }
+
+  public void setUpmRoleService(UpmRoleService<UpmRole> upmRoleService) {
+    this.upmRoleService = upmRoleService;
+  }
+
+  public DictionaryApiService getDictionaryService() {
+    return dictionaryService;
+  }
+
+  public void setDictionaryService(DictionaryApiService dictionaryService) {
+    this.dictionaryService = dictionaryService;
+  }
+
 }

@@ -784,9 +784,16 @@
 					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
 					<minimumTokens>100</minimumTokens>
 					<targetJdk>${jdk.version}</targetJdk>
-					<excludes>
-						<exclude>**/xsd/*/*.java</exclude>
-					</excludes>
+					<executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <excludeFromFailureFile>exclude-pmd.properties</excludeFromFailureFile>
+                        </configuration>
+                    </execution>
+                </executions>
 				</configuration>
 			</plugin>
 			

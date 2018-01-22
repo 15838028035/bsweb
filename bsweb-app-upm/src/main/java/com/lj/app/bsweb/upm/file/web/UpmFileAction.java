@@ -160,7 +160,6 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
 
   @Override
   public String save() throws Exception {
-    boolean isSave = true;// 是否保存操作
 
     try {
       if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {

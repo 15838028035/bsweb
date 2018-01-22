@@ -19,11 +19,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.lj.app.bsweb.upm.role.service.UpmPermissionService;
-import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.security.CmSecurityContext;
 import com.lj.app.core.common.security.SecurityConstants;
 import com.lj.app.core.common.util.AjaxResult;
-import com.lj.app.core.common.util.SessionCode;
 import com.lj.app.core.common.util.SpringContextHolder;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.Struts2Utils;
@@ -98,7 +96,6 @@ public class SecurityFilterExt implements Filter {
       HttpServletRequest request = (HttpServletRequest) servletRequest;
       HttpServletResponse response = (HttpServletResponse) servletResponse;
       HttpSession session = request.getSession();
-      UpmUser upmUser = (UpmUser) session.getAttribute(SessionCode.MAIN_ACCT);
 
       String requestUri = request.getRequestURI().toString();
       String contextPath = request.getContextPath();
@@ -184,7 +181,7 @@ public class SecurityFilterExt implements Filter {
    * @return 是否
    */
   private boolean validatePermission(CmSecurityContext securityContext, String requestUri, String contextPath) {
-    if (!isSkipValidate(requestUri, contextPath)) {
+    if (!isSkipValidate(requestUri)) {
       if (!securityContext.hasUrlPermission(requestUri)) {
         return false;
       }
@@ -202,7 +199,7 @@ public class SecurityFilterExt implements Filter {
    * @return 是否
    */
   private boolean validateSession(CmSecurityContext securityContext, String requestUri, String contextPath) {
-    if (!isSkipSessionValidate(requestUri, contextPath)) {
+    if (!isSkipSessionValidate(requestUri)) {
       if (securityContext == null) {
         return false;
       }
@@ -211,7 +208,7 @@ public class SecurityFilterExt implements Filter {
     return true;
   }
 
-  private boolean isSkipSessionValidate(String requestUri, String contextPath) {
+  private boolean isSkipSessionValidate(String requestUri) {
     for (Iterator iterator = skipSessionValidateDirSet.iterator(); iterator.hasNext();) {
       String page = (String) iterator.next();
       if (requestUri.indexOf(page) != -1) {
@@ -223,7 +220,7 @@ public class SecurityFilterExt implements Filter {
     return false;
   }
 
-  private boolean isSkipValidate(String requestUri, String contextPath) {
+  private boolean isSkipValidate(String requestUri) {
     // 先根据目录过滤
     for (Iterator iterator = skipValidateDirSet.iterator(); iterator.hasNext();) {
       String dir = (String) iterator.next();
@@ -258,4 +255,53 @@ public class SecurityFilterExt implements Filter {
   public void destroy() {
 
   }
+
+  public String getIsNeedAuthen() {
+    return isNeedAuthen;
+  }
+
+  public void setIsNeedAuthen(String isNeedAuthen) {
+    this.isNeedAuthen = isNeedAuthen;
+  }
+
+  public Set<String> getSkipValidatePageSet() {
+    return skipValidatePageSet;
+  }
+
+  public void setSkipValidatePageSet(Set<String> skipValidatePageSet) {
+    this.skipValidatePageSet = skipValidatePageSet;
+  }
+
+  public Set<String> getSkipValidateDirSet() {
+    return skipValidateDirSet;
+  }
+
+  public void setSkipValidateDirSet(Set<String> skipValidateDirSet) {
+    this.skipValidateDirSet = skipValidateDirSet;
+  }
+
+  public Set<String> getSkipSessionValidateDirSet() {
+    return skipSessionValidateDirSet;
+  }
+
+  public void setSkipSessionValidateDirSet(Set<String> skipSessionValidateDirSet) {
+    this.skipSessionValidateDirSet = skipSessionValidateDirSet;
+  }
+
+  public Set<String> getNeedValidateUrlSet() {
+    return needValidateUrlSet;
+  }
+
+  public void setNeedValidateUrlSet(Set<String> needValidateUrlSet) {
+    this.needValidateUrlSet = needValidateUrlSet;
+  }
+
+  public Set<String> getDisabledAccessUrlSet() {
+    return disabledAccessUrlSet;
+  }
+
+  public void setDisabledAccessUrlSet(Set<String> disabledAccessUrlSet) {
+    this.disabledAccessUrlSet = disabledAccessUrlSet;
+  }
+  
 }
