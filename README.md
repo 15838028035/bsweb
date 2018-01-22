@@ -3,11 +3,11 @@
 
  1.	bsweb-common-config 公共配置项目信息
  2.	bsweb-service-upm   upm统一用户角色权限管理系统服务层
- 3.	bsweb-service-redis redis服务
- 4.	bsweb-service-impl-upm upm统一用户角色权限管理系统服务层实现
+ 3.	bsweb-service-impl-upm upm统一用户角色权限管理系统服务层实现
+ 4.	bsweb-service-flows 工作流引擎服务层
  5.	bsweb-service-impl-flows 工作流引擎服务层实现
- 6.	bsweb-service-impl-redis redis服务层实现
- 7.	bsweb-service-flows 工作流引擎服务层
+ 6.	bsweb-service-deploy 服务部署层
+ 7.	bsweb-app-upm upm统一用户角色权限管理系统web层
  
 ## 项目使用手册
 请查看 <a href="https://15838028035.github.io/bsweb/">使用手册</a>
