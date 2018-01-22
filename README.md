@@ -8,6 +8,9 @@
  5.	bsweb-service-impl-flows 工作流引擎服务层实现
  6.	bsweb-service-impl-redis redis服务层实现
  7.	bsweb-service-flows 工作流引擎服务层
+ 
+## 项目使用手册
+请查看 <a href="https://15838028035.github.io/bsweb/">使用手册</a>
   
 ### 本项目根据标签进行管理, 标签含义介绍如下
  1. Bug -问题
