@@ -201,7 +201,7 @@ public class FlowOrderHist extends BaseEntity {
   }
 
   public void setEndTime(Date date) {
-    this.endTime = endTime;
+    this.endTime = date;
   }
 
   public Date getEndTime() {

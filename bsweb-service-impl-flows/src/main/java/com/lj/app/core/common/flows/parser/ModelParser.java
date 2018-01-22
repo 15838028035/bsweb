@@ -144,8 +144,12 @@ public class ModelParser {
       if (nodeParser == null) {
         System.out.println("nodeName=" + nodeName);
       }
-      nodeParser.parse(element);
-      return nodeParser.getModel();
+      
+      if (nodeParser != null) {
+        nodeParser.parse(element);
+        return nodeParser.getModel();
+      }
+      return null;
     } catch (RuntimeException e) {
       e.printStackTrace();
       throw new FlowException(e);

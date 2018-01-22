@@ -91,7 +91,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
   public String goToLogin() throws Exception {
     UpmUser upmUser = (UpmUser) Struts2Utils.getSession().getAttribute(SessionCode.MAIN_ACCT);
     if (upmUser != null) {
-      goToIndex();
+      return  goToIndex();
     }
     return SecurityConstants.LOGIN;
   }
@@ -302,7 +302,6 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
     if (userList != null && userList.size() > 0) {
       upmUser = (UpmUser) userList.get(0);
     }
-    JSONObject jsonObj = new JSONObject();
 
     Struts2Utils.renderText(JSONObject.fromObject(upmUser).toString());
     return null;

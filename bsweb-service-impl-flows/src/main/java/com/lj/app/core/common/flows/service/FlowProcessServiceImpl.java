@@ -329,7 +329,6 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
       baos.flush();
 
       InputStream stream1 = new ByteArrayInputStream(baos.toByteArray());
-      InputStream stream2 = new ByteArrayInputStream(baos.toByteArray());
 
       byte[] bytes = FileUtil.readBytes(stream1);
 

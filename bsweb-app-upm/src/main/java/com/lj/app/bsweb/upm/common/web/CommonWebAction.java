@@ -73,7 +73,7 @@ public class CommonWebAction extends ActionSupport {
 
       byte[] b = new byte[2048];
 
-      while (in.read(b) != -1) {
+      while (in != null && (in.read(b) != -1)) {
         os.write(b);
         os.flush();
       }

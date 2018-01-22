@@ -206,7 +206,10 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
    * @throws Exception 异常
    */
   public void multideleteValidate(Integer deleteId) throws BusinessException {
-
+    if (deleteId == null)  {
+      throw new BusinessException("删除Id不能为空");
+    }
+    
     if (deleteId != null && deleteId.intValue() <= 1) {
       throw new BusinessException("超级管理员无法删除");
     }
