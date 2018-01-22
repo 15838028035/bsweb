@@ -854,9 +854,6 @@
 		<module>bsweb-service-upm</module>
 		<module>bsweb-service-impl-upm</module>
 		<module>bsweb-app-upm</module>
-		<module>bsweb-service-redis</module>
-		<module>bsweb-service-impl-redis</module>
-		<module>bsweb-app-redis</module>
  	</modules>
 	
 </project>
