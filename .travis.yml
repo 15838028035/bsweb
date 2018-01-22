@@ -2,7 +2,7 @@ language:
 jdk:
 - oraclejdk7
 install: 
-- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -e
+- mvn install -X
 
 notifications:
   email:
