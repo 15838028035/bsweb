@@ -2,7 +2,7 @@ language:
 jdk:
 - oraclejdk7
 install: 
-- mvn install -X
+- mvn clean checkstyle:checkstyle pmd:pmd 
 
 notifications:
   email:
