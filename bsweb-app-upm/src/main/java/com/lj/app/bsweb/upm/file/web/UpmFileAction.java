@@ -48,8 +48,6 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Action("upmFileAction")
 public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
 
-  protected Logger logger = LoggerFactory.getLogger(UpmFileAction.class);
-
   /**
    * ID
    */
@@ -291,15 +289,6 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
   public Integer getOperator() {
     return this.operator;
   }
-
-  public Logger getLogger() {
-    return logger;
-  }
-
-  public void setLogger(Logger logger) {
-    this.logger = logger;
-  }
-
   public byte[] getContent() {
     return content;
   }
