@@ -831,14 +831,14 @@
 					<artifactId>maven-checkstyle-plugin</artifactId>
 					<version>2.12</version>
 					<inherited>true</inherited>
-<!-- 					<executions> -->
-<!-- 						<execution> -->
-<!-- 							<phase>test</phase> -->
-<!-- 							<goals> -->
-<!-- 								<goal>check</goal> -->
-<!-- 							</goals> -->
-<!-- 						</execution> -->
-<!-- 					</executions> -->
+					<executions>
+						<execution>
+							<phase>test</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
 					
 					<configuration>
 						<configLocation>${project.basedir}/checkstyle.xml</configLocation>
