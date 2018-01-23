@@ -2,7 +2,7 @@ language:
 jdk:
 - oraclejdk7
 install: 
-- mvn clean install -X
+- mvn clean install 
 
 notifications:
   email:
