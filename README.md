@@ -1,5 +1,7 @@
 # bsweb
 
+[![Build status](https://travis-ci.org/15838028035/bsweb.svg?branch=master)](https://travis-ci.org/15838028035/bsweb)
+
 ## 项目描述
 
  1.	bsweb-common-config 公共配置项目信息
