@@ -1,6 +1,7 @@
 # bsweb
 
 [![Build status](https://travis-ci.org/15838028035/bsweb.svg?branch=master)](https://travis-ci.org/15838028035/bsweb)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=15838028035%bsweb)](https://sonarcloud.io/api/badges/gate?key=15838028035%bsweb)
 
 ## 项目描述
 
