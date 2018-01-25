@@ -27,6 +27,7 @@ import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -112,7 +113,9 @@ public class LoginAction extends AbstractBaseFlowsAction<UpmUser> {
       session2.invalidate();
     }
     
-    JSONObject obj =  LoginActionApi.findPermissionByUserIdApi(String.valueOf(loginUserInfo.getId()), "FLOWS");
+    JSONArray obj=  LoginActionApi.findPermissionByUserIdApi(String.valueOf(loginUserInfo.getId()), "FLOWS");
+
+    Struts2Utils.getSession().setAttribute(SessionCode.APP_MENU_PERMISSION_LIST, obj);
     
     return goToIndex();
   }

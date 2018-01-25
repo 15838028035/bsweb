@@ -6,6 +6,7 @@
   <title>${fns:getProperty('flowsProductName')}</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
+
 </head>
 <body class="hold-transition skin-blue  sidebar-mini">
 <!-- Site wrapper -->
@@ -108,10 +109,11 @@
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
+      
+           <ul class="sidebar-menu" data-widget="tree">
         <li class="header">导航菜单</li>
         
-		<li class="treeview active">
+        <li class="treeview active">
           <a href="#">
             <span>导航菜单</span>
             <span class="pull-right-container">
@@ -126,12 +128,14 @@
             <span class="pull-right-container"></span>
           </a>
         </li>
-		</c:forEach>
+        </c:forEach>
             </li>
           </ul>
         </li>
         
       </ul>
+    </script>
+     
     </section>
     <!-- /.sidebar -->
   </aside>

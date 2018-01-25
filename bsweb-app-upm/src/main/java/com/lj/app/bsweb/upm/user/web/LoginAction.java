@@ -293,9 +293,9 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
     }
     UpmUser user = new UpmUser();
     user.setLoginNo(loginNo);
-    user.setPwd(pwd);
-    user.setLockStatus("0");
-
+    String encryptPwd = DesUtil.encrypt(pwd);
+    user.setPwd(encryptPwd);
+    
     List<UpmUser> userList = upmUserService.findBaseModeList(user);
 
     UpmUser upmUser = null;

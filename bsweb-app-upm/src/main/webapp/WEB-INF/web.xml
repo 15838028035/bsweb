@@ -25,7 +25,9 @@
 				/jsp/common/sessionexpire.jsp,
 				/identifyingcode!getIdentifyingCodeNew.action,
 				/loginAction!sendMail.action,
-				/loginAction!getRand.action
+				/loginAction!getRand.action,
+				/loginAction!findUserInfoApi.action,
+                /jsp/permission/upmPermissionAction!findPermissionByUserIdApi.action
 			</param-value>
     </init-param>
     <init-param>
@@ -45,7 +47,8 @@
 				/identifyingcode!getIdentifyingCodeNew.action,
 				/loginAction!sendMail.action,
 				/loginAction!getRand.action,
-				/jsp/permission!findPermissionByUserIdApi.action
+				/loginAction!findUserInfoApi.action,
+				/jsp/permission/upmPermissionAction!findPermissionByUserIdApi.action
 			</param-value>
     </init-param>
   </filter>
