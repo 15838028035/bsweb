@@ -1,5 +1,7 @@
 package com.lj.app.bsweb.flows.user.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.Action;
@@ -10,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lj.app.bsweb.flows.AbstractBaseFlowsAction;
+import com.lj.app.core.common.api.LoginActionApi;
+import com.lj.app.core.common.api.LoginUserInfo;
 import com.lj.app.core.common.api.SecurityApiService;
 import com.lj.app.core.common.base.entity.UpmUser;
 import com.lj.app.core.common.base.service.BaseService;
+import com.lj.app.core.common.base.service.CreateTokenService;
 import com.lj.app.core.common.base.service.UpmUserService;
 import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.security.SecurityConstants;
@@ -21,6 +26,8 @@ import com.lj.app.core.common.util.SessionCode;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
+
+import net.sf.json.JSONObject;
 
 /**
  * 
@@ -58,6 +65,9 @@ public class LoginAction extends AbstractBaseFlowsAction<UpmUser> {
 
   @Autowired
   private SecurityApiService securityApiService;
+  
+  @Autowired
+  private CreateTokenService createTokenService;
 
   public BaseService<UpmUser> getBaseService() {
     return upmUserService;
@@ -73,6 +83,7 @@ public class LoginAction extends AbstractBaseFlowsAction<UpmUser> {
     if (upmUser != null) {
       return  goToIndex();
     }
+    
     return SecurityConstants.LOGIN;
   }
 
@@ -82,8 +93,27 @@ public class LoginAction extends AbstractBaseFlowsAction<UpmUser> {
    * @throws Exception 异常
    */
   public String login() throws Exception {
-    String method = Struts2Utils.getRequest().getMethod();
+	  //获得用户信息
+    
+    LoginUserInfo loginUserInfo = LoginActionApi.getLoginUserInfo(loginNo, pwd);
+    
+    if(loginUserInfo==null){
+    	addActionError("用户不存在或密码错误");
+    	return goToLogin();
+    }
 
+    //创建登录token
+    String token = createTokenService.createToken(String.valueOf(loginUserInfo.getId()), "FLOWS", loginUserInfo.getId());
+    
+    LoginActionApi.ssoLogin(token);
+    
+    HttpSession session2 = Struts2Utils.getSession();// 清空session
+    if (session2 != null) {
+      session2.invalidate();
+    }
+    
+    JSONObject obj =  LoginActionApi.findPermissionByUserIdApi(String.valueOf(loginUserInfo.getId()), "FLOWS");
+    
     return goToIndex();
   }
 
@@ -109,6 +139,7 @@ public class LoginAction extends AbstractBaseFlowsAction<UpmUser> {
     if (Struts2Utils.getSessionAttribute(SecurityConstants.SECURITY_CONTEXT) != null) {
       Struts2Utils.getSession().invalidate();
     }
+    
     return goToLogin();
   }
 

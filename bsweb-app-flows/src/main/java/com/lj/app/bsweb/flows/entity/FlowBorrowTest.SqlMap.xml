@@ -4,7 +4,7 @@
 
 <sqlMap namespace="flowBorrowTest">
 
-    <typeAlias alias="flowBorrowTest" type="com.lj.app.core.common.flows.entity.FlowBorrowTest"/>
+    <typeAlias alias="flowBorrowTest" type="com.lj.app.bsweb.flows.entity.FlowBorrowTest"/>
 
     <resultMap id="flowBorrowTestResult" class="flowBorrowTest">
    	  	<result property="id" column="id"   />

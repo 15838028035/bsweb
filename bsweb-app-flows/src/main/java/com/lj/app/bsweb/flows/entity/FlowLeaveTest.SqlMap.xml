@@ -4,7 +4,7 @@
 
 <sqlMap namespace="flowLeaveTest">
 
-    <typeAlias alias="flowLeaveTest" type="com.lj.app.core.common.flows.entity.FlowLeaveTest"/>
+    <typeAlias alias="flowLeaveTest" type="com.lj.app.bsweb.flows.entity.FlowLeaveTest"/>
 
     <resultMap id="flowLeaveTestResult" class="flowLeaveTest">
    	  	<result property="id" column="id"   />

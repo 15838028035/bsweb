@@ -4,7 +4,7 @@
 
 <sqlMap namespace="flowUpmUser">
 
-    <typeAlias alias="flowUpmUser" type="com.lj.app.core.common.flows.entity.FlowUpmUser"/>
+    <typeAlias alias="flowUpmUser" type="com.lj.app.bsweb.flows.entity.FlowUpmUser"/>
 
     <resultMap id="flowUpmUserResult" class="flowUpmUser">
    	  	<result property="id" column="id"   />

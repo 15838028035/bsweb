@@ -44,7 +44,8 @@
 				/jsp/common/sessionexpire.jsp,
 				/identifyingcode!getIdentifyingCodeNew.action,
 				/loginAction!sendMail.action,
-				/loginAction!getRand.action
+				/loginAction!getRand.action,
+				/jsp/permission!findPermissionByUserIdApi.action
 			</param-value>
     </init-param>
   </filter>

@@ -48,14 +48,14 @@
 			</param-value>
     </init-param>
   </filter>
-  <filter-mapping>
-    <filter-name>CheckLoginFilter</filter-name>
-    <url-pattern>*.action</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>CheckLoginFilter</filter-name>
-    <url-pattern>*.jsp</url-pattern>
-  </filter-mapping>
+<!--   <filter-mapping> -->
+<!--     <filter-name>CheckLoginFilter</filter-name> -->
+<!--     <url-pattern>*.action</url-pattern> -->
+<!--   </filter-mapping> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>CheckLoginFilter</filter-name> -->
+<!--     <url-pattern>*.jsp</url-pattern> -->
+<!--   </filter-mapping> -->
   <filter>
     <filter-name>charFilter</filter-name>
     <filter-class>com.lj.app.core.common.security.CharFilter</filter-class>

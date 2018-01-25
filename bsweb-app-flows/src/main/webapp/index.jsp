@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>${fns:getProperty('upmProductName')}</title>
+  <title>${fns:getProperty('flowsProductName')}</title>
 <%@ include file="/jsp/common/meta.jsp" %>
 <%@ include file="/jsp/common/resource/scripts_all.jsp" %>
 </head>
@@ -15,9 +15,9 @@
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>UPM</b></span>
+      <span class="logo-mini"><b>flows</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>用户权限流程管理</b></span>
+      <span class="logo-lg"><b>${fns:getProperty('flowsProductName')}</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -155,7 +155,7 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>当前版本:</b>${fns:getProperty('upmVersion')}
+      <b>当前版本:</b>${fns:getProperty('flowsVersion')}
     </div>
     <strong>Copyright &copy; 2017-2019</strong> 版权所有
     

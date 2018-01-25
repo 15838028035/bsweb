@@ -269,7 +269,7 @@ public class LoginAction extends AbstractBaseUpmAction<UpmUser> {
     String contextPath = Struts2Utils.getRequest().getContextPath();
 
     securityContext = upmPermissionService.getSecurityContext(loginUser.getId(), contextPath,
-        SecurityConstants.APPID_UPM);
+        SecurityConstants.APPID_FLOWS);
     securityContext.setLoginName(loginUser.getUserName());
 
     Struts2Utils.getSession().setAttribute(SecurityConstants.SECURITY_CONTEXT, securityContext);
