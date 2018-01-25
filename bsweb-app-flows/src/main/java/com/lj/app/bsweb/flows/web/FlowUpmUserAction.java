@@ -1,4 +1,4 @@
-package com.lj.app.bsweb.upm.flows.web;
+package com.lj.app.bsweb.flows.web;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,12 +12,10 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.lj.app.bsweb.upm.AbstractBaseFlowsAction;
+import com.lj.app.bsweb.flows.AbstractBaseFlowsAction;
+import com.lj.app.bsweb.flows.entity.FlowUpmUser;
+import com.lj.app.bsweb.flows.service.FlowUpmUserService;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.flows.entity.FlowOrder;
-import com.lj.app.core.common.flows.entity.FlowUpmUser;
-import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
-import com.lj.app.core.common.flows.service.FlowUpmUserService;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
@@ -71,9 +69,6 @@ public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
   private String readonly = "0";// 当前节点1,非当前节点0
 
   private String isApplyWhere = "";// 条件查询
-
-  @Autowired
-  private FlowEngineFacetsService flowEngineFacetsService;
 
   public BaseService getBaseService() {
     return flowUpmUserService;
@@ -173,41 +168,6 @@ public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
    * @throws Exception 异常
    */
   public String applySave() throws Exception {
-    /** 流程数据构造开始 */
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put("apply.operator", this.getUserName());
-    /** 流程数据构造结束 */
-
-    /**
-     * 启动流程并且执行申请任务
-     */
-    if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-      FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, this.getUserName(), params);
-      /** 业务数据处理开始 */
-      flowUpmUser.setFlowOrderId(flowOrder.getId());
-      flowUpmUser.setOperatorTime(new Date());
-      flowUpmUser.setOperator(this.getUserName());
-
-      flowUpmUserService.insertObject(flowUpmUser);
-    } else {
-      flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-      /** 业务数据处理开始 */
-      flowUpmUser.setOperator(this.getUserName());
-
-      if (operate != null && operate.equals("edit")) {
-        flowUpmUser.setUpdateBy(getLoginUserId());
-        flowUpmUser.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-        flowUpmUserService.updateObject(flowUpmUser);
-
-        returnMessage = UPDATE_SUCCESS;
-      } else {
-        flowUpmUser.setCreateBy(getLoginUserId());
-        flowUpmUser.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-        flowUpmUserService.insertObject(flowUpmUser);
-        returnMessage = CREATE_SUCCESS;
-      }
-    }
-
     return LIST;
   }
 
@@ -278,14 +238,6 @@ public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
 
   public void setReadonly(String readonly) {
     this.readonly = readonly;
-  }
-
-  public FlowEngineFacetsService getFlowEngineFacetsService() {
-    return flowEngineFacetsService;
-  }
-
-  public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
-    this.flowEngineFacetsService = flowEngineFacetsService;
   }
 
   public String getIsApplyWhere() {

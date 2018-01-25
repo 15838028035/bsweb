@@ -1,4 +1,4 @@
-package com.lj.app.bsweb.upm;
+package com.lj.app.bsweb.flows;
 
 import com.lj.app.core.common.web.AbstractBaseAction;
 

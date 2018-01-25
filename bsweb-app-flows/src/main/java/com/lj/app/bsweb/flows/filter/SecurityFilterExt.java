@@ -1,4 +1,4 @@
-package com.lj.app.bsweb.upm.filter;
+package com.lj.app.bsweb.flows.filter;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -18,11 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.lj.app.bsweb.upm.role.service.UpmPermissionService;
 import com.lj.app.core.common.security.CmSecurityContext;
 import com.lj.app.core.common.security.SecurityConstants;
 import com.lj.app.core.common.util.AjaxResult;
-import com.lj.app.core.common.util.SpringContextHolder;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.Struts2Utils;
 
@@ -76,15 +74,15 @@ public class SecurityFilterExt implements Filter {
       }
     }
 
-    // 加载uap_permission中需要验证的url集合
-    UpmPermissionService upmPermissionService = SpringContextHolder.getBean(UpmPermissionService.class);
+    // FIXME:查询获取权限校验信息 加载uap_permission中需要验证的url集合
+   // UpmPermissionService upmPermissionService = SpringContextHolder.getBean(UpmPermissionService.class);
     logger.info("needValidateUrlSet load......");
-    needValidateUrlSet = upmPermissionService.findPermissionUrlByAppId("UPM");
+   // needValidateUrlSet = upmPermissionService.findPermissionUrlByAppId("FLOWS");
 
     logger.info("needValidateUrlSet load success");
     // 加载uap_permission中不可访问的url集合
     logger.info("disabledAccessUrlSet load......");
-    disabledAccessUrlSet = upmPermissionService.findDisabledPermissionUrlByAppId("UPM");
+  //  disabledAccessUrlSet = upmPermissionService.findDisabledPermissionUrlByAppId("FLOWS");
     logger.info("disabledAccessUrlSet load success");
   }
 

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="flowLeaveTest">
+
+    <typeAlias alias="flowLeaveTest" type="com.lj.app.core.common.flows.entity.FlowLeaveTest"/>
+
+    <resultMap id="flowLeaveTestResult" class="flowLeaveTest">
+   	  	<result property="id" column="id"   />
+   	  	<result property="leaveDates" column="leave_dates"   />
+   	  	<result property="leaveMem" column="LEAVE_MEM"   />
+   	  	<result property="orderId" column="order_id"   />
+    </resultMap>
+
+	<sql id="dynamicWhere">
+	    <dynamic prepend="WHERE">
+	       <isNotEmpty prepend="AND" property="id">
+	             id = #id#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="leaveDates">
+	             leave_dates = #leaveDates#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="leaveMem">
+	             LEAVE_MEM = #leaveMem#
+	       </isNotEmpty>
+	       <isNotEmpty prepend="AND" property="orderId">
+	             order_id = #orderId#
+	       </isNotEmpty>
+	    </dynamic>	
+	</sql>
+
+	<sql id="commonSelectColumnsPrefix">
+	    <![CDATA[
+	    select
+        	id ,
+        	leave_dates ,
+        	LEAVE_MEM ,
+        	order_id 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" parameterClass="flowLeaveTest">
+        <selectKey resultClass="int" keyProperty="id"  type="post">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+
+	    <![CDATA[
+	        INSERT INTO
+	        flow_leave_test (
+	        	id ,
+	        	leave_dates ,
+	        	LEAVE_MEM ,
+	        	order_id 
+	        ) VALUES (
+				#id# ,
+				#leaveDates# ,
+				#leaveMem# ,
+				#orderId# 
+	        )
+	    ]]>
+    </insert>
+   
+     <update id="update" >
+    <![CDATA[
+        UPDATE flow_leave_test 
+      ]]>
+      <dynamic prepend="set"> 
+	        <isNotEmpty prepend="," property="id">
+				id = #id#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="leaveDates">
+				leave_dates = #leaveDates#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="leaveMem">
+				LEAVE_MEM = #leaveMem#
+			</isNotEmpty>
+	        <isNotEmpty prepend="," property="orderId">
+				order_id = #orderId#
+			</isNotEmpty>
+	        
+	   </dynamic>
+        WHERE 
+	        id = #id# 
+    </update>
+
+    <delete id="delete" parameterClass="java.lang.Integer">
+    <![CDATA[
+        delete from flow_leave_test where
+        id = #id# 
+    ]]>
+    </delete>
+    
+    <select id="select" resultMap="flowLeaveTestResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_leave_test 
+	    ]]>
+		<include refid="dynamicWhere"/>
+    </select>
+    
+    <select id="getInfoByKey" resultMap="flowLeaveTestResult">
+	    <include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_leave_test 
+	        where 
+		        id = #id# 
+	    ]]>
+    </select>
+
+ 	<select id="pagenate" resultMap="flowLeaveTestResult">
+    	<include refid="commonSelectColumnsPrefix"/>
+	    <![CDATA[
+	        from flow_leave_test 
+	    ]]>
+		<include refid="dynamicWhere"/>
+		<dynamic prepend="ORDER BY">
+			<isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+		</dynamic>
+    </select>
+    
+    <select id="pagenate_count" resultClass="long">
+    <![CDATA[
+        select 
+        count(*)
+        from flow_leave_test
+    ]]>
+		<include refid="dynamicWhere"/>    
+    </select>
+
+</sqlMap>

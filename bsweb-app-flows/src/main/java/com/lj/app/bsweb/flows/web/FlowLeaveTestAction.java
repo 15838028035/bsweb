@@ -1,4 +1,4 @@
-package com.lj.app.bsweb.upm.flows.web;
+package com.lj.app.bsweb.flows.web;
 
 import java.util.Map;
 
@@ -9,11 +9,10 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.lj.app.bsweb.upm.AbstractBaseFlowsAction;
+import com.lj.app.bsweb.flows.AbstractBaseFlowsAction;
+import com.lj.app.bsweb.flows.entity.FlowLeaveTest;
+import com.lj.app.bsweb.flows.service.FlowLeaveTestService;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.flows.entity.FlowLeaveTest;
-import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
-import com.lj.app.core.common.flows.service.FlowLeaveTestService;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.opensymphony.xwork2.util.logging.Logger;
@@ -74,9 +73,6 @@ public class FlowLeaveTestAction extends AbstractBaseFlowsAction<FlowLeaveTest> 
 
   private String operator;
 
-  @Autowired
-  private FlowEngineFacetsService flowEngineFacetsService;
-
   private Map<String, Object> flowData;
 
   public BaseService<FlowLeaveTest> getBaseService() {
@@ -111,7 +107,7 @@ public class FlowLeaveTestAction extends AbstractBaseFlowsAction<FlowLeaveTest> 
       // 如果orderId非空、taskId为空，则表示申请步骤已提交，此时可获取申请数据
       // 由于请假流程中的业务数据，是保存在任务表的variable字段中，所以通过flowData方法获取
       // 如果业务数据保存在业务表中，需要业务表的orderId字段来关联流程，进而根据orderId查询出业务数据
-      flowData = flowEngineFacetsService.flowData(orderId, taskName);
+     // flowData = flowEngineFacetsService.flowData(orderId, taskName);
       // 返回申请的查看页面
       return "flowLeaveTestApplyView";
     }
@@ -124,7 +120,6 @@ public class FlowLeaveTestAction extends AbstractBaseFlowsAction<FlowLeaveTest> 
     if (StringUtil.isNotBlank(taskId)) {
       return "flowLeaveTestApproveDeptApp";
     } else {
-      flowData = flowEngineFacetsService.flowData(orderId, taskName);
       return "flowLeaveTestApproveDeptView";
     }
   }
@@ -136,7 +131,6 @@ public class FlowLeaveTestAction extends AbstractBaseFlowsAction<FlowLeaveTest> 
     if (StringUtil.isNotBlank(taskId)) {
       return "flowLeaveTestBossApp";
     } else {
-      flowData = flowEngineFacetsService.flowData(orderId, taskName);
       return "flowLeaveTestBossAppView";
     }
   }
@@ -203,14 +197,6 @@ public class FlowLeaveTestAction extends AbstractBaseFlowsAction<FlowLeaveTest> 
 
   public void setOperator(String operator) {
     this.operator = operator;
-  }
-
-  public FlowEngineFacetsService getFlowEngineFacetsService() {
-    return flowEngineFacetsService;
-  }
-
-  public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
-    this.flowEngineFacetsService = flowEngineFacetsService;
   }
 
   public Map<String, Object> getFlowData() {

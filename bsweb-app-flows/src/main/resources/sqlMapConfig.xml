@@ -10,5 +10,10 @@
        <typeHandler jdbcType="BLOB" javaType="[B" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler"/>
 	 <typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler"/>
  
+ 
+      <sqlMap resource="com/lj/app/bsweb/flows/entity/FlowUpmUser.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/flows/entity/FlowLeaveTest.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/flows/entity/FlowBorrowTest.SqlMap.xml"/>
+      <sqlMap resource="com/lj/app/bsweb/flows/entity/FlowExpenseTest.SqlMap.xml"/>
 </sqlMapConfig>
     

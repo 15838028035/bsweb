@@ -1,4 +1,4 @@
-package com.lj.app.bsweb.upm.flows.web;
+package com.lj.app.bsweb.flows.web;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,12 +12,10 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.lj.app.bsweb.upm.AbstractBaseFlowsAction;
+import com.lj.app.bsweb.flows.AbstractBaseFlowsAction;
+import com.lj.app.bsweb.flows.entity.FlowExpenseTest;
+import com.lj.app.bsweb.flows.service.FlowExpenseTestService;
 import com.lj.app.core.common.base.service.BaseService;
-import com.lj.app.core.common.flows.entity.FlowExpenseTest;
-import com.lj.app.core.common.flows.entity.FlowOrder;
-import com.lj.app.core.common.flows.service.FlowEngineFacetsService;
-import com.lj.app.core.common.flows.service.FlowExpenseTestService;
 import com.lj.app.core.common.pagination.PageTool;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
@@ -70,9 +68,6 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
   private String readonly = "0";// 当前节点1,非当前节点0
 
   private String isApplyWhere = "";// 条件查询
-
-  @Autowired
-  private FlowEngineFacetsService flowEngineFacetsService;
 
   public BaseService getBaseService() {
     return flowExpenseTestService;
@@ -199,41 +194,6 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
    * @throws Exception 异常
    */
   public String applySave() throws Exception {
-    /** 流程数据构造开始 */
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put("apply.operator", this.getUserName());
-    /** 流程数据构造结束 */
-
-    /**
-     * 启动流程并且执行申请任务
-     */
-    if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-      FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, getUserName(), params);
-      /** 业务数据处理开始 */
-      flowExpenseTest.setFlowOrderId(flowOrder.getId());
-      flowExpenseTest.setOperatorTime(new Date());
-      flowExpenseTest.setOperator(this.getUserName());
-
-      flowExpenseTestService.insertObject(flowExpenseTest);
-    } else {
-      flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-      /** 业务数据处理开始 */
-      flowExpenseTest.setOperator(this.getUserName());
-
-      if (operate != null && operate.equals("edit")) {
-        flowExpenseTest.setUpdateBy(getLoginUserId());
-        flowExpenseTest.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-        flowExpenseTestService.updateObject(flowExpenseTest);
-
-        returnMessage = UPDATE_SUCCESS;
-      } else {
-        flowExpenseTest.setCreateBy(getLoginUserId());
-        flowExpenseTest.setCreateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
-        flowExpenseTestService.insertObject(flowExpenseTest);
-        returnMessage = CREATE_SUCCESS;
-      }
-    }
-
     return LIST;
   }
 
@@ -248,54 +208,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
       return "flowExpenseTestView";
     }
   }
-
-  /**
-   * 申请保存
-   * 
-   * @return 页面
-   * @throws Exception 异常
-   */
-  public String flowExpenseTestAppTableSubmit() throws Exception {
-    /** 流程数据构造开始 */
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put("apply.operator", this.getUserName());
-    /** 流程数据构造结束 */
-
-    try {
-      /**
-       * 启动流程并且执行申请任务
-       */
-      if (StringUtil.isBlank(orderId) && StringUtil.isBlank(taskId)) {
-        FlowOrder flowOrder = flowEngineFacetsService.startAndExecute(processId, getUserName(), params);
-        /** 业务数据处理开始 */
-
-        Map<String, String> querMap = new HashMap<String, String>();
-        querMap.put("processId", processId);
-        querMap.put("operator", this.getUserName());
-        querMap.put("conditionWhere", " and flow_order_id is null and  operator='" + this.getUserName() + "'");
-
-        List<FlowExpenseTest> list = flowExpenseTestService.queryForList(querMap);
-
-        for (FlowExpenseTest tlowExpenseTest : list) {
-          tlowExpenseTest.setFlowOrderId(flowOrder.getId());
-          flowExpenseTestService.updateObject(tlowExpenseTest);
-        }
-
-      } else {
-        flowEngineFacetsService.execute(taskId, this.getUserName(), params);
-        /** 业务数据处理开始 */
-      }
-      returnMessage = "提交成功";
-    } catch (Exception e) {
-      e.printStackTrace();
-      returnMessage = "提交失败,失败原因:" + e.getMessage();
-    }
-
-    AjaxResult ar = new AjaxResult();
-    ar.setOpResult(returnMessage);
-    Struts2Utils.renderJson(ar);
-    return null;
-  }
+  
 
   @Override
   public String delete() throws Exception {
@@ -364,14 +277,6 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
 
   public void setReadonly(String readonly) {
     this.readonly = readonly;
-  }
-
-  public FlowEngineFacetsService getFlowEngineFacetsService() {
-    return flowEngineFacetsService;
-  }
-
-  public void setFlowEngineFacetsService(FlowEngineFacetsService flowEngineFacetsService) {
-    this.flowEngineFacetsService = flowEngineFacetsService;
   }
 
   public String getIsApplyWhere() {
