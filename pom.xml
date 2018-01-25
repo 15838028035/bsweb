@@ -837,6 +837,7 @@
 		<module>bsweb-service-upm</module>
 		<module>bsweb-service-impl-upm</module>
 		<module>bsweb-app-upm</module>
+		<module>bsweb-app-flows</module>
  	</modules>
 	
 </project>

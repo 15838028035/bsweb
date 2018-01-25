@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="bsweb-app-upm"
+  id="myeclipse.1275893780451"
+  context-root="/bsweb-app-flows"
+  j2ee-spec="5.0"
+  archive="bsweb-app-flows.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

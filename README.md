@@ -12,6 +12,7 @@
  5.	bsweb-service-impl-flows 工作流引擎服务层实现
  6.	bsweb-service-deploy 服务部署层
  7.	bsweb-app-upm upm统一用户角色权限管理系统web层
+ 8.	bsweb-app-flows 流程管理系统实例
  
 ## 项目使用手册
 请查看 [使用手册](https://15838028035.github.io/bsweb/)

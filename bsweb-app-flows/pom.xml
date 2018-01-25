@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>bsweb</artifactId>
+    <groupId>com.lj.app.bsweb</groupId>
+   	<version>2.0.2-SNAPSHOT</version>
+  </parent>
+  <artifactId>bsweb-app-flows</artifactId>
+  <packaging>war</packaging>
+  <name>bsweb-app-flows</name>
+  <url>http://maven.apache.org</url>
+  
+  <dependencies>
+	
+		<dependency>
+			<groupId>com.lj.app.bsweb</groupId>
+			<artifactId>bsweb-common-core</artifactId>
+	 </dependency>
+			 
+		<dependency>
+		<groupId>com.lj.app.bsweb</groupId>  
+       <artifactId>bsweb-common-config</artifactId>
+       <version>${project.version}</version>
+		</dependency>
+		<dependency>
+		<groupId>com.lj.app.bsweb</groupId>  
+       <artifactId>bsweb-common-web</artifactId>
+		</dependency>
+		
+		 <dependency>
+			<groupId>com.lj.app.bsweb</groupId>
+			<artifactId>bsweb-service-upm</artifactId>
+			 <version>${project.version}</version>
+		</dependency>
+		
+	    <dependency>
+			<groupId>com.lj.app.bsweb</groupId>
+			<artifactId>bsweb-service-flows</artifactId>
+			 <version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+	
+  <build>
+    <finalName>bsweb-app-flows</finalName>
+  </build>
+</project>
