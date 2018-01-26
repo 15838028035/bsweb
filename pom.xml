@@ -35,6 +35,29 @@
 		<developerConnection>scm:git:https://github.com/15838028035/bsweb.git</developerConnection>
 		<url>scm:git:https://github.com/15838028035/bsweb.git</url>
 	</scm>
+	
+	
+<!-- 设定除中央仓repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查 -->
+<repositories>
+	<repository>
+		<id>central</id>
+		<name>Central Repository</name>
+		<url>http://repo.maven.apache.org/maven2</url>
+		<snapshots>
+			<enabled>false</enabled>
+		</snapshots>
+	</repository>
+	
+	<repository>
+         <id>oss-public</id>
+         <url>https://oss.sonatype.org/content/groups/public</url>
+     </repository>
+     <repository>
+         <id>oss-staging</id>
+         <url>https://oss.sonatype.org/content/groups/staging</url>
+     </repository>
+	
+</repositories>
 
 	<distributionManagement>
 		<repository>
