@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>bsweb</artifactId>
-    <groupId>com.lj.app.bsweb</groupId>
+    <groupId>com.github.15838028035</groupId>
     <version>2.0.2-SNAPSHOT</version>
   </parent>
   <artifactId>bsweb-service-upm</artifactId>
@@ -260,12 +260,12 @@
 		</dependency>
 		
 	<dependency>
-		<groupId>com.lj.app.bsweb</groupId>
+		<groupId>com.github.15838028035</groupId>
 		<artifactId>bsweb-common-core</artifactId>
 	</dependency>
 
 	<dependency>  
-        <groupId>com.lj.app.bsweb</groupId>  
+        <groupId>com.github.15838028035</groupId>  
        <artifactId>bsweb-common-core</artifactId>
        <version>${bsweb-common-core.version}</version>
         <type>test-jar</type>  

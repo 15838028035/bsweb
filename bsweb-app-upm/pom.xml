@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>bsweb</artifactId>
-    <groupId>com.lj.app.bsweb</groupId>
+    <groupId>com.github.15838028035</groupId>
    	<version>2.0.2-SNAPSHOT</version>
   </parent>
   <artifactId>bsweb-app-upm</artifactId>
@@ -15,28 +15,28 @@
   <dependencies>
 	
 		<dependency>
-			<groupId>com.lj.app.bsweb</groupId>
+			<groupId>com.github.15838028035</groupId>
 			<artifactId>bsweb-common-core</artifactId>
 	 </dependency>
 			 
 		<dependency>
-		<groupId>com.lj.app.bsweb</groupId>  
+		<groupId>com.github.15838028035</groupId>  
        <artifactId>bsweb-common-config</artifactId>
        <version>${project.version}</version>
 		</dependency>
 		<dependency>
-		<groupId>com.lj.app.bsweb</groupId>  
+		<groupId>com.github.15838028035</groupId>  
        <artifactId>bsweb-common-web</artifactId>
 		</dependency>
 		
 		 <dependency>
-			<groupId>com.lj.app.bsweb</groupId>
+			<groupId>com.github.15838028035</groupId>
 			<artifactId>bsweb-service-upm</artifactId>
 			 <version>${project.version}</version>
 		</dependency>
 		
 	    <dependency>
-			<groupId>com.lj.app.bsweb</groupId>
+			<groupId>com.github.15838028035</groupId>
 			<artifactId>bsweb-service-flows</artifactId>
 			 <version>${project.version}</version>
 		</dependency>

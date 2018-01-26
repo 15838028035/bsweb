@@ -2,7 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.lj.app.bsweb</groupId>
+	
+	 <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+	</parent>
+
+	<groupId>com.github.15838028035</groupId>
 	<artifactId>bsweb</artifactId>
 	<packaging>pom</packaging>
 	<version>2.0.2-SNAPSHOT</version>
@@ -29,37 +36,14 @@
 		<url>scm:git:https://github.com/15838028035/bsweb.git</url>
 	</scm>
 
-
-	<!-- 设定除中央仓repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查 -->
-	<repositories>
-		<repository>
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		
-		<repository>
-            <id>nexus-public</id>
-            <url>http://127.0.0.1:8081/repository/maven-public/</url>
-        </repository>
-        <repository>
-            <id>nexus-releases</id>
-            <url>http://127.0.0.1:8081/repository/maven-releases/</url>
-        </repository>
-		
-	</repositories>
-
 	<distributionManagement>
 		<repository>
-            <id>nexus-releases</id>
-            <url>http://127.0.0.1:8081/repository/maven-releases/</url>
+            <id>oss-releases</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
         <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>http://127.0.0.1:8081/repository/maven-snapshots/</url>
+            <id>oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
 	</distributionManagement>
 
@@ -386,13 +370,13 @@
 			</dependency>
 			
 			<dependency>
-			<groupId>com.lj.app.bsweb</groupId>
+			<groupId>com.github.15838028035</groupId>
 			<artifactId>bsweb-common-core</artifactId>
 			 <version>${bsweb-common-core.version}</version>
 			 </dependency>
 			 
 			 <dependency>
-			<groupId>com.lj.app.bsweb</groupId>
+			<groupId>com.github.15838028035</groupId>
 			<artifactId>bsweb-common-web</artifactId>
 			 <version>${bsweb-common-web.version}</version>
 			 </dependency>
@@ -813,12 +797,12 @@
 							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 							<artifactSet>
 								<includes>
-								    <include>com.lj.app.bsweb:bsweb-common-config</include>
-								    <include>com.lj.app.bsweb:bsweb-service-flows</include>
-								    <include>com.lj.app.bsweb:bsweb-service-impl-flows</include>
-								    <include>com.lj.app.bsweb:bsweb-app-upm</include>
-								    <include>com.lj.app.bsweb:bsweb-service-redis</include>
-								    <include>com.lj.app.bsweb:bsweb-app-redis</include>
+								    <include>com.github.15838028035:bsweb-common-config</include>
+								    <include>com.github.15838028035:bsweb-service-flows</include>
+								    <include>com.github.15838028035:bsweb-service-impl-flows</include>
+								    <include>com.github.15838028035:bsweb-app-upm</include>
+								    <include>com.github.15838028035:bsweb-service-redis</include>
+								    <include>com.github.15838028035:bsweb-app-redis</include>
 								</includes>
 							</artifactSet>
 							
