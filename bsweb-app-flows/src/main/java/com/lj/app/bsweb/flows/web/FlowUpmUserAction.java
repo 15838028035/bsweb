@@ -51,8 +51,6 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Action("flowUpmUserAction")
 public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
 
-  protected Logger logger = LoggerFactory.getLogger(FlowUpmUserAction.class);
-
   @Autowired
   private FlowUpmUserService flowUpmUserService;
 
@@ -174,14 +172,6 @@ public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
   @Override
   public String delete() throws Exception {
     return null;
-  }
-
-  public Logger getLogger() {
-    return logger;
-  }
-
-  public void setLogger(Logger logger) {
-    this.logger = logger;
   }
 
   public java.lang.Integer getId() {

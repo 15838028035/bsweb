@@ -2,7 +2,6 @@ package com.lj.app.bsweb.flows.web;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -50,8 +49,6 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
     })
 @Action("flowExpenseTestAction")
 public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTest> {
-
-  protected Logger logger = LoggerFactory.getLogger(FlowExpenseTestAction.class);
 
   @Autowired
   private FlowExpenseTestService flowExpenseTestService;
@@ -213,14 +210,6 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
   @Override
   public String delete() throws Exception {
     return null;
-  }
-
-  public Logger getLogger() {
-    return logger;
-  }
-
-  public void setLogger(Logger logger) {
-    this.logger = logger;
   }
 
   public java.lang.Integer getId() {

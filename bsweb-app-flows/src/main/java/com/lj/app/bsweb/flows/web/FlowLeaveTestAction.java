@@ -15,8 +15,6 @@ import com.lj.app.bsweb.flows.service.FlowLeaveTestService;
 import com.lj.app.core.common.base.service.BaseService;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * @title :
@@ -56,8 +54,6 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 @Action("flowLeaveTestAction")
 public class FlowLeaveTestAction extends AbstractBaseFlowsAction<FlowLeaveTest> {
-
-  protected Logger logger = LoggerFactory.getLogger(FlowLeaveTestAction.class);
 
   @Autowired
   private FlowLeaveTestService<FlowLeaveTest> flowLeaveTestService;
