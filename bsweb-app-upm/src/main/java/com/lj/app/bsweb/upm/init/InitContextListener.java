@@ -29,11 +29,14 @@ public class InitContextListener implements ServletContextListener {
     String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");
     String upmVersion = PropertiesUtil.getProperty("upmVersion");
     String upmProductName = PropertiesUtil.getProperty("upmProductName");
+    
+    String bswebAdminUiUrl = PropertiesUtil.getProperty("bswebAdminUiUrl");
 
     logger.debug("InitContextListener spring.profiles.active= " + springProfilesActive);
     context.getServletContext().setAttribute("springProfilesActive", springProfilesActive);
     context.getServletContext().setAttribute("upmVersion", upmVersion);
     context.getServletContext().setAttribute("upmProductName", upmProductName);
+    context.getServletContext().setAttribute("bswebAdminUiUrl", bswebAdminUiUrl);
 
     String springProfilesActiveShow = "";
 
@@ -52,6 +55,6 @@ public class InitContextListener implements ServletContextListener {
     sb.append("\r\n    欢迎使用 " + upmProductName + "[" + springProfilesActiveShow + "],版本号:" + upmVersion + " \r\n");
 
     sb.append("\r\n======================================================================\r\n");
-    System.out.println(sb.toString());
+    logger.info(sb.toString());
   }
 }

@@ -118,4 +118,21 @@ public class FlowExpenseTest extends BaseEntity {
   public java.lang.Integer getProcessId() {
     return this.processId;
   }
+
+  public String getOperatorTimeBegin() {
+    return operatorTimeBegin;
+  }
+
+  public void setOperatorTimeBegin(String operatorTimeBegin) {
+    this.operatorTimeBegin = operatorTimeBegin;
+  }
+
+  public String getOperatorTimeEnd() {
+    return operatorTimeEnd;
+  }
+
+  public void setOperatorTimeEnd(String operatorTimeEnd) {
+    this.operatorTimeEnd = operatorTimeEnd;
+  }
+  
 }
