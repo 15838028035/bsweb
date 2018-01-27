@@ -16,7 +16,7 @@ import com.lj.app.core.common.util.StringUtil;
  */
 public class InitContextListener implements ServletContextListener {
 
-  private static Log logger = LogFactory.getLog(InitContextListener.class);
+  private static com.alibaba.druid.support.logging.Log logger = LogFactory.getLog(InitContextListener.class);
 
   public void contextDestroyed(ServletContextEvent arg0) {
 
@@ -52,6 +52,7 @@ public class InitContextListener implements ServletContextListener {
     sb.append("\r\n    欢迎使用 " + productName + "[" + springProfilesActiveShow + "],版本号:" + version + " \r\n");
 
     sb.append("\r\n======================================================================\r\n");
-    System.out.println(sb.toString());
+    
+    logger.info(sb.toString());
   }
 }

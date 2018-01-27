@@ -52,6 +52,6 @@ public class InitContextListener implements ServletContextListener {
     sb.append("\r\n    欢迎使用 " + upmProductName + "[" + springProfilesActiveShow + "],版本号:" + upmVersion + " \r\n");
 
     sb.append("\r\n======================================================================\r\n");
-    System.out.println(sb.toString());
+    logger.info(sb.toString());
   }
 }
