@@ -6,6 +6,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.lj.app.bsweb.upm.init.InitContextListener;
 import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.util.StringUtil;
 
@@ -52,6 +53,7 @@ public class InitContextListener implements ServletContextListener {
     sb.append("\r\n    欢迎使用 " + productName + "[" + springProfilesActiveShow + "],版本号:" + version + " \r\n");
 
     sb.append("\r\n======================================================================\r\n");
-    System.out.println(sb.toString());
+    
+    logger.info(sb.toString());
   }
 }

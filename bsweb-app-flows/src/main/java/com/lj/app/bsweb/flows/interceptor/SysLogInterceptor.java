@@ -31,7 +31,6 @@ public class SysLogInterceptor extends AbstractInterceptor {
 
   @Override
   public String intercept(ActionInvocation invocation) throws Exception {
-    // invocation.invoke();
     String result = invocation.invoke();
     Object action = invocation.getAction();
 
@@ -44,7 +43,7 @@ public class SysLogInterceptor extends AbstractInterceptor {
       return null;
     }
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     Map<String, Object> map = invocation.getInvocationContext().getParameters();
     Set<String> keys = map.keySet();
