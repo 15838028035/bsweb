@@ -11,3 +11,4 @@ after_success:
 notifications:
   email:
     - 15838028035@163.com
+sudo: required
