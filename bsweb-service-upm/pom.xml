@@ -266,14 +266,6 @@
 		<artifactId>bsweb-common-core</artifactId>
 	</dependency>
 
-	<dependency>  
-        <groupId>com.github.15838028035</groupId>  
-       <artifactId>bsweb-common-core</artifactId>
-       <version>${bsweb-common-core.version}</version>
-        <type>test-jar</type>  
-        <scope>test</scope>  
-    </dependency>  
-    
     	<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
