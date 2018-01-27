@@ -6,7 +6,6 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.lj.app.bsweb.upm.init.InitContextListener;
 import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.util.StringUtil;
 
