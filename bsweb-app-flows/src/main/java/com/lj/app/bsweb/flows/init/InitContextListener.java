@@ -6,6 +6,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.lj.app.bsweb.upm.init.InitContextListener;
 import com.lj.app.core.common.properties.PropertiesUtil;
 import com.lj.app.core.common.util.StringUtil;
 
@@ -16,7 +17,7 @@ import com.lj.app.core.common.util.StringUtil;
  */
 public class InitContextListener implements ServletContextListener {
 
-  private static com.alibaba.druid.support.logging.Log logger = LogFactory.getLog(InitContextListener.class);
+  private static Log logger = LogFactory.getLog(InitContextListener.class);
 
   public void contextDestroyed(ServletContextEvent arg0) {
 
