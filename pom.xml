@@ -97,7 +97,7 @@
 		<druid.version>1.0.16</druid.version>
 		
 		<bsweb-common-core.version>0.0.1-SNAPSHOT</bsweb-common-core.version>
-		<bsweb-common-web.version>0.0.1</bsweb-common-web.version>
+		<bsweb-common-web.version>0.0.1-SNAPSHOT</bsweb-common-web.version>
 		
 		<maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
 
