@@ -29,11 +29,13 @@ public class InitContextListener implements ServletContextListener {
     String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");
     String version = PropertiesUtil.getProperty("flowsVersion");
     String productName = PropertiesUtil.getProperty("flowProductName");
+    String bswebAdminUiUrl = PropertiesUtil.getProperty("bswebAdminUiUrl");
 
     logger.debug("InitContextListener spring.profiles.active= " + springProfilesActive);
     context.getServletContext().setAttribute("springProfilesActive", springProfilesActive);
     context.getServletContext().setAttribute("version", version);
     context.getServletContext().setAttribute("productName", productName);
+    context.getServletContext().setAttribute("bswebAdminUiUrl", bswebAdminUiUrl);
 
     String springProfilesActiveShow = "";
 
@@ -52,6 +54,7 @@ public class InitContextListener implements ServletContextListener {
     sb.append("\r\n    欢迎使用 " + productName + "[" + springProfilesActiveShow + "],版本号:" + version + " \r\n");
 
     sb.append("\r\n======================================================================\r\n");
-    System.out.println(sb.toString());
+    
+    logger.info(sb.toString());
   }
 }
