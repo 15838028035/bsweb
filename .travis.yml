@@ -5,7 +5,7 @@ install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -e
 
 after_success:
-- mvn clean  cobertura:cobertura  sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.login=$SONAR_TOKEN
+- mvn clean  cobertura:cobertura  sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.organization=15838028035-github  -Dsonar.login=$SONAR_CLOUD_TOKEN
 
 
 notifications:
