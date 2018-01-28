@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -21,8 +23,6 @@ import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * @title :FlowExpenseTestAction.java
@@ -50,6 +50,8 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Action("flowExpenseTestAction")
 public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTest> {
 
+  private static Log logger = LogFactory.getLog(FlowExpenseTestAction.class);
+	
   @Autowired
   private FlowExpenseTestService flowExpenseTestService;
 
@@ -109,7 +111,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
       throw e;
     }
   }
@@ -141,7 +143,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
       return LIST;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
       throw e;
     }
 
@@ -174,7 +176,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
       throw e;
     }
 

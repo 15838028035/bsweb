@@ -166,10 +166,10 @@ public class SecurityFilterExt implements Filter {
       filterChain.doFilter(servletRequest, servletResponse);
 
     } catch (ServletException sx) {
-      sx.printStackTrace();
+      logger.error("[" + this.getClass().getName() + "] 异常信息:" + sx);
 
     } catch (IOException iox) {
-      iox.printStackTrace();
+      logger.error("[" + this.getClass().getName() + "] 异常信息:" + iox);
     }
 
   }
@@ -181,6 +181,9 @@ public class SecurityFilterExt implements Filter {
    * @return 是否
    */
   private boolean validatePermission(CmSecurityContext securityContext, String requestUri, String contextPath) {
+	  if(securityContext == null) {
+		  return true;
+	  }
     if (!isSkipValidate(requestUri)) {
       if (!securityContext.hasUrlPermission(requestUri)) {
         return false;

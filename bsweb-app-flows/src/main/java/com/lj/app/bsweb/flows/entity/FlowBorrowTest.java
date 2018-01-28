@@ -139,5 +139,37 @@ public class FlowBorrowTest extends BaseEntity {
   public java.lang.Integer getProcessId() {
     return this.processId;
   }
+
+public String getOperatorTimeBegin() {
+	return operatorTimeBegin;
+}
+
+public void setOperatorTimeBegin(String operatorTimeBegin) {
+	this.operatorTimeBegin = operatorTimeBegin;
+}
+
+public String getOperatorTimeEnd() {
+	return operatorTimeEnd;
+}
+
+public void setOperatorTimeEnd(String operatorTimeEnd) {
+	this.operatorTimeEnd = operatorTimeEnd;
+}
+
+public String getRepayTimeBegin() {
+	return repayTimeBegin;
+}
+
+public void setRepayTimeBegin(String repayTimeBegin) {
+	this.repayTimeBegin = repayTimeBegin;
+}
+
+public String getRepayTimeEnd() {
+	return repayTimeEnd;
+}
+
+public void setRepayTimeEnd(String repayTimeEnd) {
+	this.repayTimeEnd = repayTimeEnd;
+}
  
 }

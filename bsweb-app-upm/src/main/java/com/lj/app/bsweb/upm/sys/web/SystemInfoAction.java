@@ -119,7 +119,7 @@ public class SystemInfoAction extends AbstractBaseUpmAction<UpmUser> {
    * @return 页面
    */
   public String printSysInfo() {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append(propertiesMapToString("服务器信息", getSystemProperties()));
     systemInfo = buf.toString();
     return "systemInfo";
@@ -127,13 +127,13 @@ public class SystemInfoAction extends AbstractBaseUpmAction<UpmUser> {
 
   @Override
   public String toString() {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append(propertiesMapToString("系统信息", getSystemProperties()));
     return buf.toString();
   }
 
   private static String propertiesMapToString(String mapName, Map<String, String> properties) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("<h3>" + mapName + "</h3>");
     buf.append("<hr/>");
 
