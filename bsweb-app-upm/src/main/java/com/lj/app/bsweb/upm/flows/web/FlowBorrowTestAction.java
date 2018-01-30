@@ -149,7 +149,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
       e.printStackTrace();
@@ -269,7 +269,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
       }
     }
 
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**

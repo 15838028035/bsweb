@@ -136,7 +136,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
   @Override
   public String commonSaveOrUpdate() throws Exception {
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         flowProcess.setFlowContent(flowProcess.getFlowContentStr().getBytes("UTF-8"));
         flowProcess.setUpdateBy(this.getLoginUserId());
         flowProcess.setUpdateByUname(this.getUserName());
@@ -155,7 +155,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
       e.printStackTrace();
