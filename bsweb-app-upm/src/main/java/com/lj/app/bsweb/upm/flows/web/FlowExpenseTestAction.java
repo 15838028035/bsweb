@@ -45,9 +45,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowExpenseTestAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/flowExpenseTest/flowExpenseTest-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "flowExpenseTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flowExpenseTest/flowExpenseTestList.jsp", type = AbstractBaseAction.REDIRECT) 
     })
 @Action("flowExpenseTestAction")

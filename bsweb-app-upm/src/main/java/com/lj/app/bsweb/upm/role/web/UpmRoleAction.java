@@ -33,11 +33,11 @@ import com.lj.app.core.common.web.Struts2Utils;
 @Results({ 
     @Result(name = AbstractBaseAction.INPUT, 
         location = "upmRole-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "upmRoleAction!edit.action", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.RELOAD, 
         location = "upmRoleList.jsp"),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "upmRoleList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 
@@ -158,7 +158,7 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 
     try {
 
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         upmRole.setUpdateBy(getLoginUserId());
         upmRole.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
         upmRoleService.updateObject(upmRole);

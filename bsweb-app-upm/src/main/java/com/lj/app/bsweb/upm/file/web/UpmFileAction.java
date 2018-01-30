@@ -40,9 +40,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
       location = "upmFileAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
       location = "/jsp/upmFile/upmFile-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
       location = "upmFileAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
       location = "/jsp/upmFile/upmFileList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 @Action("upmFileAction")
@@ -160,7 +160,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
   public String save() throws Exception {
 
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         upmFile.setId(id);
         upmFile.setRelateId1(relateId1);
         upmFile.setRelateId2(relateId2);
@@ -189,7 +189,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
       e.printStackTrace();

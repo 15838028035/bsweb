@@ -23,9 +23,9 @@ import com.lj.app.core.common.web.AbstractBaseAction;
 @Results({ 
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/dictionary/upmDictionaryNote-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "upmDictionaryNoteAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/dictionary/upmDictionaryNoteList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

@@ -200,7 +200,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
   @Override
   public String commonSaveOrUpdate() throws Exception {
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         upmPermission.setUpdateBy(getLoginUserId());
         upmPermission.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
         upmPermissionService.updateObject(upmPermission);

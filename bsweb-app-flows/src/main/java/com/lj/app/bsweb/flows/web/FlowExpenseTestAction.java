@@ -42,9 +42,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowExpenseTestAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/flowExpenseTest/flowExpenseTest-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "flowExpenseTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flowExpenseTest/flowExpenseTestList.jsp", type = AbstractBaseAction.REDIRECT) 
     })
 @Action("flowExpenseTestAction")
@@ -138,7 +138,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
       e.printStackTrace();
@@ -191,7 +191,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
    * @throws Exception 异常
    */
   public String applySave() throws Exception {
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**

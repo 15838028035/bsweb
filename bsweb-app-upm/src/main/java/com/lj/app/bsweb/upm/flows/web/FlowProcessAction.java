@@ -50,9 +50,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowProcessAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/flows/flowProcess-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowProcessAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flows/flowProcessList.jsp", type = AbstractBaseAction.REDIRECT),
     @Result(name = "flowDiagram", 
         location = "/jsp/flows/flowDiagram.jsp"),
@@ -328,7 +328,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 
   public String processStart() throws Exception {
     flowEngineFacetsService.startInstanceByName(flowProcess.getFlowName(), null, this.getUserName(), null);
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**

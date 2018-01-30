@@ -32,9 +32,9 @@ import com.lj.app.core.common.web.Struts2Utils;
 @Results({
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/user/upmUserGroupAndRoleRel-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "upmUserGroupAndRoleRelAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/user/upmUserGroupAndRoleRelList.jsp", type = AbstractBaseAction.REDIRECT) 
     })
 
@@ -83,7 +83,7 @@ public class UpmUserGroupAndRoleRelAction extends AbstractBaseUpmAction<UpmUserG
   public String save() throws Exception {
 
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         upmUserGroupAndRoleRel.setId(id);
         upmUserGroupAndRoleRel.setUserGroupId(userGroupId);
         upmUserGroupAndRoleRel.setRoleId(roleId);
@@ -104,7 +104,7 @@ public class UpmUserGroupAndRoleRelAction extends AbstractBaseUpmAction<UpmUserG
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
       e.printStackTrace();

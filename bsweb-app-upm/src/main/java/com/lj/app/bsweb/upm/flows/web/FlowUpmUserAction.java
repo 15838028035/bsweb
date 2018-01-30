@@ -44,9 +44,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "/jsp/flowUpmUser/flowUpmUserApply.jsp"),
     @Result(name = "flowUpmUserApplyView",
         location = "/jsp/flowUpmUser/flowUpmUserApplyView.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowUpmUserAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST,
+    @Result(name = AbstractBaseAction.LIST_RESULT,
         location = "/jsp/flowUpmUser/flowUpmUserList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 
@@ -208,7 +208,7 @@ public class FlowUpmUserAction extends AbstractBaseUpmAction<FlowUpmUser> {
       }
     }
 
-    return LIST;
+    return LIST_RESULT;
   }
 
   @Override

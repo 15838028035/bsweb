@@ -47,9 +47,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "/jsp/flowBorrowTest/flowBorrowTestView.jsp"),
     @Result(name = "flowBorrowTestAppTable",
         location = "/jsp/flowBorrowTest/flowBorrowTestAppTable.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowBorrowTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST,
+    @Result(name = AbstractBaseAction.LIST_RESULT,
         location = "/jsp/flowBorrowTest/flowBorrowTestList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

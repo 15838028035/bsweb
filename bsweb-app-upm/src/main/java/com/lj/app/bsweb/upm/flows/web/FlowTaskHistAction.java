@@ -36,11 +36,11 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowTaskHistAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/flows/flowTaskHist-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowTaskHistAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flows/flowTaskHistList.jsp", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flows/flowTaskHistViewList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

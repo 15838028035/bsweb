@@ -27,7 +27,7 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Results({ 
     @Result(name = AbstractBaseAction.RELOAD, 
         location = "upmSysLogAction", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/sys/upmSysLogList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

@@ -32,9 +32,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowOrderAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/flows/flowOrder-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowOrderAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flows/flowOrderList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

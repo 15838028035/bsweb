@@ -30,9 +30,9 @@ import com.lj.app.core.common.web.Struts2Utils;
 @Results({ 
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/user/upmUserAndUserGroupRel-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "upmUserAndUserGroupRelAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST,
+    @Result(name = AbstractBaseAction.LIST_RESULT,
         location = "/jsp/user/upmUserAndUserGroupRelList.jsp", type = AbstractBaseAction.REDIRECT) 
       })
 @Action("upmUserAndUserGroupRelAction")

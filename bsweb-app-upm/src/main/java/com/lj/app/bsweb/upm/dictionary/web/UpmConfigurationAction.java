@@ -31,9 +31,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/dictionary/upmConfiguration-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "upmConfigurationAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

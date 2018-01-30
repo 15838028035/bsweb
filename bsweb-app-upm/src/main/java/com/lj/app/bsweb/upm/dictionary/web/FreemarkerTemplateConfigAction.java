@@ -29,9 +29,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "freemarkerTemplateConfigAction",  type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfig-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "freemarkerTemplateConfigAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/freemarkerTemplateConfig/freemarkerTemplateConfigList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

@@ -32,9 +32,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "upmJobAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT, 
       location = "/jsp/task/upmJob-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
       location = "upmJobAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
       location = "/jsp/task/upmJobList.jsp", type = AbstractBaseAction.REDIRECT) 
     })
 
