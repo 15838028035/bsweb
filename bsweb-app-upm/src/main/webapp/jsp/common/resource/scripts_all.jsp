@@ -61,3 +61,4 @@
 <%-- <script src="${ctx}/scripts/adminLTE/js/app.js"></script> --%>
 
 <script src="${staticFileRootUrl}/scripts/mustache.js"></script>
+<script src="${staticFileRootUrl}/scripts/adminLTE/js/demo.js"></script>
