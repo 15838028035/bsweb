@@ -551,6 +551,7 @@
 				</plugin>
 				
 				<plugin>
+
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
@@ -576,6 +577,7 @@
                 </plugin>
 
 				<plugin>
+
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
 					<version>2.3</version>
