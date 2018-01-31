@@ -1,4 +1,5 @@
-﻿<link href="${staticFileRootUrl}/scripts/bootstrap/css/bootstrap.css" rel="stylesheet">
+﻿<!--css样式-->
+<link href="${staticFileRootUrl}/scripts/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="${staticFileRootUrl}/scripts/bootstrap-table/bootstrap-table.css" rel="stylesheet">
 <!--js-->
 
@@ -36,3 +37,27 @@
 <link href="${staticFileRootUrl}/scripts/bootstrapvalidator/css/bootstrapValidator.css" rel="stylesheet">
 <script src="${staticFileRootUrl}/scripts/bootstrapvalidator/js/bootstrapValidator.js"></script>
 <script src="${staticFileRootUrl}/scripts/bootstrapvalidator/js/language/zh_CN.js"></script>
+
+<%-- <link href="${ctx}/scripts/BootSideMenu/css/BootSideMenu.css" rel="stylesheet"> --%>
+<%-- <script src="${ctx}/scripts/BootSideMenu/js/BootSideMenu.js"></script> --%>
+
+    <!-- ui -->
+    <script src="${staticFileRootUrl}/scripts/jquery/jqueryui/jquery-ui-1.8.1.custom.min.js" type="text/javascript"></script>
+    
+<link href="${staticFileRootUrl}/scripts/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
+<script src="${staticFileRootUrl}/scripts/bootstrap-fileinput/js/fileinput.js"></script>
+
+
+<link href="${staticFileRootUrl}/scripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.css" rel="stylesheet">
+<script src="${staticFileRootUrl}/scripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js"></script>
+
+<link href="${staticFileRootUrl}/scripts/adminLTE/css/AdminLTE.css" rel="stylesheet">
+<link href="${staticFileRootUrl}/scripts/adminLTE/css/skins/all-skins.css" rel="stylesheet">
+<link href="${staticFileRootUrl}/scripts/adminLTE/css/ionicons.css" rel="stylesheet">
+<link href="${staticFileRootUrl}/scripts/adminLTE/css/font-awesome.css" rel="stylesheet">
+
+<script src="${staticFileRootUrl}/scripts/adminLTE/js/adminlte.js"></script>
+<%-- <script src="${ctx}/scripts/adminLTE/plugins/slimScroll/jquery.slimscroll.js"></script> --%>
+<%-- <script src="${ctx}/scripts/adminLTE/js/app.js"></script> --%>
+
+<script src="${staticFileRootUrl}/scripts/mustache.js"></script>
