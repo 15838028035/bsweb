@@ -29,11 +29,13 @@ public class InitContextListener implements ServletContextListener {
     String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");
     String upmVersion = PropertiesUtil.getProperty("upmVersion");
     String upmProductName = PropertiesUtil.getProperty("upmProductName");
+    String staticFileRootUrl = PropertiesUtil.getProperty("staticFileRootUrl");
 
     logger.debug("InitContextListener spring.profiles.active= " + springProfilesActive);
     context.getServletContext().setAttribute("springProfilesActive", springProfilesActive);
     context.getServletContext().setAttribute("upmVersion", upmVersion);
     context.getServletContext().setAttribute("upmProductName", upmProductName);
+    context.getServletContext().setAttribute("staticFileRootUrl", staticFileRootUrl);
 
     String springProfilesActiveShow = "";
 
@@ -50,7 +52,7 @@ public class InitContextListener implements ServletContextListener {
     StringBuilder sb = new StringBuilder();
     sb.append("\r\n======================================================================\r\n");
     sb.append("\r\n    欢迎使用 " + upmProductName + "[" + springProfilesActiveShow + "],版本号:" + upmVersion + " \r\n");
-
+    sb.append("\r\n    静态资源地址:" + staticFileRootUrl + "                                               \r\n");
     sb.append("\r\n======================================================================\r\n");
     logger.info(sb.toString());
   }
