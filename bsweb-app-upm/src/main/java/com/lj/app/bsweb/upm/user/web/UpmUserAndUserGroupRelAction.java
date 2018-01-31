@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -37,7 +39,7 @@ import com.lj.app.core.common.web.Struts2Utils;
       })
 @Action("upmUserAndUserGroupRelAction")
 public class UpmUserAndUserGroupRelAction extends AbstractBaseUpmAction<UpmUserAndUserGroupRel> {
-
+  
   private java.lang.Integer id;
   private java.lang.Integer userId;
   private java.lang.Integer groupId;
@@ -101,7 +103,7 @@ public class UpmUserAndUserGroupRelAction extends AbstractBaseUpmAction<UpmUserA
         }
       } catch (Exception e) {
         returnMessage = "保存失败";
-        e.printStackTrace();
+        logger.error(e.getMessage(),null);
         throw e;
       } 
     }

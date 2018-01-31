@@ -146,7 +146,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -192,7 +192,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     } 
 

@@ -107,7 +107,7 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -147,7 +147,7 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
       return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }

@@ -98,7 +98,7 @@ public class UpmNoticeAction extends AbstractBaseUpmAction<UpmNotice> {
       return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }

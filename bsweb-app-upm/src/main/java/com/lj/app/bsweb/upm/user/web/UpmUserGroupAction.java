@@ -148,7 +148,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
       Struts2Utils.renderText(jsonStr);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -181,7 +181,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
 

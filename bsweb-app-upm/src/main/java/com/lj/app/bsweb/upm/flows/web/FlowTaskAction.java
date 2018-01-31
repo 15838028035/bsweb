@@ -121,7 +121,7 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
       Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }
@@ -146,7 +146,7 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
       Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }

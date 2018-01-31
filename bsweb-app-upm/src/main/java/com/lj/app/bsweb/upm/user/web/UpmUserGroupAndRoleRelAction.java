@@ -74,7 +74,7 @@ public class UpmUserGroupAndRoleRelAction extends AbstractBaseUpmAction<UpmUserG
       Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -107,7 +107,7 @@ public class UpmUserGroupAndRoleRelAction extends AbstractBaseUpmAction<UpmUserG
       return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     } 
 
@@ -158,7 +158,7 @@ public class UpmUserGroupAndRoleRelAction extends AbstractBaseUpmAction<UpmUserG
         }
       } catch (Exception e) {
         returnMessage = "保存失败";
-        e.printStackTrace();
+        logger.error(e);
         throw e;
       }
     }

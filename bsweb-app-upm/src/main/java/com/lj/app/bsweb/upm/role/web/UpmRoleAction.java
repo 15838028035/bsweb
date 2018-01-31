@@ -178,7 +178,7 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
 
@@ -219,7 +219,7 @@ public class UpmRoleAction extends AbstractBaseUpmAction<UpmRole> {
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }
