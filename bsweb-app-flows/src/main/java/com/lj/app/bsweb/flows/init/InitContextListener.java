@@ -29,11 +29,13 @@ public class InitContextListener implements ServletContextListener {
     String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");
     String version = PropertiesUtil.getProperty("flowsVersion");
     String productName = PropertiesUtil.getProperty("flowProductName");
+    String staticFileRootUrl = PropertiesUtil.getProperty("staticFileRootUrl");
 
     logger.debug("InitContextListener spring.profiles.active= " + springProfilesActive);
     context.getServletContext().setAttribute("springProfilesActive", springProfilesActive);
     context.getServletContext().setAttribute("version", version);
     context.getServletContext().setAttribute("productName", productName);
+    context.getServletContext().setAttribute("staticFileRootUrl", staticFileRootUrl);
 
     String springProfilesActiveShow = "";
 
