@@ -57,7 +57,7 @@ public class FlowUtil {
    */
   public static String getStateJson(ProcessModel model, List<FlowTask> activeFlowTasks,
       List<FlowTaskHist> historyFlowTasks) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     buffer.append("{'activeRects':{'rects':[");
     if (activeFlowTasks != null && activeFlowTasks.size() > 0) {
       for (FlowTask flowTask : activeFlowTasks) {
@@ -89,7 +89,7 @@ public class FlowUtil {
    * @return 模型json
    */
   public static String getModelJson(ProcessModel model) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     List<TransitionModel> tms = new ArrayList<TransitionModel>();
     for (NodeModel node : model.getNodes()) {
       for (TransitionModel tm : node.getOutputs()) {
@@ -119,7 +119,7 @@ public class FlowUtil {
    * @return json字符串
    */
   public static String getNodeJson(List<NodeModel> nodes) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     buffer.append("states: {");
     for (NodeModel node : nodes) {
       buffer.append(node.getName());
@@ -139,7 +139,7 @@ public class FlowUtil {
    * @return 路径
    */
   public static String getPathJson(List<TransitionModel> tms) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     buffer.append("paths:{");
     for (TransitionModel tm : tms) {
       buffer.append(tm.getName());
@@ -181,7 +181,7 @@ public class FlowUtil {
    * @return base信息
    */
   public static String getBase(NodeModel node) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     buffer.append(":{type:'");
     buffer.append(mapper.get(node.getClass()));
     buffer.append("',text:{text:'");
@@ -191,7 +191,7 @@ public class FlowUtil {
   }
 
   private static String getProperty(NodeModel node) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     buffer.append("props:{");
     try {
       PropertyDescriptor[] beanProperties = PropertyUtils.getPropertyDescriptors(node);
@@ -223,7 +223,7 @@ public class FlowUtil {
   }
 
   private static String getLayout(NodeModel node) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
     buffer.append("attr:{");
     String[] values = node.getLayout().split(",");
     buffer.append("x:").append(getNumber(values[0])).append(",");

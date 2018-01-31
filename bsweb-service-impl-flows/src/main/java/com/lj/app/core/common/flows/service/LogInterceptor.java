@@ -20,7 +20,7 @@ public class LogInterceptor implements FlowInterceptor {
   public void intercept(Execution execution) {
     if (log.isInfoEnabled()) {
       for (FlowTask task : execution.getTasks()) {
-        StringBuffer buffer = new StringBuffer(100);
+        StringBuilder buffer = new StringBuilder(100);
         buffer.append("创建任务[标识=").append(task.getId());
         buffer.append(",名称=").append(task.getDisplayName());
         buffer.append(",创建时间=").append(task.getCreateTime());
