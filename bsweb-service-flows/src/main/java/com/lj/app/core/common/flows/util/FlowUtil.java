@@ -9,6 +9,8 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.lj.app.core.common.flows.entity.FlowTask;
 import com.lj.app.core.common.flows.entity.FlowTaskHist;
@@ -31,6 +33,9 @@ import com.lj.app.core.common.flows.model.TransitionModel;
  *
  */
 public class FlowUtil {
+
+  private static Log logger = LogFactory.getLog(FlowUtil.class);
+  
   private static Map<Class<? extends NodeModel>, String> mapper = new HashMap<Class<? extends NodeModel>, String>();
   static {
     mapper.put(ExtTaskModel.class, "task");
@@ -210,7 +215,7 @@ public class FlowUtil {
         buffer.append("'},");
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
     }
     buffer.deleteCharAt(buffer.length() - 1);
     buffer.append("}}");

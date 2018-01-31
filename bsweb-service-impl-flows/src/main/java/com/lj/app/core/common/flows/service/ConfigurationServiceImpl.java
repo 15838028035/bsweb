@@ -167,7 +167,7 @@ public class ConfigurationServiceImpl implements ConfigurationService, Serializa
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       throw new FlowException("资源解析失败，请检查配置文件[" + resource + "]", e.getCause());
     }
   }
