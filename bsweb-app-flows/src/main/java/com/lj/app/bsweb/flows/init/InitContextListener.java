@@ -27,8 +27,8 @@ public class InitContextListener implements ServletContextListener {
    */
   public void contextInitialized(ServletContextEvent context) {
     String springProfilesActive = PropertiesUtil.getProperty("spring.profiles.active");
-    String version = PropertiesUtil.getProperty("flowsVersion");
-    String productName = PropertiesUtil.getProperty("flowProductName");
+    String version = PropertiesUtil.getProperty("productVersion");
+    String productName = PropertiesUtil.getProperty("productName");
     String staticFileRootUrl = PropertiesUtil.getProperty("staticFileRootUrl");
 
     logger.debug("InitContextListener spring.profiles.active= " + springProfilesActive);
@@ -52,7 +52,7 @@ public class InitContextListener implements ServletContextListener {
     StringBuilder sb = new StringBuilder();
     sb.append("\r\n======================================================================\r\n");
     sb.append("\r\n    欢迎使用 " + productName + "[" + springProfilesActiveShow + "],版本号:" + version + " \r\n");
-    sb.append("\r\n    静态资源地址:               [" + staticFileRootUrl + "       ]                       \r\n");
+    sb.append("\r\n    静态资源地址:" + staticFileRootUrl + "                                               \r\n");
 
     sb.append("\r\n======================================================================\r\n");
     
