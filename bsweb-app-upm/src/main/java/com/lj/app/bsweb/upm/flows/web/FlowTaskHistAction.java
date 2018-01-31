@@ -102,7 +102,7 @@ public class FlowTaskHistAction extends AbstractBaseUpmAction<FlowTaskHist> {
       Struts2Utils.renderText(PageTool.mapPageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      logger.error(e.getMessage(),null);
+      logger.error(e.getMessage());
       throw e;
     }
   }
