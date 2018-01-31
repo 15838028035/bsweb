@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -51,6 +53,8 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 @Action("flowUpmUserAction")
 public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
 
+  private static Log logger = LogFactory.getLog(FlowUpmUserAction.class);
+  
   @Autowired
   private FlowUpmUserService flowUpmUserService;
 
@@ -117,7 +121,7 @@ public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
 

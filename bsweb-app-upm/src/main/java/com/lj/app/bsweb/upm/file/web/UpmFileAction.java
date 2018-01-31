@@ -23,8 +23,6 @@ import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * @title :UpmFileAction.java
@@ -146,7 +144,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -192,7 +190,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     } 
 
@@ -219,9 +217,8 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       out.write(bt);
       out.flush();
       out.close();
-    } catch (Exception e1) {
-
-      e1.printStackTrace();
+    } catch (Exception e) {
+      logger.error(e);
     }
     return null;
   }

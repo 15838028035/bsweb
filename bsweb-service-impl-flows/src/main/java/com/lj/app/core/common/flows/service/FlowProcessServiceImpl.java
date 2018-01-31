@@ -285,7 +285,6 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
       cache(entity);
       return entity.getId().toString();
     } catch (Exception e) {
-      e.printStackTrace();
       log.error(e.getMessage());
       throw new FlowException(e.getMessage(), e.getCause());
     }
@@ -351,7 +350,6 @@ public class FlowProcessServiceImpl<FlowProcess> extends BaseServiceImpl<FlowPro
       cache(entity);
 
     } catch (Exception e) {
-      e.printStackTrace();
       log.error(e.getMessage());
       throw new FlowException(e.getMessage(), e.getCause());
     }

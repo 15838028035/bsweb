@@ -38,7 +38,7 @@ public class FlowCcorderServiceImpl<FlowCcorder> extends BaseServiceImpl<FlowCco
       try {
         this.insertObject(ccorder);
       } catch (Exception e) {
-        e.printStackTrace();
+        log.error(e);
       }
     }
   }

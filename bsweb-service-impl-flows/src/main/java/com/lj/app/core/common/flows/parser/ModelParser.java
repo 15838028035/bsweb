@@ -6,6 +6,8 @@ import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,6 +26,8 @@ import com.lj.app.core.common.flows.util.XmlHelper;
  */
 public class ModelParser {
 
+  private static Log logger = LogFactory.getLog(ModelParser.class);
+  
   /**
    * 解析流程定义文件，并将解析后的对象放入模型容器中
    * 
@@ -66,7 +70,7 @@ public class ModelParser {
         }
         return process;
       } catch (SAXException e) {
-        e.printStackTrace();
+        logger.error(e);
         throw new FlowException(e);
       } catch (IOException e) {
         throw new FlowException(e);
@@ -118,7 +122,7 @@ public class ModelParser {
         }
         return process;
       } catch (SAXException e) {
-        e.printStackTrace();
+        logger.error(e);
         throw new FlowException(e);
       } catch (IOException e) {
         throw new FlowException(e);
@@ -151,7 +155,7 @@ public class ModelParser {
       }
       return null;
     } catch (RuntimeException e) {
-      e.printStackTrace();
+      logger.error(e);
       throw new FlowException(e);
     }
   }

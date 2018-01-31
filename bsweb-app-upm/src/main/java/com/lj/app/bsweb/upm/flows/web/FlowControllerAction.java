@@ -403,7 +403,7 @@ public class FlowControllerAction extends AbstractBaseUpmAction<FlowProcess> {
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(),e);
       throw e;
     }
   }

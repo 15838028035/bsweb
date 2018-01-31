@@ -52,6 +52,7 @@ public class InitContextListener implements ServletContextListener {
     StringBuilder sb = new StringBuilder();
     sb.append("\r\n======================================================================\r\n");
     sb.append("\r\n    欢迎使用 " + productName + "[" + springProfilesActiveShow + "],版本号:" + version + " \r\n");
+    sb.append("\r\n    静态资源地址:               [" + staticFileRootUrl + "       ]                       \r\n");
 
     sb.append("\r\n======================================================================\r\n");
     

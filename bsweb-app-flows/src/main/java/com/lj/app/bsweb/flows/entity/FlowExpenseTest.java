@@ -3,7 +3,7 @@ package com.lj.app.bsweb.flows.entity;
 import com.lj.app.core.common.base.entity.BaseEntity;
 
 /**
- * FlowExpenseTest111
+ * FlowExpenseTest
  */
 public class FlowExpenseTest extends BaseEntity {
 

@@ -136,7 +136,7 @@ public class FlowOrderServiceImpl<FlowOrder> extends BaseServiceImpl<FlowOrder>
     try {
       flowEngineFacets.getEngine().flowOrderHistService().updateObject(history);
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
     }
     this.delete(orderId);
     FlowCompletionService completion = flowEngineFacets.getEngine().flowCompletionService();

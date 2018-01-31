@@ -78,21 +78,18 @@ public class CommonWebAction extends ActionSupport {
         os.flush();
       }
     } catch (IOException e) {
-      e.printStackTrace();
       logger.error("file[" + filePath + "] read error= " + e.getMessage());
     } catch (Exception e) {
-      e.printStackTrace();
       logger.error(e.getMessage());
     } finally {
       try {
-        if (os != null) {
+        if (in != null) {
           in.close();
         }
         if (os != null) {
           os.close();
         }
       } catch (IOException e) {
-        e.printStackTrace();
         logger.error(e.getMessage());
       }
     }

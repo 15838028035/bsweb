@@ -124,7 +124,7 @@ public class FlowUpmUserAction extends AbstractBaseUpmAction<FlowUpmUser> {
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e.getMessage());
       throw e;
     }
 
