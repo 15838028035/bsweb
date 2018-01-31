@@ -42,16 +42,15 @@ import com.lj.app.core.common.web.Struts2Utils;
         location = "flowExpenseTestAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/flowExpenseTest/flowExpenseTest-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "flowExpenseTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flowExpenseTest/flowExpenseTestList.jsp", type = AbstractBaseAction.REDIRECT) 
     })
 @Action("flowExpenseTestAction")
 public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTest> {
 
   private static Log logger = LogFactory.getLog(FlowExpenseTestAction.class);
-	
   @Autowired
   private FlowExpenseTestService flowExpenseTestService;
 
@@ -111,7 +110,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
+      logger.error(e);
       throw e;
     }
   }
@@ -140,10 +139,10 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
+      logger.error(e);
       throw e;
     }
 
@@ -176,7 +175,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
+      logger.error(e);
       throw e;
     }
 
@@ -193,7 +192,7 @@ public class FlowExpenseTestAction extends AbstractBaseFlowsAction<FlowExpenseTe
    * @throws Exception 异常
    */
   public String applySave() throws Exception {
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**

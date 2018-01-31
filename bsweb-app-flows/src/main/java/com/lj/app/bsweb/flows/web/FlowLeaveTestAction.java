@@ -46,9 +46,9 @@ import com.lj.app.core.common.web.AbstractBaseAction;
         location = "/jsp/flowLeaveTest/flowLeaveTestBossApp.jsp"),
     @Result(name = "flowLeaveTestBossAppView", 
         location = "/jsp/flowLeaveTest/flowLeaveTestBossAppView.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowLeaveTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST,
+    @Result(name = AbstractBaseAction.LIST_RESULT,
       location = "/jsp/flowLeaveTest/flowLeaveTestList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 

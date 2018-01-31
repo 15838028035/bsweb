@@ -14,8 +14,6 @@ import com.lj.app.core.common.base.service.UpmConfigurationService;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * @title :UpmConfigurationAction.java
@@ -31,16 +29,14 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/dictionary/upmConfiguration-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "upmConfigurationAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/dictionary/upmConfigurationList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 
 @Action("upmConfigurationAction")
 public class UpmConfigurationAction extends AbstractBaseUpmAction<UpmConfiguration> {
-
-  protected Logger logger = LoggerFactory.getLogger(UpmConfigurationAction.class);
 
   @Autowired
   private UpmConfigurationService<UpmConfiguration> upmConfigurationService;
@@ -90,7 +86,7 @@ public class UpmConfigurationAction extends AbstractBaseUpmAction<UpmConfigurati
       upmConfigurationService.reloadConfigPro();
     } catch (Exception e) {
       returnMessage = "加载失败";
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
     AjaxResult ar = new AjaxResult();

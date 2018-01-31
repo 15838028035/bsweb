@@ -82,7 +82,7 @@ public class TimeoutInterceptor extends MethodFilterInterceptor implements PreRe
           ServletActionContext.setRequest(request);
           invocationa.invoke();
         } catch (Exception e) {
-          e.printStackTrace();
+          logger.error(e);
         }
       }
     };
@@ -141,7 +141,7 @@ public class TimeoutInterceptor extends MethodFilterInterceptor implements PreRe
         resultCode = null;
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
     }
   }
 

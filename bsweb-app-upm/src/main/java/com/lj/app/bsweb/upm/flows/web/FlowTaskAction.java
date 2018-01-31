@@ -44,9 +44,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowTaskAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
       location = "/jsp/flows/flowTask-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
       location = "flowTaskAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
       location = "/jsp/flows/flowTaskList.jsp", type = AbstractBaseAction.REDIRECT),
     @Result(name = "ADD_TASK_ACTOR",
       location = "/jsp/flows/flowTaskActor-Input.jsp", type = AbstractBaseAction.REDIRECT) 
@@ -121,7 +121,7 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
       Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }
@@ -146,7 +146,7 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
       Struts2Utils.renderText(PageTool.pageToJsonJQGrid(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage());
       throw e;
     }
   }
@@ -234,7 +234,7 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
    */
   public String activeTaskExec() throws Exception {
     flowEngineFacetsService.execute(taskId, this.getUserName(), null);
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**
@@ -244,7 +244,7 @@ public class FlowTaskAction extends AbstractBaseUpmAction<FlowTask> {
    */
   public String activeTaskReject() throws Exception {
     flowEngineFacetsService.executeAndJump(taskId, this.getUserName(), null, null);
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**

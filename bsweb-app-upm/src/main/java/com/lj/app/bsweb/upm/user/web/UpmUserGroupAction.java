@@ -35,9 +35,9 @@ import com.lj.app.core.common.web.Struts2Utils;
 @Results({ 
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/user/upmUserGroup-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "upmUserGroupAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/user/upmUserGroupList.jsp", type = AbstractBaseAction.REDIRECT) 
       })
 
@@ -148,7 +148,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
       Struts2Utils.renderText(jsonStr);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -161,7 +161,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
   @Override
   public String commonSaveOrUpdate() throws Exception {
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         BaseEntity entity = (BaseEntity) getModel();
         entity.setUpdateBy(this.getLoginUserId());
         entity.setUpdateByUname(this.getUserName());
@@ -181,7 +181,7 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
 

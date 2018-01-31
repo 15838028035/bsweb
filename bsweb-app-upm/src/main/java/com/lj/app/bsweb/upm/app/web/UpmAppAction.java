@@ -23,9 +23,9 @@ import com.lj.app.core.common.web.AbstractBaseAction;
 @Results({ 
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/upmApp/upmApp-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "upmAppAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
       location = "/jsp/upmApp/upmAppList.jsp", type = AbstractBaseAction.REDIRECT) 
     })
 @Action("upmAppAction")

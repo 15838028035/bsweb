@@ -35,9 +35,9 @@ import com.lj.app.core.common.web.Struts2Utils;
 @Results({ 
     @Result(name = AbstractBaseAction.INPUT, 
         location = "upmUser-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "upmUserAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "upmUserList.jsp", type = AbstractBaseAction.REDIRECT) 
         })
 
@@ -107,7 +107,7 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -121,7 +121,7 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
   public String commonSaveOrUpdate() throws Exception {
 
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         BaseEntity entity = (BaseEntity) getModel();
         entity.setUpdateBy(this.getLoginUserId());
         entity.setUpdateByUname(this.getUserName());
@@ -144,10 +144,10 @@ public class UpmUserAction extends AbstractBaseUpmAction<UpmUser> {
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }

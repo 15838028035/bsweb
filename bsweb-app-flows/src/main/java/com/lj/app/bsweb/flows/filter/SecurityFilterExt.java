@@ -166,8 +166,10 @@ public class SecurityFilterExt implements Filter {
     } catch (ServletException sx) {
     	 logger.error("[" + this.getClass().getName() + "] 异常信息:" + sx);
 
+      logger.error(sx);
+
     } catch (IOException iox) {
-    	logger.error("[" + this.getClass().getName() + "] 异常信息:" + iox);
+      logger.error(iox);
     }
 
   }

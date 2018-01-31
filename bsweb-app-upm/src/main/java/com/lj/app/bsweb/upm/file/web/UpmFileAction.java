@@ -23,8 +23,6 @@ import com.lj.app.core.common.util.DateUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * @title :UpmFileAction.java
@@ -40,9 +38,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
       location = "upmFileAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
       location = "/jsp/upmFile/upmFile-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
       location = "upmFileAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
       location = "/jsp/upmFile/upmFileList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 @Action("upmFileAction")
@@ -146,7 +144,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -160,7 +158,7 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
   public String save() throws Exception {
 
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         upmFile.setId(id);
         upmFile.setRelateId1(relateId1);
         upmFile.setRelateId2(relateId2);
@@ -189,10 +187,10 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     } 
 
@@ -219,9 +217,8 @@ public class UpmFileAction extends AbstractBaseUpmAction<UpmFile> {
       out.write(bt);
       out.flush();
       out.close();
-    } catch (Exception e1) {
-
-      e1.printStackTrace();
+    } catch (Exception e) {
+      logger.error(e);
     }
     return null;
   }

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -42,15 +44,17 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "/jsp/flowUpmUser/flowUpmUserApply.jsp"),
     @Result(name = "flowUpmUserApplyView",
         location = "/jsp/flowUpmUser/flowUpmUserApplyView.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowUpmUserAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST,
+    @Result(name = AbstractBaseAction.LIST_RESULT,
         location = "/jsp/flowUpmUser/flowUpmUserList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 
 @Action("flowUpmUserAction")
 public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
 
+  private static Log logger = LogFactory.getLog(FlowUpmUserAction.class);
+  
   @Autowired
   private FlowUpmUserService flowUpmUserService;
 
@@ -117,7 +121,7 @@ public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
 
@@ -166,7 +170,7 @@ public class FlowUpmUserAction extends AbstractBaseFlowsAction<FlowUpmUser> {
    * @throws Exception 异常
    */
   public String applySave() throws Exception {
-    return LIST;
+    return LIST_RESULT;
   }
 
   @Override

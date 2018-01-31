@@ -47,9 +47,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "/jsp/flowBorrowTest/flowBorrowTestView.jsp"),
     @Result(name = "flowBorrowTestAppTable",
         location = "/jsp/flowBorrowTest/flowBorrowTestAppTable.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowBorrowTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST,
+    @Result(name = AbstractBaseAction.LIST_RESULT,
         location = "/jsp/flowBorrowTest/flowBorrowTestList.jsp", type = AbstractBaseAction.REDIRECT)
     })
 
@@ -120,7 +120,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), null);
       throw e;
     }
   }
@@ -149,10 +149,10 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e.getMessage(), null);
       throw e;
     }
 
@@ -185,7 +185,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e.getMessage(), null);
       throw e;
     }
 
@@ -269,7 +269,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
       }
     }
 
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**
@@ -323,7 +323,7 @@ public class FlowBorrowTestAction extends AbstractBaseUpmAction<FlowBorrowTest> 
       }
       returnMessage = "提交成功";
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), null);
       returnMessage = "提交失败,失败原因:" + e.getMessage();
     }
 

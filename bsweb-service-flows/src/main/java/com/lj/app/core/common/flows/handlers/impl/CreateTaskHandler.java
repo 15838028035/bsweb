@@ -51,7 +51,7 @@ public class CreateTaskHandler implements IHandler {
         throw new FlowException(e);
       }
     } catch (Exception ee) {
-      ee.printStackTrace();
+      logger.error("拦截器执行失败=" + ee.getMessage());
       throw new FlowException(ee);
     }
   }

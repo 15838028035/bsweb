@@ -33,8 +33,6 @@ import com.lj.app.core.common.util.FileUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 /**
  * @title :流程定义表
@@ -50,9 +48,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowProcessAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/flows/flowProcess-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "flowProcessAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flows/flowProcessList.jsp", type = AbstractBaseAction.REDIRECT),
     @Result(name = "flowDiagram", 
         location = "/jsp/flows/flowDiagram.jsp"),
@@ -77,8 +75,6 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
     })
 @Action("flowProcessAction")
 public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
-
-  protected Logger logger = LoggerFactory.getLogger(FlowProcessAction.class);
 
   private FlowProcess flowProcess;
 
@@ -136,7 +132,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
   @Override
   public String commonSaveOrUpdate() throws Exception {
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         flowProcess.setFlowContent(flowProcess.getFlowContentStr().getBytes("UTF-8"));
         flowProcess.setUpdateBy(this.getLoginUserId());
         flowProcess.setUpdateByUname(this.getUserName());
@@ -155,10 +151,10 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e);
       throw e;
     }
   }
@@ -176,14 +172,14 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
       String flowContent = FileUtil.readStreamToString(input);
       flowProcessService.deploy(flowContent, this.getUserName());
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       returnMessage = e.getMessage();
     } finally {
       if (input != null) {
         try {
           input.close();
         } catch (IOException e) {
-          e.printStackTrace();
+          logger.error(e);
         }
       }
     }
@@ -213,7 +209,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       msg = this.OPT_FAILURE;
       expMsg = e.getMessage();
     } finally {
@@ -221,7 +217,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
         try {
           input.close();
         } catch (IOException e) {
-          e.printStackTrace();
+          logger.error(e);
           expMsg = e.getMessage();
         }
       }
@@ -255,7 +251,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       msg = this.OPT_FAILURE;
       expMsg = e.getMessage();
     } finally {
@@ -263,7 +259,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
         try {
           input.close();
         } catch (IOException e) {
-          e.printStackTrace();
+          logger.error(e);
           expMsg = e.getMessage();
         }
       }
@@ -310,14 +306,14 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
         flowProcessService.deploy(flowContent, this.getUserName());
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       msg = "false";
     } finally {
       if (input != null) {
         try {
           input.close();
         } catch (IOException e) {
-          e.printStackTrace();
+          logger.error(e);
           msg = "false";
         }
       }
@@ -328,7 +324,7 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
 
   public String processStart() throws Exception {
     flowEngineFacetsService.startInstanceByName(flowProcess.getFlowName(), null, this.getUserName(), null);
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**
@@ -413,13 +409,13 @@ public class FlowProcessAction extends AbstractBaseUpmAction<FlowProcess> {
         return input;
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
     } finally {
       if (input != null) {
         try {
           input.close();
         } catch (IOException e) {
-          e.printStackTrace();
+          logger.error(e);
         }
       }
     }

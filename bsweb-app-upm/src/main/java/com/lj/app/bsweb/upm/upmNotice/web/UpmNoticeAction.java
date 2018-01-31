@@ -34,9 +34,9 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "upmNoticeAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT, 
         location = "/jsp/upmNotice/upmNotice-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE, 
+    @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "upmNoticeAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/upmNotice/upmNoticeList.jsp", type = AbstractBaseAction.REDIRECT)
       })
 
@@ -76,7 +76,7 @@ public class UpmNoticeAction extends AbstractBaseUpmAction<UpmNotice> {
   public String commonSaveOrUpdate() throws Exception {
 
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         BaseEntity entity = (BaseEntity) getModel();
         entity.setUpdateBy(this.getLoginUserId());
         entity.setUpdateByUname(this.getUserName());
@@ -95,10 +95,10 @@ public class UpmNoticeAction extends AbstractBaseUpmAction<UpmNotice> {
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }

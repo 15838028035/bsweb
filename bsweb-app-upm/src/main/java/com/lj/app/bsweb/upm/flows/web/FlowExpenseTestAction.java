@@ -45,15 +45,13 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
         location = "flowExpenseTestAction", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.INPUT,
         location = "/jsp/flowExpenseTest/flowExpenseTest-input.jsp"),
-    @Result(name = AbstractBaseAction.SAVE,
+    @Result(name = AbstractBaseAction.SAVE_RESULT,
         location = "flowExpenseTestAction!edit.action", type = AbstractBaseAction.REDIRECT),
-    @Result(name = AbstractBaseAction.LIST, 
+    @Result(name = AbstractBaseAction.LIST_RESULT, 
         location = "/jsp/flowExpenseTest/flowExpenseTestList.jsp", type = AbstractBaseAction.REDIRECT) 
     })
 @Action("flowExpenseTestAction")
 public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest> {
-
-  protected Logger logger = LoggerFactory.getLogger(FlowExpenseTestAction.class);
 
   @Autowired
   private FlowExpenseTestService flowExpenseTestService;
@@ -117,7 +115,7 @@ public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest
       Struts2Utils.renderText(PageTool.pageToJsonBootStrap(this.page), new String[0]);
       return null;
     } catch (Exception e) {
-    	logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
+      logger.error(e);
       throw e;
     }
   }
@@ -146,10 +144,10 @@ public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest
         returnMessage = CREATE_SUCCESS;
       }
 
-      return LIST;
+      return LIST_RESULT;
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
+      logger.error(e);
       throw e;
     }
 
@@ -182,7 +180,7 @@ public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest
 
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
+      logger.error(e);
       throw e;
     }
 
@@ -234,7 +232,7 @@ public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest
       }
     }
 
-    return LIST;
+    return LIST_RESULT;
   }
 
   /**
@@ -287,7 +285,7 @@ public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest
       }
       returnMessage = "提交成功";
     } catch (Exception e) {
-    	logger.error("[" + this.getClass().getName() + "] 异常信息:" + e);
+      logger.error(e);
       returnMessage = "提交失败,失败原因:" + e.getMessage();
     }
 
@@ -300,14 +298,6 @@ public class FlowExpenseTestAction extends AbstractBaseUpmAction<FlowExpenseTest
   @Override
   public String delete() throws Exception {
     return null;
-  }
-
-  public Logger getLogger() {
-    return logger;
-  }
-
-  public void setLogger(Logger logger) {
-    this.logger = logger;
   }
 
   public java.lang.Integer getId() {

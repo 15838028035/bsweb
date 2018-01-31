@@ -115,7 +115,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
       Struts2Utils.renderText(JSONArray.fromObject(upmPermissionList).toString());
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }
@@ -140,7 +140,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 
       return null;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
   }
@@ -200,7 +200,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
   @Override
   public String commonSaveOrUpdate() throws Exception {
     try {
-      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT)) {
+      if (StringUtil.isEqualsIgnoreCase(operate, AbstractBaseAction.EDIT_RESULT)) {
         upmPermission.setUpdateBy(getLoginUserId());
         upmPermission.setUpdateDate(DateUtil.getNowDateYYYYMMddHHMMSS());
         upmPermissionService.updateObject(upmPermission);
@@ -221,7 +221,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
       return "turnToPermissionList";
     } catch (Exception e) {
       returnMessage = CREATE_FAILURE;
-      e.printStackTrace();
+      logger.error(e.getMessage(),null);
       throw e;
     }
 
@@ -257,7 +257,7 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
       upmPermissionService.updateObject(upmPermission);
       returnMessage = "操作成功";
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e);
       returnMessage = "操作失败";
     }
     AjaxResult ar = new AjaxResult();
