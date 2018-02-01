@@ -13,7 +13,7 @@
 	<artifactId>bsweb</artifactId>
 	<packaging>pom</packaging>
 	<version>2.0.2-SNAPSHOT</version>
-	<name>bswebApp</name>
+	<name>bsweb</name>
 	<url>http://maven.apache.org</url>
 
 	<developers>
@@ -828,6 +828,7 @@
 		<module>bsweb-service-impl-upm</module>
 		<module>bsweb-app-upm</module>
 		<module>bsweb-app-flows</module>
+		<module>bsweb-staticServer</module>
  	</modules>
 	
 </project>
