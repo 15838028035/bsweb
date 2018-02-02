@@ -9,10 +9,10 @@
   </parent>
   <artifactId>bsweb-staicServer</artifactId>
   <packaging>war</packaging>
-  <name>bsweb-staicServer</name>
+  <name>bsweb-staticServer</name>
   <url>http://maven.apache.org</url>
   
   <build>
-    <finalName>bsweb-staicServer</finalName>
+    <finalName>bsweb-staticServer</finalName>
   </build>
 </project>
