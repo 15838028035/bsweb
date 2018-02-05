@@ -89,7 +89,7 @@
                 <c:if test="${fns:getProperty('spring.profiles.active') eq 'dev'}">[开发环境]</c:if>
                 <c:if test="${fns:getProperty('spring.profiles.active') eq 'test'}">[测试环境]</c:if>
                 <c:if test="${fns:getProperty('spring.profiles.active') eq 'pro'}">[生产环境]</c:if>
-                [${fns:getProperty('flowsVersion')}]
+                [${version}]
                 </h3>流程管理登录</span>
                 <s:if test="hasActionErrors()">
 		   			<div class="alert alert-warning" style="list-style:none">
