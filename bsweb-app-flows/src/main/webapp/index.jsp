@@ -127,10 +127,18 @@
           <ul class="treeview-menu">
              <c:forEach var="upmPermission" items="${sessionScope.appMenuPermissionList}" varStatus="status">
          <li>
+         <c:if test="${fn:startsWith(upmPermission.url, 'http')}">
+          <a href="${upmPermission.url}"  target="menuFrame">
+            <span>${upmPermission.name}</span>
+            <span class="pull-right-container"></span>
+          </a>
+          </c:if>
+          <c:if test="${fn:startsWith(upmPermission.url, '/')}">
           <a href="${ctx}${upmPermission.url}"  target="menuFrame">
             <span>${upmPermission.name}</span>
             <span class="pull-right-container"></span>
           </a>
+          </c:if>
         </li>
         </c:forEach>
             </li>
