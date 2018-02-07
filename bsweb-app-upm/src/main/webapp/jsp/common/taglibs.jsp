@@ -5,4 +5,6 @@
 <%@ taglib prefix="sec" uri="http://localhost:8080/upm/security"%>
 <%@ taglib prefix="fns" uri="/WEB-INF/fns.tld" %>
 
+<%@ taglib prefix="flows" tagdir="/WEB-INF/tags/flows" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
