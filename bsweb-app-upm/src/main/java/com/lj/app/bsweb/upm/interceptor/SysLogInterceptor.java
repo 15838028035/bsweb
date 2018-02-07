@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lj.app.core.common.base.entity.UpmSysLog;
 import com.lj.app.core.common.base.service.UpmSysLogService;
 import com.lj.app.core.common.util.SessionCode;
+import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.Struts2Utils;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -53,13 +55,13 @@ public class SysLogInterceptor extends AbstractInterceptor {
     }
     sb.append(" ");
 
-    // String ip = IPUtil.getIPAddr(ServletActionContext.getRequest());
+    String ip = StringUtil.getRemoteAddr(ServletActionContext.getRequest());
     UpmSysLog upmSysLog = new UpmSysLog();
     upmSysLog.setUserName((String) Struts2Utils.getSessionAttribute(SessionCode.LOGIN_NAME));
     upmSysLog.setOperation(actionClassName);
     upmSysLog.setMethod(actionMethodName);
     upmSysLog.setParams(sb.toString());
-    // upmSysLog.setIp(ip);
+    upmSysLog.setIp(ip);
     upmSysLog.setReateDate(new Date());
 
     upmSysLogService.insertObject(upmSysLog);
