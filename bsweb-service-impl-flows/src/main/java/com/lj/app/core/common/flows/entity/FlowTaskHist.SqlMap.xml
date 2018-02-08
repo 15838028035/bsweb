@@ -380,7 +380,7 @@ and o.flow_process_id=p.id
 and ta.task_id=h.id
 
 	    ]]>
-	     <dynamic prepend=" ">
+	     <dynamic prepend=" AND ">
 	       <isNotEmpty prepend="AND" property="id">
 	             h.id = #id#
 	       </isNotEmpty>
@@ -525,7 +525,7 @@ and o.flow_process_id=p.id
 and ta.task_id=h.id
 
     ]]>
-     <dynamic prepend=" ">
+     <dynamic prepend=" AND ">
 	             <isNotEmpty prepend="AND" property="id">
 	             h.id = #id#
 	       </isNotEmpty>

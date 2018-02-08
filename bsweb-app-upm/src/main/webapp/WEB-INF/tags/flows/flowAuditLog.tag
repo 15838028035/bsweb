@@ -1,5 +1,5 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ include file="/jsp/common/taglibs.jsp" %>
 <%@ attribute name="processId" type="java.lang.String" required="true" description="流程定义ID"%>
 <%@ attribute name="orderId" type="java.lang.String" required="false" description="流程实例子ID"%>
 <fieldset>

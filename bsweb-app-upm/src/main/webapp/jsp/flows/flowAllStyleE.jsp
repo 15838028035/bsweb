@@ -84,47 +84,26 @@
 							iframeUrl += '&readonly=0';
 						}
 						
-						var tab;
 						
 						if(iscurrent){
-							$.addtabs.add({"id":"00"+i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
+							 $("#taskIframe").attr("src",iframeUrl);
 						}
 						
-						if((taskName == '' &&  i == 0) || (!iscurrent && isAppNode==-1) )  {
-							//$.addtabs.add({"id":i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
-						}
-						
-						if((taskName == '' &&  i == 0) || ((!iscurrent && isAppNode!=-1) )  ){
-							
-						}
-						
-						if(i == 0&& !iscurrent)  {
-							$.addtabs.add({"id":"00"+i,"title":node.displayName,"url": iframeUrl,"target": "#tabs"});
-						}
-						
-			            if(iscurrent) {
-			            	curTab = tab;
-			            	currentTabNo=i;
-			            }
 					}
-					
-					if(currentTabNo>0){
-						$.addtabs.add({"id":"8888","title":"审批流水","url": "${ctx}/jsp/flows/flowApproveList.jsp?processId=${processId}&orderId=${orderId}","target": "#tabs"});
-					}
-					$.addtabs.add({"id":"9999","title":"流程图","url": "${ctx}/jsp/flows/flowProcessAction!flowDiagram.action?processId=${processId}&orderId=${orderId}","target": "#tabs"});
-					
-					//激活当前流程节点
-					$("#tab_tab_00"+currentTabNo).addClass("active");
-					$("#tab_00"+currentTabNo).addClass("active");
 					
 				}
 			});
         });
         
     	</script>
+    	
+    	<iframe src=""  id="taskIframe"
+                                  width="100%;" height="auto";>
+        </iframe>
+                                        
     	<!-- 审批日志信息 -->
     	<flows:flowAuditLog processId="${processId}" orderId="${orderId}" />
     	<!-- 历史任务 -->
-    	<flows:flowTaskHist  flowOrderId="${orderId}" />
+    	<flows:flowTaskHist  processId="${processId}"  flowOrderId="${orderId}" />
 	</body>
 </html>
