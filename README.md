@@ -3,26 +3,47 @@
 [![Build status](https://travis-ci.org/15838028035/bsweb.svg?branch=master)](https://travis-ci.org/15838028035/bsweb)
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.github.15838028035%3Absweb)](https://sonarcloud.io/dashboard?id=com.github.15838028035%3Absweb)
 
-## 项目描述
+#### 模块介绍
 
- 1.	bsweb-common-config 公共配置项目信息
- 2.	bsweb-service-upm   upm统一用户角色权限管理系统服务层
- 3.	bsweb-service-impl-upm upm统一用户角色权限管理系统服务层实现
- 4.	bsweb-service-flows 工作流引擎服务层
- 5.	bsweb-service-impl-flows 工作流引擎服务层实现
- 6.	bsweb-service-deploy 服务部署层
- 7.	bsweb-app-upm upm统一用户角色权限管理系统web层
- 8.	bsweb-app-flows 流程管理系统实例
- 9.	bsweb-staticServer 静态资源服务器
+> bsweb-common-config 
+
+ 公共配置项目信息
  
-## 项目使用手册
+> bsweb-service-upm 
+ 
+upm统一用户角色权限管理系统服务层
+
+> bsweb-service-impl-upm 
+upm统一用户角色权限管理系统服务层实现
+
+> bsweb-service-flows 
+工作流引擎服务层
+
+> bsweb-service-impl-flows
+工作流引擎服务层实现
+ 
+> bsweb-service-deploy
+ 服务部署层
+ 
+> bsweb-app-upm 
+upm统一用户角色权限管理系统web层
+
+> bsweb-app-flows
+
+ 流程管理系统实例
+ 
+> bsweb-staticServer
+ 静态资源服务器
+ 
+#### 项目使用手册
 请查看 [使用手册](https://15838028035.github.io/bsweb/)
 
 ### 开发环境
-1. jdk1.7
-2. maven 3.2
-3. eclipse 4.2
-4. tomcat7
+- jdk1.7
+- maven 3.2
+- eclipse 4.2
+- tomcat7
+- zookeeper3.4.9
 
 ### 快速上手
 1. 安装jdk
