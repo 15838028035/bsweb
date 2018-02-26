@@ -27,7 +27,7 @@ public interface UpmPermissionService<UpmPermission> extends BaseService {
    * @param appId appId
    * @return 根据用户id、appId查找用户权限
    */
-  public List<com.lj.app.bsweb.upm.role.entity.UpmPermission> findPermissionByUserId(int userId, String appId);
+  public List<com.lj.app.bsweb.upm.role.entity.UpmPermission> findPermissionByUserId(Integer userId, String appId);
 
   /**
    * 根据用户id、appcode、type查找用户权限

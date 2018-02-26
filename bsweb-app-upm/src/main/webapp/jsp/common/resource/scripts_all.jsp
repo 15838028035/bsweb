@@ -62,3 +62,6 @@
 
 <script src="${staticFileRootUrl}/scripts/mustache.js"></script>
 <script src="${staticFileRootUrl}/scripts/adminLTE/js/demo.js"></script>
+
+<link href="${staticFileRootUrl}/scripts/treeTable/themes/vsStyle/treeTable.min.css" rel="stylesheet" type="text/css" />
+<script src="${staticFileRootUrl}/scripts/treeTable/jquery.treeTable.min.js" type="text/javascript"></script>

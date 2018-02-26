@@ -1,5 +1,6 @@
 package com.lj.app.bsweb.upm.role.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import com.lj.app.core.common.base.service.DictionaryApiService;
 import com.lj.app.core.common.exception.BusinessException;
 import com.lj.app.core.common.util.AjaxResult;
 import com.lj.app.core.common.util.DateUtil;
+import com.lj.app.core.common.util.JsonUtil;
 import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
@@ -41,7 +43,9 @@ import net.sf.json.JSONArray;
     @Result(name = AbstractBaseAction.INPUT, 
         location = "permission-input.jsp"),
     @Result(name = "turnToPermissionList", 
-        location = "permissionData.jsp")
+        location = "permissionData.jsp"),
+    @Result(name = AbstractBaseAction.LIST_RESULT,
+    	location = "/jsp/permission/upmPermissionList.jsp")
     })
 
 @Action("upmPermissionAction")
@@ -81,6 +85,8 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
 
   @Autowired
   private DictionaryApiService dictionaryService;
+  
+  private String extId;
 
   public BaseService<UpmPermission> getBaseService() {
     return upmPermissionService;
@@ -279,6 +285,45 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
     }
   }
 
+  public String goToList() throws Exception {
+		try {
+			Map<String,Object> condition = new HashMap<String,Object>();
+			condition.put("appId", appId);
+			List<UpmPermission> list = upmPermissionService.findBaseModeList(condition);
+			JSONArray jsonArray = JSONArray.fromObject(list);
+			
+			Struts2Utils.getRequest().setAttribute("list", jsonArray.toString());
+			return LIST_RESULT;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
+
+	/**
+	*json 树数据
+	*/
+	public String  treeData()  throws Exception{
+		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+		Map<String,Object> condition = new HashMap<String,Object>();
+		condition.put("appId", appId);
+		List<UpmPermission> list = upmPermissionService.findBaseModeList(condition);
+		for (int i=0; i<list.size(); i++){
+			UpmPermission e = list.get(i);
+			if (StringUtil.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && String.valueOf(e.getParentId()).indexOf(","+extId+",")==-1)){
+				Map<String, Object> map =new HashMap<String,Object>();
+				map.put("id", e.getId());
+				map.put("pId", e.getParentId());
+				map.put("name", e.getName());
+				mapList.add(map);
+			}
+		}
+		
+		Struts2Utils.renderJson(mapList);
+		return null;
+	}
+	
   public java.lang.Integer getId() {
     return id;
   }
@@ -406,5 +451,13 @@ public class UpmPermissionAction extends AbstractBaseUpmAction<UpmPermission> {
   public void setDictionaryService(DictionaryApiService dictionaryService) {
     this.dictionaryService = dictionaryService;
   }
+
+	public String getExtId() {
+		return extId;
+	}
+	
+	public void setExtId(String extId) {
+		this.extId = extId;
+	}
 
 }

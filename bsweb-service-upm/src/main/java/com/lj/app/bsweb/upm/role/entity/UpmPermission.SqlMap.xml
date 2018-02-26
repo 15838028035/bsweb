@@ -241,6 +241,17 @@
 	    ]]>
     </select>
     
+     <select id="select" resultMap="upmPermissionResult">
+        <include refid="commonSelectColumnsPrefix"/>
+        <![CDATA[
+            from upm_permission 
+        ]]>
+        <include refid="dynamicWhere"/>
+        <dynamic prepend="ORDER BY">
+            <isNotEmpty property="sortColumns">$sortColumns$</isNotEmpty>
+        </dynamic>
+    </select>
+    
     <select id="findParentIsNull" resultMap="upmPermissionResult">
     	<include refid="commonSelectColumnsPrefix"/>
 	    <![CDATA[
