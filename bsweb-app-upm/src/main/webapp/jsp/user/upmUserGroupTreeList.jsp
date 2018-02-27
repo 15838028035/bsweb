@@ -62,16 +62,18 @@ $(document).ready(function(){
  * 一个节点被展开 惰性加载
  */
 function addNextNode(event, node) {
+	
     $.getJSON("${ctx}/jsp/user/upmUserGroupAction!treeList.action?treeNodeId="+node.nodeId, function (data) {
     	$('#upmUserGroupTreeDiv').treeview("deleteChildrenNode", node.nodeId);
     	$('#upmUserGroupTreeDiv').treeview("remove", node.nodeId);
     	
-    	$.each(data, function (index, nodeItem) {
+    	 /* $.each(data, function (index, nodeItem) {
     				var nodeId = nodeItem.id;
-					$('#upmUserGroupTreeDiv').treeview("addNode", [node.nodeId, {node: nodeItem}]);
-				});
-    	
-        // $("#upmUserGroupTreeDiv").treeview("addNode", [{ node: { text: "新加的菜单","parentId":"1"} }]);
+    				//console.log(nodeItem);
+					$('#upmUserGroupTreeDiv').treeview("addNode", [node, {node: nodeItem}]);
+				});  */
+			
+    	 $('#upmUserGroupTreeDiv').treeview("addNode", [node, {node: data}]);
     });
     
 }
