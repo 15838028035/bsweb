@@ -25,6 +25,8 @@ import com.lj.app.core.common.util.StringUtil;
 import com.lj.app.core.common.web.AbstractBaseAction;
 import com.lj.app.core.common.web.Struts2Utils;
 
+import net.sf.json.JSONArray;
+
 /**
  * 
  * 用户组
@@ -38,7 +40,7 @@ import com.lj.app.core.common.web.Struts2Utils;
     @Result(name = AbstractBaseAction.SAVE_RESULT, 
         location = "upmUserGroupAction!edit.action", type = AbstractBaseAction.REDIRECT),
     @Result(name = AbstractBaseAction.LIST_RESULT, 
-        location = "/jsp/user/upmUserGroupList.jsp", type = AbstractBaseAction.REDIRECT) 
+        location = "/jsp/user/upmUserGroupList.jsp") 
       })
 
 @Action("upmUserGroupAction")
@@ -50,6 +52,8 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
 
   private Long treeNodeId;
   private Long rootId = 0L;
+
+  private String extId;
 
   public Long getTreeNodeId() {
     return treeNodeId;
@@ -204,6 +208,42 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
     }
   }
 
+  public String goToList() throws Exception {
+		try {
+			Map<String,Object> condition = new HashMap<String,Object>();
+			List<UpmUserGroup> list = upmUserGroupService.findBaseModeList(new UpmUserGroup());
+			JSONArray jsonArray = JSONArray.fromObject(list);
+			
+			Struts2Utils.getRequest().setAttribute("list", jsonArray.toString());
+			return LIST_RESULT;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	/**
+	*json 树数据
+	*/
+	public String  treeData() throws Exception{
+		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+		List<UpmUserGroup> list = upmUserGroupService.findBaseModeList(new UpmUserGroup());
+		for (int i=0; i<list.size(); i++){
+			UpmUserGroup e = list.get(i);
+			if (StringUtil.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && String.valueOf(e.getParentId()).indexOf(","+extId+",")==-1)){
+				Map<String, Object> map = new HashMap<String,Object>();
+				map.put("id", e.getId());
+				map.put("pId", e.getParentId());
+				map.put("name", e.getUserGroupName());
+				mapList.add(map);
+			}
+		}
+		
+		Struts2Utils.renderJson(mapList);
+		return null;
+	}
+	
   public void setId(java.lang.Integer value) {
     this.id = value;
   }
@@ -227,5 +267,13 @@ public class UpmUserGroupAction extends AbstractBaseUpmAction<UpmUserGroup> {
   public void setParentId(java.lang.Integer parentId) {
     this.parentId = parentId;
   }
+
+	public String getExtId() {
+		return extId;
+	}
+	
+	public void setExtId(String extId) {
+		this.extId = extId;
+	}
 
 }

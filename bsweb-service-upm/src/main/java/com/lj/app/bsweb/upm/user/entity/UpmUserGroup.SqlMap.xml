@@ -153,6 +153,14 @@
         id = #id# 
     ]]>
     </delete>
+     
+    <select id="select" resultMap="upmUserGroupResult">
+        <include refid="commonSelectColumnsPrefix"/>
+        <![CDATA[
+            from upm_user_group 
+        ]]>
+        <include refid="dynamicWhere"/>
+    </select>
     
     <select id="getInfoByKey" resultMap="upmUserGroupResult">
 	    <include refid="commonSelectColumnsPrefix"/>
