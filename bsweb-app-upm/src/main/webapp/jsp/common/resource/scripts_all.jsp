@@ -65,3 +65,5 @@
 
 <link href="${staticFileRootUrl}/scripts/treeTable/themes/vsStyle/treeTable.min.css" rel="stylesheet" type="text/css" />
 <script src="${staticFileRootUrl}/scripts/treeTable/jquery.treeTable.min.js" type="text/javascript"></script>
+
+<script src="${ctx}/scripts/upm-common.js"></script>
