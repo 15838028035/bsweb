@@ -156,7 +156,7 @@
 			 	<label class="control-label col-sm-1" for="appId">应用编码</label>
 				<div class="col-sm-2"> <input type="text" class="form-control" id="appId"></div>
                      <div class="col-sm-12" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="refreshGrid('#tableList')">查询</button>
                        </div>
                    </div>
                 </form>
@@ -165,7 +165,7 @@
 
         <div id="toolbar" class="btn-group">
         	<sec:authorize code="upm_upmRoleList_btn_add" >
-            <button id="btn_add" type="button" class="btn btn-default">
+            <button id="btn_add" type="button" class="btn btn-default" onclick="commonAdd('${ctx}/jsp/role/upmRoleAction!input.action?appId=${param.appId}')">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
             </sec:authorize>
@@ -175,7 +175,7 @@
             </button>
             </sec:authorize>
             <sec:authorize code="upm_upmRoleList_btn_delete" >
-            <button id="btn_delete" type="button" class="btn btn-default">
+            <button id="btn_delete" type="button" class="btn btn-default" onclick="commonDelete('#tableList','${ctx}/jsp/role/upmRoleAction!multidelete.action?multidelete=')">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
             </sec:authorize>
@@ -188,15 +188,7 @@
     <script type="text/javascript">
     
     var $tableList = $('#tableList');
-    var $btn_add = $('#btn_add');
     var $btn_edit = $('#btn_edit');
-    var $btn_delete = $('#btn_delete');
-    var $btn_query = $('#btn_query');
-	 
-		//新增
-        $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/role/upmRoleAction!input.action?appId=${param.appId}'
-        });
 		
 		//编辑
         $("#btn_edit").click(function() {
@@ -219,46 +211,6 @@
         	}
         	window.location.href = "${ctx}/jsp/role/upmRoleAction!input.action?operate=edit&id=" + ids + "&appId=" + appId;
         });
-		
-		 $("#btn_delete").click(function() {
-        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                 return row.id;
-             });
-        	 
-        	if(ids == ""){
-        		bootbox.alert('请选择要删除的记录');
-        		return;
-        	}
-
-        	bootbox.confirm('确认要删除么?',function (result) {  
-                if(result) {  
-                	doDelete();
-                }
-        	});
-        });
-        
-        function doDelete(){
-        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                 return row.id;
-             });
-            var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/role/upmRoleAction!multidelete.action?multidelete=" + ids,
-		          async:false,
-		          cache:false,
-		          dataType:"json"
-		      }).responseText;
-			var obj = eval("("+result+")");
-			bootbox.alert(obj.opResult);
-			refreshGrid();
-        }
-        
-        $btn_query.click(function () {
-       	 refreshGrid();
-       });
-        
-      	function refreshGrid(){
-      		$tableList.bootstrapTable('refresh');
-      	};
       	
     </script>
 
