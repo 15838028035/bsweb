@@ -154,7 +154,7 @@
                             <input type="text" class="form-control" id="mobile">
                         </div>
                         <div class="col-sm-12" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="refreshGrid('#tableList')">查询</button>
                         </div>
                     </div>
                 </form>
@@ -163,17 +163,17 @@
 
         <div id="toolbar" class="btn-group">
         	<sec:authorize code="upm_upmUserList_btn_add" >
-	            <button id="btn_add" type="button" class="btn btn-default">
+	            <button id="btn_add" type="button" class="btn btn-default" onclick="commonAdd('${ctx}/jsp/user/upmUserAction!input.action')">
 	                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 	            </button>
             </sec:authorize>
             <sec:authorize code="upm_upmUserList_btn_edit" >
-	            <button id="btn_edit" type="button" class="btn btn-default">
+	            <button id="btn_edit" type="button" class="btn btn-default" onclick="commonEdit('#tableList','${ctx}/jsp/user/upmUserAction!input.action?operate=edit&id=')">
 	                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
 	            </button>
             </sec:authorize>
             <sec:authorize code="upm_upmUserList_btn_delete" >
-	            <button id="btn_delete" type="button" class="btn btn-default">
+	            <button id="btn_delete" type="button" class="btn btn-default"  onclick="commonDelete('#tableList','${ctx}/jsp/user/upmUserAction!multidelete.action?multidelete=')">
 	                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 	            </button>
             </sec:authorize>
@@ -181,80 +181,6 @@
         
         <table id="tableList"></table>
     </div>
-
-    <script type="text/javascript">
-	    var $tableList = $('#tableList');
-	    var $btn_add = $('#btn_add');
-	    var $btn_edit = $('#btn_edit');
-	    var $btn_delete = $('#btn_delete');
-	    var $btn_query = $('#btn_query');
     
-		//新增
-        $("#btn_add").click(function() {
-        	window.location.href = '${ctx}/jsp/user/upmUserAction!input.action';
-        })
-		//编辑
-        $("#btn_edit").click(function() {
-        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                 return row.id;
-             });
-        	if(ids == ''|| ids==null){
-        		bootbox.alert('请选择要编辑的记录');
-        		return;
-        	}
-        	
-        	if(ids.length>1){
-        		bootbox.alert('请选择一条编辑的记录');
-        		return;
-        	}
-        	
-        	window.location.href = "${ctx}/jsp/user/upmUserAction!input.action?operate=edit&id=" + ids;
-        })
-        
-        $("#btn_delete").click(function() {
-        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                 return row.id;
-             });
-        	 
-        	if(ids == ""){
-        		bootbox.alert('请选择要删除的记录');
-        		return;
-        	}
-
-        	bootbox.confirm('确认要删除么?',function (result) {  
-                if(result) {  
-                	doDelete();
-                }
-        	});
-        	
-        });
-		
-        function doDelete(){
-        	 var ids = $.map($tableList.bootstrapTable('getSelections'), function (row) {
-                 return row.id;
-             });
-            var result = jQuery.ajax({
-		      	  url:"${ctx}/jsp/user/upmUserAction!multidelete.action?multidelete=" + ids,
-		          async:false,
-		          cache:false,
-		          dataType:"json"
-		      }).responseText;
-			var obj = eval("("+result+")");
-			bootbox.alert(obj.opResult);
-			
-			refreshGrid();
-        }
-        		
-        $btn_query.click(function () {
-        	 refreshGrid();
-        });
-        
-      	function refreshGrid(){
-      		$tableList.bootstrapTable('refresh');
-      	}
-      	
-    </script>
-
-
 </body>
 </html>
